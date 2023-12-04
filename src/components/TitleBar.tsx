@@ -19,7 +19,7 @@ export default function TitleBar({ title, description, backHref }: IProps) {
         {backHref && (
           <ArrowLeft
             size={28}
-            className="cursor-pointer duration-300 hover:scale-105 hover:text-[var(--mantine-color-blue-5)]"
+            className="min-w-[30px] cursor-pointer duration-300 hover:scale-105 hover:text-[var(--mantine-color-blue-5)]"
             onClick={() => router.push(backHref)}
           />
         )}

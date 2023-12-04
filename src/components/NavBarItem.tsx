@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import React from 'react';
 
-import { NavBarItem, RootNavBarItem } from '@/libs/navbar';
+import { NavBarItem, RootNavBarItem } from '@/components/NavBar';
 
 interface IProps {
   item: NavBarItem | RootNavBarItem;

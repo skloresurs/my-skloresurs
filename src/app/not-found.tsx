@@ -1,8 +1,14 @@
 import { Button, Container, Group, Text, Title } from '@mantine/core';
+import { GetServerSideProps } from 'next';
 import Link from 'next/link';
 import React from 'react';
 
 import classes from '@/css/Error.module.css';
+
+export const getServerSideProps: GetServerSideProps = async ({ res }) => {
+  res.statusCode = 404;
+  return { props: {} };
+};
 
 export default async function NotFound() {
   return (

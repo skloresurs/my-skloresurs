@@ -14,9 +14,9 @@ import { CheckCircle, XCircle } from 'lucide-react';
 import React, { ReactNode } from 'react';
 import useSWR, { useSWRConfig } from 'swr';
 
+import navbar, { footer } from '@/components/NavBar';
 import NavBarItemCompnent from '@/components/NavBarItem';
 import IUser from '@/interfaces/User';
-import navbar, { footer } from '@/libs/navbar';
 import verifyPermission from '@/libs/verify-permission';
 
 const NotificationTitle = 'Вихід';

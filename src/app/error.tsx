@@ -12,8 +12,7 @@ export default function ServerError() {
         <div className={classes.label}>500</div>
         <Title className={classes.title}>Щойно сталося щось погане...</Title>
         <Text size="lg" ta="center" className={classes.description}>
-          Наші сервери не змогли обробити ваш запит. Не переживай, наш Команда
-          розробників уже була повідомлена. Спробуйте оновити сторінку.
+          Наші сервери не змогли обробити ваш запит. Спробуйте оновити сторінку.
         </Text>
         <Group justify="center">
           <Button
