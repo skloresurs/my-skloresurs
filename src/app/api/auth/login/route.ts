@@ -38,6 +38,7 @@ export async function POST(request: NextRequest) {
     authRequest.setSession(session);
     return NextResponse.json(null, { status: 200 });
   } catch (error) {
+    console.log(error);
     if (
       error instanceof LuciaError &&
       (error.message === 'AUTH_INVALID_KEY_ID' ||

@@ -6,7 +6,6 @@ import {
   Divider,
   ScrollArea,
 } from '@mantine/core';
-import { MantineLogo } from '@mantine/ds';
 import { useDisclosure } from '@mantine/hooks';
 import { notifications } from '@mantine/notifications';
 import axios from 'axios';
@@ -73,7 +72,7 @@ export default function AppShell({ children }: { children: ReactNode }) {
     >
       <MantineAppShell.Header className="flex flex-row items-center justify-between gap-2 px-5">
         <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
-        <MantineLogo size={30} />
+        Logo
       </MantineAppShell.Header>
 
       <MantineAppShell.Navbar p="md">

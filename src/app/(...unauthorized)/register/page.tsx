@@ -1,10 +1,11 @@
 'use client';
 
 import { Button, Paper, PasswordInput, TextInput, Title } from '@mantine/core';
-import { useForm, zodResolver } from '@mantine/form';
+import { useForm } from '@mantine/form';
 import { notifications } from '@mantine/notifications';
 import axios from 'axios';
 import { CheckCircle, XCircle } from 'lucide-react';
+import { zodResolver } from 'mantine-form-zod-resolver';
 import Link from 'next/link';
 import { redirect, useRouter } from 'next/navigation';
 import { useReCaptcha } from 'next-recaptcha-v3';

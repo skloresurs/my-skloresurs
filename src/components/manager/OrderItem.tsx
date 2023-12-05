@@ -34,7 +34,7 @@ export default function OrderItem({ order }: IProps) {
         component="button"
         onClick={open}
         withBorder={order.locked}
-        className="relative h-full w-full cursor-pointer justify-start border-[var(--mantine-color-red-5)] bg-[var(--mantine-color-gray-9)] duration-300 hover:bg-[var(--mantine-color-gray-8)]"
+        className="relative h-full w-full cursor-pointer justify-start border-[var(--mantine-color-red-5)] bg-[var(--mantine-color-dark-8)] duration-300 hover:bg-[var(--mantine-color-dark-9)]"
       >
         <div className="flex flex-row items-center justify-between">
           <Title order={2}>{order.id}</Title>
@@ -67,6 +67,8 @@ export default function OrderItem({ order }: IProps) {
         )}
       </Paper>
       <Drawer
+        offset={8}
+        radius="md"
         opened={opened}
         onClose={close}
         position="right"

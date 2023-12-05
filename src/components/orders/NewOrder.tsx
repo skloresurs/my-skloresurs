@@ -11,8 +11,9 @@ import {
   Textarea,
   TextInput,
 } from '@mantine/core';
-import { useForm, zodResolver } from '@mantine/form';
+import { useForm } from '@mantine/form';
 import { Trash } from 'lucide-react';
+import { zodResolver } from 'mantine-form-zod-resolver';
 import { nanoid } from 'nanoid';
 import Image from 'next/image';
 import React from 'react';

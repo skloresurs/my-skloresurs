@@ -5,7 +5,6 @@
 
     // Base
     "airbnb",
-    "airbnb/hooks",
     "airbnb-typescript",
     "plugin:@typescript-eslint/recommended",
 
@@ -24,7 +23,6 @@
     // Others
     "plugin:tailwindcss/recommended",
     "plugin:eslint-comments/recommended",
-    // "plugin:pii/recommended",
     "prettier"
   ],
   "parser": "@typescript-eslint/parser",
