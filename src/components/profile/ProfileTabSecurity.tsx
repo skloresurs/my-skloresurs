@@ -7,7 +7,7 @@ import { XCircle } from 'lucide-react';
 import React, { useState } from 'react';
 import useSWR from 'swr';
 
-import IUser from '@/interfaces/User';
+import IUser from '@/types/User';
 
 const NotificationTitle = 'Оновлення профілю';
 
@@ -97,7 +97,7 @@ export default function ProfileTabSecurity() {
         </div>
         <Divider className="my-3" />
         <div className="flex flex-row items-center justify-between px-4">
-          <span className="text-sm text-[var(--mantine-color-dark-2)]">
+          <span className="text-sm text-[var(--mantine-color-gray-5)]">
             {user?.account_type === 'Default'
               ? ''
               : 'Недоступно для oAuth аккаунтів'}

@@ -5,7 +5,7 @@ import { useSearchParams } from 'next/navigation';
 import React, { useEffect } from 'react';
 import useSWR from 'swr';
 
-import IManaderOrder from '@/interfaces/ManagerOrder';
+import IManaderOrder from '@/types/ManagerOrder';
 
 import LoadingOverlay from '../LoadingOverlay';
 import OrderItem from './OrderItem';

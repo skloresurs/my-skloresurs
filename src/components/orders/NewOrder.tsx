@@ -18,40 +18,12 @@ import { nanoid } from 'nanoid';
 import Image from 'next/image';
 import React from 'react';
 import { usePlacesWidget } from 'react-google-autocomplete';
-import { z } from 'zod';
 
+import { glassTypeData } from '@/data/new-order-data';
 import { env } from '@/env.mjs';
+import { formSchema, ValidationSchema } from '@/types/NewOrder';
 
-const specificationSchema = z.object({
-  comment: z.string().optional(),
-  count: z
-    .number({ required_error: 'Кількість обов`язкова' })
-    .min(1, 'Кількість має бути більше 1'),
-  height: z
-    .number({ required_error: 'Висота обов`язкова' })
-    .min(0, 'Висота має бути більше 0'),
-  width: z
-    .number({ required_error: 'Ширина обов`язкова' })
-    .min(0, 'Ширина має бути більше 0'),
-});
-
-const formSchema = z.object({
-  address: z
-    .string({ required_error: 'Адреса замовлення обов`язкова' })
-    .min(1, 'Адреса замовлення обов`язкова')
-    .max(255, 'Максимальна довжина адреси 255 символів'),
-  comment: z.string().optional(),
-  glass_type: z.string({ required_error: 'Тип стекла обов`язково' }),
-  specification: specificationSchema
-    .array()
-    .min(1, 'Додайте хоча б одну специфікацію'),
-  title: z
-    .string({ required_error: 'Назва замовлення обов`язкова' })
-    .min(1, 'Назва замовлення обов`язкова')
-    .max(255, 'Максимальна довжина назви 255 символів'),
-});
-
-type ValidationSchema = z.infer<typeof formSchema>;
+import Visualization from './Visualization';
 
 export default function NewOrder() {
   const form = useForm<ValidationSchema>({
@@ -68,6 +40,8 @@ export default function NewOrder() {
         },
       ],
       title: '',
+      visualization:
+        glassTypeData.find((item) => item.value === 'mono')?.data ?? [],
     },
     validate: zodResolver(formSchema),
   });
@@ -90,10 +64,7 @@ export default function NewOrder() {
   return (
     <div className="grid grid-cols-1 gap-2 lg:grid-cols-2 lg:gap-5">
       <div>
-        <form
-          onSubmit={form.onSubmit(onSubmit)}
-          className="max-w-2xl space-y-4"
-        >
+        <form onSubmit={form.onSubmit(onSubmit)} className="space-y-4">
           <Fieldset legend="Основна інформація" className="space-y-2">
             <TextInput
               label="Назва замовлення"
@@ -119,30 +90,16 @@ export default function NewOrder() {
             <SegmentedControl
               defaultValue="mono"
               value={form.values.glass_type}
-              onChange={(value) => form.setFieldValue('glass_type', value)}
+              onChange={(value) => {
+                form.setFieldValue('glass_type', value);
+                form.setFieldValue(
+                  'visualization',
+                  glassTypeData.find((e) => e.value === value)?.data ?? []
+                );
+              }}
+              fullWidth
               orientation="vertical"
-              data={[
-                {
-                  label: 'Моноскло',
-                  value: 'mono',
-                },
-                {
-                  label: 'Тріплекс',
-                  value: 'triplex',
-                },
-                {
-                  label: 'Однокамерний склопакет',
-                  value: 'single',
-                },
-                {
-                  label: 'Двокамерний склопакет',
-                  value: 'double',
-                },
-                {
-                  label: 'Трикамерний склопакет',
-                  value: 'triple',
-                },
-              ]}
+              data={glassTypeData}
             />
             <Image
               src={`/glass-type/${form.values.glass_type}.png`}
@@ -207,8 +164,7 @@ export default function NewOrder() {
           </Button>
         </form>
       </div>
-      {/* TODO: Add visualization */}
-      <div>visualize</div>
+      <Visualization form={form} />
     </div>
   );
 }

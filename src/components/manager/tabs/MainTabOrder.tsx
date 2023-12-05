@@ -4,9 +4,9 @@ import { Badge, Divider, NumberFormatter } from '@mantine/core';
 import React from 'react';
 import useSWR from 'swr';
 
-import IManaderOrder from '@/interfaces/ManagerOrder';
-import IUser from '@/interfaces/User';
 import getStatusConfig from '@/libs/status';
+import IManaderOrder from '@/types/ManagerOrder';
+import IUser from '@/types/User';
 
 import DrawerItem from '../DrawerItem';
 import DrawerItemMultiLine from '../DrawerItemMultiLine';

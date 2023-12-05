@@ -1,6 +1,7 @@
 'use client';
 
 import { Button, Divider, Paper, TextInput, Title } from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
 import { notifications } from '@mantine/notifications';
 import axios from 'axios';
 import { CheckCircle, XCircle } from 'lucide-react';
@@ -8,7 +9,7 @@ import React, { useEffect, useState } from 'react';
 import useSWR, { useSWRConfig } from 'swr';
 import { z } from 'zod';
 
-import IUser from '@/interfaces/User';
+import IUser from '@/types/User';
 
 const NotificationTitle = 'Керування користувачем';
 
@@ -21,6 +22,8 @@ export default function User1CTab({ user }: { user?: IUser }) {
     main: '',
     secondary: '',
   });
+  const [loading, { open: enableLoading, close: disableLoading }] =
+    useDisclosure();
 
   useEffect(() => {
     setData({
@@ -30,8 +33,10 @@ export default function User1CTab({ user }: { user?: IUser }) {
   }, [user]);
 
   const updateID = async (route: string, id: string) => {
+    enableLoading();
     const verify = idSchema.safeParse(id);
     if (!verify.success && id !== '') {
+      disableLoading();
       return notifications.show({
         autoClose: 3000,
         color: 'red',
@@ -67,7 +72,7 @@ export default function User1CTab({ user }: { user?: IUser }) {
         });
       });
 
-    if (!response || response.status !== 200) return null;
+    if (!response || response.status !== 200) return disableLoading;
     await mutate(`/api/user/${user?.id}`);
 
     await mutate(
@@ -81,6 +86,8 @@ export default function User1CTab({ user }: { user?: IUser }) {
     if (activeUser?.id === user?.id) {
       await mutate('/api/user');
     }
+
+    disableLoading();
 
     return notifications.update({
       autoClose: 3000,
@@ -110,10 +117,12 @@ export default function User1CTab({ user }: { user?: IUser }) {
         </div>
         <Divider className="my-3" />
         <div className="flex flex-row items-center justify-between px-4">
-          <span className="text-sm text-[var(--mantine-color-dark-2)]">
+          <span className="text-sm text-[var(--mantine-color-gray-5)]">
             ID повинен бути типу UUID
           </span>
-          <Button onClick={() => updateID('main', data.main)}>Оновити</Button>
+          <Button onClick={() => updateID('main', data.main)} loading={loading}>
+            Оновити
+          </Button>
         </div>
       </Paper>
       <Paper withBorder shadow="md" radius="md" className="py-3">
@@ -134,12 +143,13 @@ export default function User1CTab({ user }: { user?: IUser }) {
         </div>
         <Divider className="my-3" />
         <div className="flex flex-row items-center justify-between px-4">
-          <span className="text-sm text-[var(--mantine-color-dark-2)]">
+          <span className="text-sm text-[var(--mantine-color-gray-5)]">
             ID повинен бути типу UUID
           </span>
           <Button
             onClick={() => updateID('secondary', data.secondary)}
             disabled
+            // loading={loading}
           >
             Оновити
           </Button>

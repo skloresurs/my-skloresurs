@@ -8,8 +8,8 @@ import { nanoid } from 'nanoid';
 import React, { useMemo } from 'react';
 import useSWR, { useSWRConfig } from 'swr';
 
-import IUser, { Permission } from '@/interfaces/User';
 import verifyPermission from '@/libs/verify-permission';
+import IUser, { Permission } from '@/types/User';
 
 interface IPermission {
   id: Permission;

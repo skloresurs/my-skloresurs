@@ -1,7 +1,7 @@
 import { Badge } from '@mantine/core';
 import React from 'react';
 
-import { Permission } from '@/interfaces/User';
+import { Permission } from '@/types/User';
 
 interface IProps {
   permission: Permission;

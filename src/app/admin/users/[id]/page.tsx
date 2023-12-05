@@ -11,7 +11,7 @@ import UserInfoTab from '@/components/admin/users/UserInfoTab';
 import UserPermissionsTab from '@/components/admin/users/UserPermissionsTab';
 import LoadingOverlay from '@/components/LoadingOverlay';
 import TitleBar from '@/components/TitleBar';
-import IUser from '@/interfaces/User';
+import IUser from '@/types/User';
 
 const defaultProps = {
   backHref: '/admin/users',

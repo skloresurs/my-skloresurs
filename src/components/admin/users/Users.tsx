@@ -9,7 +9,7 @@ import React from 'react';
 import useSWR from 'swr';
 
 import PermissionBadge from '@/components/PermissionBadge';
-import IUser from '@/interfaces/User';
+import IUser from '@/types/User';
 
 const columns: DataTableColumn<IUser>[] = [
   {

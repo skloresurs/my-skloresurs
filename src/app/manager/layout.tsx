@@ -5,8 +5,8 @@ import useSWR from 'swr';
 
 import AppShell from '@/components/AppShell';
 import ErrorPage from '@/components/ErrorPage';
-import IUser from '@/interfaces/User';
 import verifyPermission from '@/libs/verify-permission';
+import IUser from '@/types/User';
 
 export default function RootLayout({
   children,

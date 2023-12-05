@@ -21,7 +21,7 @@ import useSWR from 'swr';
 import { z } from 'zod';
 
 import classes from '@/css/Auth.module.css';
-import IUser from '@/interfaces/User';
+import IUser from '@/types/User';
 
 const formSchema = z.object({
   email: z.string({ required_error: "E-mail є обов'язковим" }).email({

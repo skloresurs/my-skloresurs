@@ -1,19 +1,22 @@
 'use client';
 
 import { Button, Divider, Paper, TextInput, Title } from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
 import { notifications } from '@mantine/notifications';
 import axios from 'axios';
 import { CheckCircle, XCircle } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
 import useSWR from 'swr';
 
-import IUser from '@/interfaces/User';
+import IUser from '@/types/User';
 
 const NotificationTitle = 'Оновлення профілю';
 
 export default function ProfileTabInfo() {
   const { data: user, mutate } = useSWR<IUser>(`/api/user`);
   const [fullname, setFullName] = useState('');
+  const [loading, { open: enableLoading, close: disableLoading }] =
+    useDisclosure();
 
   useEffect(() => {
     if (user) {
@@ -22,7 +25,9 @@ export default function ProfileTabInfo() {
   }, [user]);
 
   const updateFullname = async () => {
+    enableLoading();
     if (!fullname) {
+      disableLoading();
       return notifications.show({
         autoClose: 3000,
         color: 'red',
@@ -58,9 +63,10 @@ export default function ProfileTabInfo() {
         });
       });
 
-    if (!response || response.status !== 200) return null;
+    if (!response || response.status !== 200) return disableLoading();
     mutate();
 
+    disableLoading();
     return notifications.update({
       autoClose: 3000,
       color: 'green',
@@ -85,7 +91,7 @@ export default function ProfileTabInfo() {
         </div>
         <Divider className="my-3" />
         <div className="flex flex-row items-center justify-between px-4">
-          <span className="text-sm text-[var(--mantine-color-dark-2)]">
+          <span className="text-sm text-[var(--mantine-color-gray-5)]">
             ID не може бути змінено
           </span>
         </div>
@@ -102,7 +108,7 @@ export default function ProfileTabInfo() {
         </div>
         <Divider className="my-3" />
         <div className="flex flex-row items-center justify-between px-4">
-          <span className="text-sm text-[var(--mantine-color-dark-2)]">
+          <span className="text-sm text-[var(--mantine-color-gray-5)]">
             E-mail не може бути змінено
           </span>
         </div>
@@ -124,16 +130,18 @@ export default function ProfileTabInfo() {
             }}
             maxLength={100}
           />
-          <span className="block text-right text-xs text-[var(--mantine-color-dark-2)]">
+          <span className="block text-right text-xs text-[var(--mantine-color-gray-5)]">
             {fullname.length}/100
           </span>
         </div>
         <Divider className="my-3" />
         <div className="flex flex-row items-center justify-between px-4">
-          <span className="text-sm text-[var(--mantine-color-dark-2)]">
+          <span className="text-sm text-[var(--mantine-color-gray-5)]">
             Максимум 100 символів
           </span>
-          <Button onClick={updateFullname}>Зберегти</Button>
+          <Button onClick={updateFullname} loading={loading}>
+            Зберегти
+          </Button>
         </div>
       </Paper>
     </div>

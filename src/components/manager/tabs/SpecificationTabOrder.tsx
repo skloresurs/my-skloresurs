@@ -7,7 +7,7 @@ import { DataTable, DataTableSortStatus } from 'mantine-datatable';
 import React, { useEffect, useMemo, useState } from 'react';
 import { useWindowSize } from 'react-use';
 
-import IManaderOrder, { IGoods } from '@/interfaces/ManagerOrder';
+import IManaderOrder, { IGoods } from '@/types/ManagerOrder';
 
 interface IProps {
   order: IManaderOrder;

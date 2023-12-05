@@ -4,7 +4,7 @@ import { redirect } from 'next/navigation';
 import React from 'react';
 import useSWR from 'swr';
 
-import IUser from '@/interfaces/User';
+import IUser from '@/types/User';
 
 export default function RootLayout({
   children,

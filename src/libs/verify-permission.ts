@@ -1,4 +1,4 @@
-import { Permission } from '@/interfaces/User'; /**
+import { Permission } from '@/types/User'; /**
  * Verifies if the user has a specific permission and returns the result.
  *
  * @param {Permission[]} userPermissions - The list of permissions assigned to the user.

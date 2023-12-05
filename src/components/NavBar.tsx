@@ -10,7 +10,7 @@ import {
 } from 'lucide-react';
 import React, { ReactNode } from 'react';
 
-import { Permission } from '@/interfaces/User';
+import { Permission } from '@/types/User';
 
 const props: LucideProps = {
   size: 18,

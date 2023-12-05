@@ -10,8 +10,8 @@ import React from 'react';
 import Moment from 'react-moment';
 import useSWR from 'swr';
 
-import IManaderOrder from '@/interfaces/ManagerOrder';
-import IUser from '@/interfaces/User';
+import IManaderOrder from '@/types/ManagerOrder';
+import IUser from '@/types/User';
 
 import MainTabOrder from './tabs/MainTabOrder';
 import SpecificationTabOrder from './tabs/SpecificationTabOrder';

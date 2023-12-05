@@ -4,7 +4,7 @@ import React from 'react';
 import useSWR from 'swr';
 
 import LoadingOverlay from '@/components/LoadingOverlay';
-import IUser from '@/interfaces/User';
+import IUser from '@/types/User';
 
 export default function AuthProvider({
   children,

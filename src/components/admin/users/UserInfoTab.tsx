@@ -1,13 +1,14 @@
 'use client';
 
 import { Button, Divider, Paper, TextInput, Title } from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
 import { notifications } from '@mantine/notifications';
 import axios from 'axios';
 import { CheckCircle, XCircle } from 'lucide-react';
 import React, { useState } from 'react';
 import useSWR, { useSWRConfig } from 'swr';
 
-import IUser from '@/interfaces/User';
+import IUser from '@/types/User';
 
 const NotificationTitle = 'Керування користувачем';
 
@@ -15,9 +16,13 @@ export default function UserInfoTab({ user }: { user?: IUser }) {
   const { mutate } = useSWRConfig();
   const { data: activeUser } = useSWR<IUser>(`/api/user`);
   const [fullname, setFullName] = useState(user?.fullname ?? '');
+  const [loading, { open: enableLoading, close: disableLoading }] =
+    useDisclosure();
 
   const updateFullname = async () => {
+    enableLoading();
     if (!fullname) {
+      disableLoading();
       return notifications.show({
         autoClose: 3000,
         color: 'red',
@@ -53,7 +58,7 @@ export default function UserInfoTab({ user }: { user?: IUser }) {
         });
       });
 
-    if (!response || response.status !== 200) return null;
+    if (!response || response.status !== 200) return disableLoading();
     await mutate(`/api/user/${user?.id}`);
 
     await mutate(
@@ -67,6 +72,8 @@ export default function UserInfoTab({ user }: { user?: IUser }) {
     if (activeUser?.id === user?.id) {
       await mutate('/api/user');
     }
+
+    disableLoading();
 
     return notifications.update({
       autoClose: 3000,
@@ -94,7 +101,7 @@ export default function UserInfoTab({ user }: { user?: IUser }) {
         </div>
         <Divider className="my-3" />
         <div className="flex flex-row items-center justify-between px-4">
-          <span className="text-sm text-[var(--mantine-color-dark-2)]">
+          <span className="text-sm text-[var(--mantine-color-gray-5)]">
             ID не може бути змінено
           </span>
         </div>
@@ -109,7 +116,7 @@ export default function UserInfoTab({ user }: { user?: IUser }) {
         </div>
         <Divider className="my-3" />
         <div className="flex flex-row items-center justify-between px-4">
-          <span className="text-sm text-[var(--mantine-color-dark-2)]">
+          <span className="text-sm text-[var(--mantine-color-gray-5)]">
             E-mail не може бути змінено
           </span>
         </div>
@@ -129,16 +136,18 @@ export default function UserInfoTab({ user }: { user?: IUser }) {
             }}
             maxLength={100}
           />
-          <span className="block text-right text-xs text-[var(--mantine-color-dark-2)]">
+          <span className="block text-right text-xs text-[var(--mantine-color-gray-5)]">
             {fullname.length}/100
           </span>
         </div>
         <Divider className="my-3" />
         <div className="flex flex-row items-center justify-between px-4">
-          <span className="text-sm text-[var(--mantine-color-dark-2)]">
+          <span className="text-sm text-[var(--mantine-color-gray-5)]">
             Максимум 100 символів
           </span>
-          <Button onClick={updateFullname}>Зберегти</Button>
+          <Button onClick={updateFullname} loading={loading}>
+            Зберегти
+          </Button>
         </div>
       </Paper>
     </div>

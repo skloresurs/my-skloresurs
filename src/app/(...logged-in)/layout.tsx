@@ -5,7 +5,7 @@ import React from 'react';
 import useSWR from 'swr';
 
 import AppShell from '@/components/AppShell';
-import IUser from '@/interfaces/User';
+import IUser from '@/types/User';
 
 export default function RootLayout({
   children,
