@@ -100,6 +100,7 @@ const RAW_RUNTIME_STATE =
           ["swr", "virtual:5148fdaf447f8ae05dcc43510cfb96c6865efa93bceccdc08932e6cba47bc7a93ff1aaa2a3e7c3b97c2edf2409bac28f708800096d63bd7c28b0ddd9d043208f#npm:2.2.4"],\
           ["tailwind-merge", "npm:2.1.0"],\
           ["tailwindcss", "npm:3.3.6"],\
+          ["tailwindcss-animated", "virtual:5148fdaf447f8ae05dcc43510cfb96c6865efa93bceccdc08932e6cba47bc7a93ff1aaa2a3e7c3b97c2edf2409bac28f708800096d63bd7c28b0ddd9d043208f#npm:1.0.1"],\
           ["typescript", "patch:typescript@npm%3A5.3.2#optional!builtin<compat/typescript>::version=5.3.2&hash=e012d7"],\
           ["zod", "npm:3.22.4"],\
           ["zustand", "virtual:5148fdaf447f8ae05dcc43510cfb96c6865efa93bceccdc08932e6cba47bc7a93ff1aaa2a3e7c3b97c2edf2409bac28f708800096d63bd7c28b0ddd9d043208f#npm:4.4.7"]\
@@ -6133,6 +6134,7 @@ const RAW_RUNTIME_STATE =
           ["swr", "virtual:5148fdaf447f8ae05dcc43510cfb96c6865efa93bceccdc08932e6cba47bc7a93ff1aaa2a3e7c3b97c2edf2409bac28f708800096d63bd7c28b0ddd9d043208f#npm:2.2.4"],\
           ["tailwind-merge", "npm:2.1.0"],\
           ["tailwindcss", "npm:3.3.6"],\
+          ["tailwindcss-animated", "virtual:5148fdaf447f8ae05dcc43510cfb96c6865efa93bceccdc08932e6cba47bc7a93ff1aaa2a3e7c3b97c2edf2409bac28f708800096d63bd7c28b0ddd9d043208f#npm:1.0.1"],\
           ["typescript", "patch:typescript@npm%3A5.3.2#optional!builtin<compat/typescript>::version=5.3.2&hash=e012d7"],\
           ["zod", "npm:3.22.4"],\
           ["zustand", "virtual:5148fdaf447f8ae05dcc43510cfb96c6865efa93bceccdc08932e6cba47bc7a93ff1aaa2a3e7c3b97c2edf2409bac28f708800096d63bd7c28b0ddd9d043208f#npm:4.4.7"]\
@@ -8434,6 +8436,28 @@ const RAW_RUNTIME_STATE =
           ["postcss-selector-parser", "npm:6.0.13"],\
           ["resolve", "patch:resolve@npm%3A1.22.8#optional!builtin<compat/resolve>::version=1.22.8&hash=c3c19d"],\
           ["sucrase", "npm:3.34.0"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["tailwindcss-animated", [\
+      ["npm:1.0.1", {\
+        "packageLocation": "../../AppData/Local/Yarn/Berry/cache/tailwindcss-animated-npm-1.0.1-41d20e053a-10c0.zip/node_modules/tailwindcss-animated/",\
+        "packageDependencies": [\
+          ["tailwindcss-animated", "npm:1.0.1"]\
+        ],\
+        "linkType": "SOFT"\
+      }],\
+      ["virtual:5148fdaf447f8ae05dcc43510cfb96c6865efa93bceccdc08932e6cba47bc7a93ff1aaa2a3e7c3b97c2edf2409bac28f708800096d63bd7c28b0ddd9d043208f#npm:1.0.1", {\
+        "packageLocation": "./.yarn/__virtual__/tailwindcss-animated-virtual-d8448e5eb0/3/AppData/Local/Yarn/Berry/cache/tailwindcss-animated-npm-1.0.1-41d20e053a-10c0.zip/node_modules/tailwindcss-animated/",\
+        "packageDependencies": [\
+          ["tailwindcss-animated", "virtual:5148fdaf447f8ae05dcc43510cfb96c6865efa93bceccdc08932e6cba47bc7a93ff1aaa2a3e7c3b97c2edf2409bac28f708800096d63bd7c28b0ddd9d043208f#npm:1.0.1"],\
+          ["@types/tailwindcss", null],\
+          ["tailwindcss", "npm:3.3.6"]\
+        ],\
+        "packagePeers": [\
+          "@types/tailwindcss",\
+          "tailwindcss"\
         ],\
         "linkType": "HARD"\
       }]\

@@ -40,7 +40,9 @@ export default function Visualization({ form }: IProps) {
                 key={nanoid()}
                 className={twMerge(
                   'relative',
-                  i.toString() === activeTab ? 'w-[55px]' : 'w-[35px]'
+                  i.toString() === activeTab
+                    ? 'w-[55px] animate-jump'
+                    : 'w-[35px]'
                 )}
               >
                 <Image src="/glass/4.png" alt="" width={90} height={225} />
@@ -58,7 +60,9 @@ export default function Visualization({ form }: IProps) {
                 key={nanoid()}
                 className={twMerge(
                   'relative',
-                  i.toString() === activeTab ? 'w-[55px]' : 'w-[35px]'
+                  i.toString() === activeTab
+                    ? 'w-[55px]  animate-jump'
+                    : 'w-[35px]'
                 )}
               >
                 <Image src="/film/satin.png" alt="" width={90} height={225} />
@@ -76,7 +80,9 @@ export default function Visualization({ form }: IProps) {
                 key={nanoid()}
                 className={twMerge(
                   'relative',
-                  i.toString() === activeTab ? 'w-[55px]' : 'w-[35px]'
+                  i.toString() === activeTab
+                    ? 'w-[55px]  animate-jump'
+                    : 'w-[35px]'
                 )}
               >
                 <Image src="/camera/6.png" alt="" width={90} height={225} />

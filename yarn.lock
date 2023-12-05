@@ -4752,6 +4752,7 @@ __metadata:
     swr: "npm:^2.2.4"
     tailwind-merge: "npm:^2.1.0"
     tailwindcss: "npm:^3.3.5"
+    tailwindcss-animated: "npm:^1.0.1"
     typescript: "npm:^5.3.2"
     zod: "npm:^3.22.4"
     zustand: "npm:^4.4.7"
@@ -6568,6 +6569,15 @@ __metadata:
   dependencies:
     "@babel/runtime": "npm:^7.23.5"
   checksum: 8a8a7fc7fd480e2ecfc6f5f1450d3cb73ef409d90c1be8ced9ea51ed957af9573e13e01e09e3ae0fa8b5eb58c83157b09e25e499a9a60d633e78d85771690f84
+  languageName: node
+  linkType: hard
+
+"tailwindcss-animated@npm:^1.0.1":
+  version: 1.0.1
+  resolution: "tailwindcss-animated@npm:1.0.1"
+  peerDependencies:
+    tailwindcss: ">=3.1.0"
+  checksum: 88300e4be2f3c52ca312018528e6b7d0a0d94d469e8d5909c5dac346fd1815270b60ae6fe9d02889aaf1a9c08637debefe4050695229925ca9c465aabd84de09
   languageName: node
   linkType: hard
 

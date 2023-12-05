@@ -51,6 +51,7 @@
     "server-only": "^0.0.1",
     "swr": "^2.2.4",
     "tailwind-merge": "^2.1.0",
+    "tailwindcss-animated": "^1.0.1",
     "zod": "^3.22.4",
     "zustand": "^4.4.7"
   },
