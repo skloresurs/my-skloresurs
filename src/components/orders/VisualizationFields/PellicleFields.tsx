@@ -5,7 +5,7 @@ import { UseFormReturnType } from '@mantine/form';
 import React from 'react';
 
 import { ValidationSchema } from '@/types/NewOrder';
-import { IFilm } from '@/types/VisualizationData';
+import { IPellicle } from '@/types/VisualizationData';
 
 interface IProps {
   form: UseFormReturnType<
@@ -15,10 +15,10 @@ interface IProps {
   index: number;
 }
 
-export default function FilmFields({ form, index }: IProps) {
+export default function PellicleFields({ form, index }: IProps) {
   // OK, because it's all fields is public
   // eslint-disable-next-line security/detect-object-injection
-  const data = form.values.visualization[index] as IFilm;
+  const data = form.values.visualization[index] as IPellicle;
   return (
     <div className="space-y-2">
       <Select

@@ -10,8 +10,6 @@ export async function POST(
   { params }: { params: { id: string } }
 ) {
   try {
-    const { fullname } = await req.json();
-
     const session = await getSession();
     if (!session) {
       return NextResponse.json(null, { status: 401 });
@@ -24,14 +22,22 @@ export async function POST(
       return NextResponse.json(null, { status: 403 });
     }
 
-    if (!fullname) {
+    const { ip } = await req.json();
+    if (!ip) {
       return NextResponse.json(
         { error: 'Відсутній один або декілька параметрів' },
         { status: 400 }
       );
     }
+
+    const user = await auth.getUser(params.id);
+
+    if (!user) {
+      return NextResponse.json(null, { status: 404 });
+    }
+
     await auth.updateUserAttributes(params.id, {
-      fullname,
+      ip,
     });
     return NextResponse.json(null, { status: 200 });
   } catch (error) {

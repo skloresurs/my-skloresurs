@@ -82,6 +82,7 @@ export default function AppShell({ children }: { children: ReactNode }) {
         <MantineAppShell.Section grow my="md" component={ScrollArea}>
           {navbar.map((e) => (
             <NavBarItemCompnent
+              toogle={toggle}
               key={e.id}
               item={e}
               hide={
@@ -93,7 +94,12 @@ export default function AppShell({ children }: { children: ReactNode }) {
         <MantineAppShell.Section>
           <Divider className="my-4" />
           {footer(() => logout()).map((e) => (
-            <NavBarItemCompnent key={e.id} item={e} hide={false} />
+            <NavBarItemCompnent
+              key={e.id}
+              toogle={toggle}
+              item={e}
+              hide={false}
+            />
           ))}
         </MantineAppShell.Section>
       </MantineAppShell.Navbar>

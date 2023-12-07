@@ -34,7 +34,10 @@ export default function UserPermissionsTab({ user }: { user?: IUser }) {
       },
       {
         description: 'Доступ до адмін-панелі',
-        disabled: !verifyPermission(user?.permissions ?? [], 'SuperAdmin'),
+        disabled: !verifyPermission(
+          activeUser?.permissions ?? [],
+          'SuperAdmin'
+        ),
         id: 'Admin',
         title: 'Адмін',
       },
@@ -58,7 +61,7 @@ export default function UserPermissionsTab({ user }: { user?: IUser }) {
         title: 'Фінансові показники менеджера',
       },
     ],
-    [user]
+    [activeUser]
   );
 
   const updatePermission = async (permissionKey: string, value: boolean) => {

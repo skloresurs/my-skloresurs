@@ -2,10 +2,12 @@
 
 import { Tabs } from '@mantine/core';
 import { Fingerprint, Info, Shield } from 'lucide-react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import React, { ReactNode } from 'react';
 
 import ProfileTabInfo from './ProfileTabInfo';
 import ProfileTabSecurity from './ProfileTabSecurity';
+import ProfileTabSessions from './ProfileTabSessions';
 
 interface Tab {
   key: string;
@@ -22,13 +24,19 @@ const tabs: readonly Tab[] = [
     key: 'security',
   },
   {
-    content: <div />,
+    content: <ProfileTabSessions />,
     key: 'sessions',
   },
 ] as const;
 export default function ProfileTabs() {
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const activeTab = searchParams.get('tab') ?? 'info';
   return (
-    <Tabs defaultValue="info">
+    <Tabs
+      value={activeTab}
+      onChange={(value) => router.push(`/profile?tab=${value}`)}
+    >
       <Tabs.List>
         <Tabs.Tab value="info" leftSection={<Info size={18} />}>
           Інформація
@@ -36,11 +44,7 @@ export default function ProfileTabs() {
         <Tabs.Tab value="security" leftSection={<Shield size={18} />}>
           Безпека
         </Tabs.Tab>
-        <Tabs.Tab
-          value="sessions"
-          leftSection={<Fingerprint size={18} />}
-          disabled
-        >
+        <Tabs.Tab value="sessions" leftSection={<Fingerprint size={18} />}>
           Сесії
         </Tabs.Tab>
       </Tabs.List>

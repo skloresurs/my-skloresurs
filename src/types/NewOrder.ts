@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { cameraSchema, filmSchema, glassSchema } from './VisualizationData';
+import { cameraSchema, glassSchema, pellicleSchema } from './VisualizationData';
 
 const specificationSchema = z.object({
   comment: z.string().optional(),
@@ -29,7 +29,7 @@ const formSchema = z.object({
     .string({ required_error: 'Назва замовлення обов`язкова' })
     .min(1, 'Назва замовлення обов`язкова')
     .max(255, 'Максимальна довжина назви 255 символів'),
-  visualization: z.array(glassSchema.or(filmSchema.or(cameraSchema))),
+  visualization: z.array(glassSchema.or(pellicleSchema.or(cameraSchema))),
 });
 
 export type ValidationSchema = z.infer<typeof formSchema>;

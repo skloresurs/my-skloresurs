@@ -5,36 +5,34 @@ import getSession from '@/libs/server-session';
 import verifyIp from '@/libs/verify-ip';
 import verifyPermission from '@/libs/verify-permission';
 
-export async function POST(
-  req: NextRequest,
+export async function DELETE(
+  _: NextRequest,
   { params }: { params: { id: string } }
 ) {
   try {
-    const { fullname } = await req.json();
-
     const session = await getSession();
     if (!session) {
       return NextResponse.json(null, { status: 401 });
     }
 
+    if (!(await verifyIp(session.user.ip))) {
+      return NextResponse.json(null, { status: 403 });
+    }
+
+    const sessionById = await auth.getSession(params.id);
+    if (!sessionById) {
+      return NextResponse.json(null, { status: 404 });
+    }
+
     if (
-      !(await verifyIp(session.user.ip)) ||
+      session.user.userId !== sessionById.user.userId &&
       !verifyPermission(session.user.permissions, 'Admin')
     ) {
       return NextResponse.json(null, { status: 403 });
     }
-
-    if (!fullname) {
-      return NextResponse.json(
-        { error: 'Відсутній один або декілька параметрів' },
-        { status: 400 }
-      );
-    }
-    await auth.updateUserAttributes(params.id, {
-      fullname,
-    });
+    await auth.invalidateSession(params.id);
     return NextResponse.json(null, { status: 200 });
   } catch (error) {
-    return NextResponse.json('Помилка сервера', { status: 500 });
+    return NextResponse.json(null, { status: 500 });
   }
 }

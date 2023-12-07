@@ -1,6 +1,6 @@
 import { SegmentedControlItem } from '@mantine/core';
 
-import { ICamera, IFilm, IGlass } from '@/types/VisualizationData';
+import { ICamera, IGlass, IPellicle } from '@/types/VisualizationData';
 
 // Default values for glass
 const defaultGlass: IGlass = {
@@ -8,15 +8,15 @@ const defaultGlass: IGlass = {
   coating: '',
   edge: '',
   facet: 0,
-  nomenclature: '',
+  nomenclature: '000000005',
   sandblast: '',
-  thickness: 0,
+  thickness: '4mm',
   type: '',
 };
 
-// Default values for film
-const defaultFilm: IFilm = {
-  category: 'film',
+// Default values for pellicle
+const defaultPellicle: IPellicle = {
+  category: 'pellicle',
   type: '',
 };
 
@@ -31,7 +31,7 @@ const defaultCamera: ICamera = {
 
 // Data for glass type
 const glassTypeData: (SegmentedControlItem & {
-  data: (IGlass | IFilm | ICamera)[];
+  data: (IGlass | IPellicle | ICamera)[];
 })[] = [
   {
     data: [defaultGlass],
@@ -39,7 +39,7 @@ const glassTypeData: (SegmentedControlItem & {
     value: 'mono',
   },
   {
-    data: [defaultGlass, defaultFilm, defaultGlass],
+    data: [defaultGlass, defaultPellicle, defaultGlass],
     label: 'Тріплекс',
     value: 'triplex',
   },
@@ -74,4 +74,4 @@ const glassTypeData: (SegmentedControlItem & {
   },
 ];
 
-export { defaultCamera, defaultFilm, defaultGlass, glassTypeData };
+export { defaultCamera, defaultGlass, defaultPellicle, glassTypeData };

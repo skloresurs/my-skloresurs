@@ -35,12 +35,13 @@ const RAW_RUNTIME_STATE =
           ["@mantine/modals", "virtual:5148fdaf447f8ae05dcc43510cfb96c6865efa93bceccdc08932e6cba47bc7a93ff1aaa2a3e7c3b97c2edf2409bac28f708800096d63bd7c28b0ddd9d043208f#npm:7.3.0"],\
           ["@mantine/notifications", "virtual:5148fdaf447f8ae05dcc43510cfb96c6865efa93bceccdc08932e6cba47bc7a93ff1aaa2a3e7c3b97c2edf2409bac28f708800096d63bd7c28b0ddd9d043208f#npm:7.3.0"],\
           ["@mantine/nprogress", "virtual:5148fdaf447f8ae05dcc43510cfb96c6865efa93bceccdc08932e6cba47bc7a93ff1aaa2a3e7c3b97c2edf2409bac28f708800096d63bd7c28b0ddd9d043208f#npm:7.3.0"],\
-          ["@prisma/client", "virtual:5148fdaf447f8ae05dcc43510cfb96c6865efa93bceccdc08932e6cba47bc7a93ff1aaa2a3e7c3b97c2edf2409bac28f708800096d63bd7c28b0ddd9d043208f#npm:5.6.0"],\
-          ["@prisma/engines", "npm:5.6.0"],\
+          ["@prisma/client", "virtual:5148fdaf447f8ae05dcc43510cfb96c6865efa93bceccdc08932e6cba47bc7a93ff1aaa2a3e7c3b97c2edf2409bac28f708800096d63bd7c28b0ddd9d043208f#npm:5.7.0"],\
+          ["@prisma/engines", "npm:5.7.0"],\
           ["@t3-oss/env-nextjs", "virtual:5148fdaf447f8ae05dcc43510cfb96c6865efa93bceccdc08932e6cba47bc7a93ff1aaa2a3e7c3b97c2edf2409bac28f708800096d63bd7c28b0ddd9d043208f#npm:0.7.1"],\
           ["@types/node", "npm:20.10.3"],\
           ["@types/react", "npm:18.2.42"],\
           ["@types/react-dom", "npm:18.2.17"],\
+          ["@types/ua-parser-js", "npm:0.7.39"],\
           ["@typescript-eslint/eslint-plugin", "virtual:5148fdaf447f8ae05dcc43510cfb96c6865efa93bceccdc08932e6cba47bc7a93ff1aaa2a3e7c3b97c2edf2409bac28f708800096d63bd7c28b0ddd9d043208f#npm:6.13.2"],\
           ["@typescript-eslint/parser", "virtual:5148fdaf447f8ae05dcc43510cfb96c6865efa93bceccdc08932e6cba47bc7a93ff1aaa2a3e7c3b97c2edf2409bac28f708800096d63bd7c28b0ddd9d043208f#npm:6.13.2"],\
           ["@yarnpkg/pnpify", "npm:4.0.1"],\
@@ -89,7 +90,7 @@ const RAW_RUNTIME_STATE =
           ["postcss-preset-mantine", "virtual:5148fdaf447f8ae05dcc43510cfb96c6865efa93bceccdc08932e6cba47bc7a93ff1aaa2a3e7c3b97c2edf2409bac28f708800096d63bd7c28b0ddd9d043208f#npm:1.11.1"],\
           ["postcss-simple-vars", "virtual:5148fdaf447f8ae05dcc43510cfb96c6865efa93bceccdc08932e6cba47bc7a93ff1aaa2a3e7c3b97c2edf2409bac28f708800096d63bd7c28b0ddd9d043208f#npm:7.0.1"],\
           ["prettier", "npm:3.1.0"],\
-          ["prisma", "npm:5.6.0"],\
+          ["prisma", "npm:5.7.0"],\
           ["react", "npm:18.2.0"],\
           ["react-dom", "virtual:5148fdaf447f8ae05dcc43510cfb96c6865efa93bceccdc08932e6cba47bc7a93ff1aaa2a3e7c3b97c2edf2409bac28f708800096d63bd7c28b0ddd9d043208f#npm:18.2.0"],\
           ["react-google-autocomplete", "virtual:5148fdaf447f8ae05dcc43510cfb96c6865efa93bceccdc08932e6cba47bc7a93ff1aaa2a3e7c3b97c2edf2409bac28f708800096d63bd7c28b0ddd9d043208f#npm:2.7.3"],\
@@ -101,7 +102,8 @@ const RAW_RUNTIME_STATE =
           ["tailwind-merge", "npm:2.1.0"],\
           ["tailwindcss", "npm:3.3.6"],\
           ["tailwindcss-animated", "virtual:5148fdaf447f8ae05dcc43510cfb96c6865efa93bceccdc08932e6cba47bc7a93ff1aaa2a3e7c3b97c2edf2409bac28f708800096d63bd7c28b0ddd9d043208f#npm:1.0.1"],\
-          ["typescript", "patch:typescript@npm%3A5.3.2#optional!builtin<compat/typescript>::version=5.3.2&hash=e012d7"],\
+          ["typescript", "patch:typescript@npm%3A5.3.3#optional!builtin<compat/typescript>::version=5.3.3&hash=e012d7"],\
+          ["ua-parser-js", "npm:1.0.37"],\
           ["zod", "npm:3.22.4"],\
           ["zustand", "virtual:5148fdaf447f8ae05dcc43510cfb96c6865efa93bceccdc08932e6cba47bc7a93ff1aaa2a3e7c3b97c2edf2409bac28f708800096d63bd7c28b0ddd9d043208f#npm:4.4.7"]\
         ],\
@@ -439,7 +441,7 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "./.yarn/__virtual__/@lucia-auth-adapter-prisma-virtual-f38cac6f14/3/AppData/Local/Yarn/Berry/cache/@lucia-auth-adapter-prisma-npm-3.0.2-8cf3dc1a10-10c0.zip/node_modules/@lucia-auth/adapter-prisma/",\
         "packageDependencies": [\
           ["@lucia-auth/adapter-prisma", "virtual:5148fdaf447f8ae05dcc43510cfb96c6865efa93bceccdc08932e6cba47bc7a93ff1aaa2a3e7c3b97c2edf2409bac28f708800096d63bd7c28b0ddd9d043208f#npm:3.0.2"],\
-          ["@prisma/client", "virtual:5148fdaf447f8ae05dcc43510cfb96c6865efa93bceccdc08932e6cba47bc7a93ff1aaa2a3e7c3b97c2edf2409bac28f708800096d63bd7c28b0ddd9d043208f#npm:5.6.0"],\
+          ["@prisma/client", "virtual:5148fdaf447f8ae05dcc43510cfb96c6865efa93bceccdc08932e6cba47bc7a93ff1aaa2a3e7c3b97c2edf2409bac28f708800096d63bd7c28b0ddd9d043208f#npm:5.7.0"],\
           ["@types/lucia", null],\
           ["@types/prisma__client", null],\
           ["lucia", "npm:2.7.4"]\
@@ -1166,20 +1168,19 @@ const RAW_RUNTIME_STATE =
       }]\
     ]],\
     ["@prisma/client", [\
-      ["npm:5.6.0", {\
-        "packageLocation": "./.yarn/unplugged/@prisma-client-virtual-220e1c0216/node_modules/@prisma/client/",\
+      ["npm:5.7.0", {\
+        "packageLocation": "./.yarn/unplugged/@prisma-client-virtual-18aa308741/node_modules/@prisma/client/",\
         "packageDependencies": [\
-          ["@prisma/client", "npm:5.6.0"]\
+          ["@prisma/client", "npm:5.7.0"]\
         ],\
         "linkType": "SOFT"\
       }],\
-      ["virtual:5148fdaf447f8ae05dcc43510cfb96c6865efa93bceccdc08932e6cba47bc7a93ff1aaa2a3e7c3b97c2edf2409bac28f708800096d63bd7c28b0ddd9d043208f#npm:5.6.0", {\
-        "packageLocation": "./.yarn/unplugged/@prisma-client-virtual-220e1c0216/node_modules/@prisma/client/",\
+      ["virtual:5148fdaf447f8ae05dcc43510cfb96c6865efa93bceccdc08932e6cba47bc7a93ff1aaa2a3e7c3b97c2edf2409bac28f708800096d63bd7c28b0ddd9d043208f#npm:5.7.0", {\
+        "packageLocation": "./.yarn/unplugged/@prisma-client-virtual-18aa308741/node_modules/@prisma/client/",\
         "packageDependencies": [\
-          ["@prisma/client", "virtual:5148fdaf447f8ae05dcc43510cfb96c6865efa93bceccdc08932e6cba47bc7a93ff1aaa2a3e7c3b97c2edf2409bac28f708800096d63bd7c28b0ddd9d043208f#npm:5.6.0"],\
-          ["@prisma/engines-version", "npm:5.6.0-32.e95e739751f42d8ca026f6b910f5a2dc5adeaeee"],\
+          ["@prisma/client", "virtual:5148fdaf447f8ae05dcc43510cfb96c6865efa93bceccdc08932e6cba47bc7a93ff1aaa2a3e7c3b97c2edf2409bac28f708800096d63bd7c28b0ddd9d043208f#npm:5.7.0"],\
           ["@types/prisma", null],\
-          ["prisma", "npm:5.6.0"]\
+          ["prisma", "npm:5.7.0"]\
         ],\
         "packagePeers": [\
           "@types/prisma",\
@@ -1188,20 +1189,55 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
-    ["@prisma/engines", [\
-      ["npm:5.6.0", {\
-        "packageLocation": "./.yarn/unplugged/@prisma-engines-npm-5.6.0-2182f804e0/node_modules/@prisma/engines/",\
+    ["@prisma/debug", [\
+      ["npm:5.7.0", {\
+        "packageLocation": "../../AppData/Local/Yarn/Berry/cache/@prisma-debug-npm-5.7.0-6204be368b-10c0.zip/node_modules/@prisma/debug/",\
         "packageDependencies": [\
-          ["@prisma/engines", "npm:5.6.0"]\
+          ["@prisma/debug", "npm:5.7.0"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["@prisma/engines", [\
+      ["npm:5.7.0", {\
+        "packageLocation": "./.yarn/unplugged/@prisma-engines-npm-5.7.0-9938283bb9/node_modules/@prisma/engines/",\
+        "packageDependencies": [\
+          ["@prisma/engines", "npm:5.7.0"],\
+          ["@prisma/debug", "npm:5.7.0"],\
+          ["@prisma/engines-version", "npm:5.7.0-41.79fb5193cf0a8fdbef536e4b4a159cad677ab1b9"],\
+          ["@prisma/fetch-engine", "npm:5.7.0"],\
+          ["@prisma/get-platform", "npm:5.7.0"]\
         ],\
         "linkType": "HARD"\
       }]\
     ]],\
     ["@prisma/engines-version", [\
-      ["npm:5.6.0-32.e95e739751f42d8ca026f6b910f5a2dc5adeaeee", {\
-        "packageLocation": "../../AppData/Local/Yarn/Berry/cache/@prisma-engines-version-npm-5.6.0-32.e95e739751f42d8ca026f6b910f5a2dc5adeaeee-24711335d0-10c0.zip/node_modules/@prisma/engines-version/",\
+      ["npm:5.7.0-41.79fb5193cf0a8fdbef536e4b4a159cad677ab1b9", {\
+        "packageLocation": "../../AppData/Local/Yarn/Berry/cache/@prisma-engines-version-npm-5.7.0-41.79fb5193cf0a8fdbef536e4b4a159cad677ab1b9-c6379fb00c-10c0.zip/node_modules/@prisma/engines-version/",\
         "packageDependencies": [\
-          ["@prisma/engines-version", "npm:5.6.0-32.e95e739751f42d8ca026f6b910f5a2dc5adeaeee"]\
+          ["@prisma/engines-version", "npm:5.7.0-41.79fb5193cf0a8fdbef536e4b4a159cad677ab1b9"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["@prisma/fetch-engine", [\
+      ["npm:5.7.0", {\
+        "packageLocation": "../../AppData/Local/Yarn/Berry/cache/@prisma-fetch-engine-npm-5.7.0-27f16be6c7-10c0.zip/node_modules/@prisma/fetch-engine/",\
+        "packageDependencies": [\
+          ["@prisma/fetch-engine", "npm:5.7.0"],\
+          ["@prisma/debug", "npm:5.7.0"],\
+          ["@prisma/engines-version", "npm:5.7.0-41.79fb5193cf0a8fdbef536e4b4a159cad677ab1b9"],\
+          ["@prisma/get-platform", "npm:5.7.0"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["@prisma/get-platform", [\
+      ["npm:5.7.0", {\
+        "packageLocation": "../../AppData/Local/Yarn/Berry/cache/@prisma-get-platform-npm-5.7.0-a444f4f28b-10c0.zip/node_modules/@prisma/get-platform/",\
+        "packageDependencies": [\
+          ["@prisma/get-platform", "npm:5.7.0"],\
+          ["@prisma/debug", "npm:5.7.0"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -1258,7 +1294,7 @@ const RAW_RUNTIME_STATE =
           ["@t3-oss/env-core", "virtual:f42f37f54212d706c5ee51f3a3be944d204b97f8bfb66e2b48449b5a84b40bc360dfaeff0d1debe16e099e58dd7f40c850387859783c2923667d25022b875837#npm:0.7.1"],\
           ["@types/typescript", null],\
           ["@types/zod", null],\
-          ["typescript", "patch:typescript@npm%3A5.3.2#optional!builtin<compat/typescript>::version=5.3.2&hash=e012d7"],\
+          ["typescript", "patch:typescript@npm%3A5.3.3#optional!builtin<compat/typescript>::version=5.3.3&hash=e012d7"],\
           ["zod", "npm:3.22.4"]\
         ],\
         "packagePeers": [\
@@ -1285,7 +1321,7 @@ const RAW_RUNTIME_STATE =
           ["@t3-oss/env-core", "virtual:f42f37f54212d706c5ee51f3a3be944d204b97f8bfb66e2b48449b5a84b40bc360dfaeff0d1debe16e099e58dd7f40c850387859783c2923667d25022b875837#npm:0.7.1"],\
           ["@types/typescript", null],\
           ["@types/zod", null],\
-          ["typescript", "patch:typescript@npm%3A5.3.2#optional!builtin<compat/typescript>::version=5.3.2&hash=e012d7"],\
+          ["typescript", "patch:typescript@npm%3A5.3.3#optional!builtin<compat/typescript>::version=5.3.3&hash=e012d7"],\
           ["zod", "npm:3.22.4"]\
         ],\
         "packagePeers": [\
@@ -1478,6 +1514,15 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
+    ["@types/ua-parser-js", [\
+      ["npm:0.7.39", {\
+        "packageLocation": "../../AppData/Local/Yarn/Berry/cache/@types-ua-parser-js-npm-0.7.39-23053990d8-10c0.zip/node_modules/@types/ua-parser-js/",\
+        "packageDependencies": [\
+          ["@types/ua-parser-js", "npm:0.7.39"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
     ["@typescript-eslint/eslint-plugin", [\
       ["npm:6.13.2", {\
         "packageLocation": "../../AppData/Local/Yarn/Berry/cache/@typescript-eslint-eslint-plugin-npm-6.13.2-c060495a4b-10c0.zip/node_modules/@typescript-eslint/eslint-plugin/",\
@@ -1506,7 +1551,7 @@ const RAW_RUNTIME_STATE =
           ["natural-compare", "npm:1.4.0"],\
           ["semver", "npm:7.5.4"],\
           ["ts-api-utils", "virtual:3d5999f1fb9e92ceb55e7757b9019ccdff78e484e70cac0db11146827cbc7cfc6329cadfa3fead5a4c7db3b07cbf3e3cc7f2e92bf17d5a6282878d8021e3f708#npm:1.0.3"],\
-          ["typescript", "patch:typescript@npm%3A5.3.2#optional!builtin<compat/typescript>::version=5.3.2&hash=e012d7"]\
+          ["typescript", "patch:typescript@npm%3A5.3.3#optional!builtin<compat/typescript>::version=5.3.3&hash=e012d7"]\
         ],\
         "packagePeers": [\
           "@types/eslint",\
@@ -1539,7 +1584,7 @@ const RAW_RUNTIME_STATE =
           ["@typescript-eslint/visitor-keys", "npm:6.13.2"],\
           ["debug", "virtual:1ff4b5f90832ba0a9c93ba1223af226e44ba70c1126a3740d93562b97bc36544e896a5e95908196f7458713e6a6089a34bfc67362fc6df7fa093bd06c878be47#npm:4.3.4"],\
           ["eslint", "npm:8.55.0"],\
-          ["typescript", "patch:typescript@npm%3A5.3.2#optional!builtin<compat/typescript>::version=5.3.2&hash=e012d7"]\
+          ["typescript", "patch:typescript@npm%3A5.3.3#optional!builtin<compat/typescript>::version=5.3.3&hash=e012d7"]\
         ],\
         "packagePeers": [\
           "@types/eslint",\
@@ -1580,7 +1625,7 @@ const RAW_RUNTIME_STATE =
           ["debug", "virtual:1ff4b5f90832ba0a9c93ba1223af226e44ba70c1126a3740d93562b97bc36544e896a5e95908196f7458713e6a6089a34bfc67362fc6df7fa093bd06c878be47#npm:4.3.4"],\
           ["eslint", "npm:8.55.0"],\
           ["ts-api-utils", "virtual:3d5999f1fb9e92ceb55e7757b9019ccdff78e484e70cac0db11146827cbc7cfc6329cadfa3fead5a4c7db3b07cbf3e3cc7f2e92bf17d5a6282878d8021e3f708#npm:1.0.3"],\
-          ["typescript", "patch:typescript@npm%3A5.3.2#optional!builtin<compat/typescript>::version=5.3.2&hash=e012d7"]\
+          ["typescript", "patch:typescript@npm%3A5.3.3#optional!builtin<compat/typescript>::version=5.3.3&hash=e012d7"]\
         ],\
         "packagePeers": [\
           "@types/eslint",\
@@ -1620,7 +1665,7 @@ const RAW_RUNTIME_STATE =
           ["is-glob", "npm:4.0.3"],\
           ["semver", "npm:7.5.4"],\
           ["ts-api-utils", "virtual:3d5999f1fb9e92ceb55e7757b9019ccdff78e484e70cac0db11146827cbc7cfc6329cadfa3fead5a4c7db3b07cbf3e3cc7f2e92bf17d5a6282878d8021e3f708#npm:1.0.3"],\
-          ["typescript", "patch:typescript@npm%3A5.3.2#optional!builtin<compat/typescript>::version=5.3.2&hash=e012d7"]\
+          ["typescript", "patch:typescript@npm%3A5.3.3#optional!builtin<compat/typescript>::version=5.3.3&hash=e012d7"]\
         ],\
         "packagePeers": [\
           "@types/typescript",\
@@ -3379,7 +3424,7 @@ const RAW_RUNTIME_STATE =
           ["eslint-plugin-jsx-a11y", "virtual:5148fdaf447f8ae05dcc43510cfb96c6865efa93bceccdc08932e6cba47bc7a93ff1aaa2a3e7c3b97c2edf2409bac28f708800096d63bd7c28b0ddd9d043208f#npm:6.8.0"],\
           ["eslint-plugin-react", "virtual:5148fdaf447f8ae05dcc43510cfb96c6865efa93bceccdc08932e6cba47bc7a93ff1aaa2a3e7c3b97c2edf2409bac28f708800096d63bd7c28b0ddd9d043208f#npm:7.33.2"],\
           ["eslint-plugin-react-hooks", "virtual:1048efe4ca457940cbadf0361868247fb8b56306e9a548c2c156ec58cbf5406146a984b267f1f884e1a3747441e3cdb860380def8854cbb3e424a6f6081721de#npm:5.0.0-canary-7118f5dd7-20230705"],\
-          ["typescript", "patch:typescript@npm%3A5.3.2#optional!builtin<compat/typescript>::version=5.3.2&hash=e012d7"]\
+          ["typescript", "patch:typescript@npm%3A5.3.3#optional!builtin<compat/typescript>::version=5.3.3&hash=e012d7"]\
         ],\
         "packagePeers": [\
           "@types/eslint",\
@@ -6069,12 +6114,13 @@ const RAW_RUNTIME_STATE =
           ["@mantine/modals", "virtual:5148fdaf447f8ae05dcc43510cfb96c6865efa93bceccdc08932e6cba47bc7a93ff1aaa2a3e7c3b97c2edf2409bac28f708800096d63bd7c28b0ddd9d043208f#npm:7.3.0"],\
           ["@mantine/notifications", "virtual:5148fdaf447f8ae05dcc43510cfb96c6865efa93bceccdc08932e6cba47bc7a93ff1aaa2a3e7c3b97c2edf2409bac28f708800096d63bd7c28b0ddd9d043208f#npm:7.3.0"],\
           ["@mantine/nprogress", "virtual:5148fdaf447f8ae05dcc43510cfb96c6865efa93bceccdc08932e6cba47bc7a93ff1aaa2a3e7c3b97c2edf2409bac28f708800096d63bd7c28b0ddd9d043208f#npm:7.3.0"],\
-          ["@prisma/client", "virtual:5148fdaf447f8ae05dcc43510cfb96c6865efa93bceccdc08932e6cba47bc7a93ff1aaa2a3e7c3b97c2edf2409bac28f708800096d63bd7c28b0ddd9d043208f#npm:5.6.0"],\
-          ["@prisma/engines", "npm:5.6.0"],\
+          ["@prisma/client", "virtual:5148fdaf447f8ae05dcc43510cfb96c6865efa93bceccdc08932e6cba47bc7a93ff1aaa2a3e7c3b97c2edf2409bac28f708800096d63bd7c28b0ddd9d043208f#npm:5.7.0"],\
+          ["@prisma/engines", "npm:5.7.0"],\
           ["@t3-oss/env-nextjs", "virtual:5148fdaf447f8ae05dcc43510cfb96c6865efa93bceccdc08932e6cba47bc7a93ff1aaa2a3e7c3b97c2edf2409bac28f708800096d63bd7c28b0ddd9d043208f#npm:0.7.1"],\
           ["@types/node", "npm:20.10.3"],\
           ["@types/react", "npm:18.2.42"],\
           ["@types/react-dom", "npm:18.2.17"],\
+          ["@types/ua-parser-js", "npm:0.7.39"],\
           ["@typescript-eslint/eslint-plugin", "virtual:5148fdaf447f8ae05dcc43510cfb96c6865efa93bceccdc08932e6cba47bc7a93ff1aaa2a3e7c3b97c2edf2409bac28f708800096d63bd7c28b0ddd9d043208f#npm:6.13.2"],\
           ["@typescript-eslint/parser", "virtual:5148fdaf447f8ae05dcc43510cfb96c6865efa93bceccdc08932e6cba47bc7a93ff1aaa2a3e7c3b97c2edf2409bac28f708800096d63bd7c28b0ddd9d043208f#npm:6.13.2"],\
           ["@yarnpkg/pnpify", "npm:4.0.1"],\
@@ -6123,7 +6169,7 @@ const RAW_RUNTIME_STATE =
           ["postcss-preset-mantine", "virtual:5148fdaf447f8ae05dcc43510cfb96c6865efa93bceccdc08932e6cba47bc7a93ff1aaa2a3e7c3b97c2edf2409bac28f708800096d63bd7c28b0ddd9d043208f#npm:1.11.1"],\
           ["postcss-simple-vars", "virtual:5148fdaf447f8ae05dcc43510cfb96c6865efa93bceccdc08932e6cba47bc7a93ff1aaa2a3e7c3b97c2edf2409bac28f708800096d63bd7c28b0ddd9d043208f#npm:7.0.1"],\
           ["prettier", "npm:3.1.0"],\
-          ["prisma", "npm:5.6.0"],\
+          ["prisma", "npm:5.7.0"],\
           ["react", "npm:18.2.0"],\
           ["react-dom", "virtual:5148fdaf447f8ae05dcc43510cfb96c6865efa93bceccdc08932e6cba47bc7a93ff1aaa2a3e7c3b97c2edf2409bac28f708800096d63bd7c28b0ddd9d043208f#npm:18.2.0"],\
           ["react-google-autocomplete", "virtual:5148fdaf447f8ae05dcc43510cfb96c6865efa93bceccdc08932e6cba47bc7a93ff1aaa2a3e7c3b97c2edf2409bac28f708800096d63bd7c28b0ddd9d043208f#npm:2.7.3"],\
@@ -6135,7 +6181,8 @@ const RAW_RUNTIME_STATE =
           ["tailwind-merge", "npm:2.1.0"],\
           ["tailwindcss", "npm:3.3.6"],\
           ["tailwindcss-animated", "virtual:5148fdaf447f8ae05dcc43510cfb96c6865efa93bceccdc08932e6cba47bc7a93ff1aaa2a3e7c3b97c2edf2409bac28f708800096d63bd7c28b0ddd9d043208f#npm:1.0.1"],\
-          ["typescript", "patch:typescript@npm%3A5.3.2#optional!builtin<compat/typescript>::version=5.3.2&hash=e012d7"],\
+          ["typescript", "patch:typescript@npm%3A5.3.3#optional!builtin<compat/typescript>::version=5.3.3&hash=e012d7"],\
+          ["ua-parser-js", "npm:1.0.37"],\
           ["zod", "npm:3.22.4"],\
           ["zustand", "virtual:5148fdaf447f8ae05dcc43510cfb96c6865efa93bceccdc08932e6cba47bc7a93ff1aaa2a3e7c3b97c2edf2409bac28f708800096d63bd7c28b0ddd9d043208f#npm:4.4.7"]\
         ],\
@@ -7046,11 +7093,11 @@ const RAW_RUNTIME_STATE =
       }]\
     ]],\
     ["prisma", [\
-      ["npm:5.6.0", {\
-        "packageLocation": "./.yarn/unplugged/prisma-npm-5.6.0-974a3e0044/node_modules/prisma/",\
+      ["npm:5.7.0", {\
+        "packageLocation": "./.yarn/unplugged/prisma-npm-5.7.0-33f23bb85f/node_modules/prisma/",\
         "packageDependencies": [\
-          ["prisma", "npm:5.6.0"],\
-          ["@prisma/engines", "npm:5.6.0"]\
+          ["prisma", "npm:5.7.0"],\
+          ["@prisma/engines", "npm:5.7.0"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -8594,7 +8641,7 @@ const RAW_RUNTIME_STATE =
         "packageDependencies": [\
           ["ts-api-utils", "virtual:3d5999f1fb9e92ceb55e7757b9019ccdff78e484e70cac0db11146827cbc7cfc6329cadfa3fead5a4c7db3b07cbf3e3cc7f2e92bf17d5a6282878d8021e3f708#npm:1.0.3"],\
           ["@types/typescript", null],\
-          ["typescript", "patch:typescript@npm%3A5.3.2#optional!builtin<compat/typescript>::version=5.3.2&hash=e012d7"]\
+          ["typescript", "patch:typescript@npm%3A5.3.3#optional!builtin<compat/typescript>::version=5.3.3&hash=e012d7"]\
         ],\
         "packagePeers": [\
           "@types/typescript",\
@@ -8766,10 +8813,19 @@ const RAW_RUNTIME_STATE =
       }]\
     ]],\
     ["typescript", [\
-      ["patch:typescript@npm%3A5.3.2#optional!builtin<compat/typescript>::version=5.3.2&hash=e012d7", {\
-        "packageLocation": "../../AppData/Local/Yarn/Berry/cache/typescript-patch-71fdfda6a2-10c0.zip/node_modules/typescript/",\
+      ["patch:typescript@npm%3A5.3.3#optional!builtin<compat/typescript>::version=5.3.3&hash=e012d7", {\
+        "packageLocation": "../../AppData/Local/Yarn/Berry/cache/typescript-patch-4778c7998b-10c0.zip/node_modules/typescript/",\
         "packageDependencies": [\
-          ["typescript", "patch:typescript@npm%3A5.3.2#optional!builtin<compat/typescript>::version=5.3.2&hash=e012d7"]\
+          ["typescript", "patch:typescript@npm%3A5.3.3#optional!builtin<compat/typescript>::version=5.3.3&hash=e012d7"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["ua-parser-js", [\
+      ["npm:1.0.37", {\
+        "packageLocation": "../../AppData/Local/Yarn/Berry/cache/ua-parser-js-npm-1.0.37-b79655e1b5-10c0.zip/node_modules/ua-parser-js/",\
+        "packageDependencies": [\
+          ["ua-parser-js", "npm:1.0.37"]\
         ],\
         "linkType": "HARD"\
       }]\

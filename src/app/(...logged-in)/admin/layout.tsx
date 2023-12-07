@@ -1,5 +1,6 @@
 'use client';
 
+import { redirect, useRouter } from 'next/navigation';
 import React from 'react';
 import useSWR from 'swr';
 
@@ -14,15 +15,20 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   const { data: user } = useSWR<IUser>(`/api/user`);
+  const router = useRouter();
 
-  if (!user || !verifyPermission(user.permissions, 'Admin'))
+  if (!user) {
+    redirect('/login');
+  }
+
+  if (!verifyPermission(user.permissions, 'Admin'))
     return (
       <ErrorPage
         code={403}
         title="Доступ заборонено"
         description="У вас недостатньо прав для відображення цієї сторінки"
         buttonLabel="На головну"
-        buttonLink="/"
+        onClick={() => router.push('/')}
       />
     );
 

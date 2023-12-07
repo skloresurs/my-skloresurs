@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 
 import axios1c from '@/libs/axios';
 import getSession from '@/libs/server-session';
+import verifyIp from '@/libs/verify-ip';
 import verifyPermission from '@/libs/verify-permission';
 
 // TODO: Rewrite on POST request
@@ -18,8 +19,10 @@ export async function GET(req: NextRequest) {
       return NextResponse.json(null, { status: 401 });
     }
 
-    const verify = verifyPermission(session.user.permissions, 'Manager');
-    if (!verify) {
+    if (
+      !(await verifyIp(session.user.ip)) ||
+      !verifyPermission(session.user.permissions, 'Manager')
+    ) {
       return NextResponse.json(null, { status: 403 });
     }
 

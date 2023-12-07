@@ -3,6 +3,7 @@ import { NextResponse } from 'next/server';
 
 import { auth } from '@/libs/lucia';
 import getSession from '@/libs/server-session';
+import verifyIp from '@/libs/verify-ip';
 
 export async function POST(req: NextRequest) {
   try {
@@ -10,6 +11,10 @@ export async function POST(req: NextRequest) {
     const session = await getSession();
     if (!session) {
       return NextResponse.json(null, { status: 401 });
+    }
+
+    if (!(await verifyIp(session.user.ip))) {
+      return NextResponse.json(null, { status: 403 });
     }
 
     if (!password) {

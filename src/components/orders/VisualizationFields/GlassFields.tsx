@@ -1,6 +1,6 @@
 'use client';
 
-import { Select, Slider, Text } from '@mantine/core';
+import { ComboboxItem, Select, Slider, Text } from '@mantine/core';
 import { UseFormReturnType } from '@mantine/form';
 import React from 'react';
 
@@ -15,7 +15,22 @@ interface IProps {
   index: number;
 }
 
-const nomenclature: string[] = ['Скло сире', 'Триплекс заводський'];
+type Nomenclature = ComboboxItem & {
+  thicknesses: string[];
+};
+
+const nomenclature: Nomenclature[] = [
+  {
+    label: 'Скло сире',
+    thicknesses: ['4mm', '5mm', '6mm', '8mm', '10mm', '12mm'],
+    value: '000000005',
+  },
+  {
+    label: 'Триплекс заводський',
+    thicknesses: ['6mm', '8mm', '10mm', '11mm', '13mm'],
+    value: '000000012',
+  },
+];
 
 export default function GlassFields({ form, index }: IProps) {
   // OK, because it's all fields is public
@@ -28,14 +43,23 @@ export default function GlassFields({ form, index }: IProps) {
         label="Вид номенклатури"
         data={nomenclature}
         value={data.nomenclature}
-        onChange={(value) =>
-          form.setFieldValue(`visualization.${index}.nomenclature`, value)
-        }
+        allowDeselect={false}
+        onChange={(value) => {
+          form.setFieldValue(`visualization.${index}.nomenclature`, value);
+          form.setFieldValue(
+            `visualization.${index}.thickness`,
+            nomenclature.find((item) => item.value === value)?.thicknesses[0]
+          );
+        }}
       />
       <Select
         label="Товщина"
-        data={[]}
-        value={data.thickness.toString()}
+        data={
+          nomenclature.find((item) => item.value === data.nomenclature)
+            ?.thicknesses ?? []
+        }
+        allowDeselect={false}
+        value={data.thickness}
         onChange={(value) =>
           form.setFieldValue(`visualization.${index}.thickness`, value)
         }

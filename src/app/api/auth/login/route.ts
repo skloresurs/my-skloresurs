@@ -2,11 +2,15 @@ import { LuciaError } from 'lucia';
 import * as context from 'next/headers';
 import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
+import { UAParser } from 'ua-parser-js';
 
 import { auth } from '@/libs/lucia';
 import verifyReCaptcha from '@/libs/recaptcha';
 
 export async function POST(request: NextRequest) {
+  const ip =
+    request.headers.get('x-real-ip') || request.headers.get('x-forwarded-for');
+  const parser = new UAParser(request.headers.get('user-agent') ?? '');
   const { email, password, captcha } = await request.json();
 
   if (!(await verifyReCaptcha(captcha))) {
@@ -29,8 +33,31 @@ export async function POST(request: NextRequest) {
 
   try {
     const key = await auth.useKey('email', email.toLowerCase(), password);
+    const user = await auth.getUser(key.userId);
+
+    if (!user) {
+      return NextResponse.json(
+        {
+          error: 'Невірний email або пароль',
+        },
+        { status: 401 }
+      );
+    }
+
+    if (user.ip.length > 0 && !user.ip.includes(ip)) {
+      return NextResponse.json(
+        {
+          error: 'Вхід заблоковано з цієї IP адреси',
+        },
+        { status: 403 }
+      );
+    }
     const session = await auth.createSession({
-      attributes: {},
+      attributes: {
+        browser: `${parser.getBrowser().name} ${parser.getBrowser().version}`,
+        created_at: new Date(),
+        os: parser.getOS().name,
+      },
       userId: key.userId,
     });
     const authRequest = auth.handleRequest(request.method, context);

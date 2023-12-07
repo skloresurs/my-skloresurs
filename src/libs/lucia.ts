@@ -9,6 +9,7 @@ import client from '@/libs/prisma';
 export const auth = lucia({
   adapter: prisma(client),
   env: process.env.NODE_ENV === 'production' ? 'PROD' : 'DEV',
+  getSessionAttributes: (data) => ({ ...data }),
   getUserAttributes: (data) => ({ ...data }),
   middleware: nextjs_future(),
   sessionCookie: {

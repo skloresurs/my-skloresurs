@@ -1,5 +1,4 @@
 import { Button, Container, Group, Text, Title } from '@mantine/core';
-import Link from 'next/link';
 import React from 'react';
 
 import classes from '@/css/Error.module.css';
@@ -9,7 +8,7 @@ interface IProps {
   title: string;
   description: string;
   buttonLabel: string;
-  buttonLink: string;
+  onClick: () => void;
 }
 
 export default function ErrorPage({
@@ -17,7 +16,7 @@ export default function ErrorPage({
   title,
   description,
   buttonLabel,
-  buttonLink,
+  onClick,
 }: IProps) {
   return (
     <Container className={classes.root}>
@@ -27,7 +26,7 @@ export default function ErrorPage({
         {description}
       </Text>
       <Group justify="center">
-        <Button component={Link} href={buttonLink} variant="subtle" size="md">
+        <Button onClick={() => onClick()} variant="subtle" size="md">
           {buttonLabel}
         </Button>
       </Group>

@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 
 import { auth } from '@/libs/lucia';
 import getSession from '@/libs/server-session';
+import verifyIp from '@/libs/verify-ip';
 import verifyPermission from '@/libs/verify-permission';
 
 export async function POST(
@@ -13,8 +14,10 @@ export async function POST(
     if (!session) {
       return NextResponse.json(null, { status: 401 });
     }
-    const verify = verifyPermission(session.user.permissions, 'Admin');
-    if (!verify) {
+    if (
+      !(await verifyIp(session.user.ip)) ||
+      !verifyPermission(session.user.permissions, 'Admin')
+    ) {
       return NextResponse.json(null, { status: 403 });
     }
 
@@ -26,12 +29,18 @@ export async function POST(
       );
     }
 
+    const user = await auth.getUser(params.id);
+
+    if (!user) {
+      return NextResponse.json(null, { status: 404 });
+    }
+
     await (value
       ? auth.updateUserAttributes(params.id, {
-          permissions: [...session.user.permissions, key],
+          permissions: [...user.permissions, key],
         })
       : auth.updateUserAttributes(params.id, {
-          permissions: session.user.permissions.filter(
+          permissions: user.permissions.filter(
             (permission: string) => permission !== key
           ),
         }));

@@ -1,5 +1,3 @@
-'use client';
-
 import { NavLink } from '@mantine/core';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -10,12 +8,17 @@ import { NavBarItem, RootNavBarItem } from '@/components/NavBar';
 interface IProps {
   item: NavBarItem | RootNavBarItem;
   hide: boolean;
+  toogle: () => void;
 }
 
 const isRootItem = (item: NavBarItem): item is RootNavBarItem =>
   'children' in item;
 
-export default function NavBarItemCompnent({ item, hide = false }: IProps) {
+export default function NavBarItemCompnent({
+  item,
+  hide = false,
+  toogle,
+}: IProps) {
   const pathname = usePathname();
 
   if (hide) {
@@ -31,7 +34,7 @@ export default function NavBarItemCompnent({ item, hide = false }: IProps) {
         opened
       >
         {item.children.map((e) => (
-          <NavBarItemCompnent key={e.id} item={e} hide={hide} />
+          <NavBarItemCompnent key={e.id} item={e} hide={hide} toogle={toogle} />
         ))}
       </NavLink>
     );
@@ -46,6 +49,7 @@ export default function NavBarItemCompnent({ item, hide = false }: IProps) {
         href={item.href ?? '#'}
         description={item.description}
         active={pathname === item.href}
+        onClick={() => toogle()}
       />
     );
   }
@@ -55,7 +59,12 @@ export default function NavBarItemCompnent({ item, hide = false }: IProps) {
       label={item.label}
       leftSection={item.icon}
       description={item.description}
-      onClick={item.onClick}
+      onClick={() => {
+        if (item.onClick) {
+          item.onClick();
+        }
+        toogle();
+      }}
     />
   );
 }

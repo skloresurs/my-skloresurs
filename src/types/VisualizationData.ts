@@ -7,12 +7,12 @@ const glassSchema = z.object({
   facet: z.number(),
   nomenclature: z.string(),
   sandblast: z.string(),
-  thickness: z.number(),
+  thickness: z.string(),
   type: z.string(),
 });
 
-const filmSchema = z.object({
-  category: z.string().refine((val) => val === 'film'),
+const pellicleSchema = z.object({
+  category: z.string().refine((val) => val === 'pellicle'),
   type: z.string(),
 });
 
@@ -25,7 +25,7 @@ const cameraSchema = z.object({
 });
 
 export type IGlass = z.infer<typeof glassSchema>;
-export type IFilm = z.infer<typeof filmSchema>;
+export type IPellicle = z.infer<typeof pellicleSchema>;
 export type ICamera = z.infer<typeof cameraSchema>;
 
-export { cameraSchema, filmSchema, glassSchema };
+export { cameraSchema, glassSchema, pellicleSchema };

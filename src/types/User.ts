@@ -6,6 +6,7 @@ export default interface IUser {
   permissions: Permission[];
   id_1c_main?: string;
   id_1c_secondary?: string;
+  ip: string[];
 }
 
 export type Permission =

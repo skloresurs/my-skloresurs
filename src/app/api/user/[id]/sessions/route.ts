@@ -5,13 +5,11 @@ import getSession from '@/libs/server-session';
 import verifyIp from '@/libs/verify-ip';
 import verifyPermission from '@/libs/verify-permission';
 
-export async function POST(
-  req: NextRequest,
+export async function GET(
+  _: NextRequest,
   { params }: { params: { id: string } }
 ) {
   try {
-    const { fullname } = await req.json();
-
     const session = await getSession();
     if (!session) {
       return NextResponse.json(null, { status: 401 });
@@ -24,17 +22,14 @@ export async function POST(
       return NextResponse.json(null, { status: 403 });
     }
 
-    if (!fullname) {
-      return NextResponse.json(
-        { error: 'Відсутній один або декілька параметрів' },
-        { status: 400 }
-      );
-    }
-    await auth.updateUserAttributes(params.id, {
-      fullname,
-    });
-    return NextResponse.json(null, { status: 200 });
+    const sessions = await auth.getAllUserSessions(params.id);
+    return NextResponse.json(sessions, { status: 200 });
   } catch (error) {
-    return NextResponse.json('Помилка сервера', { status: 500 });
+    return NextResponse.json(
+      {
+        error: 'Помилка сервера',
+      },
+      { status: 500 }
+    );
   }
 }

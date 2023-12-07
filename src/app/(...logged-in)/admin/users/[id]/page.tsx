@@ -9,6 +9,8 @@ import useSWR from 'swr';
 import User1CTab from '@/components/admin/users/User1CTab';
 import UserInfoTab from '@/components/admin/users/UserInfoTab';
 import UserPermissionsTab from '@/components/admin/users/UserPermissionsTab';
+import UserSecurityTab from '@/components/admin/users/UserSecurityTab';
+import UserSessionsTab from '@/components/admin/users/UserSessionsTab';
 import LoadingOverlay from '@/components/LoadingOverlay';
 import TitleBar from '@/components/TitleBar';
 import IUser from '@/types/User';
@@ -44,15 +46,11 @@ export default function UserSettingsPage({
           key: 'info',
         },
         {
-          content: <div />,
-          key: 'security',
-        },
-        {
           content: <UserPermissionsTab user={user} />,
           key: 'permissions',
         },
         {
-          content: <div />,
+          content: <UserSessionsTab user={user} />,
           key: 'sessions',
         },
         {
@@ -64,8 +62,8 @@ export default function UserSettingsPage({
           key: 'orders',
         },
         {
-          content: <div />,
-          key: 'manager',
+          content: <UserSecurityTab user={user} />,
+          key: 'security',
         },
       ] as const,
     [user]
@@ -119,17 +117,13 @@ export default function UserSettingsPage({
             <Tabs.Tab value="1c" leftSection={<BookKey size={18} />}>
               1С
             </Tabs.Tab>
-            <Tabs.Tab value="safe" leftSection={<Shield size={18} />} disabled>
-              Безпека
-            </Tabs.Tab>
             <Tabs.Tab value="permissions" leftSection={<Key size={18} />}>
               Права
             </Tabs.Tab>
-            <Tabs.Tab
-              value="sessions"
-              leftSection={<Fingerprint size={18} />}
-              disabled
-            >
+            <Tabs.Tab value="security" leftSection={<Shield size={18} />}>
+              Безпека
+            </Tabs.Tab>
+            <Tabs.Tab value="sessions" leftSection={<Fingerprint size={18} />}>
               Сесії
             </Tabs.Tab>
           </Tabs.List>

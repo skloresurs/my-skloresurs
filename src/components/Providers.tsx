@@ -27,8 +27,9 @@ export default function Providers({
           fetcher,
           onErrorRetry(error, key, config, revalidate, { retryCount }) {
             if (
-              (error.response.status >= 400 && error.response.status <= 404) ||
-              error.response.status === 429
+              (error.response?.status >= 400 &&
+                error.response?.status <= 404) ||
+              error.response?.status === 429
             ) {
               return;
             }

@@ -1,9 +1,17 @@
 'use client';
 
-import { Button, Divider, Paper, PasswordInput, Title } from '@mantine/core';
+import {
+  Button,
+  Divider,
+  Paper,
+  PasswordInput,
+  TextInput,
+  Title,
+} from '@mantine/core';
 import { notifications } from '@mantine/notifications';
 import axios from 'axios';
 import { XCircle } from 'lucide-react';
+import { nanoid } from 'nanoid';
 import React, { useState } from 'react';
 import useSWR from 'swr';
 
@@ -108,6 +116,34 @@ export default function ProfileTabSecurity() {
           >
             Змінити
           </Button>
+        </div>
+      </Paper>
+      <Paper withBorder shadow="md" radius="md" className="py-3">
+        <div className="px-4">
+          <Title order={2} size="h3">
+            Дозволені IP адреси
+          </Title>
+          <span className="text-sm">
+            Список дозволених IP адрес для використання вашого аккаунту
+          </span>
+          {user?.ip.length === 0 && (
+            <Title order={3} size="h5" className="text-center">
+              Не вказано жодної ip адреси. Вхід дозволено з будь-якого IP
+            </Title>
+          )}
+          <div className="flex flex-col gap-1">
+            {user?.ip.map((ip) => (
+              <div key={nanoid()} className="flex flex-row items-center gap-2">
+                <TextInput value={ip} readOnly className="w-full" />
+              </div>
+            ))}
+          </div>
+        </div>
+        <Divider className="my-3" />
+        <div className="flex flex-row items-center justify-between px-4">
+          <span className="text-sm text-[var(--mantine-color-gray-5)]">
+            Зазвичай не вказано жодної ip адреси
+          </span>
         </div>
       </Paper>
     </div>

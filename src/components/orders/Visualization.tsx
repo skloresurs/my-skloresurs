@@ -8,11 +8,12 @@ import React, { useEffect, useState } from 'react';
 import { twMerge } from 'tailwind-merge';
 
 import { ValidationSchema } from '@/types/NewOrder';
+import { IGlass } from '@/types/VisualizationData';
 
 import VisualizationButton from './VisualizationButton';
 import CameraFields from './VisualizationFields/CameraFields';
-import FilmFields from './VisualizationFields/FilmFields';
 import GlassFields from './VisualizationFields/GlassFields';
+import PellicleFields from './VisualizationFields/PellicleFields';
 
 interface IProps {
   form: UseFormReturnType<
@@ -40,12 +41,15 @@ export default function Visualization({ form }: IProps) {
                 key={nanoid()}
                 className={twMerge(
                   'relative',
-                  i.toString() === activeTab
-                    ? 'w-[55px] animate-jump'
-                    : 'w-[35px]'
+                  i.toString() === activeTab ? 'w-[55px]' : 'w-[35px]'
                 )}
               >
-                <Image src="/glass/4.png" alt="" width={90} height={225} />
+                <Image
+                  src={`/glass/${(item as IGlass).thickness}.png`}
+                  alt=""
+                  width={90}
+                  height={225}
+                />
                 <VisualizationButton
                   setActiveTab={setActiveTab}
                   id={i}
@@ -54,18 +58,21 @@ export default function Visualization({ form }: IProps) {
               </div>
             );
           }
-          if (item.category === 'film') {
+          if (item.category === 'pellicle') {
             return (
               <div
                 key={nanoid()}
                 className={twMerge(
                   'relative',
-                  i.toString() === activeTab
-                    ? 'w-[55px]  animate-jump'
-                    : 'w-[35px]'
+                  i.toString() === activeTab ? 'w-[55px] ' : 'w-[35px]'
                 )}
               >
-                <Image src="/film/satin.png" alt="" width={90} height={225} />
+                <Image
+                  src="/pellicle/satin.png"
+                  alt=""
+                  width={90}
+                  height={225}
+                />
                 <VisualizationButton
                   setActiveTab={setActiveTab}
                   id={i}
@@ -80,9 +87,7 @@ export default function Visualization({ form }: IProps) {
                 key={nanoid()}
                 className={twMerge(
                   'relative',
-                  i.toString() === activeTab
-                    ? 'w-[55px]  animate-jump'
-                    : 'w-[35px]'
+                  i.toString() === activeTab ? 'w-[55px] ' : 'w-[35px]'
                 )}
               >
                 <Image src="/camera/6.png" alt="" width={90} height={225} />
@@ -113,7 +118,9 @@ export default function Visualization({ form }: IProps) {
               {item.category === 'glass' && (
                 <GlassFields form={form} index={i} />
               )}
-              {item.category === 'film' && <FilmFields form={form} index={i} />}
+              {item.category === 'pellicle' && (
+                <PellicleFields form={form} index={i} />
+              )}
               {item.category === 'camera' && (
                 <CameraFields form={form} index={i} />
               )}
