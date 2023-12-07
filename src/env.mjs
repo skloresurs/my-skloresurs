@@ -31,9 +31,12 @@ export const env = createEnv({
   },
 
   server: {
-    API_URL: z
-      .string({ required_error: 'API_URL is required' })
-      .url('API_URL must be a valid URL'),
+    API_URL_1C_MAIN: z
+      .string({ required_error: 'API_URL_1C_MAIN is required' })
+      .url('API_URL_1C_MAIN must be a valid URL'),
+    API_URL_1C_SECONDARY: z
+      .string({ required_error: 'API_URL_1C_SECONDARY is required' })
+      .url('API_URL_1C_SECONDARY must be a valid URL'),
     BASE_URL: z
       .string({ required_error: 'BASE_URL is required' })
       .url('BASE_URL must be a valid URL'),
@@ -48,6 +51,12 @@ export const env = createEnv({
     }),
     RECAPTCHA_SECRET_KEY: z.string({
       required_error: 'RECAPTCHA_SECRET_KEY is required',
+    }),
+    TELEGRAM_BOT_TOKEN: z.string({
+      required_error: 'TELEGRAM_BOT_TOKEN is required',
+    }),
+    TELEGRAM_CHAT_ID: z.string({
+      required_error: 'TELEGRAM_CHAT_ID is required',
     }),
   },
 });

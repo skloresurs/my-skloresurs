@@ -1,6 +1,6 @@
 import React from 'react';
 
-import OrdersFilter from '@/components/manager/OrdersFilter';
+import OrdersInstruments from '@/components/manager/OrdersFilter';
 import OrdersList from '@/components/manager/OrdersList';
 import TitleBar from '@/components/TitleBar';
 
@@ -8,7 +8,7 @@ export default function Orders() {
   return (
     <>
       <TitleBar title="Замовлення" />
-      <OrdersFilter />
+      <OrdersInstruments />
       <div className="mt-3">
         <OrdersList />
       </div>

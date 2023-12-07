@@ -1,18 +1,17 @@
+import { orderBy } from 'lodash';
 import { NextRequest, NextResponse } from 'next/server';
 
-import axios1c from '@/libs/axios';
+import axios1cMain from '@/libs/axios';
 import getSession from '@/libs/server-session';
 import verifyIp from '@/libs/verify-ip';
 import verifyPermission from '@/libs/verify-permission';
-
-// TODO: Rewrite on POST request
+import IManaderOrder from '@/types/ManagerOrder';
 
 export async function GET(req: NextRequest) {
   try {
     const params = req.nextUrl.searchParams;
 
     const search = params.get('search');
-    const all = params.get('all');
 
     const session = await getSession();
     if (!session) {
@@ -26,25 +25,28 @@ export async function GET(req: NextRequest) {
       return NextResponse.json(null, { status: 403 });
     }
 
-    const allUsersOrder = session.user.permissions.includes('ManagerAllOrders');
-    const paramsQuery = new URLSearchParams();
-    paramsQuery.set('manadgerId', session.user.id_1c_main);
+    let orders: IManaderOrder[] = [];
 
-    if (all) {
-      paramsQuery.set('all', 'true');
-    }
-    if (allUsersOrder) {
-      paramsQuery.set('allUsersOrders', 'true');
-    }
-    if (search) {
-      paramsQuery.set('search', search);
+    if (session.user.id_1c_main) {
+      const response = await axios1cMain
+        .post(`/orders/manager`, {
+          search,
+        })
+        .catch(() => null);
+      if (!response || response.status !== 200) {
+        return NextResponse.json("Помилка з'єднання з основним сервером", {
+          status: 500,
+        });
+      }
+      orders = [...orders, ...response.data.data];
     }
 
-    const { data } = await axios1c.get(
-      `/orders?${paramsQuery.toString().replaceAll('+', '%20')}`
+    return NextResponse.json(
+      orderBy(orders, ['locked', 'createdAt'], ['asc', 'desc']),
+      {
+        status: 200,
+      }
     );
-
-    return NextResponse.json(data, { status: 200 });
   } catch (error) {
     return NextResponse.json(
       {

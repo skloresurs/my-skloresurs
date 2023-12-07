@@ -1,13 +1,14 @@
 'use client';
 
 import { ActionIcon, Badge, Box, Group, Tooltip } from '@mantine/core';
-import { BadgeCheck, Pencil } from 'lucide-react';
+import { BadgeInfo, Pencil } from 'lucide-react';
 import { DataTable, DataTableColumn } from 'mantine-datatable';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import React from 'react';
 import useSWR from 'swr';
 
+import { Id } from '@/components/info';
 import PermissionBadge from '@/components/PermissionBadge';
 import IUser from '@/types/User';
 
@@ -18,23 +19,18 @@ const columns: DataTableColumn<IUser>[] = [
   },
   {
     accessor: 'verified',
-    render: (record) => {
-      if (record.email.endsWith('@skloresurs.com')) {
-        return (
-          <Tooltip label="Домен skloresurs.com">
-            <BadgeCheck
-              color="var(--mantine-color-yellow-5)"
-              className="block w-full"
-            />
-          </Tooltip>
-        );
-      }
-      return <div />;
-    },
+    render: (record) => (
+      <div className="flex flex-row gap-2">
+        {record.id_1c_main && <Id label="Вказано ID основного серверу" />}
+        {record.id_1c_secondary && (
+          <Id label="Вказано ID додаткового серверу" />
+        )}
+      </div>
+    ),
     textAlign: 'center',
     title: (
-      <Tooltip label="Підтверджено">
-        <BadgeCheck />
+      <Tooltip label="Інформація">
+        <BadgeInfo />
       </Tooltip>
     ),
     width: 50,

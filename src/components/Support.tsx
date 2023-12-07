@@ -1,6 +1,7 @@
 'use client';
 
 import { Button, Textarea } from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
 import { notifications } from '@mantine/notifications';
 import axios from 'axios';
 import { XCircle } from 'lucide-react';
@@ -9,9 +10,13 @@ import React, { useState } from 'react';
 const NotificationTitle = 'Підтримка';
 
 export default function Support() {
+  const [loading, { open: enableLoading, close: disableLoading }] =
+    useDisclosure();
   const [message, setMessage] = useState('');
   const onSubmit = async () => {
     if (message.length === 0) return null;
+
+    enableLoading();
 
     const notification = notifications.show({
       autoClose: false,
@@ -37,7 +42,7 @@ export default function Support() {
         });
       });
 
-    if (!response || response.status !== 200) return null;
+    if (!response || response.status !== 200) return disableLoading();
 
     notifications.update({
       autoClose: 3000,
@@ -49,6 +54,8 @@ export default function Support() {
       title: NotificationTitle,
       withCloseButton: true,
     });
+
+    disableLoading();
 
     return setMessage('');
   };
@@ -63,7 +70,11 @@ export default function Support() {
         value={message}
         onChange={(e) => setMessage(e.target.value)}
       />
-      <Button onClick={onSubmit} disabled={message.length === 0}>
+      <Button
+        onClick={onSubmit}
+        loading={loading}
+        disabled={message.length === 0}
+      >
         Відправити
       </Button>
       <div />

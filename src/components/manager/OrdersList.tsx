@@ -37,7 +37,7 @@ export default function OrdersList() {
     );
   }
 
-  if (!data || data.data.length === 0) {
+  if (!data || data.length === 0) {
     return (
       <div className="flex flex-col gap-6 text-center">
         <Title order={2}>Не знайдено жодного замовлення</Title>
@@ -46,7 +46,7 @@ export default function OrdersList() {
   }
   return (
     <Grid>
-      {data.data.map((order: IManaderOrder) => (
+      {data.map((order: IManaderOrder) => (
         <Grid.Col span={{ base: 12, lg: 3, md: 6 }} key={order.id}>
           <OrderItem order={order} />
         </Grid.Col>
