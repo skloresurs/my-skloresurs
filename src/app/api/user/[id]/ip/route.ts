@@ -1,39 +1,25 @@
 import { NextRequest, NextResponse } from 'next/server';
 
+import { MissingParamsError } from '@/classes/CustomError';
+import apiErrorHandler from '@/libs/api-error-handler';
 import { auth } from '@/libs/lucia';
-import getSession from '@/libs/server-session';
+import { getSession } from '@/libs/sessions';
 import verifyIp from '@/libs/verify-ip';
-import verifyPermission from '@/libs/verify-permission';
+import { verifyPermissionServer } from '@/libs/verify-permission';
 
 export async function POST(
-  req: NextRequest,
+  request: NextRequest,
   { params }: { params: { id: string } }
 ) {
   try {
-    const session = await getSession();
-    if (!session) {
-      return NextResponse.json(null, { status: 401 });
-    }
+    const session = await getSession(request);
 
-    if (
-      !(await verifyIp(session.user.ip)) ||
-      !verifyPermission(session.user.permissions, 'Admin')
-    ) {
-      return NextResponse.json(null, { status: 403 });
-    }
+    verifyPermissionServer(session.user.permissions, 'Admin');
+    await verifyIp(session.user.ip);
 
-    const { ip } = await req.json();
+    const { ip } = await request.json();
     if (!ip) {
-      return NextResponse.json(
-        { error: 'Відсутній один або декілька параметрів' },
-        { status: 400 }
-      );
-    }
-
-    const user = await auth.getUser(params.id);
-
-    if (!user) {
-      return NextResponse.json(null, { status: 404 });
+      throw MissingParamsError;
     }
 
     await auth.updateUserAttributes(params.id, {
@@ -41,6 +27,6 @@ export async function POST(
     });
     return NextResponse.json(null, { status: 200 });
   } catch (error) {
-    return NextResponse.json('Помилка сервера', { status: 500 });
+    return apiErrorHandler(error);
   }
 }

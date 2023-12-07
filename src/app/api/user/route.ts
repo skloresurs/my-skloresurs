@@ -1,20 +1,13 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 
-import getSession from '@/libs/server-session';
+import apiErrorHandler from '@/libs/api-error-handler';
+import { getSession } from '@/libs/sessions';
 
-export async function GET() {
+export async function GET(request: NextRequest) {
   try {
-    const session = await getSession();
-    if (!session) {
-      return NextResponse.json(null, { status: 401 });
-    }
+    const session = await getSession(request);
     return NextResponse.json(session.user, { status: 200 });
   } catch (error) {
-    return NextResponse.json(
-      {
-        error: 'Помилка сервера',
-      },
-      { status: 500 }
-    );
+    return apiErrorHandler(error);
   }
 }

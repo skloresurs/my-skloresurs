@@ -1,27 +1,20 @@
 import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
 
+import { MissingParamsError } from '@/classes/CustomError';
+import apiErrorHandler from '@/libs/api-error-handler';
 import { auth } from '@/libs/lucia';
-import getSession from '@/libs/server-session';
+import { getSession } from '@/libs/sessions';
 import verifyIp from '@/libs/verify-ip';
 
-export async function POST(req: NextRequest) {
+export async function POST(request: NextRequest) {
   try {
-    const { password } = await req.json();
-    const session = await getSession();
-    if (!session) {
-      return NextResponse.json(null, { status: 401 });
-    }
+    const session = await getSession(request);
+    await verifyIp(session.user.ip);
 
-    if (!(await verifyIp(session.user.ip))) {
-      return NextResponse.json(null, { status: 403 });
-    }
-
+    const { password } = await request.json();
     if (!password) {
-      return NextResponse.json(
-        { error: 'Відсутній один або декілька параметрів' },
-        { status: 400 }
-      );
+      throw MissingParamsError;
     }
 
     await auth.invalidateAllUserSessions(session.user.userId);
@@ -33,11 +26,6 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json(null, { status: 200 });
   } catch (error) {
-    return NextResponse.json(
-      {
-        error: 'Помилка сервера',
-      },
-      { status: 500 }
-    );
+    return apiErrorHandler(error);
   }
 }

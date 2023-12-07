@@ -2,38 +2,27 @@ import axios from 'axios';
 import moment from 'moment-timezone';
 import { NextRequest, NextResponse } from 'next/server';
 
+import ServerError from '@/app/error';
+import { MissingParamsError } from '@/classes/CustomError';
 import { env } from '@/env.mjs';
+import apiErrorHandler from '@/libs/api-error-handler';
 import verifyReCaptcha from '@/libs/recaptcha';
-import getSession from '@/libs/server-session';
+import { getSession } from '@/libs/sessions';
+import verifyIp from '@/libs/verify-ip';
 
 const TELEGRAM_API_ROUTE = `https://api.telegram.org/bot${env.TELEGRAM_BOT_TOKEN}`;
 
 export async function POST(request: NextRequest) {
   try {
-    const session = await getSession();
-    if (!session) {
-      return NextResponse.json(null, { status: 401 });
-    }
+    const session = await getSession(request);
+    await verifyIp(session.user.ip);
 
     const { message, captcha } = await request.json();
 
-    const verifyCaptcha = verifyReCaptcha(captcha);
-    if (!verifyCaptcha) {
-      return NextResponse.json(
-        {
-          error: 'Помилка reCaptcha',
-        },
-        { status: 429 }
-      );
-    }
+    await verifyReCaptcha(captcha);
 
     if (!message) {
-      return NextResponse.json(
-        {
-          error: 'Відсутній один або декілька параметрів',
-        },
-        { status: 400 }
-      );
+      throw MissingParamsError;
     }
 
     const createTopicResponse = await axios
@@ -46,7 +35,7 @@ export async function POST(request: NextRequest) {
       .catch(() => null);
 
     if (!createTopicResponse) {
-      return NextResponse.json('Помилка створення', { status: 500 });
+      return ServerError;
     }
 
     await axios.post(`${TELEGRAM_API_ROUTE}/sendMessage`, {
@@ -60,7 +49,7 @@ export async function POST(request: NextRequest) {
     });
 
     return NextResponse.json(null, { status: 200 });
-  } catch {
-    return NextResponse.json('Помилка сервера', { status: 500 });
+  } catch (error) {
+    return apiErrorHandler(error);
   }
 }

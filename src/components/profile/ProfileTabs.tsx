@@ -1,11 +1,16 @@
+// eslint-disable-next-line eslint-comments/disable-enable-pair
+/* eslint-disable jsx-a11y/anchor-is-valid */
+// ^ Link in not next/link!
+
 'use client';
 
 import { Tabs } from '@mantine/core';
-import { Fingerprint, Info, Shield } from 'lucide-react';
+import { Fingerprint, Info, Link, Shield } from 'lucide-react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import React, { ReactNode } from 'react';
 
 import ProfileTabInfo from './ProfileTabInfo';
+import ProfileTabLink from './ProfileTabLink';
 import ProfileTabSecurity from './ProfileTabSecurity';
 import ProfileTabSessions from './ProfileTabSessions';
 
@@ -27,6 +32,10 @@ const tabs: readonly Tab[] = [
     content: <ProfileTabSessions />,
     key: 'sessions',
   },
+  {
+    content: <ProfileTabLink />,
+    key: 'link',
+  },
 ] as const;
 export default function ProfileTabs() {
   const searchParams = useSearchParams();
@@ -43,6 +52,9 @@ export default function ProfileTabs() {
         </Tabs.Tab>
         <Tabs.Tab value="security" leftSection={<Shield size={18} />}>
           Безпека
+        </Tabs.Tab>
+        <Tabs.Tab value="link" leftSection={<Link size={18} />}>
+          Зв&apos;язані аккаунти
         </Tabs.Tab>
         <Tabs.Tab value="sessions" leftSection={<Fingerprint size={18} />}>
           Сесії

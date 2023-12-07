@@ -3,7 +3,7 @@
 import { ActionIcon, Paper, Title } from '@mantine/core';
 import { notifications } from '@mantine/notifications';
 import axios from 'axios';
-import { Trash, XCircle } from 'lucide-react';
+import { CheckCircle, Trash, XCircle } from 'lucide-react';
 import moment from 'moment';
 import Image from 'next/image';
 import React from 'react';
@@ -63,7 +63,7 @@ export default function ProfileTabSessions() {
     notifications.update({
       autoClose: 3000,
       color: 'green',
-      icon: <XCircle />,
+      icon: <CheckCircle />,
       id: notification,
       loading: false,
       message: 'Сесія видалена',

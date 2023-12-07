@@ -776,7 +776,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@prisma/client@npm:5.7.0":
+"@prisma/client@npm:^5.7.0":
   version: 5.7.0
   resolution: "@prisma/client@npm:5.7.0"
   peerDependencies:
@@ -906,6 +906,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/cookie@npm:^0.4.1":
+  version: 0.4.1
+  resolution: "@types/cookie@npm:0.4.1"
+  checksum: f96afe12bd51be1ec61410b0641243d93fa3a494702407c787a4c872b5c8bcd39b224471452055e44a9ce42af1a636e87d161994226eaf4c2be9c30f60418409
+  languageName: node
+  linkType: hard
+
 "@types/emscripten@npm:^1.39.6":
   version: 1.39.10
   resolution: "@types/emscripten@npm:1.39.10"
@@ -963,6 +970,13 @@ __metadata:
   dependencies:
     undici-types: "npm:~5.26.4"
   checksum: 7c8a0327a29d68a0bb152ae30e8c4738638515dd599064821c9d0c1884a1efa103021cd8f8c91e690cd56b0602bb6fe0e6651a5df2337bdc85e0c0f66054b2ce
+  languageName: node
+  linkType: hard
+
+"@types/node@npm:^16.10.2":
+  version: 16.18.68
+  resolution: "@types/node@npm:16.18.68"
+  checksum: 4c7e65c78bc3893ff89a0761bf18f412080486ef31a8b62d7bc1b91551c8a4218dc4bf41443450318914758c58976ac19e969fd7dce019741f085547e83d1fb7
   languageName: node
   linkType: hard
 
@@ -2023,6 +2037,24 @@ __metadata:
   version: 1.0.11
   resolution: "confusing-browser-globals@npm:1.0.11"
   checksum: 475d0a284fa964a5182b519af5738b5b64bf7e413cfd703c1b3496bf6f4df9f827893a9b221c0ea5873c1476835beb1e0df569ba643eff0734010c1eb780589e
+  languageName: node
+  linkType: hard
+
+"cookie@npm:^0.4.0":
+  version: 0.4.2
+  resolution: "cookie@npm:0.4.2"
+  checksum: beab41fbd7c20175e3a2799ba948c1dcc71ef69f23fe14eeeff59fc09f50c517b0f77098db87dbb4c55da802f9d86ee86cdc1cd3efd87760341551838d53fca2
+  languageName: node
+  linkType: hard
+
+"cookies-next@npm:^4.1.0":
+  version: 4.1.0
+  resolution: "cookies-next@npm:4.1.0"
+  dependencies:
+    "@types/cookie": "npm:^0.4.1"
+    "@types/node": "npm:^16.10.2"
+    cookie: "npm:^0.4.0"
+  checksum: 199d568921c5ac222b0e56144399c14566be4fe111ce58b74a3059c73c6a3980960704625f5ded7ee5a9a26694e9e1d90500ec3e8fb1c9a24e9c7f092bb2bb34
   languageName: node
   linkType: hard
 
@@ -3612,6 +3644,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"http-status-codes@npm:^2.3.0":
+  version: 2.3.0
+  resolution: "http-status-codes@npm:2.3.0"
+  checksum: c2412188929e8eed6623eef468c62d0c3c082919c03e9b74fd79cfd060d11783dba44603e38a3cee52d26563fe32005913eaf6120aa8ba907da1238f3eaad5fe
+  languageName: node
+  linkType: hard
+
 "http2-wrapper@npm:^1.0.0-beta.5.2":
   version: 1.0.3
   resolution: "http2-wrapper@npm:1.0.3"
@@ -4740,7 +4779,7 @@ __metadata:
     "@mantine/modals": "npm:^7.3.0"
     "@mantine/notifications": "npm:^7.3.0"
     "@mantine/nprogress": "npm:^7.3.0"
-    "@prisma/client": "npm:5.7.0"
+    "@prisma/client": "npm:^5.7.0"
     "@prisma/engines": "npm:^5.7.0"
     "@t3-oss/env-nextjs": "npm:^0.7.1"
     "@types/lodash": "npm:^4.14.202"
@@ -4754,6 +4793,7 @@ __metadata:
     autoprefixer: "npm:^10.4.16"
     axios: "npm:^1.6.2"
     clsx: "npm:^2.0.0"
+    cookies-next: "npm:^4.1.0"
     dayjs: "npm:^1.11.10"
     eslint: "npm:^8.55.0"
     eslint-config-airbnb: "npm:^19.0.4"
@@ -4779,6 +4819,7 @@ __metadata:
     eslint-plugin-tailwindcss: "npm:^3.13.0"
     eslint-plugin-unicorn: "npm:^49.0.0"
     eslint-plugin-xss: "npm:^0.1.12"
+    http-status-codes: "npm:^2.3.0"
     husky: "npm:^8.0.3"
     lint-staged: "npm:^15.2.0"
     lodash: "npm:^4.17.21"

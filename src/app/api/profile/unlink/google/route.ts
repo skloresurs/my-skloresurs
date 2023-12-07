@@ -1,6 +1,6 @@
+import { cookies } from 'next/headers';
 import { NextRequest, NextResponse } from 'next/server';
 
-import apiErrorHandler from '@/libs/api-error-handler';
 import { auth } from '@/libs/lucia';
 import { getSession } from '@/libs/sessions';
 import verifyIp from '@/libs/verify-ip';
@@ -9,13 +9,14 @@ export async function GET(request: NextRequest) {
   try {
     const session = await getSession(request);
     await verifyIp(session.user.ip);
-
-    const sessions = await auth.getAllUserSessions(session.user.userId);
-    return NextResponse.json(
-      { sessions, thisSession: session.id },
-      { status: 200 }
-    );
+    await auth.updateUserAttributes(session.user.userId, {
+      google: null,
+    });
   } catch (error) {
-    return apiErrorHandler(error);
+    cookies().set('oauth_error', 'Помилка під час видалення Google');
   }
+  return NextResponse.json(null, {
+    headers: { Location: '/profile?tab=link' },
+    status: 302,
+  });
 }

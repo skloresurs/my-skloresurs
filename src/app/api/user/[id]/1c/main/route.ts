@@ -1,33 +1,28 @@
 import { NextRequest, NextResponse } from 'next/server';
 
+import apiErrorHandler from '@/libs/api-error-handler';
 import { auth } from '@/libs/lucia';
-import getSession from '@/libs/server-session';
+import { getSession } from '@/libs/sessions';
 import verifyIp from '@/libs/verify-ip';
-import verifyPermission from '@/libs/verify-permission';
+import { verifyPermissionServer } from '@/libs/verify-permission';
 
 export async function POST(
-  req: NextRequest,
+  request: NextRequest,
   { params }: { params: { id: string } }
 ) {
   try {
-    const session = await getSession();
-    if (!session) {
-      return NextResponse.json(null, { status: 401 });
-    }
+    const session = await getSession(request);
 
-    if (
-      !(await verifyIp(session.user.ip)) ||
-      !verifyPermission(session.user.permissions, 'Admin')
-    ) {
-      return NextResponse.json(null, { status: 403 });
-    }
-    const { id } = await req.json();
+    verifyPermissionServer(session.user.permissions, 'Admin');
+    await verifyIp(session.user.ip);
+
+    const { id } = await request.json();
 
     await auth.updateUserAttributes(params.id, {
       id_1c_main: id,
     });
     return NextResponse.json(null, { status: 200 });
   } catch (error) {
-    return NextResponse.json('Помилка сервера', { status: 500 });
+    return apiErrorHandler(error);
   }
 }

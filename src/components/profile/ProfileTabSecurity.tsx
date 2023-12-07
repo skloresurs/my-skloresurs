@@ -10,7 +10,7 @@ import {
 } from '@mantine/core';
 import { notifications } from '@mantine/notifications';
 import axios from 'axios';
-import { XCircle } from 'lucide-react';
+import { CheckCircle, XCircle } from 'lucide-react';
 import { nanoid } from 'nanoid';
 import React, { useState } from 'react';
 import useSWR from 'swr';
@@ -65,11 +65,11 @@ export default function ProfileTabSecurity() {
       });
 
     if (!response || response.status !== 200) return null;
-    mutate();
+    await mutate();
     return notifications.update({
       autoClose: 3000,
       color: 'green',
-      icon: <XCircle />,
+      icon: <CheckCircle />,
       id: notification,
       loading: false,
       message: 'Пароль оновлено',
@@ -92,7 +92,6 @@ export default function ProfileTabSecurity() {
             className="mt-3"
             value={password.new}
             onChange={(e) => setPassword({ ...password, new: e.target.value })}
-            disabled={user?.account_type !== 'Default'}
           />
           <PasswordInput
             className="mt-3"
@@ -100,22 +99,12 @@ export default function ProfileTabSecurity() {
             onChange={(e) =>
               setPassword({ ...password, confirm: e.target.value })
             }
-            disabled={user?.account_type !== 'Default'}
           />
         </div>
         <Divider className="my-3" />
         <div className="flex flex-row items-center justify-between px-4">
-          <span className="text-sm text-[var(--mantine-color-gray-5)]">
-            {user?.account_type === 'Default'
-              ? ''
-              : 'Недоступно для oAuth аккаунтів'}
-          </span>
-          <Button
-            onClick={changePassword}
-            disabled={user?.account_type !== 'Default'}
-          >
-            Змінити
-          </Button>
+          <span className="text-sm text-[var(--mantine-color-gray-5)]" />
+          <Button onClick={changePassword}>Змінити</Button>
         </div>
       </Paper>
       <Paper withBorder shadow="md" radius="md" className="py-3">

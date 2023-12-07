@@ -2,7 +2,11 @@
 
 import axios from 'axios';
 
-export default async function verifyIp(ips: string[]): Promise<boolean> {
+import { ForbriddenIpError } from '@/classes/CustomError';
+
+export default async function verifyIp(ips: string[]): Promise<void> {
   const { data } = await axios.get(`https://geolocation-db.com/json/`);
-  return ips.length === 0 || ips.includes(data.IPv4);
+  if (ips.length > 0 && !ips.includes(data.IPv4)) {
+    throw ForbriddenIpError;
+  }
 }

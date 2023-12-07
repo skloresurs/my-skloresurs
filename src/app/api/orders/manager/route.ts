@@ -1,29 +1,23 @@
 import { orderBy } from 'lodash';
 import { NextRequest, NextResponse } from 'next/server';
 
+import { ServerError } from '@/classes/CustomError';
+import apiErrorHandler from '@/libs/api-error-handler';
 import axios1cMain from '@/libs/axios';
-import getSession from '@/libs/server-session';
+import { getSession } from '@/libs/sessions';
 import verifyIp from '@/libs/verify-ip';
-import verifyPermission from '@/libs/verify-permission';
+import { verifyPermissionServer } from '@/libs/verify-permission';
 import IManaderOrder from '@/types/ManagerOrder';
 
-export async function GET(req: NextRequest) {
+export async function GET(request: NextRequest) {
   try {
-    const params = req.nextUrl.searchParams;
+    const session = await getSession(request);
+    await verifyIp(session.user.ip);
+    verifyPermissionServer(session.user.permissions, 'Manager');
+
+    const params = request.nextUrl.searchParams;
 
     const search = params.get('search');
-
-    const session = await getSession();
-    if (!session) {
-      return NextResponse.json(null, { status: 401 });
-    }
-
-    if (
-      !(await verifyIp(session.user.ip)) ||
-      !verifyPermission(session.user.permissions, 'Manager')
-    ) {
-      return NextResponse.json(null, { status: 403 });
-    }
 
     let orders: IManaderOrder[] = [];
 
@@ -34,9 +28,7 @@ export async function GET(req: NextRequest) {
         })
         .catch(() => null);
       if (!response || response.status !== 200) {
-        return NextResponse.json("Помилка з'єднання з основним сервером", {
-          status: 500,
-        });
+        throw ServerError;
       }
       orders = [...orders, ...response.data.data];
     }
@@ -48,11 +40,6 @@ export async function GET(req: NextRequest) {
       }
     );
   } catch (error) {
-    return NextResponse.json(
-      {
-        error: 'Помилка сервера',
-      },
-      { status: 500 }
-    );
+    return apiErrorHandler(error);
   }
 }

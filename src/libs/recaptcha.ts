@@ -1,14 +1,9 @@
 import axios from 'axios';
 
+import { ReCatpchaError } from '@/classes/CustomError';
 import { env } from '@/env.mjs';
 
-/**
- * Validates the given ReCaptcha token via the ReCaptcha API.
- *
- * @param {string} token - The ReCaptcha token to be verified.
- * @return {Promise<boolean>} A promise that resolves to a boolean indicating if the token is valid.
- */
-export default async function verifyReCaptcha(token: string): Promise<boolean> {
+export default async function verifyReCaptcha(token: string): Promise<void> {
   const reCaptchaKey: string = env.RECAPTCHA_SECRET_KEY;
 
   try {
@@ -16,8 +11,10 @@ export default async function verifyReCaptcha(token: string): Promise<boolean> {
       `https://www.google.com/recaptcha/api/siteverify?secret=${reCaptchaKey}&response=${token}`
     );
 
-    return data.success;
+    if (!data.success) {
+      throw ReCatpchaError;
+    }
   } catch (error) {
-    return false;
+    throw ReCatpchaError;
   }
 }

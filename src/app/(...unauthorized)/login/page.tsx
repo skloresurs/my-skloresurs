@@ -11,8 +11,10 @@ import {
 import { useForm } from '@mantine/form';
 import { notifications } from '@mantine/notifications';
 import axios from 'axios';
+import { deleteCookie, getCookie } from 'cookies-next';
 import { CheckCircle, XCircle } from 'lucide-react';
 import { zodResolver } from 'mantine-form-zod-resolver';
+import Image from 'next/image';
 import Link from 'next/link';
 import { redirect, useRouter } from 'next/navigation';
 import { useReCaptcha } from 'next-recaptcha-v3';
@@ -32,7 +34,7 @@ const formSchema = z.object({
     .min(8, 'Пароль не може бути меншим за 8 символів'),
 });
 
-const NotificationTitle = 'Вхід';
+const NotificationTitle = 'Авторизація';
 type ValidationSchema = z.infer<typeof formSchema>;
 
 export default function AuthenticationImage() {
@@ -49,6 +51,19 @@ export default function AuthenticationImage() {
 
   if (user) {
     redirect('/');
+  }
+
+  const errorCookie = getCookie('oauth_error');
+  if (errorCookie) {
+    notifications.show({
+      autoClose: 3000,
+      color: 'red',
+      icon: <XCircle />,
+      message: errorCookie,
+      title: NotificationTitle,
+      withCloseButton: true,
+    });
+    deleteCookie('auth_error');
   }
 
   const onSubmit = async (values: ValidationSchema) => {
@@ -138,16 +153,37 @@ export default function AuthenticationImage() {
           <Button type="submit" fullWidth mt="xl" size="md" variant="filled">
             Увійти
           </Button>
-          <Divider className="my-3" />
-          <Button
-            component={Link}
-            href="/api/auth/google"
-            variant="outline"
-            fullWidth
-            size="md"
-          >
-            Sign in with Google
-          </Button>
+          <Divider className="my-3" label="або" />
+          <div className="flex flex-row items-center justify-center gap-2">
+            <Button
+              component={Link}
+              href="/api/auth/google"
+              variant="outline"
+              fullWidth
+              size="md"
+            >
+              <Image
+                src="https://cdn.simpleicons.org/google/white"
+                alt="Google"
+                width={20}
+                height={20}
+              />
+            </Button>
+            <Button
+              component={Link}
+              href="/api/auth/facebook"
+              variant="outline"
+              fullWidth
+              size="md"
+            >
+              <Image
+                src="https://cdn.simpleicons.org/facebook/white"
+                alt="Facebook"
+                width={20}
+                height={20}
+              />
+            </Button>
+          </div>
           <div className="mt-5">
             <span>This site is protected by reCAPTCHA and the Google </span>
             <Link href="https://policies.google.com/privacy">

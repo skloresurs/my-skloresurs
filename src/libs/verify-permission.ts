@@ -1,11 +1,6 @@
-import { Permission } from '@/types/User'; /**
- * Verifies if the user has a specific permission and returns the result.
- *
- * @param {Permission[]} userPermissions - The list of permissions assigned to the user.
- * @param {Permission} permission - The permission to verify. (optional)
- * @param {boolean} defaultState - The default state to return if the permission is not found. (default: false)
- * @return {boolean} The result of the permission verification.
- */
+import { MissingPermissionError } from '@/classes/CustomError';
+import { Permission } from '@/types/User';
+
 const verifyPermission = (
   userPermissions: Permission[],
   permission?: Permission,
@@ -41,5 +36,14 @@ const verifyPermission = (
     }
   }
 };
+
+export function verifyPermissionServer(
+  userPermissions: Permission[],
+  permission?: Permission
+) {
+  if (!verifyPermission(userPermissions, permission)) {
+    throw MissingPermissionError;
+  }
+}
 
 export default verifyPermission;

@@ -43,6 +43,12 @@ export const env = createEnv({
     DATABASE_URL: z
       .string({ required_error: 'DATABASE_URL is required' })
       .min(1),
+    FACEBOOK_APP_ID: z.string({
+      required_error: 'FACEBOOK_APP_ID is required',
+    }),
+    FACEBOOK_APP_SECRET: z.string({
+      required_error: 'FACEBOOK_APP_SECRET is required',
+    }),
     GOOGLE_CLIENT_ID: z.string({
       required_error: 'GOOGLE_CLIENT_ID is required',
     }),

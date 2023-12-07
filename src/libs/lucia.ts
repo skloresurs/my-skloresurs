@@ -1,5 +1,5 @@
 import { prisma } from '@lucia-auth/adapter-prisma';
-import { google } from '@lucia-auth/oauth/providers';
+import { facebook, google } from '@lucia-auth/oauth/providers';
 import { lucia } from 'lucia';
 import { nextjs_future } from 'lucia/middleware';
 
@@ -22,6 +22,13 @@ export const googleAuth = google(auth, {
   clientSecret: env.GOOGLE_CLIENT_SECRET,
   redirectUri: `${env.BASE_URL}/api/auth/google/callback`,
   scope: ['profile', 'email'],
+});
+
+export const facebookAuth = facebook(auth, {
+  clientId: env.FACEBOOK_APP_ID,
+  clientSecret: env.FACEBOOK_APP_SECRET,
+  redirectUri: `${env.BASE_URL}/api/auth/facebook/callback`,
+  scope: ['public_profile', 'email'],
 });
 
 export type Auth = typeof auth;

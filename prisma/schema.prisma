@@ -13,11 +13,12 @@ model User {
     email    String  @unique
     fullname String?
 
-    account_type AccountType  @default(Default)
-    permissions  Permission[] @default([])
+    permissions Permission[] @default([])
 
     id_1c_main      String?
     id_1c_secondary String?
+
+    google String? // google email from Google oAuth
 
     ip String[] @default([])
 
@@ -56,9 +57,4 @@ enum Permission {
     ManagerFinance
 
     Driver
-}
-
-enum AccountType {
-    Default
-    Google
 }

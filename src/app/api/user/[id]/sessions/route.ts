@@ -1,35 +1,24 @@
 import { NextRequest, NextResponse } from 'next/server';
 
+import apiErrorHandler from '@/libs/api-error-handler';
 import { auth } from '@/libs/lucia';
-import getSession from '@/libs/server-session';
+import { getSession } from '@/libs/sessions';
 import verifyIp from '@/libs/verify-ip';
-import verifyPermission from '@/libs/verify-permission';
+import { verifyPermissionServer } from '@/libs/verify-permission';
 
 export async function GET(
   _: NextRequest,
   { params }: { params: { id: string } }
 ) {
   try {
-    const session = await getSession();
-    if (!session) {
-      return NextResponse.json(null, { status: 401 });
-    }
+    const session = await getSession(request);
 
-    if (
-      !(await verifyIp(session.user.ip)) ||
-      !verifyPermission(session.user.permissions, 'Admin')
-    ) {
-      return NextResponse.json(null, { status: 403 });
-    }
+    verifyPermissionServer(session.user.permissions, 'Admin');
+    await verifyIp(session.user.ip);
 
     const sessions = await auth.getAllUserSessions(params.id);
     return NextResponse.json(sessions, { status: 200 });
   } catch (error) {
-    return NextResponse.json(
-      {
-        error: 'Помилка сервера',
-      },
-      { status: 500 }
-    );
+    return apiErrorHandler(error);
   }
 }

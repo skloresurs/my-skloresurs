@@ -2,6 +2,7 @@
 
 import { notifications } from '@mantine/notifications';
 import axios from 'axios';
+import { deleteCookie, getCookie } from 'cookies-next';
 import { CheckCircle, XCircle } from 'lucide-react';
 import { redirect } from 'next/navigation';
 import React from 'react';
@@ -20,6 +21,19 @@ export default function RootLayout({
   const { mutate } = useSWRConfig();
   const { data: user } = useSWR<IUser>(`/api/user`);
   const { data: ip } = useSWR('https://geolocation-db.com/json/');
+
+  const errorCookie = getCookie('oauth_error');
+  if (errorCookie) {
+    notifications.show({
+      autoClose: 3000,
+      color: 'red',
+      icon: <XCircle />,
+      message: errorCookie,
+      title: NotificationTitle,
+      withCloseButton: true,
+    });
+    deleteCookie('oauth_error');
+  }
 
   const logout = async () => {
     const notification = notifications.show({
