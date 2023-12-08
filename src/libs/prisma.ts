@@ -1,4 +1,4 @@
-import { PrismaClient } from '@/.prisma';
+import { PrismaClient } from '@prisma/client';
 
 const prisma: PrismaClient =
   global.prisma || new PrismaClient({ log: ['info'] });
