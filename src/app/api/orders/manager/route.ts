@@ -12,24 +12,34 @@ import IManaderOrder from '@/types/ManagerOrder';
 export async function GET(req: NextRequest) {
   try {
     const session = await getSession(req);
-    await verifyIp(session.user.ip);
+    await verifyIp(req, session.user.ip);
     verifyPermissionServer(session.user.permissions, 'Manager');
 
     const params = req.nextUrl.searchParams;
 
     const search = params.get('search');
+    const all = !!params.get('all');
 
     let orders: IManaderOrder[] = [];
 
     if (session.user.id_1c_main) {
       const response = await axios1cMain
-        .post(`/orders/manager`, {
-          search,
-        })
-        .catch(() => null);
-      if (!response || response.status !== 200) {
-        throw ServerError;
-      }
+        .post(
+          `/orders/manager`,
+          {
+            all,
+            search,
+          },
+          {
+            headers: {
+              ManagerId: session.user.id_1c_main,
+            },
+          }
+        )
+        .catch(() => {
+          throw ServerError;
+        });
+
       orders = [...orders, ...response.data.data];
     }
 

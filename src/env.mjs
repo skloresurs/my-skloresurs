@@ -31,6 +31,9 @@ export const env = createEnv({
   },
 
   server: {
+    API_KEY_1C_MAIN: z.string({
+      required_error: 'API_KEY_1C_MAIN is required',
+    }),
     API_URL_1C_MAIN: z
       .string({ required_error: 'API_URL_1C_MAIN is required' })
       .url('API_URL_1C_MAIN must be a valid URL'),
@@ -40,9 +43,7 @@ export const env = createEnv({
     BASE_URL: z
       .string({ required_error: 'BASE_URL is required' })
       .url('BASE_URL must be a valid URL'),
-    DATABASE_URL: z
-      .string({ required_error: 'DATABASE_URL is required' })
-      .min(1),
+    DATABASE_URL: z.string({ required_error: 'DATABASE_URL is required' }),
     FACEBOOK_APP_ID: z.string({
       required_error: 'FACEBOOK_APP_ID is required',
     }),
@@ -63,12 +64,6 @@ export const env = createEnv({
     }),
     TELEGRAM_CHAT_ID: z.string({
       required_error: 'TELEGRAM_CHAT_ID is required',
-    }),
-    TWITTER_CLIENT_ID: z.string({
-      required_error: 'TWITTER_CLIENT_ID is required',
-    }),
-    TWITTER_CLIENT_SECRET: z.string({
-      required_error: 'TWITTER_CLIENT_SECRET is required',
     }),
   },
 });

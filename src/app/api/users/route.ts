@@ -9,7 +9,7 @@ import { verifyPermissionServer } from '@/libs/verify-permission';
 export async function GET(req: NextRequest) {
   try {
     const session = await getSession(req);
-    await verifyIp(session.user.ip);
+    await verifyIp(req, session.user.ip);
     verifyPermissionServer(session.user.permissions, 'Admin');
 
     const params = req.nextUrl.searchParams;

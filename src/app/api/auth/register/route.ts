@@ -1,8 +1,8 @@
+import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 import { nanoid } from 'nanoid';
 import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
 
-import { PrismaClientKnownRequestError } from '@/.prisma/runtime/library';
 import {
   EmailExistsError,
   MissingParamsError,

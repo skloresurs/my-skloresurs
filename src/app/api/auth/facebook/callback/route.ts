@@ -1,8 +1,8 @@
+import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 import { nanoid } from 'nanoid';
 import { cookies } from 'next/headers';
 import { type NextRequest, NextResponse } from 'next/server';
 
-import { PrismaClientKnownRequestError } from '@/.prisma/runtime/library';
 import CustomError, {
   EmailExistsError,
   ServerError,
@@ -54,7 +54,7 @@ export const GET = async (req: NextRequest) => {
     }
 
     if (existUser) {
-      verifyIp(existUser.ip);
+      verifyIp(req, existUser.ip);
       await auth.updateUserAttributes(existUser.id, {
         facebook: facebookUser.name,
       });

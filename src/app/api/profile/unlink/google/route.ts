@@ -8,7 +8,7 @@ import verifyIp from '@/libs/verify-ip';
 export async function GET(req: NextRequest) {
   try {
     const session = await getSession(req);
-    await verifyIp(session.user.ip);
+    await verifyIp(req, session.user.ip);
     await auth.updateUserAttributes(session.user.userId, {
       google: null,
       googleId: null,

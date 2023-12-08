@@ -12,7 +12,7 @@ export async function DELETE(
 ) {
   try {
     const session = await getSession(req);
-    await verifyIp(session.user.ip);
+    await verifyIp(req, session.user.ip);
 
     const sessionById = await auth.getSession(params.id);
     if (!sessionById) {

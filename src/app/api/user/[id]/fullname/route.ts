@@ -15,7 +15,7 @@ export async function POST(
     const session = await getSession(req);
 
     verifyPermissionServer(session.user.permissions, 'Admin');
-    await verifyIp(session.user.ip);
+    await verifyIp(req, session.user.ip);
 
     const { fullname } = await req.json();
 

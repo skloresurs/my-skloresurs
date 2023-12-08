@@ -20,7 +20,7 @@ export async function POST(req: NextRequest) {
     const key = await auth.useKey('email', email.toLowerCase(), password);
     const user = await auth.getUser(key.userId);
 
-    verifyIp(user.ip);
+    verifyIp(req, user.ip);
 
     await setSession(req, user.id);
 
