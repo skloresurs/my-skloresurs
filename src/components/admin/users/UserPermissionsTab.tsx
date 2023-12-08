@@ -9,7 +9,7 @@ import React, { useMemo } from 'react';
 import useSWR, { useSWRConfig } from 'swr';
 
 import verifyPermission from '@/libs/verify-permission';
-import IUser, { Permission } from '@/types/User';
+import { IUserMeRequest, IUserRequest, Permission } from '@/types/User';
 
 interface IPermission {
   id: Permission;
@@ -20,9 +20,9 @@ interface IPermission {
 
 const NotificationTitle = 'Керування користувачем';
 
-export default function UserPermissionsTab({ user }: { user?: IUser }) {
+export default function UserPermissionsTab({ user }: { user?: IUserRequest }) {
   const { mutate } = useSWRConfig();
-  const { data: activeUser } = useSWR<IUser>(`/api/user`);
+  const { data: activeUser } = useSWR<IUserMeRequest>(`/api/user`);
 
   const permissionsData: (IPermission | null)[] = useMemo(
     () => [

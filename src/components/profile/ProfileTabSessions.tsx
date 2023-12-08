@@ -7,29 +7,14 @@ import { CheckCircle, Trash, XCircle } from 'lucide-react';
 import moment from 'moment';
 import Image from 'next/image';
 import React from 'react';
-import useSWR, { useSWRConfig } from 'swr';
+import useSWR from 'swr';
 
-import ISession from '@/types/Session';
-
-import LoadingOverlay from '../LoadingOverlay';
+import { IUserMeRequest } from '@/types/User';
 
 const NotificationTitle = 'Сесії';
 
-interface Response {
-  sessions: ISession[];
-  thisSession: string;
-}
-
 export default function ProfileTabSessions() {
-  const { mutate } = useSWRConfig();
-  const { data, isValidating } = useSWR<Response>('/api/sessions');
-  if (isValidating) {
-    return (
-      <div className="relative mt-3 h-[400px] w-full">
-        <LoadingOverlay />
-      </div>
-    );
-  }
+  const { data: user, mutate } = useSWR<IUserMeRequest>(`/api/user`);
 
   const removeSession = async (id: string) => {
     const notification = notifications.show({
@@ -56,8 +41,7 @@ export default function ProfileTabSessions() {
         });
       });
 
-    await mutate('/api/user');
-    await mutate('/api/sessions');
+    await mutate();
 
     if (!response || response.status !== 200) return;
     notifications.update({
@@ -73,14 +57,14 @@ export default function ProfileTabSessions() {
   };
   return (
     <div className="flex max-w-xl flex-col gap-3">
-      {data?.sessions.map((e) => (
+      {user?.sessions.map((e) => (
         <Paper
           key={e.id}
           withBorder
           className="flex w-full flex-row items-center gap-3"
           p="md"
           radius="md"
-          c={e.id === data.thisSession ? 'green' : ''}
+          c={e.id === user.thisSession ? 'green' : ''}
         >
           <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[var(--mantine-color-dark-6)] p-2">
             <Image
@@ -93,7 +77,7 @@ export default function ProfileTabSessions() {
           <div className="flex flex-col">
             <Title order={2} size="h5">
               {e.browser}{' '}
-              <span className={e.id === data.thisSession ? '' : 'hidden'}>
+              <span className={e.id === user.thisSession ? '' : 'hidden'}>
                 (ця сесія)
               </span>
             </Title>

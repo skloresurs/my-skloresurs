@@ -1,5 +1,4 @@
 import { nanoid } from 'nanoid';
-import * as context from 'next/headers';
 import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
 
@@ -12,11 +11,11 @@ import {
 import apiErrorHandler from '@/libs/api-error-handler';
 import { auth } from '@/libs/lucia';
 import verifyReCaptcha from '@/libs/recaptcha';
-import generateSession from '@/libs/sessions';
+import { setSession } from '@/libs/sessions';
 
-export async function POST(request: NextRequest) {
+export async function POST(req: NextRequest) {
   try {
-    const { email, password, fullname, captcha } = await request.json();
+    const { email, password, fullname, captcha } = await req.json();
 
     await verifyReCaptcha(captcha);
 
@@ -46,9 +45,7 @@ export async function POST(request: NextRequest) {
         }
         throw ServerError;
       });
-    const session = await generateSession(request, user.userId);
-    const authRequest = auth.handleRequest(request.method, context);
-    authRequest.setSession(session);
+    await setSession(req, user.id);
     return NextResponse.json(null, { status: 200 });
   } catch (error) {
     return apiErrorHandler(error);

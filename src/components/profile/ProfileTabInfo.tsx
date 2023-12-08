@@ -8,12 +8,12 @@ import { CheckCircle, XCircle } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
 import useSWR from 'swr';
 
-import IUser from '@/types/User';
+import { IUserMeRequest } from '@/types/User';
 
 const NotificationTitle = 'Оновлення профілю';
 
 export default function ProfileTabInfo() {
-  const { data: user, mutate } = useSWR<IUser>(`/api/user`);
+  const { data: user, mutate } = useSWR<IUserMeRequest>(`/api/user`);
   const [fullname, setFullName] = useState('');
   const [loading, { open: enableLoading, close: disableLoading }] =
     useDisclosure();

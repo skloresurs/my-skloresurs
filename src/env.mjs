@@ -64,5 +64,11 @@ export const env = createEnv({
     TELEGRAM_CHAT_ID: z.string({
       required_error: 'TELEGRAM_CHAT_ID is required',
     }),
+    TWITTER_CLIENT_ID: z.string({
+      required_error: 'TWITTER_CLIENT_ID is required',
+    }),
+    TWITTER_CLIENT_SECRET: z.string({
+      required_error: 'TWITTER_CLIENT_SECRET is required',
+    }),
   },
 });

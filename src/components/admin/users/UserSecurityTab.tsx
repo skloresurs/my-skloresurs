@@ -19,7 +19,7 @@ import React from 'react';
 import useSWR, { useSWRConfig } from 'swr';
 import { z } from 'zod';
 
-import IUser from '@/types/User';
+import { IUserMeRequest, IUserRequest } from '@/types/User';
 
 const NotificationTitle = 'Керування користувачем';
 
@@ -35,9 +35,9 @@ const formSchema = z.object({
     .array(),
 });
 
-export default function UserSecurityTab({ user }: { user?: IUser }) {
+export default function UserSecurityTab({ user }: { user?: IUserRequest }) {
   const { mutate } = useSWRConfig();
-  const { data: activeUser } = useSWR<IUser>(`/api/user`);
+  const { data: activeUser } = useSWR<IUserMeRequest>(`/api/user`);
   const [loading, { open: enableLoading, close: disableLoading }] =
     useDisclosure();
   const form = useForm({

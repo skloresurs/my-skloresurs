@@ -7,14 +7,13 @@ import axios from 'axios';
 import { CheckCircle, XCircle } from 'lucide-react';
 import { zodResolver } from 'mantine-form-zod-resolver';
 import Link from 'next/link';
-import { redirect, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { useReCaptcha } from 'next-recaptcha-v3';
 import React from 'react';
-import useSWR from 'swr';
+import { useSWRConfig } from 'swr';
 import { z } from 'zod';
 
 import classes from '@/css/Auth.module.css';
-import IUser from '@/types/User';
 
 const formSchema = z
   .object({
@@ -42,7 +41,7 @@ type ValidationSchema = z.infer<typeof formSchema>;
 export default function AuthenticationImage() {
   const router = useRouter();
   const { executeRecaptcha } = useReCaptcha();
-  const { data: user, mutate } = useSWR<IUser>('/api/user');
+  const { mutate } = useSWRConfig();
   const form = useForm({
     initialValues: {
       confirm: '',
@@ -52,10 +51,6 @@ export default function AuthenticationImage() {
     },
     validate: zodResolver(formSchema),
   });
-
-  if (user) {
-    redirect('/');
-  }
 
   const onSubmit = async (values: ValidationSchema) => {
     const notification = notifications.show({
@@ -102,7 +97,7 @@ export default function AuthenticationImage() {
       });
 
     if (!response || response.status !== 200) return;
-    await mutate();
+    await mutate('/api/user');
 
     notifications.update({
       autoClose: 3000,

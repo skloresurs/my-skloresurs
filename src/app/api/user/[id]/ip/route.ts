@@ -8,16 +8,16 @@ import verifyIp from '@/libs/verify-ip';
 import { verifyPermissionServer } from '@/libs/verify-permission';
 
 export async function POST(
-  request: NextRequest,
+  req: NextRequest,
   { params }: { params: { id: string } }
 ) {
   try {
-    const session = await getSession(request);
+    const session = await getSession(req);
 
     verifyPermissionServer(session.user.permissions, 'Admin');
     await verifyIp(session.user.ip);
 
-    const { ip } = await request.json();
+    const { ip } = await req.json();
     if (!ip) {
       throw MissingParamsError;
     }

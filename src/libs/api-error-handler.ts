@@ -1,9 +1,20 @@
+import { StatusCodes } from 'http-status-codes';
 import { LuciaError } from 'lucia';
 import { NextResponse } from 'next/server';
 
 import CustomError from '@/classes/CustomError';
 
-export default function apiErrorHandler(error: unknown): NextResponse {
+/**
+ * Handles errors thrown by the API.
+ *
+ * @param {unknown} error - The error object.
+ * @param {string} [key] - Optional key parameter.
+ * @return {NextResponse} The response object.
+ */
+export default function apiErrorHandler(
+  error: unknown,
+  key?: string
+): NextResponse {
   if (error instanceof CustomError) {
     return NextResponse.json(
       {
@@ -17,8 +28,8 @@ export default function apiErrorHandler(error: unknown): NextResponse {
   if (error instanceof LuciaError) {
     if (error.message === 'AUTH_INVALID_USER_ID') {
       return NextResponse.json(
-        { code: 404, error: 'Користувача не знайдено' },
-        { status: 404 }
+        { code: StatusCodes.NOT_FOUND, error: 'Користувача не знайдено' },
+        { status: StatusCodes.NOT_FOUND }
       );
     }
 
@@ -26,18 +37,24 @@ export default function apiErrorHandler(error: unknown): NextResponse {
       error.message === 'AUTH_INVALID_KEY_ID' ||
       error.message === 'AUTH_INVALID_PASSWORD'
     ) {
+      if (key === 'old-password') {
+        return NextResponse.json(
+          { code: StatusCodes.BAD_REQUEST, error: 'Невірний старий пароль' },
+          { status: StatusCodes.BAD_REQUEST }
+        );
+      }
       return NextResponse.json(
-        { code: 401, error: 'Невірний логін або пароль' },
-        { status: 401 }
+        { code: StatusCodes.UNAUTHORIZED, error: 'Невірний логін або пароль' },
+        { status: StatusCodes.UNAUTHORIZED }
       );
     }
   }
 
   return NextResponse.json(
     {
-      code: 500,
+      code: StatusCodes.INTERNAL_SERVER_ERROR,
       error: 'Невідома помилка',
     },
-    { status: 500 }
+    { status: StatusCodes.INTERNAL_SERVER_ERROR }
   );
 }

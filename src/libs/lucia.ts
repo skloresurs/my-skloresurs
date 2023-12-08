@@ -1,5 +1,5 @@
 import { prisma } from '@lucia-auth/adapter-prisma';
-import { facebook, google } from '@lucia-auth/oauth/providers';
+import { facebook, google, twitter } from '@lucia-auth/oauth/providers';
 import { lucia } from 'lucia';
 import { nextjs_future } from 'lucia/middleware';
 
@@ -29,6 +29,12 @@ export const facebookAuth = facebook(auth, {
   clientSecret: env.FACEBOOK_APP_SECRET,
   redirectUri: `${env.BASE_URL}/api/auth/facebook/callback`,
   scope: ['public_profile', 'email'],
+});
+
+export const twitterAuth = twitter(auth, {
+  clientId: env.TWITTER_CLIENT_ID,
+  clientSecret: env.TWITTER_CLIENT_SECRET,
+  redirectUri: `${env.BASE_URL}/api/auth/twitter/callback`,
 });
 
 export type Auth = typeof auth;

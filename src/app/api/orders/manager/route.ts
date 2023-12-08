@@ -9,13 +9,13 @@ import verifyIp from '@/libs/verify-ip';
 import { verifyPermissionServer } from '@/libs/verify-permission';
 import IManaderOrder from '@/types/ManagerOrder';
 
-export async function GET(request: NextRequest) {
+export async function GET(req: NextRequest) {
   try {
-    const session = await getSession(request);
+    const session = await getSession(req);
     await verifyIp(session.user.ip);
     verifyPermissionServer(session.user.permissions, 'Manager');
 
-    const params = request.nextUrl.searchParams;
+    const params = req.nextUrl.searchParams;
 
     const search = params.get('search');
 

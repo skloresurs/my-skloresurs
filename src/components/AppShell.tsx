@@ -16,12 +16,12 @@ import useSWR, { useSWRConfig } from 'swr';
 import navbar, { footer } from '@/components/NavBar';
 import NavBarItemCompnent from '@/components/NavBarItem';
 import verifyPermission from '@/libs/verify-permission';
-import IUser from '@/types/User';
+import { IUserMeRequest } from '@/types/User';
 
 const NotificationTitle = 'Вихід';
 
 export default function AppShell({ children }: { children: ReactNode }) {
-  const { data: user } = useSWR<IUser | null>(`/api/user`);
+  const { data: user } = useSWR<IUserMeRequest>(`/api/user`);
   const { mutate } = useSWRConfig();
   const [opened, { toggle }] = useDisclosure();
 

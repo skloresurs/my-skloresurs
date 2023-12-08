@@ -1,6 +1,6 @@
 'use client';
 
-import { ActionIcon, LoadingOverlay, Paper, Title } from '@mantine/core';
+import { ActionIcon, Paper, Title } from '@mantine/core';
 import { notifications } from '@mantine/notifications';
 import axios from 'axios';
 import { Trash, XCircle } from 'lucide-react';
@@ -9,24 +9,13 @@ import Image from 'next/image';
 import React from 'react';
 import useSWR, { useSWRConfig } from 'swr';
 
-import ISession from '@/types/Session';
-import IUser from '@/types/User';
+import { IUserMeRequest, IUserRequest } from '@/types/User';
 
 const NotificationTitle = 'Сесії';
 
-export default function UserSessionsTab({ user }: { user?: IUser }) {
+export default function UserSessionsTab({ user }: { user?: IUserRequest }) {
   const { mutate } = useSWRConfig();
-  const { data: sessions, isValidating } = useSWR<ISession[]>(
-    `/api/user/${user?.id}/sessions`
-  );
-  const { data: activeUser } = useSWR<IUser>(`/api/user`);
-  if (isValidating) {
-    return (
-      <div className="relative mt-3 h-[400px] w-full">
-        <LoadingOverlay />
-      </div>
-    );
-  }
+  const { data: activeUser } = useSWR<IUserMeRequest>(`/api/user`);
 
   const removeSession = async (id: string) => {
     const notification = notifications.show({
@@ -54,7 +43,7 @@ export default function UserSessionsTab({ user }: { user?: IUser }) {
       });
 
     if (activeUser?.id === user?.id) await mutate('/api/user');
-    await mutate(`/api/user/${user?.id}/sessions`);
+    await mutate(`/api/user/${user?.id}`);
 
     if (!response || response.status !== 200) return;
     notifications.update({
@@ -69,7 +58,7 @@ export default function UserSessionsTab({ user }: { user?: IUser }) {
     });
   };
 
-  if (sessions?.length === 0) {
+  if (user?.sessions?.length === 0) {
     return (
       <Title order={2} className="mt-3 text-center">
         Не знайдено жодної сесії
@@ -78,7 +67,7 @@ export default function UserSessionsTab({ user }: { user?: IUser }) {
   }
   return (
     <div className="flex max-w-xl flex-col gap-3">
-      {sessions?.map((e) => (
+      {user?.sessions?.map((e) => (
         <Paper
           key={e.id}
           withBorder

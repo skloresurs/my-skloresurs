@@ -6,12 +6,12 @@ import { auth } from '@/libs/lucia';
 import { getSession } from '@/libs/sessions';
 import verifyIp from '@/libs/verify-ip';
 
-export async function POST(request: NextRequest) {
+export async function POST(req: NextRequest) {
   try {
-    const session = await getSession(request);
+    const session = await getSession(req);
     await verifyIp(session.user.ip);
 
-    const { fullname } = await request.json();
+    const { fullname } = await req.json();
 
     if (!fullname) {
       throw MissingParamsError;

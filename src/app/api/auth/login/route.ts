@@ -8,9 +8,9 @@ import verifyReCaptcha from '@/libs/recaptcha';
 import { setSession } from '@/libs/sessions';
 import verifyIp from '@/libs/verify-ip';
 
-export async function POST(request: NextRequest) {
+export async function POST(req: NextRequest) {
   try {
-    const { email, password, captcha } = await request.json();
+    const { email, password, captcha } = await req.json();
 
     await verifyReCaptcha(captcha);
 
@@ -22,7 +22,7 @@ export async function POST(request: NextRequest) {
 
     verifyIp(user.ip);
 
-    await setSession(request, user.id);
+    await setSession(req, user.id);
 
     return NextResponse.json(null, { status: 200 });
   } catch (error) {

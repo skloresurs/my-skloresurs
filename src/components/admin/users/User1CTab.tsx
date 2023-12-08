@@ -9,15 +9,13 @@ import React, { useEffect, useState } from 'react';
 import useSWR, { useSWRConfig } from 'swr';
 import { z } from 'zod';
 
-import IUser from '@/types/User';
+import { IUserMeRequest, IUserRequest } from '@/types/User';
 
 const NotificationTitle = 'Керування користувачем';
 
-const idSchema = z.string().uuid();
-
-export default function User1CTab({ user }: { user?: IUser }) {
+export default function User1CTab({ user }: { user?: IUserRequest }) {
   const { mutate } = useSWRConfig();
-  const { data: activeUser } = useSWR<IUser>(`/api/user`);
+  const { data: activeUser } = useSWR<IUserMeRequest>(`/api/user`);
   const [data, setData] = useState({
     main: '',
     secondary: '',
@@ -34,7 +32,7 @@ export default function User1CTab({ user }: { user?: IUser }) {
 
   const updateID = async (route: string, id: string) => {
     enableLoading();
-    const verify = idSchema.safeParse(id);
+    const verify = z.string().uuid().safeParse(id);
     if (!verify.success && id !== '') {
       disableLoading();
       return notifications.show({

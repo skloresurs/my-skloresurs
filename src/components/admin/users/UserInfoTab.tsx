@@ -8,13 +8,13 @@ import { CheckCircle, XCircle } from 'lucide-react';
 import React, { useState } from 'react';
 import useSWR, { useSWRConfig } from 'swr';
 
-import IUser from '@/types/User';
+import { IUserMeRequest, IUserRequest } from '@/types/User';
 
 const NotificationTitle = 'Керування користувачем';
 
-export default function UserInfoTab({ user }: { user?: IUser }) {
+export default function UserInfoTab({ user }: { user?: IUserRequest }) {
   const { mutate } = useSWRConfig();
-  const { data: activeUser } = useSWR<IUser>(`/api/user`);
+  const { data: activeUser } = useSWR<IUserMeRequest>(`/api/user`);
   const [fullname, setFullName] = useState(user?.fullname ?? '');
   const [loading, { open: enableLoading, close: disableLoading }] =
     useDisclosure();

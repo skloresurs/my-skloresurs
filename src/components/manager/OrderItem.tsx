@@ -11,7 +11,7 @@ import Moment from 'react-moment';
 import useSWR from 'swr';
 
 import IManaderOrder from '@/types/ManagerOrder';
-import IUser from '@/types/User';
+import { IUserMeRequest } from '@/types/User';
 
 import MainTabOrder from './tabs/MainTabOrder';
 import SpecificationTabOrder from './tabs/SpecificationTabOrder';
@@ -22,7 +22,7 @@ interface IProps {
 
 export default function OrderItem({ order }: IProps) {
   const [opened, { open, close }] = useDisclosure(false);
-  const { data: user } = useSWR<IUser>('/api/user');
+  const { data: user } = useSWR<IUserMeRequest>('/api/user');
   const createdAt = moment(order.createdAt, 'DD.MM.YYYY HH:mm:ss').toDate();
 
   return (

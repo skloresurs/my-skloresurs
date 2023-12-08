@@ -7,15 +7,17 @@ import { auth } from '@/libs/lucia';
 import { getSession } from '@/libs/sessions';
 import verifyIp from '@/libs/verify-ip';
 
-export async function POST(request: NextRequest) {
+export async function POST(req: NextRequest) {
   try {
-    const session = await getSession(request);
+    const session = await getSession(req);
     await verifyIp(session.user.ip);
 
-    const { password } = await request.json();
-    if (!password) {
+    const { old, password } = await req.json();
+    if (!old || !password) {
       throw MissingParamsError;
     }
+
+    await auth.useKey('email', session.user.email.toLowerCase(), old);
 
     await auth.invalidateAllUserSessions(session.user.userId);
     await auth.updateKeyPassword(
@@ -26,6 +28,6 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json(null, { status: 200 });
   } catch (error) {
-    return apiErrorHandler(error);
+    return apiErrorHandler(error, 'old-password');
   }
 }

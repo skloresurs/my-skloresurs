@@ -6,15 +6,16 @@ import { getSession } from '@/libs/sessions';
 import { verifyPermissionServer } from '@/libs/verify-permission';
 
 export async function GET(
-  _: NextRequest,
+  req: NextRequest,
   { params }: { params: { id: string } }
 ) {
   try {
-    const session = await getSession(request);
+    const session = await getSession(req);
     verifyPermissionServer(session.user.permissions, 'Admin');
 
     const user = await auth.getUser(params.id);
-    return NextResponse.json(user, { status: 200 });
+    const sessions = await auth.getAllUserSessions(params.id);
+    return NextResponse.json({ ...user, sessions }, { status: 200 });
   } catch (error) {
     return apiErrorHandler(error);
   }

@@ -91,7 +91,7 @@ export default function UserSettingsPage({
     return (
       <>
         <TitleBar title="Керування користувачем" {...defaultProps} />
-        <Title order={2}>невідома помилка</Title>
+        <Title order={2}>Невідома помилка</Title>
       </>
     );
   }

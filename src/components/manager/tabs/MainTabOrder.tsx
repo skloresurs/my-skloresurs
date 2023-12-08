@@ -6,7 +6,7 @@ import useSWR from 'swr';
 
 import getStatusConfig from '@/libs/status';
 import IManaderOrder from '@/types/ManagerOrder';
-import IUser from '@/types/User';
+import { IUserMeRequest } from '@/types/User';
 
 import DrawerItem from '../DrawerItem';
 import DrawerItemMultiLine from '../DrawerItemMultiLine';
@@ -14,7 +14,7 @@ import DrawerItemMultiLine from '../DrawerItemMultiLine';
 const NotFoundData = 'Не вказано';
 
 export default function MainTabOrder({ order }: { order: IManaderOrder }) {
-  const { data: user } = useSWR<IUser | null>(`/api/user`);
+  const { data: user } = useSWR<IUserMeRequest>(`/api/user`);
   return (
     <div className="mt-2">
       <div className="flex flex-col gap-1">

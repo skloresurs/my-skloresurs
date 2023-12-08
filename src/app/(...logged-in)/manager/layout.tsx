@@ -7,14 +7,14 @@ import useSWR from 'swr';
 import AppShell from '@/components/AppShell';
 import ErrorPage from '@/components/ErrorPage';
 import verifyPermission from '@/libs/verify-permission';
-import IUser from '@/types/User';
+import { IUserMeRequest } from '@/types/User';
 
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const { data: user } = useSWR<IUser>(`/api/user`);
+  const { data: user } = useSWR<IUserMeRequest>(`/api/user`);
   const router = useRouter();
 
   if (!user) {

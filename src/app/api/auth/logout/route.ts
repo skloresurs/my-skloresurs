@@ -4,9 +4,9 @@ import apiErrorHandler from '@/libs/api-error-handler';
 import { auth } from '@/libs/lucia';
 import { getSession } from '@/libs/sessions';
 
-export async function POST(request: NextRequest) {
+export async function POST(req: NextRequest) {
   try {
-    const session = await getSession(request);
+    const session = await getSession(req);
     if (session) {
       await auth.invalidateSession(session.sessionId);
       await auth.deleteDeadUserSessions(session.user.userId);

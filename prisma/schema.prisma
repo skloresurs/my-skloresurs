@@ -18,7 +18,11 @@ model User {
     id_1c_main      String?
     id_1c_secondary String?
 
-    google String? // google email from Google oAuth
+    google   String? // google email from Google oAuth
+    googleId String? // google id for Google oAuth
+
+    facebook   String? // facebook email for Facebook oAuth
+    facebookId String? // facebook id for Facebook oAuth
 
     ip String[] @default([])
 

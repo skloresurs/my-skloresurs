@@ -15,12 +15,12 @@ import { nanoid } from 'nanoid';
 import React, { useState } from 'react';
 import useSWR from 'swr';
 
-import IUser from '@/types/User';
+import { IUserMeRequest } from '@/types/User';
 
 const NotificationTitle = 'Оновлення профілю';
 
 export default function ProfileTabSecurity() {
-  const { data: user, mutate } = useSWR<IUser>('/api/user');
+  const { data: user, mutate } = useSWR<IUserMeRequest>('/api/user');
   const [password, setPassword] = useState<{ new: string; confirm: string }>({
     confirm: '',
     new: '',

@@ -1,5 +1,3 @@
-'use client';
-
 import { Button } from '@mantine/core';
 import React, { Dispatch, SetStateAction } from 'react';
 

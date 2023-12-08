@@ -7,12 +7,12 @@ import React, { useState } from 'react';
 import useSWR from 'swr';
 
 import { Error, Info, Warning } from '@/components/info';
-import IUser from '@/types/User';
+import { IUserMeRequest } from '@/types/User';
 
 export default function OrdersInstruments() {
   const query = useSearchParams();
   const router = useRouter();
-  const { data: user } = useSWR<IUser>('/api/user');
+  const { data: user } = useSWR<IUserMeRequest>('/api/user');
   const [opened, setOpened] = useState<boolean>(false);
   const [allOrders, setAllOrders] = useState<boolean>(!!query.get('all'));
   const [search, setSearch] = useState<string>(query.get('search') ?? '');

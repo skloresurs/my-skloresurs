@@ -1,39 +1,20 @@
 'use client';
 
-import { ActionIcon, Badge, Box, Group, Tooltip } from '@mantine/core';
-import { BadgeInfo, Pencil } from 'lucide-react';
+import { ActionIcon, Box, Group } from '@mantine/core';
+import { Pencil } from 'lucide-react';
 import { DataTable, DataTableColumn } from 'mantine-datatable';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import React from 'react';
 import useSWR from 'swr';
 
-import { Id } from '@/components/info';
 import PermissionBadge from '@/components/PermissionBadge';
-import IUser from '@/types/User';
+import { IUserRequest } from '@/types/User';
 
-const columns: DataTableColumn<IUser>[] = [
+const columns: DataTableColumn<IUserRequest>[] = [
   {
     accessor: 'id',
     title: 'ID',
-  },
-  {
-    accessor: 'verified',
-    render: (record) => (
-      <div className="flex flex-row gap-2">
-        {record.id_1c_main && <Id label="Вказано ID основного серверу" />}
-        {record.id_1c_secondary && (
-          <Id label="Вказано ID додаткового серверу" />
-        )}
-      </div>
-    ),
-    textAlign: 'center',
-    title: (
-      <Tooltip label="Інформація">
-        <BadgeInfo />
-      </Tooltip>
-    ),
-    width: 50,
   },
   {
     accessor: 'fullname',
@@ -42,16 +23,6 @@ const columns: DataTableColumn<IUser>[] = [
   {
     accessor: 'email',
     title: 'Email',
-  },
-  {
-    accessor: 'account_type',
-    render: (record) => {
-      if (record.account_type === 'Google') {
-        return <Badge color="green">Google</Badge>;
-      }
-      return <Badge>Стандартний</Badge>;
-    },
-    title: 'Тип облікового запису',
   },
   {
     accessor: 'permissions',
@@ -86,7 +57,7 @@ const columns: DataTableColumn<IUser>[] = [
 
 interface Response {
   total: number;
-  users: IUser[];
+  users: IUserRequest[];
 }
 
 const page = (pageParam: string | null) => {
@@ -101,7 +72,7 @@ export default function Users() {
   const searchParams = useSearchParams();
   const pageParam = searchParams.get('page');
   const { data, isValidating } = useSWR<Response>(
-    `/api/admin/users?page=${page(pageParam) ?? 1}`
+    `/api/users?page=${page(pageParam) ?? 1}`
   );
 
   const onPageChange = (p: number) => router.push(`/admin/users?page=${p}`);

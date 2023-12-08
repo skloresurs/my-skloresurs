@@ -12,12 +12,12 @@ import verifyIp from '@/libs/verify-ip';
 
 const TELEGRAM_API_ROUTE = `https://api.telegram.org/bot${env.TELEGRAM_BOT_TOKEN}`;
 
-export async function POST(request: NextRequest) {
+export async function POST(req: NextRequest) {
   try {
-    const session = await getSession(request);
+    const session = await getSession(req);
     await verifyIp(session.user.ip);
 
-    const { message, captcha } = await request.json();
+    const { message, captcha } = await req.json();
 
     await verifyReCaptcha(captcha);
 

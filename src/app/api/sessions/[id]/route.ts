@@ -7,11 +7,11 @@ import verifyIp from '@/libs/verify-ip';
 import { verifyPermissionServer } from '@/libs/verify-permission';
 
 export async function DELETE(
-  _: NextRequest,
+  req: NextRequest,
   { params }: { params: { id: string } }
 ) {
   try {
-    const session = await getSession(request);
+    const session = await getSession(req);
     await verifyIp(session.user.ip);
 
     const sessionById = await auth.getSession(params.id);

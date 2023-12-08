@@ -9,7 +9,7 @@ import React from 'react';
 import useSWR, { useSWRConfig } from 'swr';
 
 import ErrorPage from '@/components/ErrorPage';
-import IUser from '@/types/User';
+import { IUserMeRequest } from '@/types/User';
 
 const NotificationTitle = 'Вихід';
 
@@ -19,7 +19,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   const { mutate } = useSWRConfig();
-  const { data: user } = useSWR<IUser>(`/api/user`);
+  const { data: user } = useSWR<IUserMeRequest>(`/api/user`);
   const { data: ip } = useSWR('https://geolocation-db.com/json/');
 
   const errorCookie = getCookie('oauth_error');

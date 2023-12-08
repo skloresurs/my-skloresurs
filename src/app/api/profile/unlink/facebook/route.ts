@@ -10,11 +10,11 @@ export async function GET(req: NextRequest) {
     const session = await getSession(req);
     await verifyIp(session.user.ip);
     await auth.updateUserAttributes(session.user.userId, {
-      google: null,
-      googleId: null,
+      facebook: null,
+      facebookId: null,
     });
   } catch (error) {
-    cookies().set('oauth_error', 'Помилка під час видалення Google');
+    cookies().set('oauth_error', 'Помилка під час видалення Facebook');
   }
   return NextResponse.json(null, {
     headers: { Location: '/profile?tab=link' },
