@@ -1,7 +1,6 @@
 import {
   Boxes,
   GanttChartSquare,
-  HelpCircle,
   LogOut,
   LucideProps,
   Shield,
@@ -73,12 +72,6 @@ const footer: (logoutFunc: () => Promise<void>) => NavBarItem[] = (
   logoutFunc
 ) =>
   [
-    {
-      href: '/support',
-      icon: <HelpCircle {...props} />,
-      id: 'support',
-      label: 'Підтримка',
-    },
     {
       href: '/profile',
       icon: <UserRound {...props} />,

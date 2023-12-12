@@ -1,18 +1,23 @@
 import { z } from 'zod';
 
-import { cameraSchema, glassSchema, pellicleSchema } from './VisualizationData';
+import elementTypes from '@/data/order/element-type';
 
 const specificationSchema = z.object({
-  comment: z.string().optional(),
-  count: z
-    .number({ required_error: 'Кількість обов`язкова' })
-    .min(1, 'Кількість має бути більше 1'),
-  height: z
-    .number({ required_error: 'Висота обов`язкова' })
-    .min(0, 'Висота має бути більше 0'),
-  width: z
-    .number({ required_error: 'Ширина обов`язкова' })
-    .min(0, 'Ширина має бути більше 0'),
+  coatingType: z.string().optional(),
+  edgeProcessing: z.string().optional(),
+  emalitFilm: z.string().optional(),
+  facet: z.string().optional(),
+  gasFilling: z.string().optional(),
+  hardening: z.string().optional(),
+  hydrofob: z.boolean().optional(),
+  nomenclature: z
+    .string({ required_error: 'Номенклатура обов`язкова' })
+    .min(1, 'Номенклатура обов`язкова'),
+  paint: z.string().optional(),
+  sandBlaster: z.string().optional(),
+  type: z
+    .string({ required_error: 'Тип обов`язковий' })
+    .min(1, 'Тип обов`язковий'),
 });
 
 const formSchema = z.object({
@@ -21,17 +26,40 @@ const formSchema = z.object({
     .min(1, 'Адреса замовлення обов`язкова')
     .max(255, 'Максимальна довжина адреси 255 символів'),
   comment: z.string().optional(),
-  glass_type: z.string({ required_error: 'Тип стекла обов`язково' }),
   specification: specificationSchema
     .array()
-    .min(1, 'Додайте хоча б одну специфікацію'),
+    .min(1, 'Налаштуйте хоча б одну специфікацію'),
   title: z
     .string({ required_error: 'Назва замовлення обов`язкова' })
     .min(1, 'Назва замовлення обов`язкова')
     .max(255, 'Максимальна довжина назви 255 символів'),
-  visualization: z.array(glassSchema.or(pellicleSchema.or(cameraSchema))),
+  type: z
+    .string({ required_error: 'Тип замовлення обов`язково' })
+    .min(1, 'Тип замовлення обов`язково'),
 });
+
+const defaultData: ValidationSchema = {
+  address: '',
+  comment: '',
+  specification: [
+    {
+      coatingType: undefined,
+      edgeProcessing: undefined,
+      emalitFilm: undefined,
+      facet: undefined,
+      gasFilling: undefined,
+      hardening: undefined,
+      hydrofob: false,
+      nomenclature: '',
+      paint: undefined,
+      sandBlaster: undefined,
+      type: elementTypes[0].value,
+    },
+  ],
+  title: '',
+  type: '',
+};
 
 export type ValidationSchema = z.infer<typeof formSchema>;
 
-export { formSchema };
+export { defaultData, formSchema };

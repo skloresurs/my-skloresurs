@@ -1,14 +1,18 @@
 'use client';
 
 import { notifications } from '@mantine/notifications';
+import { TawkAPI } from '@tawk.to/tawk-messenger-react';
 import axios from 'axios';
 import { deleteCookie, getCookie } from 'cookies-next';
+import { HmacSHA256 } from 'crypto-js';
 import { CheckCircle, XCircle } from 'lucide-react';
 import { redirect } from 'next/navigation';
-import React from 'react';
+import React, { RefObject, useEffect } from 'react';
 import useSWR, { useSWRConfig } from 'swr';
 
 import ErrorPage from '@/components/ErrorPage';
+import { env } from '@/env.mjs';
+import useSupportStore from '@/stores/support';
 import { IUserMeRequest } from '@/types/User';
 
 const NotificationTitle = 'Вихід';
@@ -21,6 +25,7 @@ export default function RootLayout({
   const { mutate } = useSWRConfig();
   const { data: user } = useSWR<IUserMeRequest>(`/api/user`);
   const { data: ip } = useSWR('https://geolocation-db.com/json/');
+  const supportRef = useSupportStore((state) => state.supportRef);
 
   const errorCookie = getCookie('oauth_error');
   if (errorCookie) {
@@ -34,6 +39,35 @@ export default function RootLayout({
     });
     deleteCookie('oauth_error');
   }
+
+  useEffect(() => {
+    if ((supportRef as RefObject<TawkAPI>) && supportRef && user) {
+      try {
+        const hash = HmacSHA256(
+          user.email,
+          env.NEXT_PUBLIC_TAWK_API_KEY
+        ).toString();
+        supportRef.current?.setAttributes(
+          {
+            email: user.email,
+            hash,
+            userId: user.id,
+          },
+          () => {}
+        );
+        if (user.fullname) {
+          supportRef.current?.setAttributes(
+            {
+              name: user.fullname,
+            },
+            () => {}
+          );
+        }
+      } catch (error) {
+        /* empty */
+      }
+    }
+  }, [supportRef, user]);
 
   const logout = async () => {
     const notification = notifications.show({
