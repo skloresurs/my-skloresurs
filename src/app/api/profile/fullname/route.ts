@@ -21,6 +21,6 @@ export async function POST(req: NextRequest) {
     });
     return NextResponse.json(null, { status: 200 });
   } catch (error) {
-    return apiErrorHandler(error);
+    return apiErrorHandler(error, '/profile/fullname');
   }
 }

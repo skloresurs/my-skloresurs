@@ -48,6 +48,6 @@ export async function POST(req: NextRequest) {
     await setSession(req, user.id);
     return NextResponse.json(null, { status: 200 });
   } catch (error) {
-    return apiErrorHandler(error);
+    return apiErrorHandler(error, '/auth/register');
   }
 }

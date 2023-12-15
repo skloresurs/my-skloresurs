@@ -3,6 +3,9 @@ import { LuciaError } from 'lucia';
 import { NextResponse } from 'next/server';
 
 import CustomError from '@/classes/CustomError';
+import { env } from '@/env.mjs';
+
+import logger from './logger';
 
 /**
  * Handles errors thrown by the API.
@@ -13,9 +16,13 @@ import CustomError from '@/classes/CustomError';
  */
 export default function apiErrorHandler(
   error: unknown,
+  url: string,
   key?: string
 ): NextResponse {
   if (error instanceof CustomError) {
+    logger.error(
+      `API Error: [${error.code}] - ${error} (${env.BASE_URL}/api${url})`
+    );
     return NextResponse.json(
       {
         code: error.code,
@@ -49,6 +56,8 @@ export default function apiErrorHandler(
       );
     }
   }
+
+  logger.error(`API Error: [500] - ${error} (${env.BASE_URL}/api${url})`);
 
   return NextResponse.json(
     {

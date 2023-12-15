@@ -23,6 +23,6 @@ export async function POST(
     });
     return NextResponse.json(null, { status: 200 });
   } catch (error) {
-    return apiErrorHandler(error);
+    return apiErrorHandler(error, `/user/${params.id}/1c/main`);
   }
 }

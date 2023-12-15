@@ -17,6 +17,6 @@ export async function GET(
     const sessions = await auth.getAllUserSessions(params.id);
     return NextResponse.json({ ...user, sessions }, { status: 200 });
   } catch (error) {
-    return apiErrorHandler(error);
+    return apiErrorHandler(error, `/user/${params.id}`);
   }
 }

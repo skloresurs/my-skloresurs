@@ -25,6 +25,6 @@ export async function DELETE(
     await auth.invalidateSession(params.id);
     return NextResponse.json(null, { status: 200 });
   } catch (error) {
-    return apiErrorHandler(error);
+    return apiErrorHandler(error, `/sessions/${params.id}`);
   }
 }

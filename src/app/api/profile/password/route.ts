@@ -28,6 +28,6 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json(null, { status: 200 });
   } catch (error) {
-    return apiErrorHandler(error, 'old-password');
+    return apiErrorHandler(error, '/profile/password', 'old-password');
   }
 }

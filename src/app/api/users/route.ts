@@ -27,6 +27,6 @@ export async function GET(req: NextRequest) {
 
     return NextResponse.json({ total, users }, { status: 200 });
   } catch (error) {
-    return apiErrorHandler(error);
+    return apiErrorHandler(error, '/users');
   }
 }

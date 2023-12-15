@@ -4,6 +4,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { ServerError } from '@/classes/CustomError';
 import apiErrorHandler from '@/libs/api-error-handler';
 import axios1cMain from '@/libs/axios';
+import logger from '@/libs/logger';
 import { getSession } from '@/libs/sessions';
 import verifyIp from '@/libs/verify-ip';
 import { verifyPermissionServer } from '@/libs/verify-permission';
@@ -36,7 +37,8 @@ export async function GET(req: NextRequest) {
             },
           }
         )
-        .catch(() => {
+        .catch((error) => {
+          logger.error(error.response.data);
           throw ServerError;
         });
 
@@ -50,6 +52,6 @@ export async function GET(req: NextRequest) {
       }
     );
   } catch (error) {
-    return apiErrorHandler(error);
+    return apiErrorHandler(error, '/orders/manager');
   }
 }

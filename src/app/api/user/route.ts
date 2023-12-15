@@ -13,6 +13,6 @@ export async function GET(req: NextRequest) {
       { status: 200 }
     );
   } catch (error) {
-    return apiErrorHandler(error);
+    return apiErrorHandler(error, '/user');
   }
 }
