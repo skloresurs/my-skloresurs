@@ -41,6 +41,7 @@
     "clsx": "^2.0.0",
     "cookies-next": "^4.1.0",
     "crypto-js": "^4.2.0",
+    "geist": "^1.2.0",
     "http-status-codes": "^2.3.0",
     "lodash": "^4.17.21",
     "lucia": "2.7.4",
