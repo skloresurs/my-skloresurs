@@ -7,10 +7,7 @@ import { getSession } from '@/libs/sessions';
 import verifyIp from '@/libs/verify-ip';
 import { verifyPermissionServer } from '@/libs/verify-permission';
 
-export async function POST(
-  req: NextRequest,
-  { params }: { params: { id: string } }
-) {
+export async function POST(req: NextRequest, { params }: { params: { id: string } }) {
   try {
     const session = await getSession(req);
 
@@ -30,9 +27,7 @@ export async function POST(
           permissions: [...user.permissions, key],
         })
       : auth.updateUserAttributes(params.id, {
-          permissions: user.permissions.filter(
-            (permission: string) => permission !== key
-          ),
+          permissions: user.permissions.filter((permission: string) => permission !== key),
         }));
     return NextResponse.json(null, { status: 200 });
   } catch (error) {

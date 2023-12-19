@@ -1,6 +1,5 @@
-// eslint-disable-next-line eslint-comments/disable-enable-pair
 /* eslint-disable jsx-a11y/anchor-is-valid */
-// ^ Link in not next/link!
+// ^ incorrect on the icon
 
 'use client';
 
@@ -42,27 +41,24 @@ export default function ProfileTabs() {
   const router = useRouter();
   const activeTab = searchParams.get('tab') ?? 'info';
   return (
-    <Tabs
-      value={activeTab}
-      onChange={(value) => router.push(`/profile?tab=${value}`)}
-    >
+    <Tabs value={activeTab} onChange={(value) => router.push(`/profile?tab=${value}`)}>
       <Tabs.List>
-        <Tabs.Tab value="info" leftSection={<Info size={18} />}>
+        <Tabs.Tab value='info' leftSection={<Info size={20} />}>
           Інформація
         </Tabs.Tab>
-        <Tabs.Tab value="security" leftSection={<Shield size={18} />}>
+        <Tabs.Tab value='security' leftSection={<Shield size={20} />}>
           Безпека
         </Tabs.Tab>
-        <Tabs.Tab value="link" leftSection={<Link size={18} />}>
+        <Tabs.Tab value='link' leftSection={<Link size={20} />}>
           Зв&apos;язані аккаунти
         </Tabs.Tab>
-        <Tabs.Tab value="sessions" leftSection={<Fingerprint size={18} />}>
+        <Tabs.Tab value='sessions' leftSection={<Fingerprint size={20} />}>
           Сесії
         </Tabs.Tab>
       </Tabs.List>
 
       {tabs.map((tab) => (
-        <Tabs.Panel key={tab.key} value={tab.key} className="mt-3">
+        <Tabs.Panel key={tab.key} value={tab.key} className='mt-3'>
           {tab.content}
         </Tabs.Panel>
       ))}

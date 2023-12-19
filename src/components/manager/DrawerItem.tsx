@@ -13,12 +13,7 @@ interface IProps {
   className?: string;
 }
 
-export default function DrawerItem({
-  title,
-  data,
-  enableCopy,
-  className,
-}: IProps) {
+export default function DrawerItem({ title, data, enableCopy, className }: IProps) {
   const [, copyToClipboard] = useCopyToClipboard();
 
   function copy() {
@@ -33,10 +28,10 @@ export default function DrawerItem({
   return (
     <div className={twMerge('flex flex-row gap-2', className)}>
       <span>{title}:</span>
-      <div className="flex-1 text-right">{data}</div>
+      <div className='flex-1 text-right'>{data}</div>
       {enableCopy && !React.isValidElement(data) && (
         <ClipboardCopy
-          className="cursor-pointer duration-300 hover:text-[var(--mantine-color-blue-5)]"
+          className='cursor-pointer duration-300 hover:text-[var(--mantine-color-blue-5)]'
           onClick={() => copy()}
         />
       )}

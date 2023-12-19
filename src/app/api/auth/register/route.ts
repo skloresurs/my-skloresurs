@@ -3,11 +3,7 @@ import { nanoid } from 'nanoid';
 import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
 
-import {
-  EmailExistsError,
-  MissingParamsError,
-  ServerError,
-} from '@/classes/CustomError';
+import { EmailExistsError, MissingParamsError, ServerError } from '@/classes/CustomError';
 import apiErrorHandler from '@/libs/api-error-handler';
 import { auth } from '@/libs/lucia';
 import verifyReCaptcha from '@/libs/recaptcha';
@@ -37,10 +33,7 @@ export async function POST(req: NextRequest) {
         userId: nanoid(),
       })
       .catch((error) => {
-        if (
-          (error as PrismaClientKnownRequestError) &&
-          error.code === 'P2002'
-        ) {
+        if ((error as PrismaClientKnownRequestError) && error.code === 'P2002') {
           throw EmailExistsError;
         }
         throw ServerError;

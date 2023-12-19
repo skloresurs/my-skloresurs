@@ -11,15 +11,11 @@ export default function ServerError() {
       <Container>
         <div className={classes.label}>500</div>
         <Title className={classes.title}>Щойно сталося щось погане...</Title>
-        <Text size="lg" ta="center" className={classes.description}>
+        <Text size='lg' ta='center' className={classes.description}>
           Наші сервери не змогли обробити ваш запит. Спробуйте оновити сторінку.
         </Text>
-        <Group justify="center">
-          <Button
-            onClick={() => window.location.reload()}
-            variant="white"
-            size="md"
-          >
+        <Group justify='center'>
+          <Button onClick={() => window.location.reload()} variant='white' size='md'>
             Оновіть сторінку
           </Button>
         </Group>

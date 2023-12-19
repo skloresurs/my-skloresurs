@@ -17,11 +17,7 @@ import { IUserMeRequest } from '@/types/User';
 
 const NotificationTitle = 'Вихід';
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   const { mutate } = useSWRConfig();
   const { data: user } = useSWR<IUserMeRequest>(`/api/user`);
   const { data: ip } = useSWR('https://geolocation-db.com/json/');
@@ -43,10 +39,7 @@ export default function RootLayout({
   useEffect(() => {
     if ((supportRef as RefObject<TawkAPI>) && supportRef && user) {
       try {
-        const hash = HmacSHA256(
-          user.email,
-          env.NEXT_PUBLIC_TAWK_API_KEY
-        ).toString();
+        const hash = HmacSHA256(user.email, env.NEXT_PUBLIC_TAWK_API_KEY).toString();
         supportRef.current?.setAttributes(
           {
             email: user.email,
@@ -85,8 +78,7 @@ export default function RootLayout({
         icon: <XCircle />,
         id: notification,
         loading: false,
-        message:
-          error.response?.data.error ?? error.message ?? 'Невідома помилка',
+        message: error.response?.data.error ?? error.message ?? 'Невідома помилка',
         title: NotificationTitle,
         withCloseButton: true,
       });
@@ -116,9 +108,9 @@ export default function RootLayout({
     return (
       <ErrorPage
         code={403}
-        title="Доступ заборонено"
-        description="Доступ з цієї IP-адреси заборонено"
-        buttonLabel="Вийти"
+        title='Доступ заборонено'
+        description='Доступ з цієї IP-адреси заборонено'
+        buttonLabel='Вийти'
         onClick={logout}
       />
     );

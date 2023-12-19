@@ -34,10 +34,7 @@ export default function UserPermissionsTab({ user }: { user?: IUserRequest }) {
       },
       {
         description: 'Доступ до адмін-панелі',
-        disabled: !verifyPermission(
-          activeUser?.permissions ?? [],
-          'SuperAdmin'
-        ),
+        disabled: !verifyPermission(activeUser?.permissions ?? [], 'SuperAdmin'),
         id: 'Admin',
         title: 'Адмін',
       },
@@ -85,8 +82,7 @@ export default function UserPermissionsTab({ user }: { user?: IUserRequest }) {
           icon: <XCircle />,
           id: notification,
           loading: false,
-          message:
-            error.response?.data.error ?? error.message ?? 'Невідома помилка',
+          message: error.response?.data.error ?? error.message ?? 'Невідома помилка',
           title: NotificationTitle,
           withCloseButton: true,
         });
@@ -99,13 +95,9 @@ export default function UserPermissionsTab({ user }: { user?: IUserRequest }) {
       await mutate('/api/user');
     }
 
-    await mutate(
-      (key: string) => key.startsWith('/api/admin/users'),
-      undefined,
-      {
-        revalidate: false,
-      }
-    );
+    await mutate((key: string) => key.startsWith('/api/admin/users'), undefined, {
+      revalidate: false,
+    });
 
     return notifications.update({
       autoClose: 3000,
@@ -120,7 +112,7 @@ export default function UserPermissionsTab({ user }: { user?: IUserRequest }) {
   };
 
   return (
-    <div className="flex w-full max-w-xl flex-col gap-5">
+    <div className='flex w-full max-w-xl flex-col gap-5'>
       {permissionsData.map((e) => (
         <div key={e?.id ?? nanoid()}>
           {e ? (
@@ -130,10 +122,8 @@ export default function UserPermissionsTab({ user }: { user?: IUserRequest }) {
               description={e.description}
               disabled={e.disabled}
               defaultChecked={user?.permissions.includes(e.id)}
-              onChange={(event) =>
-                updatePermission(e.id, event.currentTarget.checked)
-              }
-              size="md"
+              onChange={(event) => updatePermission(e.id, event.currentTarget.checked)}
+              size='md'
             />
           ) : (
             <Divider />

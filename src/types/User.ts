@@ -24,10 +24,4 @@ export interface IUserMeRequest extends IUserRequest {
   thisSession: string;
 }
 
-export type Permission =
-  | 'SuperAdmin'
-  | 'Admin'
-  | 'Manager'
-  | 'ManagerAllOrders'
-  | 'ManagerFinance'
-  | 'Driver';
+export type Permission = 'SuperAdmin' | 'Admin' | 'Manager' | 'ManagerAllOrders' | 'ManagerFinance' | 'Driver';

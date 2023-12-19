@@ -3,10 +3,7 @@ import { nanoid } from 'nanoid';
 import { cookies } from 'next/headers';
 import { type NextRequest, NextResponse } from 'next/server';
 
-import CustomError, {
-  EmailExistsError,
-  ServerError,
-} from '@/classes/CustomError';
+import CustomError, { EmailExistsError, ServerError } from '@/classes/CustomError';
 import { auth, facebookAuth } from '@/libs/lucia';
 import oauthErrorRedirect from '@/libs/oauth-middleware';
 import prisma from '@/libs/prisma';
@@ -36,10 +33,7 @@ export const GET = async (req: NextRequest) => {
 
     if (activeSession) {
       if (existUser) {
-        return oauthErrorRedirect(
-          "Цей oauth аккаунт вже зв'язаний з іншим аккаунтом",
-          activeSessionBoolean
-        );
+        return oauthErrorRedirect("Цей oauth аккаунт вже зв'язаний з іншим аккаунтом", activeSessionBoolean);
       }
       await auth.updateUserAttributes(activeSession.user.id, {
         facebook: facebookUser.name,
@@ -76,10 +70,7 @@ export const GET = async (req: NextRequest) => {
           userId: nanoid(),
         })
         .catch((error) => {
-          if (
-            (error as PrismaClientKnownRequestError) &&
-            error.code === 'P2002'
-          ) {
+          if ((error as PrismaClientKnownRequestError) && error.code === 'P2002') {
             throw EmailExistsError;
           }
           throw ServerError;

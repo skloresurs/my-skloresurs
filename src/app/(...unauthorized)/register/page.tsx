@@ -26,9 +26,7 @@ const formSchema = z
     fullname: z
       .string({ required_error: "Повне ім'я є обов'язковим" })
       .min(3, "Повне ім'я не може бути меншим за 3 символів"),
-    password: z
-      .string({ required_error: "Пароль є обов'язковим" })
-      .min(8, 'Пароль не може бути меншим за 8 символів'),
+    password: z.string({ required_error: "Пароль є обов'язковим" }).min(8, 'Пароль не може бути меншим за 8 символів'),
   })
   .refine((data) => data.password === data.confirm, {
     message: 'Паролі не співпадають',
@@ -89,8 +87,7 @@ export default function AuthenticationImage() {
           icon: <XCircle />,
           id: notification,
           loading: false,
-          message:
-            error.response?.data.error ?? error.message ?? 'Невідома помилка',
+          message: error.response?.data.error ?? error.message ?? 'Невідома помилка',
           title: NotificationTitle,
           withCloseButton: true,
         });
@@ -115,53 +112,28 @@ export default function AuthenticationImage() {
   return (
     <div className={classes.wrapper}>
       <Paper className={classes.form} radius={0} p={30}>
-        <Title order={2} className={classes.title} ta="center" mt="md" mb={50}>
+        <Title order={2} className={classes.title} ta='center' mt='md' mb={50}>
           Реєстрація
         </Title>
-        <form
-          className="space-y-3"
-          onSubmit={form.onSubmit((values: ValidationSchema) =>
-            onSubmit(values)
-          )}
-        >
-          <TextInput
-            label="E-mail"
-            size="md"
-            withAsterisk
-            {...form.getInputProps('email')}
-          />
-          <TextInput
-            label="Повне ім'я"
-            size="md"
-            withAsterisk
-            {...form.getInputProps('fullname')}
-          />
-          <PasswordInput
-            label="Пароль"
-            size="md"
-            withAsterisk
-            {...form.getInputProps('password')}
-          />
-          <PasswordInput
-            label="Підтвердіть пароль"
-            size="md"
-            withAsterisk
-            {...form.getInputProps('confirm')}
-          />
-          <Button type="submit" fullWidth mt="xl" size="md" variant="filled">
+        <form className='space-y-3' onSubmit={form.onSubmit((values: ValidationSchema) => onSubmit(values))}>
+          <TextInput label='E-mail' size='md' withAsterisk {...form.getInputProps('email')} />
+          <TextInput label="Повне ім'я" size='md' withAsterisk {...form.getInputProps('fullname')} />
+          <PasswordInput label='Пароль' size='md' withAsterisk {...form.getInputProps('password')} />
+          <PasswordInput label='Підтвердіть пароль' size='md' withAsterisk {...form.getInputProps('confirm')} />
+          <Button type='submit' fullWidth mt='xl' size='md' variant='filled'>
             Зареєструватись
           </Button>
         </form>
-        <div className="mt-5">
+        <div className='mt-5'>
           <span>This site is protected by reCAPTCHA and the Google </span>
-          <Link href="https://policies.google.com/privacy">Privacy Policy</Link>
+          <Link href='https://policies.google.com/privacy'>Privacy Policy</Link>
           <span> and </span>
-          <Link href="https://policies.google.com/terms">Terms of Service</Link>
+          <Link href='https://policies.google.com/terms'>Terms of Service</Link>
           <span> apply.</span>
         </div>
-        <div className="mt-5">
+        <div className='mt-5'>
           <span>Вже є аккаунт? </span>
-          <Link href="/login">Увійти</Link>
+          <Link href='/login'>Увійти</Link>
         </div>
       </Paper>
     </div>

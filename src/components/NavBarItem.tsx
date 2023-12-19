@@ -11,14 +11,9 @@ interface IProps {
   toogle: () => void;
 }
 
-const isRootItem = (item: NavBarItem): item is RootNavBarItem =>
-  'children' in item;
+const isRootItem = (item: NavBarItem): item is RootNavBarItem => 'children' in item;
 
-export default function NavBarItemCompnent({
-  item,
-  hide = false,
-  toogle,
-}: IProps) {
+export default function NavBarItemCompnent({ item, hide = false, toogle }: IProps) {
   const pathname = usePathname();
 
   if (hide) {
@@ -27,12 +22,7 @@ export default function NavBarItemCompnent({
 
   if (isRootItem(item) && item.children) {
     return (
-      <NavLink
-        label={item.label}
-        leftSection={item.icon}
-        description={item.description}
-        opened
-      >
+      <NavLink label={item.label} leftSection={item.icon} description={item.description} opened>
         {item.children.map((e) => (
           <NavBarItemCompnent key={e.id} item={e} hide={hide} toogle={toogle} />
         ))}

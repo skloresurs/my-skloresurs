@@ -10,10 +10,7 @@ import { env } from '@/env.mjs';
 import { defaultData, ValidationSchema } from '@/types/NewOrder';
 
 interface IProps {
-  form: UseFormReturnType<
-    ValidationSchema,
-    (values: ValidationSchema) => ValidationSchema
-  >;
+  form: UseFormReturnType<ValidationSchema, (values: ValidationSchema) => ValidationSchema>;
   setActiveTab: React.Dispatch<React.SetStateAction<string | null>>;
 }
 
@@ -29,24 +26,19 @@ export default function MainInformation({ form, setActiveTab }: IProps) {
   });
 
   return (
-    <Fieldset legend="Основна інформація" className="space-y-2">
-      <TextInput
-        label="Назва замовлення"
-        size="md"
-        withAsterisk
-        {...form.getInputProps('title')}
-      />
+    <Fieldset legend='Основна інформація' className='space-y-2'>
+      <TextInput label='Назва замовлення' size='md' withAsterisk {...form.getInputProps('title')} />
       <TextInput
         ref={ref}
-        label="Адреса"
-        placeholder="Харків, вул. Сумська, 17, кв. 25"
-        size="md"
+        label='Адреса'
+        placeholder='Харків, вул. Сумська, 17, кв. 25'
+        size='md'
         withAsterisk
         {...form.getInputProps('address')}
       />
 
       <Select
-        label="Вид"
+        label='Вид'
         {...form.getInputProps('type')}
         data={OrderTypes}
         allowDeselect={false}
@@ -57,7 +49,7 @@ export default function MainInformation({ form, setActiveTab }: IProps) {
           setActiveTab('0');
         }}
       />
-      <Textarea label="Коментар" {...form.getInputProps('comment')} />
+      <Textarea label='Коментар' {...form.getInputProps('comment')} />
     </Fieldset>
   );
 }

@@ -45,12 +45,9 @@ export async function GET(req: NextRequest) {
       orders = [...orders, ...response.data.data];
     }
 
-    return NextResponse.json(
-      orderBy(orders, ['locked', 'createdAt'], ['asc', 'desc']),
-      {
-        status: 200,
-      }
-    );
+    return NextResponse.json(orderBy(orders, ['locked', 'createdAt'], ['asc', 'desc']), {
+      status: 200,
+    });
   } catch (error) {
     return apiErrorHandler(error, '/orders/manager');
   }

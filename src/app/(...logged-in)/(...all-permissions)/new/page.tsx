@@ -6,7 +6,7 @@ import TitleBar from '@/components/TitleBar';
 export default function NewOrderPage() {
   return (
     <>
-      <TitleBar title="Нове замовлення" />
+      <TitleBar title='Нове замовлення' />
       <NewOrder />
     </>
   );

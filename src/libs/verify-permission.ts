@@ -1,11 +1,7 @@
 import { MissingPermissionError } from '@/classes/CustomError';
 import { Permission } from '@/types/User';
 
-const verifyPermission = (
-  userPermissions: Permission[],
-  permission?: Permission,
-  defaultState: boolean = false
-) => {
+const verifyPermission = (userPermissions: Permission[], permission?: Permission, defaultState: boolean = false) => {
   switch (permission) {
     case 'Manager': {
       return (
@@ -23,10 +19,7 @@ const verifyPermission = (
       );
     }
     case 'Admin': {
-      return (
-        userPermissions.includes('Admin') ||
-        userPermissions.includes('SuperAdmin')
-      );
+      return userPermissions.includes('Admin') || userPermissions.includes('SuperAdmin');
     }
     case 'SuperAdmin': {
       return userPermissions.includes('SuperAdmin');
@@ -37,10 +30,7 @@ const verifyPermission = (
   }
 };
 
-export function verifyPermissionServer(
-  userPermissions: Permission[],
-  permission?: Permission
-) {
+export function verifyPermissionServer(userPermissions: Permission[], permission?: Permission) {
   if (!verifyPermission(userPermissions, permission)) {
     throw MissingPermissionError;
   }

@@ -8,10 +8,7 @@ import { UnauthorizedError } from '@/classes/CustomError';
 
 import { auth } from './lucia';
 
-export default async function generateSession(
-  request: NextRequest,
-  userId: string
-) {
+export default async function generateSession(request: NextRequest, userId: string) {
   const parser = new UAParser(request.headers.get('user-agent') ?? '');
   return auth.createSession({
     attributes: {

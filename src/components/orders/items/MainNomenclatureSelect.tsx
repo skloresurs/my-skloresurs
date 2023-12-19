@@ -11,10 +11,7 @@ import { ValidationSchema } from '@/types/NewOrder';
 
 interface IProps {
   activeTab: string | null;
-  form: UseFormReturnType<
-    ValidationSchema,
-    (values: ValidationSchema) => ValidationSchema
-  >;
+  form: UseFormReturnType<ValidationSchema, (values: ValidationSchema) => ValidationSchema>;
 }
 
 interface IRequest {
@@ -27,34 +24,25 @@ interface IRequest {
 
 export default function MainNomenclatureSelect({ activeTab, form }: IProps) {
   const { data, isValidating, error } = useSWR<IRequest>(
-    `${
-      env.NEXT_PUBLIC_API_URL_1C_MAIN
-    }/data/nomenclatures/${form.values.specification?.at(Number(activeTab))
-      ?.type}`
+    `${env.NEXT_PUBLIC_API_URL_1C_MAIN}/data/nomenclatures/${form.values.specification?.at(Number(activeTab))?.type}`
   );
   return (
-    <div className="flex w-full flex-row gap-2">
+    <div className='flex w-full flex-row gap-2'>
       <Select
-        className="flex-1"
-        label="Номенклатура"
+        className='flex-1'
+        label='Номенклатура'
         {...form.getInputProps(`specification.${activeTab}.nomenclature`)}
         allowDeselect={false}
         disabled={error || isValidating}
-        rightSection={
-          isValidating ? <Loader2 className="animate-spin" /> : null
-        }
+        rightSection={isValidating ? <Loader2 className='animate-spin' /> : null}
         placeholder={error ? 'Помилка отримання даних' : ''}
         data={data?.data ?? []}
       />
       <TextInput
-        label="Товщина"
-        value={
-          data?.data?.find(
-            (e) => e.value === form.values.specification[0].nomenclature
-          )?.thickness ?? '-'
-        }
+        label='Товщина'
+        value={data?.data?.find((e) => e.value === form.values.specification[0].nomenclature)?.thickness ?? '-'}
         readOnly
-        rightSection="мм"
+        rightSection='мм'
       />
     </div>
   );

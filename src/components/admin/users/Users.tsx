@@ -27,7 +27,7 @@ const columns: DataTableColumn<IUserRequest>[] = [
   {
     accessor: 'permissions',
     render: (record) => (
-      <div className="flex flex-wrap gap-2">
+      <div className='flex flex-wrap gap-2'>
         {record.permissions.map((permission) => (
           <PermissionBadge key={permission} permission={permission} />
         ))}
@@ -38,14 +38,8 @@ const columns: DataTableColumn<IUserRequest>[] = [
   {
     accessor: 'actions',
     render: (record) => (
-      <Group gap={4} justify="right" wrap="nowrap">
-        <ActionIcon
-          component={Link}
-          size="sm"
-          variant="subtle"
-          color="yellow"
-          href={`/admin/users/${record.id}`}
-        >
+      <Group gap={4} justify='right' wrap='nowrap'>
+        <ActionIcon component={Link} size='sm' variant='subtle' color='yellow' href={`/admin/users/${record.id}`}>
           <Pencil />
         </ActionIcon>
       </Group>
@@ -71,9 +65,7 @@ export default function Users() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const pageParam = searchParams.get('page');
-  const { data, isValidating } = useSWR<Response>(
-    `/api/users?page=${page(pageParam) ?? 1}`
-  );
+  const { data, isValidating } = useSWR<Response>(`/api/users?page=${page(pageParam) ?? 1}`);
 
   const onPageChange = (p: number) => router.push(`/admin/users?page=${p}`);
 
@@ -83,7 +75,7 @@ export default function Users() {
       withColumnBorders
       striped
       columns={columns}
-      verticalSpacing="md"
+      verticalSpacing='md'
       records={data?.users ?? []}
       loaderBackgroundBlur={2}
       totalRecords={data?.total ?? 0}

@@ -10,31 +10,31 @@ interface IProps {
 export default function PermissionBadge({ permission }: IProps) {
   switch (permission) {
     case 'SuperAdmin': {
-      return <Badge color="purple">Супер-адмін</Badge>;
+      return <Badge color='purple'>Супер-адмін</Badge>;
     }
 
     case 'Admin': {
-      return <Badge color="yellow">Адмін</Badge>;
+      return <Badge color='yellow'>Адмін</Badge>;
     }
 
     case 'Manager': {
-      return <Badge color="green">Менеджер</Badge>;
+      return <Badge color='green'>Менеджер</Badge>;
     }
 
     case 'ManagerAllOrders': {
-      return <Badge color="green">Менеджер: Всі замовлення</Badge>;
+      return <Badge color='green'>Менеджер: Всі замовлення</Badge>;
     }
 
     case 'ManagerFinance': {
-      return <Badge color="green">Менеджер: Фінансові показники</Badge>;
+      return <Badge color='green'>Менеджер: Фінансові показники</Badge>;
     }
 
     case 'Driver': {
-      return <Badge color="red">Водій</Badge>;
+      return <Badge color='red'>Водій</Badge>;
     }
 
     default: {
-      return <Badge color="gray">Невідомо</Badge>;
+      return <Badge color='gray'>Невідомо</Badge>;
     }
   }
 }

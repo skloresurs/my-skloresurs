@@ -1,13 +1,6 @@
 'use client';
 
-import {
-  Button,
-  Divider,
-  Paper,
-  PasswordInput,
-  TextInput,
-  Title,
-} from '@mantine/core';
+import { Button, Divider, Paper, PasswordInput, TextInput, Title } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { notifications } from '@mantine/notifications';
 import axios from 'axios';
@@ -28,9 +21,7 @@ const formSchema = z.object({
   email: z.string({ required_error: "E-mail є обов'язковим" }).email({
     message: 'Некоректний E-mail',
   }),
-  password: z
-    .string({ required_error: "Пароль є обов'язковим" })
-    .min(8, 'Пароль не може бути меншим за 8 символів'),
+  password: z.string({ required_error: "Пароль є обов'язковим" }).min(8, 'Пароль не може бути меншим за 8 символів'),
 });
 
 const NotificationTitle = 'Авторизація';
@@ -98,8 +89,7 @@ export default function AuthenticationImage() {
           icon: <XCircle />,
           id: notification,
           loading: false,
-          message:
-            error.response?.data.error ?? error.message ?? 'Невідома помилка',
+          message: error.response?.data.error ?? error.message ?? 'Невідома помилка',
           title: NotificationTitle,
           withCloseButton: true,
         });
@@ -124,75 +114,34 @@ export default function AuthenticationImage() {
   return (
     <div className={classes.wrapper}>
       <Paper className={classes.form} radius={0} p={30}>
-        <Title order={2} className={classes.title} ta="center" mt="md" mb={50}>
+        <Title order={2} className={classes.title} ta='center' mt='md' mb={50}>
           З поверненням!
         </Title>
-        <form
-          onSubmit={form.onSubmit((values: ValidationSchema) =>
-            onSubmit(values)
-          )}
-        >
-          <TextInput
-            label="E-mail"
-            size="md"
-            withAsterisk
-            {...form.getInputProps('email')}
-          />
-          <PasswordInput
-            label="Пароль"
-            mt="md"
-            size="md"
-            withAsterisk
-            {...form.getInputProps('password')}
-          />
-          <Button type="submit" fullWidth mt="xl" size="md" variant="filled">
+        <form onSubmit={form.onSubmit((values: ValidationSchema) => onSubmit(values))}>
+          <TextInput label='E-mail' size='md' withAsterisk {...form.getInputProps('email')} />
+          <PasswordInput label='Пароль' mt='md' size='md' withAsterisk {...form.getInputProps('password')} />
+          <Button type='submit' fullWidth mt='xl' size='md' variant='filled'>
             Увійти
           </Button>
-          <Divider className="my-3" label="або" />
-          <div className="flex flex-row items-center justify-center gap-2">
-            <Button
-              component={Link}
-              href="/api/auth/google"
-              variant="outline"
-              fullWidth
-              size="md"
-            >
-              <Image
-                src="https://cdn.simpleicons.org/google/white"
-                alt="Google"
-                width={20}
-                height={20}
-              />
+          <Divider className='my-3' label='або' />
+          <div className='flex flex-row items-center justify-center gap-2'>
+            <Button component={Link} href='/api/auth/google' variant='outline' fullWidth size='md'>
+              <Image src='https://cdn.simpleicons.org/google/white' alt='Google' width={20} height={20} />
             </Button>
-            <Button
-              component={Link}
-              href="/api/auth/facebook"
-              variant="outline"
-              fullWidth
-              size="md"
-            >
-              <Image
-                src="https://cdn.simpleicons.org/facebook/white"
-                alt="Facebook"
-                width={20}
-                height={20}
-              />
+            <Button component={Link} href='/api/auth/facebook' variant='outline' fullWidth size='md'>
+              <Image src='https://cdn.simpleicons.org/facebook/white' alt='Facebook' width={20} height={20} />
             </Button>
           </div>
-          <div className="mt-5">
+          <div className='mt-5'>
             <span>This site is protected by reCAPTCHA and the Google </span>
-            <Link href="https://policies.google.com/privacy">
-              Privacy Policy
-            </Link>
+            <Link href='https://policies.google.com/privacy'>Privacy Policy</Link>
             <span> and </span>
-            <Link href="https://policies.google.com/terms">
-              Terms of Service
-            </Link>
+            <Link href='https://policies.google.com/terms'>Terms of Service</Link>
             <span> apply.</span>
           </div>
-          <div className="mt-5">
+          <div className='mt-5'>
             <span>Немає облікового запису? </span>
-            <Link href="/register">Зареєструватися</Link>
+            <Link href='/register'>Зареєструватися</Link>
           </div>
         </form>
       </Paper>

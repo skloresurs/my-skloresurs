@@ -1,15 +1,11 @@
 'use client';
 
-import {
-  AppShell as MantineAppShell,
-  Burger,
-  Divider,
-  ScrollArea,
-} from '@mantine/core';
+import { AppShell as MantineAppShell, Burger, Divider, ScrollArea, Title } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { notifications } from '@mantine/notifications';
 import axios from 'axios';
 import { CheckCircle, XCircle } from 'lucide-react';
+import Image from 'next/image';
 import React, { ReactNode } from 'react';
 import useSWR, { useSWRConfig } from 'swr';
 
@@ -41,8 +37,7 @@ export default function AppShell({ children }: { children: ReactNode }) {
         icon: <XCircle />,
         id: notification,
         loading: false,
-        message:
-          error.response?.data.error ?? error.message ?? 'Невідома помилка',
+        message: error.response?.data.error ?? error.message ?? 'Невідома помилка',
         title: NotificationTitle,
         withCloseButton: true,
       });
@@ -68,38 +63,30 @@ export default function AppShell({ children }: { children: ReactNode }) {
     <MantineAppShell
       header={{ height: 60 }}
       navbar={{ breakpoint: 'sm', collapsed: { mobile: !opened }, width: 250 }}
-      padding="md"
+      padding='md'
     >
-      <MantineAppShell.Header className="flex flex-row items-center justify-between gap-2 px-5">
-        <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
-        Logo
+      <MantineAppShell.Header className='flex flex-row items-center gap-2 px-5'>
+        <Burger opened={opened} onClick={toggle} hiddenFrom='sm' size='sm' />
+        <Image src='/logo.webp' height={40} width={40} alt='Skloresurs' />
+        <Title order={1}>My Skloresurs</Title>
       </MantineAppShell.Header>
 
-      <MantineAppShell.Navbar p="md">
-        <MantineAppShell.Section className="text-center text-lg">
-          Вітаємо, {user?.fullname}
-        </MantineAppShell.Section>
-        <MantineAppShell.Section grow my="md" component={ScrollArea}>
+      <MantineAppShell.Navbar p='md'>
+        <MantineAppShell.Section className='text-center text-lg'>Вітаємо, {user?.fullname}</MantineAppShell.Section>
+        <MantineAppShell.Section grow my='md' component={ScrollArea}>
           {navbar.map((e) => (
             <NavBarItemCompnent
               toogle={toggle}
               key={e.id}
               item={e}
-              hide={
-                !verifyPermission(user?.permissions ?? [], e.permission, true)
-              }
+              hide={!verifyPermission(user?.permissions ?? [], e.permission, true)}
             />
           ))}
         </MantineAppShell.Section>
         <MantineAppShell.Section>
-          <Divider className="my-4" />
+          <Divider className='my-4' />
           {footer(() => logout()).map((e) => (
-            <NavBarItemCompnent
-              key={e.id}
-              toogle={toggle}
-              item={e}
-              hide={false}
-            />
+            <NavBarItemCompnent key={e.id} toogle={toggle} item={e} hide={false} />
           ))}
         </MantineAppShell.Section>
       </MantineAppShell.Navbar>

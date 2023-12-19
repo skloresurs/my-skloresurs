@@ -9,11 +9,7 @@ import ErrorPage from '@/components/ErrorPage';
 import verifyPermission from '@/libs/verify-permission';
 import { IUserMeRequest } from '@/types/User';
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   const { data: user } = useSWR<IUserMeRequest>(`/api/user`);
   const router = useRouter();
 
@@ -25,9 +21,9 @@ export default function RootLayout({
     return (
       <ErrorPage
         code={403}
-        title="Доступ заборонено"
-        description="У вас недостатньо прав для відображення цієї сторінки"
-        buttonLabel="На головну"
+        title='Доступ заборонено'
+        description='У вас недостатньо прав для відображення цієї сторінки'
+        buttonLabel='На головну'
         onClick={() => router.push('/')}
       />
     );

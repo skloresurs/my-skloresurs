@@ -1,4 +1,9 @@
 {
+  "env": {
+    "browser": true,
+    "es2020": true,
+    "node": true
+  },
   "extends": [
     // Next.js
     "next/core-web-vitals",
@@ -7,50 +12,49 @@
     "airbnb",
     "airbnb-typescript",
     "plugin:@typescript-eslint/recommended",
+    "plugin:jsx-a11y/recommended",
 
     // Extended
     "plugin:sonarjs/recommended",
     "plugin:unicorn/recommended",
-    "plugin:array-func/recommended",
-    "plugin:no-use-extend-native/recommended",
-    "plugin:promise/recommended",
 
     // Security
-    "plugin:no-unsanitized/DOM",
     "plugin:security/recommended",
     "plugin:xss/recommended",
 
     // Others
     "plugin:tailwindcss/recommended",
-    "plugin:eslint-comments/recommended",
+    "plugin:jsonc/recommended-with-jsonc",
+    "plugin:import/recommended",
+    "plugin:import/typescript",
     "prettier"
   ],
   "parser": "@typescript-eslint/parser",
-  "plugins": [
-    "@typescript-eslint",
-    "no-constructor-bind",
-    "no-secrets",
-    "simple-import-sort",
-    "sort-keys-fix"
-  ],
-  "root": true,
   "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": 2021,
+    "sourceType": "module",
     "project": "./tsconfig.json"
   },
+  "plugins": ["import", "@typescript-eslint", "react", "no-secrets", "simple-import-sort", "prettier"],
+  "root": true,
+  "settings": {
+    "import/resolver": {
+      "typescript": {
+        "project": "."
+      },
+      "node": true
+    }
+  },
   "rules": {
-    // no-constructor-bind plugin
-    "no-constructor-bind/no-constructor-bind": "error",
-    "no-constructor-bind/no-constructor-state": "error",
-
     // no-secrets plugin
     "no-secrets/no-secrets": "error",
 
     // simple-import-sort plugin
     "simple-import-sort/imports": "error",
     "simple-import-sort/exports": "error",
-
-    //sort-keys-fix plugin
-    "sort-keys-fix/sort-keys-fix": "warn",
 
     // Fix unicorn rules for React
     "unicorn/filename-case": [
@@ -64,10 +68,7 @@
     ],
 
     // Disable no-duplicate-string rule for server error message
-    "sonarjs/no-duplicate-string": [
-      "error",
-      { "ignoreStrings": "Помилка сервера" }
-    ],
+    "sonarjs/no-duplicate-string": ["error", { "ignoreStrings": "Помилка сервера" }],
 
     // Next.js rules for API routes
     "import/prefer-default-export": "off",
@@ -97,7 +98,6 @@
     "react/jsx-props-no-spreading": "off",
 
     // The following rules are disabled due to clashing with other plugins
-    "array-func/prefer-array-from": "off",
     "import/order": "off",
     "sort-imports": "off",
     "react/require-default-props": "off"

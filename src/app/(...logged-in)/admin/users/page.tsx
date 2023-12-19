@@ -6,7 +6,7 @@ import TitleBar from '@/components/TitleBar';
 export default function UsersPage() {
   return (
     <>
-      <TitleBar title="Користувачі" />
+      <TitleBar title='Користувачі' />
       <Users />
     </>
   );

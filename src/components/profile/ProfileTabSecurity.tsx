@@ -1,16 +1,9 @@
 'use client';
 
-import {
-  Button,
-  Divider,
-  Paper,
-  PasswordInput,
-  TextInput,
-  Title,
-} from '@mantine/core';
+import { Button, Divider, Paper, PasswordInput, TextInput, Title } from '@mantine/core';
 import { notifications } from '@mantine/notifications';
 import axios from 'axios';
-import { CheckCircle, XCircle } from 'lucide-react';
+import { CheckCircle, Pencil, XCircle } from 'lucide-react';
 import { nanoid } from 'nanoid';
 import React, { useState } from 'react';
 import useSWR from 'swr';
@@ -57,8 +50,7 @@ export default function ProfileTabSecurity() {
           icon: <XCircle />,
           id: notification,
           loading: false,
-          message:
-            error.response?.data.error ?? error.message ?? 'Невідома помилка',
+          message: error.response?.data.error ?? error.message ?? 'Невідома помилка',
           title: NotificationTitle,
           withCloseButton: true,
         });
@@ -79,60 +71,54 @@ export default function ProfileTabSecurity() {
   };
 
   return (
-    <div className="flex w-full max-w-xl flex-col gap-5">
-      <Paper withBorder shadow="md" radius="md" className="py-3">
-        <div className="px-4">
-          <Title order={2} size="h3">
+    <div className='flex w-full max-w-xl flex-col gap-5'>
+      <Paper withBorder shadow='md' radius='md' className='py-3'>
+        <div className='px-4'>
+          <Title order={2} size='h3'>
             Зміна пароля
           </Title>
-          <span className="text-sm">
-            Після зміни пароля, ви вийдете зі всіх своїх девайсів
-          </span>
+          <span className='text-sm'>Після зміни пароля, ви вийдете зі всіх своїх девайсів</span>
           <PasswordInput
-            className="mt-3"
+            className='mt-3'
             value={password.new}
             onChange={(e) => setPassword({ ...password, new: e.target.value })}
           />
           <PasswordInput
-            className="mt-3"
+            className='mt-3'
             value={password.confirm}
-            onChange={(e) =>
-              setPassword({ ...password, confirm: e.target.value })
-            }
+            onChange={(e) => setPassword({ ...password, confirm: e.target.value })}
           />
         </div>
-        <Divider className="my-3" />
-        <div className="flex flex-row items-center justify-between px-4">
-          <span className="text-sm text-[var(--mantine-color-gray-5)]" />
-          <Button onClick={changePassword}>Змінити</Button>
+        <Divider className='my-3' />
+        <div className='flex flex-row items-center justify-between px-4'>
+          <span className='text-sm text-[var(--mantine-color-gray-5)]' />
+          <Button onClick={changePassword} leftSection={<Pencil size={20} />} color='orange'>
+            Змінити
+          </Button>
         </div>
       </Paper>
-      <Paper withBorder shadow="md" radius="md" className="py-3">
-        <div className="px-4">
-          <Title order={2} size="h3">
+      <Paper withBorder shadow='md' radius='md' className='py-3'>
+        <div className='px-4'>
+          <Title order={2} size='h3'>
             Дозволені IP адреси
           </Title>
-          <span className="text-sm">
-            Список дозволених IP адрес для використання вашого аккаунту
-          </span>
+          <span className='text-sm'>Список дозволених IP адрес для використання вашого аккаунту</span>
           {user?.ip.length === 0 && (
-            <Title order={3} size="h5" className="text-center">
+            <Title order={3} size='h5' className='text-center'>
               Не вказано жодної ip адреси. Вхід дозволено з будь-якого IP
             </Title>
           )}
-          <div className="flex flex-col gap-1">
+          <div className='flex flex-col gap-1'>
             {user?.ip.map((ip) => (
-              <div key={nanoid()} className="flex flex-row items-center gap-2">
-                <TextInput value={ip} readOnly className="w-full" />
+              <div key={nanoid()} className='flex flex-row items-center gap-2'>
+                <TextInput value={ip} readOnly className='w-full' />
               </div>
             ))}
           </div>
         </div>
-        <Divider className="my-3" />
-        <div className="flex flex-row items-center justify-between px-4">
-          <span className="text-sm text-[var(--mantine-color-gray-5)]">
-            Зазвичай не вказано жодної ip адреси
-          </span>
+        <Divider className='my-3' />
+        <div className='flex flex-row items-center justify-between px-4'>
+          <span className='text-sm text-[var(--mantine-color-gray-5)]'>Зазвичай не вказано жодної ip адреси</span>
         </div>
       </Paper>
     </div>

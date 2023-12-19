@@ -36,22 +36,5 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-### yarn ###
-# https://yarnpkg.com/getting-started/qa#which-files-should-be-gitignored
-
-.yarn/*
-!.yarn/releases
-!.yarn/patches
-!.yarn/plugins
-!.yarn/sdks
-!.yarn/versions
-
-# if you are NOT using Zero-installs, then:
-# comment the following lines
-!.yarn/cache
-
-# and uncomment the following lines
-# .pnp.*
-
 # Prisma client
 .prisma

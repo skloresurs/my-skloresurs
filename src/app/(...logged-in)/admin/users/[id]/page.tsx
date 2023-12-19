@@ -13,7 +13,7 @@ import UserSecurityTab from '@/components/admin/users/UserSecurityTab';
 import UserSessionsTab from '@/components/admin/users/UserSessionsTab';
 import LoadingOverlay from '@/components/LoadingOverlay';
 import TitleBar from '@/components/TitleBar';
-import IUser from '@/types/User';
+import { IUserRequest } from '@/types/User';
 
 const defaultProps = {
   backHref: '/admin/users',
@@ -24,16 +24,8 @@ interface Tab {
   content: ReactNode;
 }
 
-export default function UserSettingsPage({
-  params,
-}: {
-  params: { id: string };
-}) {
-  const {
-    data: user,
-    error,
-    isValidating,
-  } = useSWR<IUser>(`/api/user/${params.id}`);
+export default function UserSettingsPage({ params }: { params: { id: string } }) {
+  const { data: user, error, isValidating } = useSWR<IUserRequest>(`/api/user/${params.id}`);
   const router = useRouter();
   const searchParams = useSearchParams();
   const activeTab = searchParams.get('tab') ?? 'info';
@@ -72,8 +64,8 @@ export default function UserSettingsPage({
   if (isValidating)
     return (
       <>
-        <TitleBar title="Керування користувачем" {...defaultProps} />
-        <div className="relative h-[400px] w-full">
+        <TitleBar title='Керування користувачем' {...defaultProps} />
+        <div className='relative h-[400px] w-full'>
           <LoadingOverlay />
         </div>
       </>
@@ -83,14 +75,14 @@ export default function UserSettingsPage({
     if (error.response?.status === 404) {
       return (
         <>
-          <TitleBar title="Керування користувачем" {...defaultProps} />
+          <TitleBar title='Керування користувачем' {...defaultProps} />
           <Title order={2}>Користувача не знайдено</Title>
         </>
       );
     }
     return (
       <>
-        <TitleBar title="Керування користувачем" {...defaultProps} />
+        <TitleBar title='Керування користувачем' {...defaultProps} />
         <Title order={2}>Невідома помилка</Title>
       </>
     );
@@ -98,39 +90,33 @@ export default function UserSettingsPage({
 
   return (
     <>
-      <TitleBar
-        title={`Керування користувачем ${user?.fullname}`}
-        {...defaultProps}
-      />
-      <Tabs
-        value={activeTab}
-        onChange={(key) => router.push(`/admin/users/${user?.id}?tab=${key}`)}
-      >
-        <ScrollArea type="never">
-          <Tabs.List className="flex-nowrap">
-            <Tabs.Tab value="orders" leftSection={<Boxes size={18} />} disabled>
+      <TitleBar title={`Керування користувачем ${user?.fullname}`} {...defaultProps} />
+      <Tabs value={activeTab} onChange={(key) => router.push(`/admin/users/${user?.id}?tab=${key}`)}>
+        <ScrollArea type='never'>
+          <Tabs.List className='flex-nowrap'>
+            <Tabs.Tab value='orders' leftSection={<Boxes size={20} />} disabled>
               Замовлення
             </Tabs.Tab>
-            <Tabs.Tab value="info" leftSection={<Info size={18} />}>
+            <Tabs.Tab value='info' leftSection={<Info size={20} />}>
               Інформація
             </Tabs.Tab>
-            <Tabs.Tab value="1c" leftSection={<BookKey size={18} />}>
+            <Tabs.Tab value='1c' leftSection={<BookKey size={20} />}>
               1С
             </Tabs.Tab>
-            <Tabs.Tab value="permissions" leftSection={<Key size={18} />}>
+            <Tabs.Tab value='permissions' leftSection={<Key size={20} />}>
               Права
             </Tabs.Tab>
-            <Tabs.Tab value="security" leftSection={<Shield size={18} />}>
+            <Tabs.Tab value='security' leftSection={<Shield size={20} />}>
               Безпека
             </Tabs.Tab>
-            <Tabs.Tab value="sessions" leftSection={<Fingerprint size={18} />}>
+            <Tabs.Tab value='sessions' leftSection={<Fingerprint size={20} />}>
               Сесії
             </Tabs.Tab>
           </Tabs.List>
         </ScrollArea>
 
         {tabs.map((tab) => (
-          <Tabs.Panel key={tab.key} value={tab.key} className="mt-3">
+          <Tabs.Panel key={tab.key} value={tab.key} className='mt-3'>
             {tab.content}
           </Tabs.Panel>
         ))}

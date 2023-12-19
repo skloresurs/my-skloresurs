@@ -11,12 +11,7 @@ interface IProps {
   enableCopy?: boolean;
   className?: string;
 }
-export default function DrawerItemMultiLine({
-  title,
-  data,
-  enableCopy,
-  className,
-}: IProps) {
+export default function DrawerItemMultiLine({ title, data, enableCopy, className }: IProps) {
   const [, copyToClipboard] = useCopyToClipboard();
 
   function copy() {
@@ -30,11 +25,11 @@ export default function DrawerItemMultiLine({
 
   return (
     <div className={className}>
-      <div className="flex flex-row gap-2">
-        <span className="flex-1">{title}:</span>
+      <div className='flex flex-row gap-2'>
+        <span className='flex-1'>{title}:</span>
         {enableCopy && (
           <ClipboardCopy
-            className="cursor-pointer duration-300 hover:text-[var(--mantine-color-blue-5)]"
+            className='cursor-pointer duration-300 hover:text-[var(--mantine-color-blue-5)]'
             onClick={() => copy()}
           />
         )}

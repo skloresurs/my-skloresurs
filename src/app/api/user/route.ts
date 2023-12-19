@@ -1,3 +1,4 @@
+import { orderBy } from 'lodash';
 import { NextRequest, NextResponse } from 'next/server';
 
 import apiErrorHandler from '@/libs/api-error-handler';
@@ -9,7 +10,11 @@ export async function GET(req: NextRequest) {
     const session = await getSession(req);
     const sessions = await auth.getAllUserSessions(session.user.userId);
     return NextResponse.json(
-      { ...session.user, sessions, thisSession: session.id },
+      {
+        ...session.user,
+        sessions: orderBy(sessions, ['created_at'], ['desc']),
+        thisSession: session.id,
+      },
       { status: 200 }
     );
   } catch (error) {

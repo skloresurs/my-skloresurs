@@ -34,8 +34,8 @@ export default function SpecificationTabOrder({ order }: IProps) {
           {
             accessor: 'position',
             footer: (
-              <div className="flex items-center">
-                <Sigma size={18} />
+              <div className='flex items-center'>
+                <Sigma size={20} />
               </div>
             ),
             footerClassName: 'bg-dark-6',
@@ -50,26 +50,14 @@ export default function SpecificationTabOrder({ order }: IProps) {
         columns: [
           {
             accessor: 'amount',
-            footer: (
-              <span>
-                {Math.round(
-                  order.goods.reduce((a, b) => a + b.amount, 0) * 1000
-                ) / 1000}
-              </span>
-            ),
+            footer: <span>{Math.round(order.goods.reduce((a, b) => a + b.amount, 0) * 1000) / 1000}</span>,
             footerClassName: 'bg-dark-6',
             sortable: true,
             title: 'S m²',
           },
           {
             accessor: 'pieces',
-            footer: (
-              <span>
-                {Math.round(
-                  order.goods.reduce((a, b) => a + b.pieces, 0) * 1000
-                ) / 1000}
-              </span>
-            ),
+            footer: <span>{Math.round(order.goods.reduce((a, b) => a + b.pieces, 0) * 1000) / 1000}</span>,
             footerClassName: 'bg-dark-6',
             sortable: true,
             title: 'Шт.',
@@ -82,16 +70,9 @@ export default function SpecificationTabOrder({ order }: IProps) {
         columns: [
           {
             accessor: 'in',
-            footer: (
-              <span>
-                {Math.round(order.goods.reduce((a, b) => a + b.in, 0) * 1000) /
-                  1000}
-              </span>
-            ),
+            footer: <span>{Math.round(order.goods.reduce((a, b) => a + b.in, 0) * 1000) / 1000}</span>,
             footerClassName: 'bg-dark-6',
-            render: (record: IGoods) => (
-              <span>{record.in === 0 ? '' : record.in}</span>
-            ),
+            render: (record: IGoods) => <span>{record.in === 0 ? '' : record.in}</span>,
             sortable: true,
             title: 'Шт.',
           },
@@ -103,16 +84,9 @@ export default function SpecificationTabOrder({ order }: IProps) {
         columns: [
           {
             accessor: 'out',
-            footer: (
-              <span>
-                {Math.round(order.goods.reduce((a, b) => a + b.out, 0) * 1000) /
-                  1000}
-              </span>
-            ),
+            footer: <span>{Math.round(order.goods.reduce((a, b) => a + b.out, 0) * 1000) / 1000}</span>,
             footerClassName: 'bg-dark-6',
-            render: (record: IGoods) => (
-              <span>{record.out === 0 ? '' : record.out}</span>
-            ),
+            render: (record: IGoods) => <span>{record.out === 0 ? '' : record.out}</span>,
             sortable: true,
             title: 'Шт.',
           },
@@ -135,17 +109,17 @@ export default function SpecificationTabOrder({ order }: IProps) {
       onSortStatusChange={setSortStatus}
       minHeight={order.goods.length === 0 ? 150 : 0}
       height={height - 150}
-      noRecordsText="Немає даних"
-      idAccessor="position"
+      noRecordsText='Немає даних'
+      idAccessor='position'
       rowExpansion={{
         // eslint-disable-next-line react/no-unstable-nested-components
         content: ({ record }) => (
-          <Stack className="flex flex-col gap-1 px-3 py-2">
+          <Stack className='flex flex-col gap-1 px-3 py-2'>
             <div>
-              <span className="font-bold">Номенклатура: </span> {record.name}
+              <span className='font-bold'>Номенклатура: </span> {record.name}
             </div>
             <div>
-              <span className="font-bold">Розміри: </span>
+              <span className='font-bold'>Розміри: </span>
               {` ${record.width} x ${record.height} m²`}
             </div>
           </Stack>

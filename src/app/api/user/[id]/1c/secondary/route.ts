@@ -6,10 +6,7 @@ import { getSession } from '@/libs/sessions';
 import verifyIp from '@/libs/verify-ip';
 import { verifyPermissionServer } from '@/libs/verify-permission';
 
-export async function POST(
-  req: NextRequest,
-  { params }: { params: { id: string } }
-) {
+export async function POST(req: NextRequest, { params }: { params: { id: string } }) {
   try {
     const session = await getSession(req);
 

@@ -3,9 +3,9 @@ import winston from 'winston';
 
 const { combine, colorize, printf } = winston.format;
 
-const myFormat = printf(({ level, message, timestamp }) => `${moment(timestamp).format(
-    'DD.MM.YYYY HH:mm:ss'
-  )} ${level}: ${message}`);
+const myFormat = printf(
+  ({ level, message, timestamp }) => `${moment(timestamp).format('DD.MM.YYYY HH:mm:ss')} ${level}: ${message}`
+);
 
 const logger = winston.createLogger({
   format: combine(colorize(), myFormat),

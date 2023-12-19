@@ -39,37 +39,27 @@ export default function OrdersInstruments() {
   }
 
   return (
-    <div className="flex items-center justify-end gap-2">
-      <Info label="Отримання замовлень з додаткового серверу наразі не підтримується." />
+    <div className='flex items-center justify-end gap-2'>
+      <Info label='Отримання замовлень з додаткового серверу наразі не підтримується.' />
       {user && !user.id_1c_main && (
-        <Warning label="Вам не призначено ідентифікатор основнового серверу. Ви не зможете отримувати замовлення з цього серверу." />
+        <Warning label='Вам не призначено ідентифікатор основнового серверу. Ви не зможете отримувати замовлення з цього серверу.' />
       )}
       {user && !user.id_1c_main && !user.id_1c_secondary && (
-        <Error label="Вам не призначено жодного ідентифікатору серверу. Ви не зможете отримувати замовлення." />
+        <Error label='Вам не призначено жодного ідентифікатору серверу. Ви не зможете отримувати замовлення.' />
       )}
-      <Popover
-        width={300}
-        position="bottom-end"
-        withArrow
-        shadow="md"
-        opened={opened}
-        onChange={setOpened}
-      >
+      <Popover width={300} position='bottom-end' withArrow shadow='md' opened={opened} onChange={setOpened}>
         <Popover.Target>
-          <Button
-            leftSection={<Search size={18} />}
-            onClick={() => setOpened((prev) => !prev)}
-          >
+          <Button leftSection={<Search size={20} />} onClick={() => setOpened((prev) => !prev)}>
             Пошук
           </Button>
         </Popover.Target>
         <Popover.Dropdown>
-          <Title className="text-center" order={2} size="h4">
+          <Title className='text-center' order={2} size='h4'>
             Пошук
           </Title>
-          <div className="mt-3 flex flex-col gap-2">
+          <div className='mt-3 flex flex-col gap-2'>
             <TextInput
-              placeholder="Пошук..."
+              placeholder='Пошук...'
               leftSection={<Search size={16} />}
               value={search}
               onChange={(event) => setSearch(event.currentTarget.value)}
@@ -83,7 +73,7 @@ export default function OrdersInstruments() {
               defaultChecked={allOrders}
               checked={allOrders}
               onChange={(event) => setAllOrders(event.currentTarget.checked)}
-              label="Показати всі замовлення"
+              label='Показати всі замовлення'
               description={
                 allOrders
                   ? 'Показати всі замовлення'
@@ -91,16 +81,13 @@ export default function OrdersInstruments() {
               }
             />
           </div>
-          <div className="mt-3 flex flex-col gap-2">
-            <Button
-              leftSection={<Search size={16} />}
-              onClick={() => searchHandler()}
-            >
+          <div className='mt-3 flex flex-col gap-2'>
+            <Button leftSection={<Search size={16} />} onClick={() => searchHandler()}>
               Шукати
             </Button>
             <Button
-              variant="outline"
-              color="red"
+              variant='outline'
+              color='red'
               leftSection={<SearchX size={16} />}
               onClick={() => {
                 router.push('/');

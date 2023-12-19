@@ -7,19 +7,15 @@ interface IProps {
   id: number;
 }
 
-export default function VisualizationButton({
-  setActiveTab,
-  id,
-  activeTab,
-}: IProps) {
+export default function VisualizationButton({ setActiveTab, id, activeTab }: IProps) {
   const i = id;
   return (
     <Button
       onClick={() => setActiveTab(`${id}`)}
-      size="xs"
-      radius="xl"
+      size='xs'
+      radius='xl'
       color={activeTab === `${id}` ? 'blue' : 'gray'}
-      className="absolute bottom-0 left-[-15%] p-1 text-white"
+      className='absolute bottom-0 left-[-15%] p-1 text-white'
     >
       {i}
     </Button>

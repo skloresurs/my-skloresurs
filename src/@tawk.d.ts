@@ -1,6 +1,4 @@
-/* eslint-disable eslint-comments/disable-enable-pair */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-
 declare module '@tawk.to/tawk-messenger-react' {
   import type React from 'react';
 
@@ -43,10 +41,7 @@ declare module '@tawk.to/tawk-messenger-react' {
     isChatOngoing: () => boolean;
     isVisitorEngaged: () => boolean;
     endChat: () => boolean;
-    setAttributes: (
-      attributes: Record<string, string | number>,
-      errCallback: (err?: any) => any
-    ) => any;
+    setAttributes: (attributes: Record<string, string | number>, errCallback: (err?: any) => any) => any;
     addEvent: (eventName: string, eventData: any) => any;
     addTags: (tags: string[]) => any;
     removeTags: (tags: string[]) => any;

@@ -6,7 +6,7 @@ import TitleBar from '@/components/TitleBar';
 export default function Profile() {
   return (
     <>
-      <TitleBar title="Профіль" />
+      <TitleBar title='Профіль' />
       <ProfileTabs />
     </>
   );

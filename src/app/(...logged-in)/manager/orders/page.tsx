@@ -7,9 +7,9 @@ import TitleBar from '@/components/TitleBar';
 export default function Orders() {
   return (
     <>
-      <TitleBar title="Замовлення" />
+      <TitleBar title='Замовлення' />
       <OrdersInstruments />
-      <div className="mt-3">
+      <div className='mt-3'>
         <OrdersList />
       </div>
     </>

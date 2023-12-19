@@ -4,7 +4,7 @@ import { Button, Divider, Paper, TextInput, Title } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { notifications } from '@mantine/notifications';
 import axios from 'axios';
-import { CheckCircle, XCircle } from 'lucide-react';
+import { CheckCircle, Save, XCircle } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
 import useSWR from 'swr';
 
@@ -15,8 +15,7 @@ const NotificationTitle = 'Оновлення профілю';
 export default function ProfileTabInfo() {
   const { data: user, mutate } = useSWR<IUserMeRequest>(`/api/user`);
   const [fullname, setFullName] = useState('');
-  const [loading, { open: enableLoading, close: disableLoading }] =
-    useDisclosure();
+  const [loading, { open: enableLoading, close: disableLoading }] = useDisclosure();
 
   useEffect(() => {
     if (user) {
@@ -56,8 +55,7 @@ export default function ProfileTabInfo() {
           icon: <XCircle />,
           id: notification,
           loading: false,
-          message:
-            error.response?.data.error ?? error.message ?? 'Невідома помилка',
+          message: error.response?.data.error ?? error.message ?? 'Невідома помилка',
           title: NotificationTitle,
           withCloseButton: true,
         });
@@ -80,49 +78,41 @@ export default function ProfileTabInfo() {
   };
 
   return (
-    <div className="flex w-full max-w-xl flex-col gap-5">
-      <Paper withBorder shadow="md" radius="md" className="py-3">
-        <div className="px-4">
-          <Title order={2} size="h3">
+    <div className='flex w-full max-w-xl flex-col gap-5'>
+      <Paper withBorder shadow='md' radius='md' className='py-3'>
+        <div className='px-4'>
+          <Title order={2} size='h3'>
             ID
           </Title>
-          <span className="text-sm">Ваш ID</span>
-          <TextInput className="mt-3" value={user?.id} readOnly />
+          <span className='text-sm'>Ваш ID</span>
+          <TextInput className='mt-3' value={user?.id} readOnly />
         </div>
-        <Divider className="my-3" />
-        <div className="flex flex-row items-center justify-between px-4">
-          <span className="text-sm text-[var(--mantine-color-gray-5)]">
-            ID не може бути змінено
-          </span>
+        <Divider className='my-3' />
+        <div className='flex flex-row items-center justify-between px-4'>
+          <span className='text-sm text-[var(--mantine-color-gray-5)]'>ID не може бути змінено</span>
         </div>
       </Paper>
-      <Paper withBorder shadow="md" radius="md" className="py-3">
-        <div className="px-4">
-          <Title order={2} size="h3">
+      <Paper withBorder shadow='md' radius='md' className='py-3'>
+        <div className='px-4'>
+          <Title order={2} size='h3'>
             E-mail
           </Title>
-          <span className="text-sm">
-            Ваш E-mail. Використовується для входу та оформлення замовлень
-          </span>
-          <TextInput className="mt-3" value={user?.email} readOnly />
+          <span className='text-sm'>Ваш E-mail. Використовується для входу та оформлення замовлень</span>
+          <TextInput className='mt-3' value={user?.email} readOnly />
         </div>
-        <Divider className="my-3" />
-        <div className="flex flex-row items-center justify-between px-4">
-          <span className="text-sm text-[var(--mantine-color-gray-5)]">
-            E-mail не може бути змінено
-          </span>
+        <Divider className='my-3' />
+        <div className='flex flex-row items-center justify-between px-4'>
+          <span className='text-sm text-[var(--mantine-color-gray-5)]'>E-mail не може бути змінено</span>
         </div>
       </Paper>
-      <Paper withBorder shadow="md" radius="md" className="py-3">
-        <div className="px-4">
-          <Title order={2} size="h3">
+      <Paper withBorder shadow='md' radius='md' className='py-3'>
+        <div className='px-4'>
+          <Title order={2} size='h3'>
             Повне ім&apos;я
           </Title>
-          <span className="text-sm">
-            Ваше повне ім&apos;я. Використовується для оформлення замовлень
-          </span>
+          <span className='text-sm'>Ваше повне ім&apos;я. Використовується для оформлення замовлень</span>
           <TextInput
-            className="mt-3"
+            className='mt-3'
             value={fullname}
             onChange={(e) => setFullName(e.target.value)}
             onKeyDown={(e) => {
@@ -130,16 +120,12 @@ export default function ProfileTabInfo() {
             }}
             maxLength={100}
           />
-          <span className="block text-right text-xs text-[var(--mantine-color-gray-5)]">
-            {fullname.length}/100
-          </span>
+          <span className='block text-right text-xs text-[var(--mantine-color-gray-5)]'>{fullname.length}/100</span>
         </div>
-        <Divider className="my-3" />
-        <div className="flex flex-row items-center justify-between px-4">
-          <span className="text-sm text-[var(--mantine-color-gray-5)]">
-            Максимум 100 символів
-          </span>
-          <Button onClick={updateFullname} loading={loading}>
+        <Divider className='my-3' />
+        <div className='flex flex-row items-center justify-between px-4'>
+          <span className='text-sm text-[var(--mantine-color-gray-5)]'>Максимум 100 символів</span>
+          <Button onClick={updateFullname} loading={loading} leftSection={<Save size={20} />}>
             Зберегти
           </Button>
         </div>

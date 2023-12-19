@@ -20,11 +20,7 @@ export async function POST(req: NextRequest) {
     await auth.useKey('email', session.user.email.toLowerCase(), old);
 
     await auth.invalidateAllUserSessions(session.user.userId);
-    await auth.updateKeyPassword(
-      'email',
-      session.user.email.toLowerCase(),
-      password
-    );
+    await auth.updateKeyPassword('email', session.user.email.toLowerCase(), password);
 
     return NextResponse.json(null, { status: 200 });
   } catch (error) {

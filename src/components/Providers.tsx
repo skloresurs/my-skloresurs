@@ -18,22 +18,16 @@ import useSupportStore from '@/stores/support';
 
 import AuthProvider from './AuthProvider';
 
-export default function Providers({
-  children,
-}: Readonly<{ children: React.ReactNode }>) {
+export default function Providers({ children }: Readonly<{ children: React.ReactNode }>) {
   const [scroll, scrollTo] = useWindowScroll();
   const supportRef = useSupportStore((state) => state.supportRef);
   return (
-    <MantineProvider theme={theme} defaultColorScheme="auto">
+    <MantineProvider theme={theme} defaultColorScheme='auto'>
       <SWRConfig
         value={{
           fetcher,
           onErrorRetry(error, key, config, revalidate, { retryCount }) {
-            if (
-              (error.response?.status >= 400 &&
-                error.response?.status <= 404) ||
-              error.response?.status === 429
-            ) {
+            if ((error.response?.status >= 400 && error.response?.status <= 404) || error.response?.status === 429) {
               return;
             }
 
@@ -54,31 +48,24 @@ export default function Providers({
           ref={supportRef}
         />
         <Next13ProgressBar
-          height="4px"
-          color="var(--mantine-color-blue-5)"
+          height='4px'
+          color='var(--mantine-color-blue-5)'
           options={{ showSpinner: true }}
           showOnShallow
         />
         <NavigationProgress />
-        <Notifications position="top-right" />
+        <Notifications position='top-right' />
         <AuthProvider>
           <Affix position={{ bottom: 90, right: 28 }}>
-            <Transition transition="slide-up" mounted={scroll.y > 0}>
+            <Transition transition='slide-up' mounted={scroll.y > 0}>
               {(transitionStyles) => (
-                <Button
-                  radius="xl"
-                  style={transitionStyles}
-                  onClick={() => scrollTo({ y: 0 })}
-                >
+                <Button radius='xl' style={transitionStyles} onClick={() => scrollTo({ y: 0 })}>
                   <ChevronUp size={16} />
                 </Button>
               )}
             </Transition>
           </Affix>
-          <ReCaptchaProvider
-            reCaptchaKey={env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
-            language="uk"
-          >
+          <ReCaptchaProvider reCaptchaKey={env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY} language='uk'>
             {children}
           </ReCaptchaProvider>
         </AuthProvider>

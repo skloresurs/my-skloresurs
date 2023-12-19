@@ -7,8 +7,7 @@
 }
 
 .form {
-  border-right: rem(1px) solid
-    light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-7));
+  border-right: rem(1px) solid light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-7));
   height: 100dvh;
   max-width: rem(550px);
   padding-top: rem(80px);

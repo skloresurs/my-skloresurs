@@ -1,12 +1,4 @@
-import {
-  Boxes,
-  GanttChartSquare,
-  LogOut,
-  LucideProps,
-  Shield,
-  UserRound,
-  Users,
-} from 'lucide-react';
+import { Boxes, GanttChartSquare, LogOut, LucideProps, Shield, UserRound, Users } from 'lucide-react';
 import React, { ReactNode } from 'react';
 
 import { Permission } from '@/types/User';
@@ -68,9 +60,7 @@ const navbar: RootNavBarItem[] = [
   },
 ];
 
-const footer: (logoutFunc: () => Promise<void>) => NavBarItem[] = (
-  logoutFunc
-) =>
+const footer: (logoutFunc: () => Promise<void>) => NavBarItem[] = (logoutFunc) =>
   [
     {
       href: '/profile',

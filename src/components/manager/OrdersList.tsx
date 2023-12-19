@@ -12,9 +12,7 @@ import OrderItem from './OrderItem';
 
 export default function OrdersList() {
   const query = useSearchParams();
-  const { data, error, isValidating, mutate } = useSWR(
-    `/api/orders/manager/?${query.toString()}`
-  );
+  const { data, error, isValidating, mutate } = useSWR(`/api/orders/manager/?${query.toString()}`);
 
   useEffect(() => {
     mutate();
@@ -22,7 +20,7 @@ export default function OrdersList() {
 
   if (isValidating) {
     return (
-      <div className="relative mt-3 h-[400px] w-full">
+      <div className='relative mt-3 h-[400px] w-full'>
         <LoadingOverlay />
       </div>
     );
@@ -30,7 +28,7 @@ export default function OrdersList() {
 
   if (error) {
     return (
-      <div className="flex flex-col gap-6 text-center">
+      <div className='flex flex-col gap-6 text-center'>
         <Title order={2}>Помилка</Title>
         <Title order={3}>Сталася помилка при завантаженні замовлень</Title>
       </div>
@@ -39,7 +37,7 @@ export default function OrdersList() {
 
   if (!data || data.length === 0) {
     return (
-      <div className="flex flex-col gap-6 text-center">
+      <div className='flex flex-col gap-6 text-center'>
         <Title order={2}>Не знайдено жодного замовлення</Title>
       </div>
     );

@@ -13,32 +13,20 @@ interface IProps {
   label: string;
   activeTab: string | null;
   id: string;
-  form: UseFormReturnType<
-    ValidationSchema,
-    (values: ValidationSchema) => ValidationSchema
-  >;
+  form: UseFormReturnType<ValidationSchema, (values: ValidationSchema) => ValidationSchema>;
   formKey: string;
   className?: string;
 }
 
-export default function NomenclatureSelect({
-  label,
-  activeTab,
-  form,
-  formKey,
-  id,
-  className,
-}: IProps) {
-  const { data, isValidating, error } = useSWR(
-    `${env.NEXT_PUBLIC_API_URL_1C_MAIN}/data/nomenclatures/${id}`
-  );
+export default function NomenclatureSelect({ label, activeTab, form, formKey, id, className }: IProps) {
+  const { data, isValidating, error } = useSWR(`${env.NEXT_PUBLIC_API_URL_1C_MAIN}/data/nomenclatures/${id}`);
   return (
     <Select
       className={className}
       label={label}
       {...form.getInputProps(`specification.${activeTab}.${formKey}`)}
       disabled={error || isValidating}
-      rightSection={isValidating ? <Loader2 className="animate-spin" /> : null}
+      rightSection={isValidating ? <Loader2 className='animate-spin' /> : null}
       placeholder={error ? 'Помилка отримання даних' : ''}
       data={data?.data ?? []}
     />

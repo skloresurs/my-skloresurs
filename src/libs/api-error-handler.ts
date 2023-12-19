@@ -14,15 +14,9 @@ import logger from './logger';
  * @param {string} [key] - Optional key parameter.
  * @return {NextResponse} The response object.
  */
-export default function apiErrorHandler(
-  error: unknown,
-  url: string,
-  key?: string
-): NextResponse {
+export default function apiErrorHandler(error: unknown, url: string, key?: string): NextResponse {
   if (error instanceof CustomError) {
-    logger.error(
-      `API Error: [${error.code}] - ${error} (${env.BASE_URL}/api${url})`
-    );
+    logger.error(`API Error: [${error.code}] - ${error} (${env.BASE_URL}/api${url})`);
     return NextResponse.json(
       {
         code: error.code,
@@ -40,10 +34,7 @@ export default function apiErrorHandler(
       );
     }
 
-    if (
-      error.message === 'AUTH_INVALID_KEY_ID' ||
-      error.message === 'AUTH_INVALID_PASSWORD'
-    ) {
+    if (error.message === 'AUTH_INVALID_KEY_ID' || error.message === 'AUTH_INVALID_PASSWORD') {
       if (key === 'old-password') {
         return NextResponse.json(
           { code: StatusCodes.BAD_REQUEST, error: 'Невірний старий пароль' },

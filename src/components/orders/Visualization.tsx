@@ -12,37 +12,22 @@ import { ValidationSchema } from '@/types/NewOrder';
 import VisualizationButton from './items/VisualizationButton';
 
 interface IProps {
-  form: UseFormReturnType<
-    ValidationSchema,
-    (values: ValidationSchema) => ValidationSchema
-  >;
+  form: UseFormReturnType<ValidationSchema, (values: ValidationSchema) => ValidationSchema>;
   activeTab: string | null;
   setActiveTab: React.Dispatch<React.SetStateAction<string | null>>;
 }
 
-export default function Visualization({
-  form,
-  activeTab,
-  setActiveTab,
-}: IProps) {
+export default function Visualization({ form, activeTab, setActiveTab }: IProps) {
   return (
     <Fieldset
-      legend="Візуалізація"
-      className="order-2 flex flex-row items-center justify-center overflow-x-scroll rounded-md lg:order-1"
+      legend='Візуалізація'
+      className='order-2 flex flex-row items-center justify-center overflow-x-scroll rounded-md lg:order-1'
     >
       {form.values.specification?.map((e, i) => (
-        <div
-          key={nanoid()}
-          className="relative w-[25px] md:w-[35px] xl:w-[40px]"
-        >
-          <VisualizationButton
-            activeTab={activeTab}
-            setActiveTab={setActiveTab}
-            id={i}
-          />
+        <div key={nanoid()} className='relative w-[25px] md:w-[35px] xl:w-[40px]'>
+          <VisualizationButton activeTab={activeTab} setActiveTab={setActiveTab} id={i} />
           <Image
-            src={`/${elementTypes.find((ee) => ee.value === e.type)
-              ?.imageType}.png`}
+            src={`/${elementTypes.find((ee) => ee.value === e.type)?.imageType}.png`}
             alt={e.type}
             width={70}
             height={200}
