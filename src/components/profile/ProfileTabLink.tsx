@@ -26,10 +26,9 @@ function LinkItem({ id, label, valueId, value }: ILinkItem) {
       </div>
       <Divider className='my-3' />
       <div className='flex flex-row items-center justify-between px-4'>
-        <span className='text-sm text-[var(--mantine-color-gray-5)]' />
+        <span className='text-sm text-[var(--mantine-color-dimmed)]' />
         <Button
           onClick={() => window.location.replace(valueId ? `/api/profile/unlink/${id}` : `/api/auth/${id}`)}
-          // eslint-disable-next-line jsx-a11y/anchor-is-valid
           leftSection={valueId ? <Unlink size={20} /> : <Link size={20} />}
           color={valueId ? 'red' : 'blue'}
         >

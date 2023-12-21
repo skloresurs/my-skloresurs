@@ -1,6 +1,7 @@
 'use client';
 
 import { ActionIcon, Box, Group } from '@mantine/core';
+import { map } from 'lodash';
 import { Pencil } from 'lucide-react';
 import { DataTable, DataTableColumn } from 'mantine-datatable';
 import Link from 'next/link';
@@ -28,7 +29,7 @@ const columns: DataTableColumn<IUserRequest>[] = [
     accessor: 'permissions',
     render: (record) => (
       <div className='flex flex-wrap gap-2'>
-        {record.permissions.map((permission) => (
+        {map(record.permissions, (permission) => (
           <PermissionBadge key={permission} permission={permission} />
         ))}
       </div>

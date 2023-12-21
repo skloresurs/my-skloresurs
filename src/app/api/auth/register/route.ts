@@ -1,4 +1,5 @@
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
+import { toLower } from 'lodash';
 import { nanoid } from 'nanoid';
 import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
@@ -28,7 +29,7 @@ export async function POST(req: NextRequest) {
         key: {
           password,
           providerId: 'email',
-          providerUserId: email.toLowerCase(),
+          providerUserId: toLower(email),
         },
         userId: nanoid(),
       })

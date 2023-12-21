@@ -1,7 +1,8 @@
 import { createEnv } from '@t3-oss/env-nextjs';
+// eslint-disable-next-line lodash/import-scope
+import _ from 'lodash';
 import { z } from 'zod';
 
-// eslint-disable-next-line import/prefer-default-export
 export const env = createEnv({
   client: {
     NEXT_PUBLIC_API_URL_1C_MAIN: z
@@ -38,7 +39,7 @@ export const env = createEnv({
   onValidationError: (error) => {
     throw new Error(
       // eslint-disable-next-line sonarjs/no-nested-template-literals
-      `❌ Invalid environment variables:\n\n${error.errors.map((e, i) => `${i + 1}. ${e.message}`).join('\n')}`
+      `❌ Invalid environment variables:\n\n${_.map(error.errors, (e, i) => `${i + 1}. ${e.message}`).join('\n')}`
     );
   },
 

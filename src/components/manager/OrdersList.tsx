@@ -1,6 +1,7 @@
 'use client';
 
 import { Grid, Title } from '@mantine/core';
+import { map } from 'lodash';
 import { useSearchParams } from 'next/navigation';
 import React, { useEffect } from 'react';
 import useSWR from 'swr';
@@ -12,7 +13,7 @@ import OrderItem from './OrderItem';
 
 export default function OrdersList() {
   const query = useSearchParams();
-  const { data, error, isValidating, mutate } = useSWR(`/api/orders/manager/?${query.toString()}`);
+  const { data, error, isValidating, mutate } = useSWR<IManaderOrder[]>(`/api/orders/manager/?${query.toString()}`);
 
   useEffect(() => {
     mutate();
@@ -44,7 +45,7 @@ export default function OrdersList() {
   }
   return (
     <Grid>
-      {data.map((order: IManaderOrder) => (
+      {map(data, (order: IManaderOrder) => (
         <Grid.Col span={{ base: 12, lg: 3, md: 6 }} key={order.id}>
           <OrderItem order={order} />
         </Grid.Col>

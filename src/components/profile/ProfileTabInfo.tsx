@@ -89,7 +89,7 @@ export default function ProfileTabInfo() {
         </div>
         <Divider className='my-3' />
         <div className='flex flex-row items-center justify-between px-4'>
-          <span className='text-sm text-[var(--mantine-color-gray-5)]'>ID не може бути змінено</span>
+          <span className='text-sm text-[var(--mantine-color-dimmed)]'>ID не може бути змінено</span>
         </div>
       </Paper>
       <Paper withBorder shadow='md' radius='md' className='py-3'>
@@ -102,7 +102,7 @@ export default function ProfileTabInfo() {
         </div>
         <Divider className='my-3' />
         <div className='flex flex-row items-center justify-between px-4'>
-          <span className='text-sm text-[var(--mantine-color-gray-5)]'>E-mail не може бути змінено</span>
+          <span className='text-sm text-[var(--mantine-color-dimmed)]'>E-mail не може бути змінено</span>
         </div>
       </Paper>
       <Paper withBorder shadow='md' radius='md' className='py-3'>
@@ -120,11 +120,11 @@ export default function ProfileTabInfo() {
             }}
             maxLength={100}
           />
-          <span className='block text-right text-xs text-[var(--mantine-color-gray-5)]'>{fullname.length}/100</span>
+          <span className='block text-right text-xs text-[var(--mantine-color-dimmed)]'>{fullname.length}/100</span>
         </div>
         <Divider className='my-3' />
         <div className='flex flex-row items-center justify-between px-4'>
-          <span className='text-sm text-[var(--mantine-color-gray-5)]'>Максимум 100 символів</span>
+          <span className='text-sm text-[var(--mantine-color-dimmed)]'>Максимум 100 символів</span>
           <Button onClick={updateFullname} loading={loading} leftSection={<Save size={20} />}>
             Зберегти
           </Button>

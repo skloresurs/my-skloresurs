@@ -1,3 +1,4 @@
+import { filter } from 'lodash';
 import { NextRequest, NextResponse } from 'next/server';
 
 import { MissingParamsError, UserNotFoundError } from '@/classes/CustomError';
@@ -27,7 +28,7 @@ export async function POST(req: NextRequest, { params }: { params: { id: string 
           permissions: [...user.permissions, key],
         })
       : auth.updateUserAttributes(params.id, {
-          permissions: user.permissions.filter((permission: string) => permission !== key),
+          permissions: filter(user.permissions, (permission: string) => permission !== key),
         }));
     return NextResponse.json(null, { status: 200 });
   } catch (error) {

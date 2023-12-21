@@ -1,5 +1,3 @@
-'use client';
-
 import { Fieldset, Select, Textarea, TextInput } from '@mantine/core';
 import { UseFormReturnType } from '@mantine/form';
 import React from 'react';

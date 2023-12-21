@@ -1,9 +1,10 @@
 import { NavLink } from '@mantine/core';
+import { map } from 'lodash';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import React from 'react';
 
-import { NavBarItem, RootNavBarItem } from '@/components/NavBar';
+import { NavBarItem, RootNavBarItem } from '@/components/navbar/NavBar';
 
 interface IProps {
   item: NavBarItem | RootNavBarItem;
@@ -23,7 +24,7 @@ export default function NavBarItemCompnent({ item, hide = false, toogle }: IProp
   if (isRootItem(item) && item.children) {
     return (
       <NavLink label={item.label} leftSection={item.icon} description={item.description} opened>
-        {item.children.map((e) => (
+        {map(item.children, (e) => (
           <NavBarItemCompnent key={e.id} item={e} hide={hide} toogle={toogle} />
         ))}
       </NavLink>

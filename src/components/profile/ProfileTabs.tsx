@@ -1,9 +1,7 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
-// ^ incorrect on the icon
-
 'use client';
 
 import { Tabs } from '@mantine/core';
+import { map } from 'lodash';
 import { Fingerprint, Info, Link, Shield } from 'lucide-react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import React, { ReactNode } from 'react';
@@ -57,7 +55,7 @@ export default function ProfileTabs() {
         </Tabs.Tab>
       </Tabs.List>
 
-      {tabs.map((tab) => (
+      {map(tabs, (tab) => (
         <Tabs.Panel key={tab.key} value={tab.key} className='mt-3'>
           {tab.content}
         </Tabs.Panel>

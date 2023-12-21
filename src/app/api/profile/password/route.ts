@@ -1,3 +1,4 @@
+import { toLower } from 'lodash';
 import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
 
@@ -17,10 +18,10 @@ export async function POST(req: NextRequest) {
       throw MissingParamsError;
     }
 
-    await auth.useKey('email', session.user.email.toLowerCase(), old);
+    await auth.useKey('email', toLower(session.user.email), old);
 
     await auth.invalidateAllUserSessions(session.user.userId);
-    await auth.updateKeyPassword('email', session.user.email.toLowerCase(), password);
+    await auth.updateKeyPassword('email', toLower(session.user.email), password);
 
     return NextResponse.json(null, { status: 200 });
   } catch (error) {

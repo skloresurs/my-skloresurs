@@ -5,6 +5,7 @@ import { useForm, zodResolver } from '@mantine/form';
 import { useDisclosure } from '@mantine/hooks';
 import { notifications } from '@mantine/notifications';
 import axios from 'axios';
+import { map, startsWith } from 'lodash';
 import { CheckCircle, PlusCircle, Save, XCircle } from 'lucide-react';
 import { nanoid } from 'nanoid';
 import React from 'react';
@@ -33,7 +34,7 @@ export default function UserSecurityTab({ user }: { user?: IUserRequest }) {
   const [loading, { open: enableLoading, close: disableLoading }] = useDisclosure();
   const form = useForm({
     initialValues: {
-      ips: user?.ip?.map((e) => ({ ip: e, key: nanoid() })) ?? [],
+      ips: map(user?.ip, (e) => ({ ip: e, key: nanoid() })) ?? [],
     },
     validate: zodResolver(formSchema),
   });
@@ -54,7 +55,7 @@ export default function UserSecurityTab({ user }: { user?: IUserRequest }) {
 
     const response = await axios
       .post(`/api/user/${user?.id}/ip`, {
-        ip: form.values.ips.map((e) => e.ip),
+        ip: map(form.values.ips, 'ip'),
       })
       .catch((error) => {
         notifications.update({
@@ -72,7 +73,7 @@ export default function UserSecurityTab({ user }: { user?: IUserRequest }) {
     if (!response || response.status !== 200) return disableLoading();
     await mutate(`/api/user/${user?.id}`);
 
-    await mutate((key: string) => key.startsWith('/api/admin/users'), undefined, {
+    await mutate((key: string) => startsWith(key, '/api/admin/users'), undefined, {
       revalidate: false,
     });
 
@@ -110,7 +111,7 @@ export default function UserSecurityTab({ user }: { user?: IUserRequest }) {
             </Title>
           )}
           <div className='flex flex-col gap-1'>
-            {form.values.ips.map((ip, i) => (
+            {map(form.values.ips, (ip, i) => (
               <div key={ip.key} className='flex flex-row items-center gap-2'>
                 <TextInput {...form.getInputProps(`ips.${i}.ip`)} className='w-full' />
                 <ActionIcon color='red' variant='subtle' onClick={() => form.removeListItem('ips', i)}>
@@ -136,7 +137,7 @@ export default function UserSecurityTab({ user }: { user?: IUserRequest }) {
         </div>
         <Divider className='my-3' />
         <div className='flex flex-row items-center justify-between px-4'>
-          <span className='text-sm text-[var(--mantine-color-gray-5)]'>Це не вплине на активні сесії!</span>
+          <span className='text-sm text-[var(--mantine-color-dimmed)]'>Це не вплине на активні сесії!</span>
           <Button onClick={updateIps} loading={loading} leftSection={<Save size={20} />}>
             Зберегти
           </Button>

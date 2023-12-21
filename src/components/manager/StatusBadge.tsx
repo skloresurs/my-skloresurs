@@ -1,12 +1,14 @@
-import type { DefaultMantineColor } from '@mantine/core';
+import { Badge, DefaultMantineColor } from '@mantine/core';
+import { toLower, trim } from 'lodash';
+import React from 'react';
 
 interface IStatusConfig {
   name: string;
   color: DefaultMantineColor;
 }
 
-export default function getStatusConfig(status: string): IStatusConfig {
-  switch (status.trim().toLowerCase()) {
+function getStatusConfig(status: string): IStatusConfig {
+  switch (trim(toLower(status))) {
     case 'принят менеджером': {
       return {
         color: 'orange',
@@ -80,4 +82,12 @@ export default function getStatusConfig(status: string): IStatusConfig {
       };
     }
   }
+}
+
+export default async function StatusBadge({ status }: { status: string }) {
+  return (
+    <Badge className='cursor-default select-none' variant='light' color={getStatusConfig(status).color}>
+      {getStatusConfig(status).name}
+    </Badge>
+  );
 }

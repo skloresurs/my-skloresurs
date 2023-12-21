@@ -1,7 +1,6 @@
-'use client';
-
 import { Fieldset, Overlay, Select, Switch, Tabs, Title } from '@mantine/core';
 import { UseFormReturnType } from '@mantine/form';
+import { find, includes, keys, map, some, startsWith } from 'lodash';
 import { nanoid } from 'nanoid';
 import React, { useEffect } from 'react';
 
@@ -21,7 +20,7 @@ interface IProps {
 }
 
 export default function Specification({ form, activeTab, setActiveTab }: IProps) {
-  const type = types.find((e) => e.value === form.values.type);
+  const type = find(types, ['value', form.values.type]);
 
   useEffect(() => {
     if (activeTab === 'new') {
@@ -52,15 +51,11 @@ export default function Specification({ form, activeTab, setActiveTab }: IProps)
       )}
       <Tabs value={activeTab} onChange={setActiveTab}>
         <Tabs.List>
-          {form.values.specification?.map((e, i) => (
+          {map(form.values.specification, (e, i) => (
             <Tabs.Tab
               key={nanoid()}
               value={i.toString()}
-              className={
-                Object.keys(form.errors).findIndex((ee) => ee.startsWith(`specification.${i}.`)) === -1
-                  ? ''
-                  : 'text-red-500'
-              }
+              className={some(keys(form.errors), (key) => startsWith(key, `specification.${i}.`)) ? '' : 'text-red-500'}
             >
               {i}
             </Tabs.Tab>
@@ -80,9 +75,9 @@ export default function Specification({ form, activeTab, setActiveTab }: IProps)
         <Select
           label='Вид'
           {...form.getInputProps(`specification.${activeTab}.type`)}
-          data={elementTypes.map((e) => ({
+          data={map(elementTypes, (e) => ({
             ...e,
-            disabled: !e.avalibleFor?.includes(form.values.type) && !!e.avalibleFor,
+            disabled: !includes(e.avalibleFor, form.values.type) && !!e.avalibleFor,
           }))}
           allowDeselect={false}
         />

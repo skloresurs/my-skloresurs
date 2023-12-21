@@ -20,7 +20,7 @@ model User {
     google   String? // google email from Google oAuth
     googleId String? // google id for Google oAuth
 
-    facebook   String? // facebook email for Facebook oAuth
+    facebook   String? // facebook name for Facebook oAuth
     facebookId String? // facebook id for Facebook oAuth
 
     ip String[] @default([])

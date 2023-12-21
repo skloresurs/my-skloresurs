@@ -22,7 +22,7 @@ export default function Providers({ children }: Readonly<{ children: React.React
   const [scroll, scrollTo] = useWindowScroll();
   const supportRef = useSupportStore((state) => state.supportRef);
   return (
-    <MantineProvider theme={theme} defaultColorScheme='auto'>
+    <MantineProvider theme={theme} defaultColorScheme='dark'>
       <SWRConfig
         value={{
           fetcher,

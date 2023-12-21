@@ -5,6 +5,7 @@ import { TawkAPI } from '@tawk.to/tawk-messenger-react';
 import axios from 'axios';
 import { deleteCookie, getCookie } from 'cookies-next';
 import { HmacSHA256 } from 'crypto-js';
+import { constant, includes, noop } from 'lodash';
 import { CheckCircle, XCircle } from 'lucide-react';
 import { redirect } from 'next/navigation';
 import React, { RefObject, useEffect } from 'react';
@@ -46,14 +47,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             hash,
             userId: user.id,
           },
-          () => {}
+          noop
         );
         if (user.fullname) {
           supportRef.current?.setAttributes(
             {
               name: user.fullname,
             },
-            () => {}
+            noop
           );
         }
       } catch (error) {
@@ -85,7 +86,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     });
 
     if (!response || response.status !== 200) return;
-    await mutate(() => true, undefined, { revalidate: false });
+    await mutate(constant(true), undefined, { revalidate: false });
     mutate('/api/user');
 
     notifications.update({
@@ -104,7 +105,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     redirect('/login');
   }
 
-  if (user.ip.length > 0 && !user.ip.includes(ip.IPv4)) {
+  if (user.ip.length > 0 && !includes(user.ip, ip.IPv4)) {
     return (
       <ErrorPage
         code={403}

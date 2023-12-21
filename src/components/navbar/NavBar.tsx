@@ -1,4 +1,4 @@
-import { Boxes, GanttChartSquare, LogOut, LucideProps, Shield, UserRound, Users } from 'lucide-react';
+import { Boxes, GanttChartSquare, LogOut, LucideProps, Shield, Truck, UserRound, Users } from 'lucide-react';
 import React, { ReactNode } from 'react';
 
 import { Permission } from '@/types/User';
@@ -23,12 +23,16 @@ export interface RootNavBarItem extends NavBarItem {
 
 const navbar: RootNavBarItem[] = [
   {
-    href: '/',
-    icon: <Boxes {...props} />,
     id: 'orders',
     label: 'Замовлення',
+    href: '/',
+    icon: <Boxes {...props} />,
   },
   {
+    id: 'manager',
+    label: 'Менеджер',
+    icon: <GanttChartSquare {...props} />,
+    permission: 'Manager',
     children: [
       {
         href: '/manager/orders',
@@ -38,25 +42,28 @@ const navbar: RootNavBarItem[] = [
         permission: 'Manager',
       },
     ],
-    icon: <GanttChartSquare {...props} />,
-    id: 'manager',
-    label: 'Менеджер',
-    permission: 'Manager',
   },
   {
+    id: 'driver',
+    label: 'Водій',
+    icon: <Truck {...props} />,
+    permission: 'Driver',
+    children: [],
+  },
+  {
+    id: 'admin',
+    label: 'Адміністратор',
+    icon: <Shield {...props} />,
+    permission: 'Admin',
     children: [
       {
-        href: '/admin/users',
-        icon: <Users {...props} />,
         id: 'admin-users',
         label: 'Користувачі',
+        href: '/admin/users',
+        icon: <Users {...props} />,
         permission: 'Admin',
       },
     ],
-    icon: <Shield {...props} />,
-    id: 'admin',
-    label: 'Адміністратор',
-    permission: 'Admin',
   },
 ];
 

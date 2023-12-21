@@ -1,3 +1,4 @@
+import { toLower } from 'lodash';
 import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
 
@@ -17,7 +18,7 @@ export async function POST(req: NextRequest) {
     if (!email || !password) {
       throw MissingParamsError;
     }
-    const key = await auth.useKey('email', email.toLowerCase(), password);
+    const key = await auth.useKey('email', toLower(email), password);
     const user = await auth.getUser(key.userId);
 
     verifyIp(req, user.ip);

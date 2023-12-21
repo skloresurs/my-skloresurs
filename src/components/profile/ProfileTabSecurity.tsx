@@ -3,6 +3,7 @@
 import { Button, Divider, Paper, PasswordInput, TextInput, Title } from '@mantine/core';
 import { notifications } from '@mantine/notifications';
 import axios from 'axios';
+import { map } from 'lodash';
 import { CheckCircle, Pencil, XCircle } from 'lucide-react';
 import { nanoid } from 'nanoid';
 import React, { useState } from 'react';
@@ -91,7 +92,7 @@ export default function ProfileTabSecurity() {
         </div>
         <Divider className='my-3' />
         <div className='flex flex-row items-center justify-between px-4'>
-          <span className='text-sm text-[var(--mantine-color-gray-5)]' />
+          <span className='text-sm text-[var(--mantine-color-dimmed)]' />
           <Button onClick={changePassword} leftSection={<Pencil size={20} />} color='orange'>
             Змінити
           </Button>
@@ -109,7 +110,7 @@ export default function ProfileTabSecurity() {
             </Title>
           )}
           <div className='flex flex-col gap-1'>
-            {user?.ip.map((ip) => (
+            {map(user?.ip, (ip) => (
               <div key={nanoid()} className='flex flex-row items-center gap-2'>
                 <TextInput value={ip} readOnly className='w-full' />
               </div>
@@ -118,7 +119,7 @@ export default function ProfileTabSecurity() {
         </div>
         <Divider className='my-3' />
         <div className='flex flex-row items-center justify-between px-4'>
-          <span className='text-sm text-[var(--mantine-color-gray-5)]'>Зазвичай не вказано жодної ip адреси</span>
+          <span className='text-sm text-[var(--mantine-color-dimmed)]'>Зазвичай не вказано жодної ip адреси</span>
         </div>
       </Paper>
     </div>

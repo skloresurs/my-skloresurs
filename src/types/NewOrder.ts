@@ -35,16 +35,8 @@ const defaultData: ValidationSchema = {
   comment: '',
   specification: [
     {
-      coatingType: undefined,
-      edgeProcessing: undefined,
-      emalitFilm: undefined,
-      facet: undefined,
-      gasFilling: undefined,
-      hardening: undefined,
       hydrofob: false,
       nomenclature: '',
-      paint: undefined,
-      sandBlaster: undefined,
       type: elementTypes[0].value,
     },
   ],

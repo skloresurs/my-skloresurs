@@ -10,14 +10,16 @@ export default interface IManaderOrder {
 
   status: string;
   location: string;
-  bill: string;
 
   locked: boolean;
 
-  total: number;
-  pay: number;
-  final: number;
-  currency: string;
+  finance?: {
+    bill: string;
+    total: number;
+    pay: number;
+    final: number;
+    currency: string;
+  };
 
   goods: IGoods[];
 }

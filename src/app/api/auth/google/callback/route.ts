@@ -1,4 +1,5 @@
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
+import { constant, toLower } from 'lodash';
 import { nanoid } from 'nanoid';
 import { cookies } from 'next/headers';
 import { type NextRequest, NextResponse } from 'next/server';
@@ -11,7 +12,7 @@ import { getSession, setSession } from '@/libs/sessions';
 import verifyIp from '@/libs/verify-ip';
 
 export const GET = async (req: NextRequest) => {
-  const activeSession = await getSession(req).catch(() => null);
+  const activeSession = await getSession(req).catch(constant(null));
   const activeSessionBoolean = activeSession !== null;
 
   try {
@@ -66,7 +67,7 @@ export const GET = async (req: NextRequest) => {
           key: {
             password: null,
             providerId: 'email',
-            providerUserId: googleUser.email.toLowerCase(),
+            providerUserId: toLower(googleUser.email),
           },
           userId: nanoid(),
         })

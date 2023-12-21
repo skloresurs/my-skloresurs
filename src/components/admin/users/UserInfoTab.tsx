@@ -4,6 +4,7 @@ import { Button, Divider, Paper, TextInput, Title } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { notifications } from '@mantine/notifications';
 import axios from 'axios';
+import { startsWith } from 'lodash';
 import { CheckCircle, Save, XCircle } from 'lucide-react';
 import React, { useState } from 'react';
 import useSWR, { useSWRConfig } from 'swr';
@@ -59,7 +60,7 @@ export default function UserInfoTab({ user }: { user?: IUserRequest }) {
     if (!response || response.status !== 200) return disableLoading();
     await mutate(`/api/user/${user?.id}`);
 
-    await mutate((key: string) => key.startsWith('/api/admin/users'), undefined, {
+    await mutate((key: string) => startsWith(key, '/api/admin/users'), undefined, {
       revalidate: false,
     });
 
@@ -95,7 +96,7 @@ export default function UserInfoTab({ user }: { user?: IUserRequest }) {
         </div>
         <Divider className='my-3' />
         <div className='flex flex-row items-center justify-between px-4'>
-          <span className='text-sm text-[var(--mantine-color-gray-5)]'>ID не може бути змінено</span>
+          <span className='text-sm text-[var(--mantine-color-dimmed)]'>ID не може бути змінено</span>
         </div>
       </Paper>
       <Paper withBorder shadow='md' radius='md' className='py-3'>
@@ -108,7 +109,7 @@ export default function UserInfoTab({ user }: { user?: IUserRequest }) {
         </div>
         <Divider className='my-3' />
         <div className='flex flex-row items-center justify-between px-4'>
-          <span className='text-sm text-[var(--mantine-color-gray-5)]'>E-mail не може бути змінено</span>
+          <span className='text-sm text-[var(--mantine-color-dimmed)]'>E-mail не може бути змінено</span>
         </div>
       </Paper>
       <Paper withBorder shadow='md' radius='md' className='py-3'>
@@ -126,11 +127,11 @@ export default function UserInfoTab({ user }: { user?: IUserRequest }) {
             }}
             maxLength={100}
           />
-          <span className='block text-right text-xs text-[var(--mantine-color-gray-5)]'>{fullname.length}/100</span>
+          <span className='block text-right text-xs text-[var(--mantine-color-dimmed)]'>{fullname.length}/100</span>
         </div>
         <Divider className='my-3' />
         <div className='flex flex-row items-center justify-between px-4'>
-          <span className='text-sm text-[var(--mantine-color-gray-5)]'>Максимум 100 символів</span>
+          <span className='text-sm text-[var(--mantine-color-dimmed)]'>Максимум 100 символів</span>
           <Button onClick={updateFullname} loading={loading} leftSection={<Save size={20} />}>
             Зберегти
           </Button>

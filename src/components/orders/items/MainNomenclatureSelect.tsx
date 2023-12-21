@@ -2,6 +2,7 @@
 
 import { Select, TextInput } from '@mantine/core';
 import { UseFormReturnType } from '@mantine/form';
+import { find } from 'lodash';
 import { Loader2 } from 'lucide-react';
 import React from 'react';
 import useSWR from 'swr';
@@ -40,7 +41,7 @@ export default function MainNomenclatureSelect({ activeTab, form }: IProps) {
       />
       <TextInput
         label='Товщина'
-        value={data?.data?.find((e) => e.value === form.values.specification[0].nomenclature)?.thickness ?? '-'}
+        value={find(data?.data, ['value', form.values.specification[0].nomenclature])?.thickness ?? '-'}
         readOnly
         rightSection='мм'
       />

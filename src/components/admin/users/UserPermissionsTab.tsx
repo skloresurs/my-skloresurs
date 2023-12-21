@@ -3,6 +3,7 @@
 import { Divider, Switch } from '@mantine/core';
 import { notifications } from '@mantine/notifications';
 import axios from 'axios';
+import { includes, map, startsWith } from 'lodash';
 import { CheckCircle, XCircle } from 'lucide-react';
 import { nanoid } from 'nanoid';
 import React, { useMemo } from 'react';
@@ -57,6 +58,13 @@ export default function UserPermissionsTab({ user }: { user?: IUserRequest }) {
         id: 'ManagerFinance',
         title: 'Фінансові показники менеджера',
       },
+      null,
+      {
+        description: 'Доступ до меню водія',
+        disabled: false,
+        id: 'Driver',
+        title: 'Водій',
+      },
     ],
     [activeUser]
   );
@@ -95,7 +103,7 @@ export default function UserPermissionsTab({ user }: { user?: IUserRequest }) {
       await mutate('/api/user');
     }
 
-    await mutate((key: string) => key.startsWith('/api/admin/users'), undefined, {
+    await mutate((key: string) => startsWith(key, '/api/users'), undefined, {
       revalidate: false,
     });
 
@@ -113,7 +121,7 @@ export default function UserPermissionsTab({ user }: { user?: IUserRequest }) {
 
   return (
     <div className='flex w-full max-w-xl flex-col gap-5'>
-      {permissionsData.map((e) => (
+      {map(permissionsData, (e) => (
         <div key={e?.id ?? nanoid()}>
           {e ? (
             <Switch
@@ -121,7 +129,7 @@ export default function UserPermissionsTab({ user }: { user?: IUserRequest }) {
               label={e.title}
               description={e.description}
               disabled={e.disabled}
-              defaultChecked={user?.permissions.includes(e.id)}
+              defaultChecked={includes(user?.permissions, e.id)}
               onChange={(event) => updatePermission(e.id, event.currentTarget.checked)}
               size='md'
             />

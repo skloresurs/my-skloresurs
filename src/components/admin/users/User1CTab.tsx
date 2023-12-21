@@ -4,6 +4,7 @@ import { Button, Divider, Paper, TextInput, Title } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { notifications } from '@mantine/notifications';
 import axios from 'axios';
+import { startsWith } from 'lodash';
 import { CheckCircle, RefreshCcwDot, XCircle } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
 import useSWR, { useSWRConfig } from 'swr';
@@ -71,7 +72,7 @@ export default function User1CTab({ user }: { user?: IUserRequest }) {
     if (!response || response.status !== 200) return disableLoading;
     await mutate(`/api/user/${user?.id}`);
 
-    await mutate((key: string) => key.startsWith('/api/admin/users'), undefined, {
+    await mutate((key: string) => startsWith(key, '/api/admin/users'), undefined, {
       revalidate: false,
     });
 
@@ -109,7 +110,7 @@ export default function User1CTab({ user }: { user?: IUserRequest }) {
         </div>
         <Divider className='my-3' />
         <div className='flex flex-row items-center justify-between px-4'>
-          <span className='text-sm text-[var(--mantine-color-gray-5)]'>ID повинен бути типу UUID</span>
+          <span className='text-sm text-[var(--mantine-color-dimmed)]'>ID повинен бути типу UUID</span>
           <Button
             onClick={() => updateID('main', data.main)}
             loading={loading}
@@ -135,7 +136,7 @@ export default function User1CTab({ user }: { user?: IUserRequest }) {
         </div>
         <Divider className='my-3' />
         <div className='flex flex-row items-center justify-between px-4'>
-          <span className='text-sm text-[var(--mantine-color-gray-5)]'>ID повинен бути типу UUID</span>
+          <span className='text-sm text-[var(--mantine-color-dimmed)]'>ID повинен бути типу UUID</span>
           <Button
             onClick={() => updateID('secondary', data.secondary)}
             leftSection={<RefreshCcwDot size={20} />}

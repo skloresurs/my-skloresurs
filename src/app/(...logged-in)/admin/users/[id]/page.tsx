@@ -1,6 +1,7 @@
 'use client';
 
 import { ScrollArea, Tabs, Title } from '@mantine/core';
+import { map } from 'lodash';
 import { BookKey, Boxes, Fingerprint, Info, Key, Shield } from 'lucide-react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import React, { ReactNode, useMemo } from 'react';
@@ -115,7 +116,7 @@ export default function UserSettingsPage({ params }: { params: { id: string } })
           </Tabs.List>
         </ScrollArea>
 
-        {tabs.map((tab) => (
+        {map(tabs, (tab) => (
           <Tabs.Panel key={tab.key} value={tab.key} className='mt-3'>
             {tab.content}
           </Tabs.Panel>

@@ -8,10 +8,17 @@
     // Next.js
     "next/core-web-vitals",
 
-    // Base
+    // Airbnb
     "airbnb",
     "airbnb-typescript",
+    "eslint-config-airbnb/hooks",
+
+    // TypeScript
     "plugin:@typescript-eslint/recommended",
+
+    // React
+    "plugin:react/recommended",
+    "plugin:react-hooks/recommended",
     "plugin:jsx-a11y/recommended",
 
     // Extended
@@ -22,11 +29,23 @@
     "plugin:security/recommended",
     "plugin:xss/recommended",
 
-    // Others
+    // UI and css
     "plugin:tailwindcss/recommended",
-    "plugin:jsonc/recommended-with-jsonc",
+    "mantine",
+
+    // Browser Compability
+    "plugin:compat/recommended",
+
+    // Others
+    "plugin:lodash/recommended",
     "plugin:import/recommended",
     "plugin:import/typescript",
+    "plugin:promise/recommended",
+
+    // Other files
+    "plugin:jsonc/recommended-with-jsonc",
+
+    // Prettier
     "prettier"
   ],
   "parser": "@typescript-eslint/parser",
@@ -38,7 +57,7 @@
     "sourceType": "module",
     "project": "./tsconfig.json"
   },
-  "plugins": ["import", "@typescript-eslint", "react", "no-secrets", "simple-import-sort", "prettier"],
+  "plugins": ["import", "@typescript-eslint", "no-secrets", "simple-import-sort", "prettier", "lodash", "compat"],
   "root": true,
   "settings": {
     "import/resolver": {
@@ -86,6 +105,10 @@
         "mjs": "always"
       }
     ],
+
+    // lodash
+    "lodash/import-scope": [2, "member"],
+    "lodash/prefer-lodash-method": [2, { "ignoreObjects": ["router", "window.location"] }],
 
     // The following rules are disabled due to them being considered unduly restrictive or unhelpful.
     "unicorn/no-array-for-each": "off",
