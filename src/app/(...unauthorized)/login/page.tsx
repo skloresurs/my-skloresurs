@@ -22,7 +22,7 @@ const formSchema = z.object({
     message: 'Некоректний E-mail',
   }),
   password: z.string({ required_error: "Пароль є обов'язковим" }).min(8, 'Пароль не може бути меншим за 8 символів'),
-});
+}).strict();
 
 const NotificationTitle = 'Авторизація';
 type ValidationSchema = z.infer<typeof formSchema>;

@@ -108,6 +108,7 @@
     "eslint-plugin-tailwindcss": "^3.13.0",
     "eslint-plugin-unicorn": "^49.0.0",
     "eslint-plugin-xss": "^0.1.12",
+    "eslint-plugin-zod": "^1.4.0",
     "husky": "^8.0.3",
     "lint-staged": "^15.2.0",
     "postcss": "^8.4.32",

@@ -57,7 +57,16 @@
     "sourceType": "module",
     "project": "./tsconfig.json"
   },
-  "plugins": ["import", "@typescript-eslint", "no-secrets", "simple-import-sort", "prettier", "lodash", "compat"],
+  "plugins": [
+    "import",
+    "@typescript-eslint",
+    "no-secrets",
+    "simple-import-sort",
+    "prettier",
+    "lodash",
+    "compat",
+    "zod"
+  ],
   "root": true,
   "settings": {
     "import/resolver": {
@@ -109,6 +118,10 @@
     // lodash
     "lodash/import-scope": [2, "member"],
     "lodash/prefer-lodash-method": [2, { "ignoreObjects": ["router", "window.location"] }],
+
+    // zod
+    "zod/prefer-enum": 2,
+    "zod/require-strict": 2,
 
     // The following rules are disabled due to them being considered unduly restrictive or unhelpful.
     "unicorn/no-array-for-each": "off",

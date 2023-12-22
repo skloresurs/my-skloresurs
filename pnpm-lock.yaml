@@ -232,6 +232,9 @@ devDependencies:
   eslint-plugin-xss:
     specifier: ^0.1.12
     version: 0.1.12
+  eslint-plugin-zod:
+    specifier: ^1.4.0
+    version: 1.4.0(eslint@8.56.0)
   husky:
     specifier: ^8.0.3
     version: 8.0.3
@@ -2170,6 +2173,15 @@ packages:
     engines: {node: '>=0.10.0'}
     dependencies:
       requireindex: 1.1.0
+    dev: true
+
+  /eslint-plugin-zod@1.4.0(eslint@8.56.0):
+    resolution: {integrity: sha512-i9WzQGw2X5fQcuQh33mA8DQjZJM/yuyZvs1Fc5EyTidX7Ed/g832+1FEQ4u5gtXy+jZ+DVsB5+oMHj4tIOfeZg==}
+    engines: {node: '>=12'}
+    peerDependencies:
+      eslint: '>=8.1.0'
+    dependencies:
+      eslint: 8.56.0
     dev: true
 
   /eslint-scope@7.2.2:

@@ -16,17 +16,20 @@ import { IUserMeRequest, IUserRequest } from '@/types/User';
 
 const NotificationTitle = 'Керування користувачем';
 
-const formSchema = z.object({
-  ips: z
-    .object({
-      ip: z
-        .string({ required_error: '' })
-        .min(1, 'Обов`язкове поле')
-        .ip({ message: 'Некоректний IP-адрес', version: 'v4' }),
-      key: z.string({ required_error: '' }),
-    })
-    .array(),
-});
+const formSchema = z
+  .object({
+    ips: z
+      .object({
+        ip: z
+          .string({ required_error: '' })
+          .min(1, 'Обов`язкове поле')
+          .ip({ message: 'Некоректний IP-адрес', version: 'v4' }),
+        key: z.string({ required_error: '' }),
+      })
+      .strict()
+      .array(),
+  })
+  .strict();
 
 export default function UserSecurityTab({ user }: { user?: IUserRequest }) {
   const { mutate } = useSWRConfig();

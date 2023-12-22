@@ -14,7 +14,7 @@ const specificationSchema = z.object({
   paint: z.string().optional(),
   sandBlaster: z.string().optional(),
   type: z.string({ required_error: 'Тип обов`язковий' }).min(1, 'Тип обов`язковий'),
-});
+}).strict();
 
 const formSchema = z.object({
   address: z
@@ -28,7 +28,7 @@ const formSchema = z.object({
     .min(1, 'Назва замовлення обов`язкова')
     .max(255, 'Максимальна довжина назви 255 символів'),
   type: z.string({ required_error: 'Тип замовлення обов`язково' }).min(1, 'Тип замовлення обов`язково'),
-});
+}).strict();
 
 const defaultData: ValidationSchema = {
   address: '',

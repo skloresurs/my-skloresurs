@@ -28,6 +28,7 @@ const formSchema = z
       .min(3, "Повне ім'я не може бути меншим за 3 символів"),
     password: z.string({ required_error: "Пароль є обов'язковим" }).min(8, 'Пароль не може бути меншим за 8 символів'),
   })
+  .strict()
   .refine((data) => data.password === data.confirm, {
     message: 'Паролі не співпадають',
     path: ['confirm'],
