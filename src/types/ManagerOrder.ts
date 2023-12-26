@@ -1,5 +1,8 @@
+import Server from './Server';
+
 export default interface IManaderOrder {
   id: string;
+  server: Server;
 
   responsible: string;
   manadger: string;
@@ -20,8 +23,6 @@ export default interface IManaderOrder {
     final: number;
     currency: string;
   };
-
-  goods: IGoods[];
 }
 
 export interface IGoods {

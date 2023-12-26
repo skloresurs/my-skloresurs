@@ -10,6 +10,10 @@ import verifyIp from '@/libs/verify-ip';
 import { verifyPermissionServer } from '@/libs/verify-permission';
 import IManaderOrder from '@/types/ManagerOrder';
 
+interface IResponse {
+  data: IManaderOrder[];
+}
+
 export async function GET(req: NextRequest) {
   try {
     const session = await getSession(req);
@@ -19,31 +23,30 @@ export async function GET(req: NextRequest) {
     const params = req.nextUrl.searchParams;
 
     const search = params.get('search');
-    const all = !!params.get('all');
+    const all = params.get('all');
 
     let orders: IManaderOrder[] = [];
 
     if (session.user.id_1c_main) {
       const response = await axios1cMain
-        .post(
-          `/orders/manager`,
-          {
-            all,
-            search,
+        .get<IResponse>(`/manager/order/`, {
+          headers: {
+            ManagerId: session.user.id_1c_main,
           },
-          {
-            headers: {
-              ManagerId: session.user.id_1c_main,
-            },
-          }
-        )
+          params: {
+            search,
+            all,
+          },
+        })
         .catch((error) => {
           logger.error(error.response.data);
           throw ServerError;
         });
 
-      orders = [...orders, ...response.data.data];
+      orders = [...response.data.data];
     }
+
+    // TODO: add orders from secondary server 1C
 
     return NextResponse.json(orderBy(orders, ['locked', 'createdAt'], ['asc', 'desc']), {
       status: 200,

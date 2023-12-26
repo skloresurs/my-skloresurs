@@ -6,6 +6,7 @@ import { Sigma } from 'lucide-react';
 import { DataTable, DataTableSortStatus } from 'mantine-datatable';
 import React, { useEffect, useMemo, useState } from 'react';
 import { useWindowSize } from 'react-use';
+import useSWR from 'swr';
 
 import IManaderOrder, { IGoods } from '@/types/ManagerOrder';
 
@@ -14,18 +15,19 @@ interface IProps {
 }
 
 export default function SpecificationTabOrder({ order }: IProps) {
+  const { data: goods, isValidating } = useSWR<IGoods[]>(`main1c:/manager/order/${order.id}`);
   const { height } = useWindowSize();
   const [sortStatus, setSortStatus] = useState<DataTableSortStatus<IGoods>>({
     columnAccessor: 'position',
     direction: 'asc',
   });
 
-  const [records, setRecords] = useState(sortBy(order.goods, 'position'));
+  const [records, setRecords] = useState(sortBy(goods, 'position'));
 
   useEffect(() => {
-    const data = sortBy(order.goods, sortStatus.columnAccessor);
+    const data = sortBy(goods, sortStatus.columnAccessor);
     setRecords(sortStatus.direction === 'desc' ? data.toReversed() : data);
-  }, [order, sortStatus]);
+  }, [goods, sortStatus]);
 
   const groups = useMemo(
     () => [
@@ -50,14 +52,14 @@ export default function SpecificationTabOrder({ order }: IProps) {
         columns: [
           {
             accessor: 'amount',
-            footer: <span>{Math.round(reduce(order.goods, (a, b) => a + b.amount, 0) * 1000) / 1000}</span>,
+            footer: <span>{Math.round(reduce(goods, (a, b) => a + b.amount, 0) * 1000) / 1000}</span>,
             footerClassName: 'bg-dark-6',
             sortable: true,
             title: 'S m²',
           },
           {
             accessor: 'pieces',
-            footer: <span>{Math.round(reduce(order.goods, (a, b) => a + b.pieces, 0) * 1000) / 1000}</span>,
+            footer: <span>{Math.round(reduce(goods, (a, b) => a + b.pieces, 0) * 1000) / 1000}</span>,
             footerClassName: 'bg-dark-6',
             sortable: true,
             title: 'Шт.',
@@ -70,7 +72,7 @@ export default function SpecificationTabOrder({ order }: IProps) {
         columns: [
           {
             accessor: 'in',
-            footer: <span>{Math.round(reduce(order.goods, (a, b) => a + b.in, 0) * 1000) / 1000}</span>,
+            footer: <span>{Math.round(reduce(goods, (a, b) => a + b.in, 0) * 1000) / 1000}</span>,
             footerClassName: 'bg-dark-6',
             render: (record: IGoods) => <span>{record.in === 0 ? '' : record.in}</span>,
             sortable: true,
@@ -84,7 +86,7 @@ export default function SpecificationTabOrder({ order }: IProps) {
         columns: [
           {
             accessor: 'out',
-            footer: <span>{Math.round(reduce(order.goods, (a, b) => a + b.out, 0) * 1000) / 1000}</span>,
+            footer: <span>{Math.round(reduce(goods, (a, b) => a + b.out, 0) * 1000) / 1000}</span>,
             footerClassName: 'bg-dark-6',
             render: (record: IGoods) => <span>{record.out === 0 ? '' : record.out}</span>,
             sortable: true,
@@ -95,7 +97,7 @@ export default function SpecificationTabOrder({ order }: IProps) {
         title: 'Клієнт',
       },
     ],
-    [order]
+    [goods]
   );
 
   return (
@@ -107,12 +109,12 @@ export default function SpecificationTabOrder({ order }: IProps) {
       records={records}
       sortStatus={sortStatus}
       onSortStatusChange={setSortStatus}
-      minHeight={order.goods.length === 0 ? 150 : 0}
+      minHeight={goods?.length === 0 ? 150 : 0}
       height={height - 150}
+      fetching={isValidating}
       noRecordsText='Немає даних'
       idAccessor='position'
       rowExpansion={{
-        // eslint-disable-next-line react/no-unstable-nested-components
         content: ({ record }) => (
           <Stack className='flex flex-col gap-1 px-3 py-2'>
             <div>
