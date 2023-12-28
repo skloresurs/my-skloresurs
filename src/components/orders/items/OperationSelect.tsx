@@ -6,7 +6,6 @@ import { Loader2 } from 'lucide-react';
 import React from 'react';
 import useSWR from 'swr';
 
-import { env } from '@/env.mjs';
 import { ValidationSchema } from '@/types/NewOrder';
 
 interface IProps {
@@ -19,7 +18,7 @@ interface IProps {
 }
 
 export default function OperationSelect({ label, activeTab, form, formKey, operationId, className }: IProps) {
-  const { data, isValidating, error } = useSWR(`${env.NEXT_PUBLIC_API_URL_1C_MAIN}/data/operations/${operationId}`);
+  const { data, isValidating, error } = useSWR(`/api/data/operations/${operationId}`);
   return (
     <Select
       className={className}
@@ -29,6 +28,7 @@ export default function OperationSelect({ label, activeTab, form, formKey, opera
       rightSection={isValidating ? <Loader2 className='animate-spin' /> : null}
       placeholder={error ? 'Помилка отримання даних' : ''}
       data={data?.data ?? []}
+      searchable
     />
   );
 }

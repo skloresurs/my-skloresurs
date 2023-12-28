@@ -1,19 +1,11 @@
 'use client';
 
-import {
-  ActionIcon,
-  AppShell as MantineAppShell,
-  Burger,
-  Divider,
-  ScrollArea,
-  Title,
-  useMantineColorScheme,
-} from '@mantine/core';
+import { AppShell as MantineAppShell, Burger, Divider, ScrollArea, Title } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { notifications } from '@mantine/notifications';
 import axios from 'axios';
 import { constant, map } from 'lodash';
-import { CheckCircle, Moon, Sun, XCircle } from 'lucide-react';
+import { CheckCircle, XCircle } from 'lucide-react';
 import Image from 'next/image';
 import React, { ReactNode } from 'react';
 import useSWR, { useSWRConfig } from 'swr';
@@ -28,9 +20,6 @@ const NotificationTitle = 'Вихід';
 export default function AppShell({ children }: { children: ReactNode }) {
   const { data: user } = useSWR<IUserMeRequest>(`/api/user`);
   const { mutate } = useSWRConfig();
-  const { colorScheme, setColorScheme } = useMantineColorScheme({
-    keepTransitions: true,
-  });
   const [opened, { toggle }] = useDisclosure();
 
   const logout = async () => {
@@ -83,14 +72,6 @@ export default function AppShell({ children }: { children: ReactNode }) {
           <Image src='/logo.webp' height={40} width={40} alt='Skloresurs' />
           <Title order={1}>My Skloresurs</Title>
         </div>
-        <ActionIcon
-          variant='light'
-          size='lg'
-          aria-label='Theme switch'
-          onClick={() => setColorScheme(colorScheme === 'dark' ? 'light' : 'dark')}
-        >
-          {colorScheme === 'dark' ? <Sun /> : <Moon />}
-        </ActionIcon>
       </MantineAppShell.Header>
 
       <MantineAppShell.Navbar p='md'>

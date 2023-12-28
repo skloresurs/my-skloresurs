@@ -84,7 +84,7 @@ function getStatusConfig(status: string): IStatusConfig {
   }
 }
 
-export default async function StatusBadge({ status }: { status: string }) {
+export default function StatusBadge({ status }: { status: string }) {
   return (
     <Badge className='cursor-default select-none' variant='light' color={getStatusConfig(status).color}>
       {getStatusConfig(status).name}

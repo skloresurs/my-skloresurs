@@ -1,5 +1,6 @@
 import { typeObject } from './types';
 
+export type ImageType = 'glass' | 'film' | 'camera';
 export interface IElementType {
   /**
    * @readonly
@@ -24,7 +25,7 @@ export interface IElementType {
    * @type {string[] | undefined}
    * @description Тип зображення
    */
-  readonly imageType: 'glass' | 'film' | 'camera';
+  readonly imageType: ImageType;
 }
 
 const elementTypes: IElementType[] = [

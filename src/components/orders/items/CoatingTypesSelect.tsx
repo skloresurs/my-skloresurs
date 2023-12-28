@@ -2,11 +2,11 @@
 
 import { Select } from '@mantine/core';
 import { UseFormReturnType } from '@mantine/form';
+import { map } from 'lodash';
 import { Loader2 } from 'lucide-react';
 import React from 'react';
 import useSWR from 'swr';
 
-import { env } from '@/env.mjs';
 import { ValidationSchema } from '@/types/NewOrder';
 
 interface IProps {
@@ -15,8 +15,15 @@ interface IProps {
   className?: string;
 }
 
+interface IRequest {
+  data: {
+    value: number;
+    label: string;
+  }[];
+}
+
 export default function CoatingTypesSelect({ activeTab, form, className }: IProps) {
-  const { data, isValidating, error } = useSWR(`${env.NEXT_PUBLIC_API_URL_1C_MAIN}/data/coating-types`);
+  const { data, isValidating, error } = useSWR<IRequest>(`/api/data/coating-types`);
   return (
     <Select
       className={className}
@@ -25,7 +32,8 @@ export default function CoatingTypesSelect({ activeTab, form, className }: IProp
       disabled={error || isValidating}
       rightSection={isValidating ? <Loader2 className='animate-spin' /> : null}
       placeholder={error ? 'Помилка отримання даних' : ''}
-      data={data?.data ?? []}
+      data={map(data?.data, (e) => ({ value: e.value.toString(), label: e.label })) ?? []}
+      searchable
     />
   );
 }

@@ -5,13 +5,14 @@ import 'moment/locale/uk';
 import { Drawer, NumberFormatter, Paper, Tabs, Title } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { trim } from 'lodash';
-import { CircleUserRound, MapPin } from 'lucide-react';
+import { CircleUserRound, Lock, MapPin } from 'lucide-react';
 import moment from 'moment';
 import React from 'react';
 import Moment from 'react-moment';
 
 import IManaderOrder from '@/types/ManagerOrder';
 
+import StatusBadge from './StatusBadge';
 import MainTabOrder from './tabs/MainTabOrder';
 import SpecificationTabOrder from './tabs/SpecificationTabOrder';
 
@@ -41,14 +42,23 @@ export default function OrderItem({ order }: IProps) {
             <Moment date={createdAt} format='LTS' locale='uk' />
           </div>
         </div>
+        {order.locked && (
+          <div className='flex flex-row items-center gap-1 text-sm text-[var(--mantine-color-red-5)]'>
+            <Lock size={16} />
+            <span className=''>Заблоковано</span>
+          </div>
+        )}
+        <div className='mt-1 flex'>
+          <StatusBadge status={order.status} />
+        </div>
         <div className='mt-3 flex w-full flex-col gap-1 text-[var(--mantine-color-placeholder)]'>
           <div className='flex flex-row items-center gap-1'>
             <CircleUserRound />
-            <span>{trim(order.agent)}</span>
+            <span className='line-clamp-1 w-full text-left'>{trim(order.agent)}</span>
           </div>
           <div className='flex flex-row items-center gap-1'>
             <MapPin />
-            <span className='line-clamp-2 w-full text-left'>{trim(order.location)}</span>
+            <span className='line-clamp-1 w-full text-left'>{trim(order.location)}</span>
           </div>
         </div>
         {order.finance && (

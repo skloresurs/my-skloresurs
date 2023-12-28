@@ -35,6 +35,9 @@ export default function NewOrder() {
       <Code block className='order-4'>
         {JSON.stringify(form.values, null, 2)}
       </Code>
+      <Code block className='order-4'>
+        {JSON.stringify(form.errors, null, 2)}
+      </Code>
     </form>
   );
 }

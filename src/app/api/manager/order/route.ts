@@ -1,4 +1,4 @@
-import { orderBy } from 'lodash';
+import { map, orderBy } from 'lodash';
 import { NextRequest, NextResponse } from 'next/server';
 
 import { ServerError } from '@/classes/CustomError';
@@ -9,6 +9,7 @@ import { getSession } from '@/libs/sessions';
 import verifyIp from '@/libs/verify-ip';
 import { verifyPermissionServer } from '@/libs/verify-permission';
 import IManaderOrder from '@/types/ManagerOrder';
+import Server from '@/types/Server';
 
 interface IResponse {
   data: IManaderOrder[];
@@ -31,7 +32,7 @@ export async function GET(req: NextRequest) {
       const response = await axios1cMain
         .get<IResponse>(`/manager/order/`, {
           headers: {
-            ManagerId: session.user.id_1c_main,
+            managerid: session.user.id_1c_main,
           },
           params: {
             search,
@@ -43,12 +44,12 @@ export async function GET(req: NextRequest) {
           throw ServerError;
         });
 
-      orders = [...response.data.data];
+      orders = [...map(response.data.data, (e) => ({ ...e, server: 'main' as Server }))];
     }
 
     // TODO: add orders from secondary server 1C
 
-    return NextResponse.json(orderBy(orders, ['locked', 'createdAt'], ['asc', 'desc']), {
+    return NextResponse.json(orderBy(orders, ['locked', 'createdAt'], ['desc', 'desc']), {
       status: 200,
     });
   } catch (error) {

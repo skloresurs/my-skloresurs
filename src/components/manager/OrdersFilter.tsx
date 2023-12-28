@@ -35,7 +35,7 @@ export default function OrdersInstruments() {
 
     const filter: string = current.toString();
     const newQuery = filter ? `?${filter}` : '';
-    router.replace(`/${newQuery}`);
+    router.replace(`/manager/orders${newQuery}`);
   }
 
   return (
@@ -90,7 +90,7 @@ export default function OrdersInstruments() {
               color='red'
               leftSection={<SearchX size={16} />}
               onClick={() => {
-                router.push('/');
+                router.push('/manager/orders');
                 setSearch('');
                 setAllOrders(false);
                 setOpened(false);

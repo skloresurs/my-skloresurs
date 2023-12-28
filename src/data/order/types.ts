@@ -14,9 +14,9 @@ interface IType {
   /**
    * @readonly
    * @type {number}
-   * @description Максимальна кількість груп елементів
+   * @description Максимальна кількість елементів
    */
-  readonly maxElementGroups: number;
+  readonly maxElements: number;
   /**
    * @readonly
    * @type {boolean}
@@ -28,19 +28,19 @@ interface IType {
 const types: IType[] = [
   {
     label: 'МоноСтекло',
-    maxElementGroups: 1,
+    maxElements: 1,
     twoGrops: false,
     value: '62a4c7ff-7a70-485f-9d49-7c00e49855dc',
   },
   {
     label: 'Склопакет',
-    maxElementGroups: 9,
+    maxElements: 9,
     twoGrops: true,
     value: '66859f90-8c4a-4497-bf56-099cdb8c57f4',
   },
   {
     label: 'Триплекс власного виробництва',
-    maxElementGroups: 9,
+    maxElements: 9,
     twoGrops: true,
     value: '7bbda317-6e7b-44a7-8a5d-34a9229e200f',
   },

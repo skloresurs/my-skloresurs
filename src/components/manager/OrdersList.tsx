@@ -9,11 +9,12 @@ import useSWR from 'swr';
 import IManaderOrder from '@/types/ManagerOrder';
 
 import LoadingOverlay from '../LoadingOverlay';
+import MoreItem from './MoreItem';
 import OrderItem from './OrderItem';
 
 export default function OrdersList() {
   const query = useSearchParams();
-  const { data, error, isValidating, mutate } = useSWR<IManaderOrder[]>(`/api/orders/manager/?${query.toString()}`);
+  const { data, error, isValidating, mutate } = useSWR<IManaderOrder[]>(`/api/manager/order/?${query.toString()}`);
 
   useEffect(() => {
     mutate();
@@ -50,6 +51,7 @@ export default function OrdersList() {
           <OrderItem order={order} />
         </Grid.Col>
       ))}
+      {data.length >= 250 && <MoreItem />}
     </Grid>
   );
 }

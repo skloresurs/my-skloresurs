@@ -5,6 +5,8 @@ import { useWindowScroll } from '@mantine/hooks';
 import { Notifications } from '@mantine/notifications';
 import { NavigationProgress } from '@mantine/nprogress';
 import TawkMessengerReact from '@tawk.to/tawk-messenger-react';
+import { StatusCodes } from 'http-status-codes';
+import { includes } from 'lodash';
 import { ChevronUp } from 'lucide-react';
 import { ReCaptchaProvider } from 'next-recaptcha-v3';
 import { Next13ProgressBar } from 'next13-progressbar';
@@ -18,6 +20,29 @@ import useSupportStore from '@/stores/support';
 
 import AuthProvider from './AuthProvider';
 
+const NO_RETRY_STATUS_CODES: StatusCodes[] = [
+  StatusCodes.BAD_REQUEST,
+  StatusCodes.UNAUTHORIZED,
+  StatusCodes.FORBIDDEN,
+  StatusCodes.NOT_FOUND,
+  StatusCodes.METHOD_NOT_ALLOWED,
+  StatusCodes.NOT_ACCEPTABLE,
+  StatusCodes.GONE,
+  StatusCodes.LENGTH_REQUIRED,
+  StatusCodes.PRECONDITION_FAILED,
+  StatusCodes.REQUEST_TOO_LONG,
+  StatusCodes.REQUEST_URI_TOO_LONG,
+  StatusCodes.REQUESTED_RANGE_NOT_SATISFIABLE,
+  StatusCodes.EXPECTATION_FAILED,
+  StatusCodes.MISDIRECTED_REQUEST,
+  StatusCodes.UNPROCESSABLE_ENTITY,
+  StatusCodes.LOCKED,
+  StatusCodes.TOO_MANY_REQUESTS,
+  StatusCodes.INTERNAL_SERVER_ERROR,
+  StatusCodes.NOT_IMPLEMENTED,
+  StatusCodes.HTTP_VERSION_NOT_SUPPORTED,
+];
+
 export default function Providers({ children }: Readonly<{ children: React.ReactNode }>) {
   const [scroll, scrollTo] = useWindowScroll();
   const supportRef = useSupportStore((state) => state.supportRef);
@@ -27,7 +52,7 @@ export default function Providers({ children }: Readonly<{ children: React.React
         value={{
           fetcher,
           onErrorRetry(error, key, config, revalidate, { retryCount }) {
-            if ((error.response?.status >= 400 && error.response?.status <= 404) || error.response?.status === 429) {
+            if (includes(NO_RETRY_STATUS_CODES, error.response?.status)) {
               return;
             }
 

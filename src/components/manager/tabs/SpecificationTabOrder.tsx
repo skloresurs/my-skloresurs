@@ -15,7 +15,7 @@ interface IProps {
 }
 
 export default function SpecificationTabOrder({ order }: IProps) {
-  const { data: goods, isValidating } = useSWR<IGoods[]>(`main1c:/manager/order/${order.id}`);
+  const { data: goods, isValidating } = useSWR<IGoods[]>(`/api/manager/order/${order.id}?server=${order.server}`);
   const { height } = useWindowSize();
   const [sortStatus, setSortStatus] = useState<DataTableSortStatus<IGoods>>({
     columnAccessor: 'position',
