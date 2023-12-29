@@ -1,14 +1,14 @@
-import { Fieldset, Select, Textarea, TextInput } from '@mantine/core';
-import { UseFormReturnType } from '@mantine/form';
+import { Fieldset, Textarea, TextInput } from '@mantine/core';
 import React from 'react';
 import { usePlacesWidget } from 'react-google-autocomplete';
 
-import OrderTypes from '@/data/order/types';
 import { env } from '@/env.mjs';
-import { defaultData, ValidationSchema } from '@/types/NewOrder';
+import { FormType } from '@/types/newOrder/Form';
+
+import OrderTypeSelect from './OrderTypeSelect';
 
 interface IProps {
-  form: UseFormReturnType<ValidationSchema, (values: ValidationSchema) => ValidationSchema>;
+  form: FormType;
   setActiveTab: React.Dispatch<React.SetStateAction<string | null>>;
 }
 
@@ -35,18 +35,7 @@ export default function MainInformation({ form, setActiveTab }: IProps) {
         {...form.getInputProps('address')}
       />
 
-      <Select
-        label='Вид'
-        {...form.getInputProps('type')}
-        data={OrderTypes}
-        allowDeselect={false}
-        withAsterisk
-        onChange={(e) => {
-          form.setFieldValue('type', e ?? '');
-          form.setFieldValue('specification', defaultData.specification);
-          setActiveTab('0');
-        }}
-      />
+      <OrderTypeSelect form={form} setActiveTab={setActiveTab} />
       <Textarea label='Коментар' {...form.getInputProps('comment')} />
     </Fieldset>
   );

@@ -23,7 +23,8 @@ export async function GET(req: NextRequest) {
 
     const params = req.nextUrl.searchParams;
 
-    const search = params.get('search');
+    const search = params.get('search')?.replaceAll(' ', '%20');
+    console.log(search);
     const all = params.get('all');
 
     let orders: IManaderOrder[] = [];

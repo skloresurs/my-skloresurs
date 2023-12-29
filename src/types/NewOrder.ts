@@ -1,7 +1,6 @@
 import { z } from 'zod';
 
 import elementTypes from '@/data/order/element-type';
-import types from '@/data/order/types';
 
 const specificationSchema = z
   .object({
@@ -32,9 +31,10 @@ const formSchema = z
       .string({ required_error: 'Назва замовлення обов`язкова' })
       .min(1, 'Назва замовлення обов`язкова')
       .max(255, 'Максимальна довжина назви 255 символів'),
-    type: z.string({ required_error: 'Тип замовлення обов`язково' }).min(1, 'Тип замовлення обов`язково'),
+    type: z.string().nullable(),
   })
-  .strict();
+  .strict()
+  .refine((data) => data.type, { message: 'Тип замовлення обов`язковий', path: ['type'] });
 
 const defaultData: ValidationSchema = {
   address: '',
@@ -55,7 +55,7 @@ const defaultData: ValidationSchema = {
     },
   ],
   title: '',
-  type: types[0].value,
+  type: null,
 };
 
 export type ValidationSchema = z.infer<typeof formSchema>;
