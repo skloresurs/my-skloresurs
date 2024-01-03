@@ -23,21 +23,26 @@ export async function GET(req: NextRequest) {
 
     const params = req.nextUrl.searchParams;
 
-    const search = params.get('search')?.replaceAll(' ', '%20');
-    console.log(search);
+    const search = params.get('search');
     const all = params.get('all');
 
     let orders: IManaderOrder[] = [];
 
+    const paramsQuery = new URLSearchParams();
+    if (search) {
+      paramsQuery.append('search', search);
+    }
+    if (all) {
+      paramsQuery.append('all', 'true');
+    }
+
+    const query = paramsQuery.toString().replaceAll('+', '%20');
+
     if (session.user.id_1c_main) {
       const response = await axios1cMain
-        .get<IResponse>(`/manager/order/`, {
+        .get<IResponse>(`/manager/order?${query}`, {
           headers: {
             managerid: session.user.id_1c_main,
-          },
-          params: {
-            search,
-            all,
           },
         })
         .catch((error) => {

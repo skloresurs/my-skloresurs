@@ -4,7 +4,7 @@ import { Stack } from '@mantine/core';
 import { reduce, sortBy } from 'lodash';
 import { Sigma } from 'lucide-react';
 import { DataTable, DataTableSortStatus } from 'mantine-datatable';
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { memo, useMemo, useState } from 'react';
 import { useWindowSize } from 'react-use';
 import useSWR from 'swr';
 
@@ -14,7 +14,7 @@ interface IProps {
   order: IManaderOrder;
 }
 
-export default function SpecificationTabOrder({ order }: IProps) {
+const SpecificationTabOrder = ({ order }: IProps) => {
   const { data: goods, isValidating } = useSWR<IGoods[]>(`/api/manager/order/${order.id}?server=${order.server}`);
   const { height } = useWindowSize();
   const [sortStatus, setSortStatus] = useState<DataTableSortStatus<IGoods>>({
@@ -22,12 +22,13 @@ export default function SpecificationTabOrder({ order }: IProps) {
     direction: 'asc',
   });
 
-  const [records, setRecords] = useState(sortBy(goods, 'position'));
-
-  useEffect(() => {
-    const data = sortBy(goods, sortStatus.columnAccessor);
-    setRecords(sortStatus.direction === 'desc' ? data.toReversed() : data);
-  }, [goods, sortStatus]);
+  const records = useMemo(
+    () =>
+      sortStatus.direction === 'desc'
+        ? sortBy(goods, sortStatus.columnAccessor).toReversed()
+        : sortBy(goods, sortStatus.columnAccessor),
+    [goods, sortStatus]
+  );
 
   const groups = useMemo(
     () => [
@@ -129,4 +130,6 @@ export default function SpecificationTabOrder({ order }: IProps) {
       }}
     />
   );
-}
+};
+
+export default memo(SpecificationTabOrder);

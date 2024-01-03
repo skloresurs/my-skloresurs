@@ -1,13 +1,11 @@
 'use client';
 
-import 'moment/locale/uk';
-
-import { Grid, Paper, Title } from '@mantine/core';
+import { Paper, Title } from '@mantine/core';
 import React from 'react';
 
 export default function MoreItem() {
   return (
-    <Grid.Col span={{ base: 12, lg: 3, md: 6 }}>
+    <div>
       <Paper
         radius='lg'
         p='md'
@@ -19,6 +17,6 @@ export default function MoreItem() {
           Завантажено 250 елементів. Щоб побачити більше, скористайтесь пошуком
         </Title>
       </Paper>
-    </Grid.Col>
+    </div>
   );
 }

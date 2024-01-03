@@ -56,8 +56,6 @@ enum Permission {
     Admin
 
     Manager
-    ManagerAllOrders
-    ManagerFinance
 
     Driver
 }

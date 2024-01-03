@@ -1,6 +1,7 @@
 'use client';
 
 import { Divider, NumberFormatter } from '@mantine/core';
+import dayjs from 'dayjs';
 import { trim } from 'lodash';
 import React from 'react';
 
@@ -24,8 +25,11 @@ export default function MainTabOrder({ order }: { order: IManaderOrder }) {
       <div className='flex flex-col gap-1'>
         <DrawerItem title='ID' data={trim(order.id)} enableCopy />
         <div className='my-0.5' />
-        <DrawerItem title='Дата створення' data={trim(order.createdAt)} />
-        <DrawerItem title='Дата відправлення' data={trim(order.shipmentAt) ?? NotFoundData} />
+        <DrawerItem title='Дата створення' data={dayjs(trim(order.createdAt)).format('DD.MM.YYYY HH:mm:ss')} />
+        <DrawerItem
+          title='Дата відправлення'
+          data={order.shipmentAt ? dayjs(trim(order.shipmentAt)).format('DD.MM.YYYY') : NotFoundData}
+        />
         <div className='my-0.5' />
         <DrawerItem title='Статус' data={<StatusBadge status={order.status} />} />
         <div className='my-0.5' />
@@ -47,6 +51,7 @@ export default function MainTabOrder({ order }: { order: IManaderOrder }) {
             <DrawerItem title='Оплачено' data={<NumberFormatter value={order.finance.pay} {...moneyFormatProps} />} />
             <DrawerItem
               title='Кінцевий залишок'
+              textColor={order.finance.final < 0 ? 'red' : ''}
               data={<NumberFormatter value={order.finance.final} {...moneyFormatProps} />}
             />
             <DrawerItem

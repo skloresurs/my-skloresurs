@@ -116,7 +116,7 @@ export default function UserSecurityTab({ user }: { user?: IUserRequest }) {
           <div className='flex flex-col gap-1'>
             {map(form.values.ips, (ip, i) => (
               <div key={ip.key} className='flex flex-row items-center gap-2'>
-                <TextInput {...form.getInputProps(`ips.${i}.ip`)} className='w-full' />
+                <TextInput {...form.getInputProps(`ips.${i}.ip`)} placeholder='127.0.0.1' className='w-full' />
                 <ActionIcon color='red' variant='subtle' onClick={() => form.removeListItem('ips', i)}>
                   <XCircle />
                 </ActionIcon>

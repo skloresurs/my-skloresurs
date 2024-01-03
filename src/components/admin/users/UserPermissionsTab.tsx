@@ -28,42 +28,29 @@ export default function UserPermissionsTab({ user }: { user?: IUserRequest }) {
   const permissionsData: (IPermission | null)[] = useMemo(
     () => [
       {
-        description: 'Повні права',
-        disabled: true,
         id: 'SuperAdmin',
         title: 'Супер-адмін',
+        description: 'Повні права',
+        disabled: true,
       },
       {
-        description: 'Доступ до адмін-панелі',
-        disabled: !verifyPermission(activeUser?.permissions ?? [], 'SuperAdmin'),
         id: 'Admin',
         title: 'Адмін',
+        description: 'Доступ до адмін-панелі',
+        disabled: !verifyPermission(activeUser?.permissions ?? [], 'SuperAdmin'),
       },
       null,
       {
-        description: 'Доступ до замовлень менеджера',
-        disabled: false,
         id: 'Manager',
         title: 'Менеджер',
+        description: 'Доступ до замовлень менеджера',
+        disabled: false,
       },
       {
-        description: 'Доступ до замовлень всіх менеджерів',
-        disabled: false,
-        id: 'ManagerAllOrders',
-        title: 'Всі замовлення менеджерів',
-      },
-      {
-        description: 'Доступ до фінансових показників',
-        disabled: false,
-        id: 'ManagerFinance',
-        title: 'Фінансові показники менеджера',
-      },
-      null,
-      {
-        description: 'Доступ до меню водія',
-        disabled: false,
         id: 'Driver',
         title: 'Водій',
+        description: 'Доступ до меню водія',
+        disabled: false,
       },
     ],
     [activeUser]

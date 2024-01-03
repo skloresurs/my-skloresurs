@@ -11,6 +11,7 @@ const specificationSchema = z
     hardening: z.string().nullable(),
     gasFilling: z.string().nullable(),
     coatingType: z.string().nullable(),
+    sandBlaster: z.string().nullable(),
     hydrofob: z.boolean(),
     hst: z.boolean(),
 
@@ -45,6 +46,7 @@ const defaultSpecificationData: SpecificationSchema = {
   hardening: null,
   gasFilling: null,
   coatingType: null,
+  sandBlaster: null,
   hydrofob: false,
   hst: false,
 

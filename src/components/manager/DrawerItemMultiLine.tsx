@@ -2,7 +2,7 @@
 
 import { notifications } from '@mantine/notifications';
 import { ClipboardCopy } from 'lucide-react';
-import React from 'react';
+import React, { memo } from 'react';
 import { useCopyToClipboard } from 'react-use';
 
 interface IProps {
@@ -11,7 +11,7 @@ interface IProps {
   enableCopy?: boolean;
   className?: string;
 }
-export default function DrawerItemMultiLine({ title, data, enableCopy, className }: IProps) {
+const DrawerItemMultiLine = ({ title, data, enableCopy, className }: IProps) => {
   const [, copyToClipboard] = useCopyToClipboard();
 
   function copy() {
@@ -37,4 +37,6 @@ export default function DrawerItemMultiLine({ title, data, enableCopy, className
       <span>{data}</span>
     </div>
   );
-}
+};
+
+export default memo(DrawerItemMultiLine);

@@ -3,9 +3,9 @@
 import { ActionIcon, Paper, Title } from '@mantine/core';
 import { notifications } from '@mantine/notifications';
 import axios from 'axios';
+import dayjs from 'dayjs';
 import { map } from 'lodash';
 import { Trash, XCircle } from 'lucide-react';
-import moment from 'moment';
 import Image from 'next/image';
 import React from 'react';
 import useSWR, { useSWRConfig } from 'swr';
@@ -75,7 +75,7 @@ export default function UserSessionsTab({ user }: { user?: IUserRequest }) {
               {e.browser}
             </Title>
             <span className='text-sm text-[var(--mantine-color-dimmed)]'>
-              {moment(e.created_at).format('DD.MM.YYYY HH:mm')}
+              {dayjs(e.created_at).format('DD.MM.YYYY HH:mm')}
             </span>
           </div>
           <div className='flex-1' />
