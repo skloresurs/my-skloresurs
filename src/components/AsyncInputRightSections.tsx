@@ -1,4 +1,5 @@
-import { CircleSlash, Loader2, ServerCrash } from 'lucide-react';
+import { Loader } from '@mantine/core';
+import { CircleSlash, ServerCrash } from 'lucide-react';
 import React, { ReactNode } from 'react';
 
 interface IProps {
@@ -10,7 +11,7 @@ interface IProps {
 
 export default function AsyncInputRightSections({ isValidating, error, forbidden, defaultValue }: IProps) {
   if (isValidating) {
-    return <Loader2 className='animate-spin' />;
+    return <Loader color='blue' />;
   }
   if (error) {
     <ServerCrash />;

@@ -21,14 +21,6 @@ export default function PermissionBadge({ permission }: IProps) {
       return <Badge color='green'>Менеджер</Badge>;
     }
 
-    case 'ManagerAllOrders': {
-      return <Badge color='green'>Менеджер: Всі замовлення</Badge>;
-    }
-
-    case 'ManagerFinance': {
-      return <Badge color='green'>Менеджер: Фінансові показники</Badge>;
-    }
-
     case 'Driver': {
       return <Badge color='red'>Водій</Badge>;
     }

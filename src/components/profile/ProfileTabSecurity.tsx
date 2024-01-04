@@ -1,11 +1,10 @@
 'use client';
 
-import { Button, Divider, Paper, PasswordInput, TextInput, Title } from '@mantine/core';
+import { Button, Center, Divider, Flex, Paper, PasswordInput, Stack, Text, TextInput, Title } from '@mantine/core';
 import { notifications } from '@mantine/notifications';
 import axios from 'axios';
 import { map } from 'lodash';
 import { CheckCircle, Pencil, XCircle } from 'lucide-react';
-import { nanoid } from 'nanoid';
 import React, { useState } from 'react';
 import useSWR from 'swr';
 
@@ -72,56 +71,53 @@ export default function ProfileTabSecurity() {
   };
 
   return (
-    <div className='flex w-full max-w-xl flex-col gap-5'>
-      <Paper withBorder shadow='md' radius='md' className='py-3'>
-        <div className='px-4'>
-          <Title order={2} size='h3'>
-            Зміна пароля
-          </Title>
-          <span className='text-sm'>Після зміни пароля, ви вийдете зі всіх своїх девайсів</span>
-          <PasswordInput
-            className='mt-3'
-            value={password.new}
-            onChange={(e) => setPassword({ ...password, new: e.target.value })}
-          />
-          <PasswordInput
-            className='mt-3'
-            value={password.confirm}
-            onChange={(e) => setPassword({ ...password, confirm: e.target.value })}
-          />
-        </div>
-        <Divider className='my-3' />
-        <div className='flex flex-row items-center justify-between px-4'>
-          <span className='text-sm text-[var(--mantine-color-dimmed)]' />
+    <Flex direction='column' gap='md' maw='576px'>
+      <Paper withBorder shadow='md' radius='md' p='md'>
+        <Title order={2} size='h3'>
+          Зміна пароля
+        </Title>
+        <Text size='sm'>Після зміни пароля, ви вийдете зі всіх своїх девайсів</Text>
+        <PasswordInput
+          mt='sm'
+          value={password.new}
+          onChange={(e) => setPassword({ ...password, new: e.target.value })}
+        />
+        <PasswordInput
+          mt='sm'
+          value={password.confirm}
+          onChange={(e) => setPassword({ ...password, confirm: e.target.value })}
+        />
+        <Divider mt='md' />
+        <Flex direction='row-reverse' gap='sm' mt='sm'>
           <Button onClick={changePassword} leftSection={<Pencil size={20} />} color='orange'>
             Змінити
           </Button>
-        </div>
+        </Flex>
       </Paper>
-      <Paper withBorder shadow='md' radius='md' className='py-3'>
-        <div className='px-4'>
-          <Title order={2} size='h3'>
-            Дозволені IP адреси
-          </Title>
-          <span className='text-sm'>Список дозволених IP адрес для використання вашого аккаунту</span>
-          {user?.ip.length === 0 && (
-            <Title order={3} size='h5' className='text-center'>
+      <Paper withBorder shadow='md' radius='md' p='md'>
+        <Title order={2} size='h3'>
+          Дозволені IP адреси
+        </Title>
+        <Text size='sm' my='sm'>
+          Список дозволених IP адрес для використання вашого аккаунту
+        </Text>
+        {user?.ip.length === 0 && (
+          <Center>
+            <Title order={3} size='h5'>
               Не вказано жодної ip адреси. Вхід дозволено з будь-якого IP
             </Title>
-          )}
-          <div className='flex flex-col gap-1'>
-            {map(user?.ip, (ip) => (
-              <div key={nanoid()} className='flex flex-row items-center gap-2'>
-                <TextInput value={ip} readOnly className='w-full' />
-              </div>
-            ))}
-          </div>
-        </div>
-        <Divider className='my-3' />
-        <div className='flex flex-row items-center justify-between px-4'>
-          <span className='text-sm text-[var(--mantine-color-dimmed)]'>Зазвичай не вказано жодної ip адреси</span>
-        </div>
+          </Center>
+        )}
+        <Stack gap='xs' my='sm'>
+          {map(user?.ip, (ip) => (
+            <TextInput key={ip} value={ip} readOnly w='100%' />
+          ))}
+        </Stack>
+        <Divider mt='md' />
+        <Text size='sm' c='dimmed'>
+          Зазвичай не вказано жодної ip адреси
+        </Text>
       </Paper>
-    </div>
+    </Flex>
   );
 }

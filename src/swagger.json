@@ -3,7 +3,7 @@
   "info": {
     "title": "MySkloresurs API 1C",
     "description": "HTTP веб сервіс 1С, для отримання даних з 1С. Деякі роути потребують авторизації API ключем.",
-    "version": "0.1.0"
+    "version": "0.1.1"
   },
   "servers": [
     {
@@ -19,6 +19,10 @@
     {
       "name": "manager",
       "description": "Дані менеджера"
+    },
+    {
+      "name": "driver",
+      "description": "Дані водія"
     }
   ],
   "paths": {
@@ -59,7 +63,7 @@
             }
           },
           "401": {
-            "description": "Невірний ID менеджера"
+            "description": "Невірний ID користувача"
           },
           "403": {
             "description": "Невірний API ключ"
@@ -70,10 +74,10 @@
         },
         "security": [
           {
-            "ApiKeyAuth": []
+            "ApiKey": []
           },
           {
-            "Manager": []
+            "User": []
           }
         ]
       }
@@ -119,7 +123,7 @@
         },
         "security": [
           {
-            "ApiKeyAuth": []
+            "ApiKey": []
           }
         ]
       }
@@ -273,6 +277,64 @@
             "description": "Помилка сервера"
           }
         }
+      }
+    },
+    "/driver/routes": {
+      "get": {
+        "tags": ["driver"],
+        "summary": "Маршрути",
+        "description": "Отримати список маршрутів",
+        "operationId": "driverGetRoutes",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "page",
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "description": "Номер сторінки"
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 250
+            },
+            "description": "Кількість елементів на сторінці"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Успішно",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DriverRoutes"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Невірний ID користувача"
+          },
+          "403": {
+            "description": "Невірний API ключ"
+          },
+          "500": {
+            "description": "Помилка сервера"
+          }
+        },
+        "security": [
+          {
+            "ApiKey": []
+          },
+          {
+            "User": []
+          }
+        ]
       }
     }
   },
@@ -572,18 +634,77 @@
             }
           }
         }
+      },
+      "DriverRoutes": {
+        "type": "object",
+        "properties": {
+          "total": {
+            "type": "number",
+            "description": "Загальна кі-сть елементів",
+            "example": 10000
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "example": "0000000000",
+                  "description": "ID"
+                },
+                "date": {
+                  "type": "string",
+                  "example": "2020/10/10 10:10",
+                  "description": "Дата маршруту"
+                },
+                "complete": {
+                  "type": "boolean",
+                  "example": true,
+                  "description": "Статус завершення",
+                  "enum": [true, false]
+                },
+                "route": {
+                  "type": "string",
+                  "example": "Локація 1",
+                  "description": "Місце призначення маршруту"
+                },
+                "transport": {
+                  "type": "string",
+                  "example": "Транспорт 1",
+                  "description": "Транспорт"
+                },
+                "driver": {
+                  "type": "string",
+                  "example": "Водій 1",
+                  "description": "Водій"
+                },
+                "responsible": {
+                  "type": "string",
+                  "example": "Відповідальний 1",
+                  "description": "Відповідальний"
+                },
+                "departure": {
+                  "type": "string",
+                  "example": "0001/01/01 10:10",
+                  "description": "Час відправлення"
+                }
+              }
+            }
+          }
+        }
       }
     },
     "securitySchemes": {
-      "ApiKeyAuth": {
+      "ApiKey": {
         "type": "apiKey",
         "in": "header",
         "name": "Authorization"
       },
-      "Manager": {
+      "User": {
         "type": "apiKey",
         "in": "header",
-        "name": "managerid"
+        "name": "User"
       }
     }
   }

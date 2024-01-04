@@ -1,16 +1,17 @@
 'use client';
 
-import { ActionIcon, Paper, Title } from '@mantine/core';
+import { ActionIcon, Avatar, Center, Flex, Paper, Stack, Text, Title } from '@mantine/core';
 import { notifications } from '@mantine/notifications';
 import axios from 'axios';
 import dayjs from 'dayjs';
 import { map } from 'lodash';
-import { CheckCircle, Trash, XCircle } from 'lucide-react';
-import Image from 'next/image';
+import { Trash } from 'lucide-react';
 import React from 'react';
 import useSWR from 'swr';
 
 import { IUserMeRequest } from '@/types/User';
+
+import { errorNotificationProps, loadingNotificationProps, successNotificationProps } from '../Notification';
 
 const NotificationTitle = 'Сесії';
 
@@ -19,23 +20,17 @@ export default function ProfileTabSessions() {
 
   const removeSession = async (id: string) => {
     const notification = notifications.show({
-      autoClose: false,
-      loading: true,
       message: 'Видалення сесій...',
       title: NotificationTitle,
-      withCloseButton: false,
+      ...loadingNotificationProps,
     });
 
     const response = await axios.delete(`/api/sessions/${id}`).catch((error) => {
       notifications.update({
-        autoClose: 3000,
-        color: 'red',
-        icon: <XCircle />,
         id: notification,
-        loading: false,
         message: error.response?.data.error ?? error.message ?? 'Невідома помилка',
         title: NotificationTitle,
-        withCloseButton: true,
+        ...errorNotificationProps,
       });
     });
 
@@ -43,44 +38,40 @@ export default function ProfileTabSessions() {
 
     if (!response || response.status !== 200) return;
     notifications.update({
-      autoClose: 3000,
-      color: 'green',
-      icon: <CheckCircle />,
       id: notification,
-      loading: false,
       message: 'Сесія видалена',
       title: NotificationTitle,
-      withCloseButton: true,
+      ...successNotificationProps,
     });
   };
   return (
-    <div className='flex max-w-xl flex-col gap-3'>
+    <Stack gap='md' maw='576px'>
       {map(user?.sessions, (e) => (
-        <Paper
-          key={e.id}
-          withBorder
-          className='flex w-full flex-row items-center gap-3'
-          p='md'
-          radius='md'
-          c={e.id === user?.thisSession ? 'green' : ''}
-        >
-          <div className='flex h-12 w-12 items-center justify-center rounded-full bg-[var(--mantine-color-dark-6)] p-2'>
-            <Image width={24} height={24} src={`https://cdn.simpleicons.org/${e.os}`} alt={e.os} />
-          </div>
-          <div className='flex flex-col'>
-            <Title order={2} size='h5'>
-              {e.browser} <span className={e.id === user?.thisSession ? '' : 'hidden'}>(ця сесія)</span>
-            </Title>
-            <span className='text-sm text-[var(--mantine-color-dimmed)] '>
-              {dayjs(e.created_at).format('DD.MM.YYYY HH:mm')}
-            </span>
-          </div>
-          <div className='flex-1' />
-          <ActionIcon variant='transparent' aria-label='Remove session' color='red' onClick={() => removeSession(e.id)}>
-            <Trash />
-          </ActionIcon>
+        <Paper key={e.id} withBorder p='md' radius='md' c={e.id === user?.thisSession ? 'green' : ''}>
+          <Flex gap='sm' align='center'>
+            <Center p='xs' bg='dark.6' maw='48px' mah='48px' className='rounded-full'>
+              <Avatar radius='xs' size='sm' src={`https://cdn.simpleicons.org/${e.os}`} />
+            </Center>
+            <Flex justify='center' align='flex-start' direction='column'>
+              <Title order={2} size='h5'>
+                {e.browser} <span className={e.id === user?.thisSession ? '' : 'hidden'}>(ця сесія)</span>
+              </Title>
+              <Text size='sm' c='dimmed'>
+                {dayjs(e.created_at).format('DD.MM.YYYY HH:mm')}
+              </Text>
+            </Flex>
+            <div className='flex-1' />
+            <ActionIcon
+              variant='transparent'
+              aria-label='Remove session'
+              color='red'
+              onClick={() => removeSession(e.id)}
+            >
+              <Trash />
+            </ActionIcon>
+          </Flex>
         </Paper>
       ))}
-    </div>
+    </Stack>
   );
 }
