@@ -1,7 +1,8 @@
 'use client';
 
-import { ActionIcon, Divider, Group, Text, Title } from '@mantine/core';
-import { ArrowLeft, Link } from 'lucide-react';
+import { ActionIcon, Divider, Text, Title } from '@mantine/core';
+import { ArrowLeft } from 'lucide-react';
+import Link from 'next/link';
 import React from 'react';
 
 interface IProps {
@@ -13,14 +14,16 @@ interface IProps {
 export default function TitleBar({ title, description, backHref }: IProps) {
   return (
     <div>
-      <Group>
+      <Text>
         {backHref && (
-          <ActionIcon variant='subtle' aria-label='Settings' component={Link} href={backHref}>
+          <ActionIcon display='inline' variant='subtle' aria-label='Settings' mr='sm' component={Link} href={backHref}>
             <ArrowLeft size={28} />
           </ActionIcon>
         )}
-        <Title order={1}>{title}</Title>
-      </Group>
+        <Title display='inline' order={1}>
+          {title}
+        </Title>
+      </Text>
       {description && (
         <Text size='sm' my='sm'>
           {description}

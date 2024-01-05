@@ -4,11 +4,6 @@
 
 @layer mantine, mantine-datatable;
 
-html,
-body {
-  min-height: 100dvh;
-}
-
 .grecaptcha-badge {
   visibility: hidden !important;
 }

@@ -43,7 +43,7 @@ function Route() {
         </Flex>
       </Card>
 
-      <Drawer opened={opened} onClose={close} title='Маршрут' position='right' offset={8} radius='md' size='lg'>
+      <Drawer opened={opened} onClose={close} title='Маршрут' position='right' size='lg'>
         <Tabs defaultValue='main'>
           <Tabs.List>
             <Tabs.Tab value='main'>Основна інформація</Tabs.Tab>

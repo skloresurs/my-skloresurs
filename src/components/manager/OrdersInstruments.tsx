@@ -1,18 +1,13 @@
 'use client';
 
-import { Button, Popover, Switch, TextInput, Title } from '@mantine/core';
+import { Button, Flex, Popover, Stack, Switch, TextInput, Title } from '@mantine/core';
 import { Search, SearchX } from 'lucide-react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import React, { useState } from 'react';
-import useSWR from 'swr';
-
-import { Error, Info, Warning } from '@/components/info';
-import { IUserMeRequest } from '@/types/User';
 
 export default function OrdersInstruments() {
   const query = useSearchParams();
   const router = useRouter();
-  const { data: user } = useSWR<IUserMeRequest>('/api/user');
   const [opened, setOpened] = useState<boolean>(false);
   const [allOrders, setAllOrders] = useState<boolean>(!!query.get('all'));
   const [search, setSearch] = useState<string>(query.get('search') ?? '');
@@ -32,21 +27,15 @@ export default function OrdersInstruments() {
     } else {
       current.delete('all');
     }
+    current.delete('page');
 
     const filter: string = current.toString();
     const newQuery = filter ? `?${filter}` : '';
-    router.replace(`/manager/orders${newQuery}`);
+    router.replace(`/manager${newQuery}`);
   }
 
   return (
-    <div className='flex items-center justify-end gap-2'>
-      <Info label='Отримання замовлень з додаткового серверу наразі не підтримується.' />
-      {user && !user.id_1c_main && (
-        <Warning label='Вам не призначено ідентифікатор основнового серверу. Ви не зможете отримувати замовлення з цього серверу.' />
-      )}
-      {user && !user.id_1c_main && !user.id_1c_secondary && (
-        <Error label='Вам не призначено жодного ідентифікатору серверу. Ви не зможете отримувати замовлення.' />
-      )}
+    <Flex direction='row-reverse'>
       <Popover width={300} position='bottom-end' withArrow shadow='md' opened={opened} onChange={setOpened}>
         <Popover.Target>
           <Button leftSection={<Search size={20} />} onClick={() => setOpened((prev) => !prev)}>
@@ -57,7 +46,7 @@ export default function OrdersInstruments() {
           <Title className='text-center' order={2} size='h4'>
             Пошук
           </Title>
-          <div className='mt-3 flex flex-col gap-2'>
+          <Stack gap='sm' mt='md'>
             <TextInput
               placeholder='Пошук...'
               leftSection={<Search size={16} />}
@@ -80,8 +69,8 @@ export default function OrdersInstruments() {
                   : 'Не показувати замовлення з статусом "Прийнятий Менеджером", "Відхилено", "Виконано" та замовлення старіші за 2 роки'
               }
             />
-          </div>
-          <div className='mt-3 flex flex-col gap-2'>
+          </Stack>
+          <Stack mt='sm' gap='xs'>
             <Button leftSection={<Search size={16} />} onClick={() => searchHandler()}>
               Шукати
             </Button>
@@ -90,17 +79,15 @@ export default function OrdersInstruments() {
               color='red'
               leftSection={<SearchX size={16} />}
               onClick={() => {
-                router.push('/manager/orders');
-                setSearch('');
-                setAllOrders(false);
+                router.push('/manager');
                 setOpened(false);
               }}
             >
               Скинути
             </Button>
-          </div>
+          </Stack>
         </Popover.Dropdown>
       </Popover>
-    </div>
+    </Flex>
   );
 }

@@ -17,21 +17,13 @@ export async function GET(req: NextRequest) {
   try {
     const session = await getSession(req);
     await verifyIp(req, session.user.ip);
-    verifyPermissionServer(session.user.permissions, 'Manager');
+    verifyPermissionServer(session.user.permissions, 'Driver');
 
     const params = req.nextUrl.searchParams;
 
-    const search = params.get('search');
-    const all = params.get('all');
     const page = params.get('page');
 
     const paramsQuery = new URLSearchParams();
-    if (search) {
-      paramsQuery.append('search', search);
-    }
-    if (all) {
-      paramsQuery.append('all', 'true');
-    }
     if (page) {
       paramsQuery.append('page', page);
     }
@@ -43,9 +35,9 @@ export async function GET(req: NextRequest) {
     }
 
     const response = await axios1cMain
-      .get<IResponse>(`/manager/order?${query}`, {
+      .get<IResponse>(`/driver/routes?${query}`, {
         headers: {
-          user: session.user.id_1c_main,
+          User: session.user.id_1c_main,
         },
       })
       .catch((error) => {
@@ -57,6 +49,6 @@ export async function GET(req: NextRequest) {
       status: 200,
     });
   } catch (error) {
-    return apiErrorHandler(error, '/orders/manager');
+    return apiErrorHandler(error, '/routes');
   }
 }

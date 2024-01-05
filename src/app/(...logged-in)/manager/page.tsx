@@ -1,6 +1,6 @@
 import React from 'react';
 
-import OrdersInstruments from '@/components/manager/OrdersFilter';
+import OrdersInstruments from '@/components/manager/OrdersInstruments';
 import OrdersList from '@/components/manager/OrdersList';
 import TitleBar from '@/components/TitleBar';
 

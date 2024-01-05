@@ -180,6 +180,9 @@
               }
             }
           },
+          "404": {
+            "description": "Тип замовлення не знайдено"
+          },
           "500": {
             "description": "Помилка сервера"
           }
@@ -294,16 +297,6 @@
               "minimum": 1
             },
             "description": "Номер сторінки"
-          },
-          {
-            "in": "query",
-            "name": "limit",
-            "schema": {
-              "type": "integer",
-              "minimum": 1,
-              "maximum": 250
-            },
-            "description": "Кількість елементів на сторінці"
           }
         ],
         "responses": {
@@ -704,7 +697,7 @@
       "User": {
         "type": "apiKey",
         "in": "header",
-        "name": "User"
+        "name": "user"
       }
     }
   }

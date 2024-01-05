@@ -1,6 +1,6 @@
 'use client';
 
-import { Stack } from '@mantine/core';
+import { Stack, Text } from '@mantine/core';
 import { reduce, sortBy } from 'lodash';
 import { Sigma } from 'lucide-react';
 import { DataTable, DataTableSortStatus } from 'mantine-datatable';
@@ -14,7 +14,7 @@ interface IProps {
   order: IManaderOrder;
 }
 
-const SpecificationTabOrder = ({ order }: IProps) => {
+function SpecificationTabOrder({ order }: IProps) {
   const { data: goods, isValidating } = useSWR<IGoods[]>(`/api/manager/order/${order.id}?server=${order.server}`);
   const { height } = useWindowSize();
   const [sortStatus, setSortStatus] = useState<DataTableSortStatus<IGoods>>({
@@ -118,18 +118,23 @@ const SpecificationTabOrder = ({ order }: IProps) => {
       rowExpansion={{
         content: ({ record }) => (
           <Stack className='flex flex-col gap-1 px-3 py-2'>
-            <div>
-              <span className='font-bold'>Номенклатура: </span> {record.name}
-            </div>
-            <div>
-              <span className='font-bold'>Розміри: </span>
+            <Text>
+              <Text span inherit fw={600}>
+                Номенклатура:
+              </Text>
+              {` ${record.name}`}
+            </Text>
+            <Text>
+              <Text span inherit fw={600}>
+                Розміри:
+              </Text>
               {` ${record.width} x ${record.height} m²`}
-            </div>
+            </Text>
           </Stack>
         ),
       }}
     />
   );
-};
+}
 
 export default memo(SpecificationTabOrder);

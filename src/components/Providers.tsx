@@ -51,7 +51,7 @@ export default function Providers({ children }: Readonly<{ children: React.React
       <SWRConfig
         value={{
           fetcher,
-          onErrorRetry(error, key, config, revalidate, { retryCount }) {
+          onErrorRetry(error, _, __, revalidate, { retryCount }) {
             if (includes(NO_RETRY_STATUS_CODES, error.response?.status)) {
               return;
             }
