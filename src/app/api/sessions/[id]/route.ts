@@ -9,14 +9,14 @@ import { verifyPermissionServer } from '@/libs/verify-permission';
 export async function DELETE(req: NextRequest, { params }: { params: { id: string } }) {
   try {
     const session = await getSession(req);
-    await verifyIp(req, session.user.ip);
+    await verifyIp(req, session.user.allowed_ips);
 
     const sessionById = await auth.getSession(params.id);
     if (!sessionById) {
       return NextResponse.json(null, { status: 404 });
     }
 
-    if (session.user.userId !== sessionById.user.userId) {
+    if (session.user.id !== sessionById.user.id) {
       verifyPermissionServer(session.user.permissions, 'Admin');
     }
     await auth.invalidateSession(params.id);

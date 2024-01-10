@@ -10,10 +10,10 @@ import verifyIp from '@/libs/verify-ip';
 export async function GET(req: NextRequest, { params }: { params: { connection: string } }) {
   try {
     const session = await getSession(req);
-    await verifyIp(req, session.user.ip);
-    await verifyConnections(session.user.userId);
+    await verifyIp(req, session.user.allowed_ips);
+    await verifyConnections(session.user.id);
 
-    await auth.updateUserAttributes(session.user.userId, {
+    await auth.updateUserAttributes(session.user.id, {
       [`${params.connection}_id`]: null,
     });
   } catch (error) {
