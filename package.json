@@ -30,6 +30,7 @@
     "postinstall": "husky install && drizzle-kit push:pg"
   },
   "dependencies": {
+    "@ducanh2912/next-pwa": "^10.1.0",
     "@lucia-auth/adapter-postgresql": "^2.0.2",
     "@lucia-auth/oauth": "^3.5.1",
     "@mantine/core": "^7.4.1",
@@ -116,6 +117,7 @@
     "postcss-simple-vars": "^7.0.1",
     "prettier": "^3.1.1",
     "tailwindcss": "^3.4.1",
-    "typescript": "^5.3.3"
+    "typescript": "^5.3.3",
+    "webpack": "^5.89.0"
   }
 }

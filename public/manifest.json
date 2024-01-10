@@ -1,0 +1,15 @@
+{
+  "theme_color": "#1b73bf",
+  "background_color": "#353535",
+  "icons": [
+    { "purpose": "maskable", "sizes": "512x512", "src": "icon512_maskable.png", "type": "image/png" },
+    { "purpose": "any", "sizes": "512x512", "src": "icon512_rounded.png", "type": "image/png" }
+  ],
+  "orientation": "any",
+  "display": "standalone",
+  "dir": "auto",
+  "lang": "uk",
+  "name": "My Skloresurs",
+  "short_name": "MySkloresurs",
+  "start_url": "/"
+}

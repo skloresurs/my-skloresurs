@@ -6,13 +6,26 @@ import './globals.css';
 
 import { ColorSchemeScript } from '@mantine/core';
 import { GeistSans } from 'geist/font/sans';
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import React from 'react';
 
 import Providers from '@/components/Providers';
 
+const APP_TITLE = 'My Skloresurs';
+
 export const metadata: Metadata = {
-  title: 'My Skloresurs',
+  applicationName: APP_TITLE,
+  title: APP_TITLE,
+  manifest: '/manifest.json',
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'default',
+    title: APP_TITLE,
+  },
+};
+
+export const viewport: Viewport = {
+  themeColor: '#1b73bf',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
