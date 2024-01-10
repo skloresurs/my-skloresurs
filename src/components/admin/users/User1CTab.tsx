@@ -13,7 +13,7 @@ export default function User1CTab({ user }: { user?: IUserRequest }) {
     <Stack maw='576'>
       <ProfileCard
         title='ID 1C'
-        value={user.id_1c_main ?? ''}
+        value={user.id_1c ?? ''}
         description='ID користувача в основній системі 1С'
         footerText='ID повинен бути типу UUID'
         button={{

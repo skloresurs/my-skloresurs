@@ -7,18 +7,22 @@ export const env = createEnv({
   client: {
     NEXT_PUBLIC_GOOGLE_MAPS_API_KEY: z
       .string({
-        required_error: 'GOOGLE_MAPS_API_KEY is required',
+        required_error: 'GOOGLE_MAPS_API_KEY is required [https://console.cloud.google.com/google/maps-apis/start]',
       })
       .min(1),
-    NEXT_PUBLIC_RECAPTCHA_SITE_KEY: z.string({ required_error: 'NEXT_PUBLIC_RECAPTCHA_SITE_KEY is required' }).min(1),
+    NEXT_PUBLIC_RECAPTCHA_SITE_KEY: z
+      .string({
+        required_error: 'NEXT_PUBLIC_RECAPTCHA_SITE_KEY is required [https://www.google.com/recaptcha/admin/]',
+      })
+      .min(1),
     NEXT_PUBLIC_TAWK_API_KEY: z.string({
-      required_error: 'NEXT_PUBLIC_TAWK_API_KEY is required',
+      required_error: 'NEXT_PUBLIC_TAWK_API_KEY is required [https://dashboard.tawk.to/]',
     }),
     NEXT_PUBLIC_TAWK_PROPERTY_ID: z.string({
-      required_error: 'NEXT_PUBLIC_TAWK_PROPERTY_ID is required',
+      required_error: 'NEXT_PUBLIC_TAWK_PROPERTY_ID is required [https://dashboard.tawk.to/]',
     }),
     NEXT_PUBLIC_TAWK_WIDGET_ID: z.string({
-      required_error: 'NEXT_PUBLIC_TAWK_WIDGET_ID is required',
+      required_error: 'NEXT_PUBLIC_TAWK_WIDGET_ID is required [https://dashboard.tawk.to/]',
     }),
   },
   experimental__runtimeEnv: {
@@ -45,25 +49,25 @@ export const env = createEnv({
     API_KEY_1C_MAIN: z.string({
       required_error: 'API_KEY_1C_MAIN is required',
     }),
-    // API_URL_1C_SECONDARY: z
-    //   .string({ required_error: 'API_URL_1C_SECONDARY is required' })
-    //   .url('API_URL_1C_SECONDARY must be a valid URL'),
-    BASE_URL: z.string({ required_error: 'BASE_URL is required' }).url('BASE_URL must be a valid URL'),
-    DATABASE_URL: z.string({ required_error: 'DATABASE_URL is required' }),
+    BASE_URL: z
+      .string({ required_error: 'BASE_URL is required' })
+      .url('BASE_URL must be a valid URL')
+      .default(process.env.URL ?? 'http://localhost:3000'),
+    DATABASE_URL: z.string({ required_error: 'DATABASE_URL is required. Database must be PostgreSQL' }),
     FACEBOOK_APP_ID: z.string({
-      required_error: 'FACEBOOK_APP_ID is required',
+      required_error: 'FACEBOOK_APP_ID is required [https://developers.facebook.com/apps]',
     }),
     FACEBOOK_APP_SECRET: z.string({
-      required_error: 'FACEBOOK_APP_SECRET is required',
+      required_error: 'FACEBOOK_APP_SECRET is required [https://developers.facebook.com/apps]',
     }),
     GOOGLE_CLIENT_ID: z.string({
-      required_error: 'GOOGLE_CLIENT_ID is required',
+      required_error: 'GOOGLE_CLIENT_ID is required [https://console.cloud.google.com/apis/credentials]',
     }),
     GOOGLE_CLIENT_SECRET: z.string({
-      required_error: 'GOOGLE_CLIENT_SECRET is required',
+      required_error: 'GOOGLE_CLIENT_SECRET is required [https://console.cloud.google.com/apis/credentials]',
     }),
     RECAPTCHA_SECRET_KEY: z.string({
-      required_error: 'RECAPTCHA_SECRET_KEY is required',
+      required_error: 'RECAPTCHA_SECRET_KEY is required [https://www.google.com/recaptcha/admin/]',
     }),
   },
 });

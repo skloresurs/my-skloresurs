@@ -15,6 +15,6 @@ export async function GET(req: NextRequest, { params }: { params: { id: string }
     const sessions = await auth.getAllUserSessions(params.id);
     return NextResponse.json({ ...user, sessions: orderBy(sessions, ['created_at'], ['desc']) }, { status: 200 });
   } catch (error) {
-    return apiErrorHandler(error, `/user/${params.id}`);
+    return apiErrorHandler(req, error);
   }
 }

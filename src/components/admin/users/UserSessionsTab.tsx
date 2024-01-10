@@ -1,13 +1,18 @@
+import { Center } from '@mantine/core';
 import { map } from 'lodash';
 import React from 'react';
 
-import ErrorOnPage from '@/components/ErrorOnPage';
+import InfoAlert from '@/components/ui/InfoAlert';
 import SessionItem from '@/components/ui/SessionItem';
 import { IUserRequest } from '@/types/User';
 
 export default function UserSessionsTab({ user }: { user?: IUserRequest }) {
   if (!user || !user.sessions)
-    return <ErrorOnPage title='Сесій немає' description='Не знайдено жоднох сесії' code={404} />;
+    return (
+      <Center>
+        <InfoAlert maw={576} w={576} title='Немає сесій' description='Не знадено жодної сесії' />
+      </Center>
+    );
 
   return (
     <div className='flex max-w-xl flex-col gap-3'>

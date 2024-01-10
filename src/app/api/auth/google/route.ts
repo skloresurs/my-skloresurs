@@ -4,7 +4,7 @@ import { googleAuth } from '@/libs/lucia';
 
 export const GET = async () => {
   const [url, state] = await googleAuth.getAuthorizationUrl();
-  // store state
+
   context.cookies().set('google_oauth_state', state, {
     httpOnly: true,
     maxAge: 60 * 60,

@@ -41,6 +41,7 @@
     "plugin:import/recommended",
     "plugin:import/typescript",
     "plugin:promise/recommended",
+    "plugin:drizzle/recommended",
 
     // Other files
     "plugin:jsonc/recommended-with-jsonc",
@@ -122,6 +123,9 @@
     // zod
     "zod/prefer-enum": 2,
     "zod/require-strict": 2,
+
+    // drizzle
+    "drizzle/enforce-delete-with-where": ["error", { "drizzleObjectName": ["db"] }],
 
     // The following rules are disabled due to them being considered unduly restrictive or unhelpful.
     "unicorn/no-array-for-each": "off",

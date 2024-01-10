@@ -42,7 +42,7 @@ export default function Specification({ form, activeTab, setActiveTab }: IProps)
         <>
           <Tabs value={activeTab} onChange={setActiveTab}>
             <Tabs.List>
-              {map(specificationsInputProps.value, (e, i) => (
+              {map(specificationsInputProps.value, (_, i) => (
                 <Tabs.Tab
                   key={nanoid()}
                   value={i.toString()}

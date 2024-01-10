@@ -17,7 +17,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     redirect('/login');
   }
 
-  if (!verifyPermission(user.permissions, 'Driver'))
+  if (!verifyPermission(user.permissions ?? [], 'Driver'))
     return (
       <ErrorPage
         code={403}

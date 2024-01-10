@@ -16,7 +16,7 @@ interface IResponse {
 export async function GET(req: NextRequest) {
   try {
     const session = await getSession(req);
-    await verifyIp(req, session.user.ip);
+    await verifyIp(req, session.user.allowed_ips);
     verifyPermissionServer(session.user.permissions, 'Manager');
 
     const params = req.nextUrl.searchParams;
@@ -38,14 +38,14 @@ export async function GET(req: NextRequest) {
 
     const query = paramsQuery.toString().replaceAll('+', '%20');
 
-    if (!session.user.id_1c_main) {
+    if (!session.user.id_1c) {
       throw ServerError;
     }
 
     const response = await axios1cMain
       .get<IResponse>(`/manager/order?${query}`, {
         headers: {
-          user: session.user.id_1c_main,
+          user: session.user.id_1c,
         },
       })
       .catch((error) => {
@@ -57,6 +57,6 @@ export async function GET(req: NextRequest) {
       status: 200,
     });
   } catch (error) {
-    return apiErrorHandler(error, '/orders/manager');
+    return apiErrorHandler(req, error);
   }
 }

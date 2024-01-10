@@ -24,9 +24,5 @@ export default function PermissionBadge({ permission }: IProps) {
     case 'Driver': {
       return <Badge color='red'>Водій</Badge>;
     }
-
-    default: {
-      return <Badge color='gray'>Невідомо</Badge>;
-    }
   }
 }

@@ -8,7 +8,7 @@ import { getSession } from '@/libs/sessions';
 export async function GET(req: NextRequest) {
   try {
     const session = await getSession(req);
-    const sessions = await auth.getAllUserSessions(session.user.userId);
+    const sessions = await auth.getAllUserSessions(session.user.id);
     return NextResponse.json(
       {
         ...session.user,
@@ -18,6 +18,6 @@ export async function GET(req: NextRequest) {
       { status: 200 }
     );
   } catch (error) {
-    return apiErrorHandler(error, '/user');
+    return apiErrorHandler(req, error);
   }
 }

@@ -1,9 +1,8 @@
 import { StatusCodes } from 'http-status-codes';
 import { LuciaError } from 'lucia';
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 
 import CustomError from '@/classes/CustomError';
-import { env } from '@/env.mjs';
 
 import logger from './logger';
 
@@ -14,9 +13,9 @@ import logger from './logger';
  * @param {string} [key] - Optional key parameter.
  * @return {NextResponse} The response object.
  */
-export default function apiErrorHandler(error: unknown, url: string, key?: string): NextResponse {
+export default function apiErrorHandler(req: NextRequest, error: unknown, key?: string): NextResponse {
   if (error instanceof CustomError) {
-    logger.error(`API Error: [${error.code}] - ${error} (${env.BASE_URL}/api${url})`);
+    logger.error(`API Error: [${error.code}] - ${error} (${req.nextUrl.toString()})`);
     return NextResponse.json(
       {
         code: error.code,
@@ -48,7 +47,7 @@ export default function apiErrorHandler(error: unknown, url: string, key?: strin
     }
   }
 
-  logger.error(`API Error: [500] - ${error} (${env.BASE_URL}/api${url})`);
+  logger.error(`API Error: [500] - ${error} (${req.nextUrl.toString()})`);
 
   return NextResponse.json(
     {

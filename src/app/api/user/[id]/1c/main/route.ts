@@ -11,15 +11,15 @@ export async function POST(req: NextRequest, { params }: { params: { id: string 
     const session = await getSession(req);
 
     verifyPermissionServer(session.user.permissions, 'Admin');
-    await verifyIp(req, session.user.ip);
+    await verifyIp(req, session.user.allowed_ips);
 
     const { id } = await req.json();
 
     await auth.updateUserAttributes(params.id, {
-      id_1c_main: id,
+      id_1c: id,
     });
     return NextResponse.json(null, { status: 200 });
   } catch (error) {
-    return apiErrorHandler(error, `/user/${params.id}/1c/main`);
+    return apiErrorHandler(req, error);
   }
 }

@@ -1,6 +1,6 @@
 'use client';
 
-import { Stack, Text } from '@mantine/core';
+import { Container, Stack, Text } from '@mantine/core';
 import { reduce, sortBy } from 'lodash';
 import { Sigma } from 'lucide-react';
 import { DataTable, DataTableSortStatus } from 'mantine-datatable';
@@ -15,7 +15,7 @@ interface IProps {
 }
 
 function SpecificationTabOrder({ order }: IProps) {
-  const { data: goods, isValidating } = useSWR<IGoods[]>(`/api/manager/order/${order.id}?server=${order.server}`);
+  const { data: goods, isValidating } = useSWR<IGoods[]>(`/api/manager/order/${order.id}`);
   const { height } = useWindowSize();
   const [sortStatus, setSortStatus] = useState<DataTableSortStatus<IGoods>>({
     columnAccessor: 'position',
@@ -102,38 +102,39 @@ function SpecificationTabOrder({ order }: IProps) {
   );
 
   return (
-    <DataTable
-      withTableBorder
-      withColumnBorders
-      highlightOnHover
-      groups={groups}
-      records={records}
-      sortStatus={sortStatus}
-      onSortStatusChange={setSortStatus}
-      minHeight={goods?.length === 0 ? 150 : 0}
-      height={height - 150}
-      fetching={isValidating}
-      noRecordsText='Немає даних'
-      idAccessor='position'
-      rowExpansion={{
-        content: ({ record }) => (
-          <Stack className='flex flex-col gap-1 px-3 py-2'>
-            <Text>
-              <Text span inherit fw={600}>
-                Номенклатура:
+    <Container mt='sm' fluid p='0' h={height - 200}>
+      <DataTable
+        withTableBorder
+        withColumnBorders
+        highlightOnHover
+        groups={groups}
+        records={records}
+        sortStatus={sortStatus}
+        onSortStatusChange={setSortStatus}
+        minHeight='100%'
+        fetching={isValidating}
+        noRecordsText='Немає даних'
+        idAccessor='position'
+        rowExpansion={{
+          content: ({ record }) => (
+            <Stack className='flex flex-col gap-1 px-3 py-2'>
+              <Text>
+                <Text span inherit fw={600}>
+                  Номенклатура:
+                </Text>
+                {` ${record.name}`}
               </Text>
-              {` ${record.name}`}
-            </Text>
-            <Text>
-              <Text span inherit fw={600}>
-                Розміри:
+              <Text>
+                <Text span inherit fw={600}>
+                  Розміри:
+                </Text>
+                {` ${record.width} x ${record.height} m²`}
               </Text>
-              {` ${record.width} x ${record.height} m²`}
-            </Text>
-          </Stack>
-        ),
-      }}
-    />
+            </Stack>
+          ),
+        }}
+      />
+    </Container>
   );
 }
 

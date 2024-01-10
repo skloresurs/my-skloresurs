@@ -3,11 +3,20 @@ import { useDisclosure } from '@mantine/hooks';
 import dayjs from 'dayjs';
 import { CalendarClock, MapPin, Truck } from 'lucide-react';
 import React, { memo } from 'react';
+import { twMerge } from 'tailwind-merge';
+
+import IRoute from '@/types/Route';
 
 import MainTab from './Tabs/MainTab';
-import OrdersTab from './Tabs/OrdersTab';
+import PyramidsTab from './Tabs/PyramidsTab';
+import StationsTab from './Tabs/StationsTab';
+import TasksTab from './Tabs/TasksTab';
 
-function Route() {
+interface IProps {
+  route: IRoute;
+}
+
+function Route({ route }: IProps) {
   const [opened, { open, close }] = useDisclosure(false);
   return (
     <>
@@ -16,29 +25,33 @@ function Route() {
         padding='lg'
         radius='md'
         withBorder
-        className='cursor-pointer duration-300 hover:bg-[var(--mantine-color-dark-5)]'
+        className={twMerge(
+          'cursor-pointer duration-300 hover:bg-[var(--mantine-color-dark-5)]',
+          route.completed ? 'border-[var(--mantine-color-green-9)]' : ''
+        )}
+        h='100%'
         onClick={() => {
           open();
         }}
       >
         <Title order={2} c='blue'>
-          000077108
+          {route.id}
         </Title>
         <Text size='xs' c='dimmed'>
-          {dayjs().format('DD.MM.YYYY HH:mm:ss')}
+          {dayjs(route.date).format('DD.MM.YYYY HH:mm:ss')}
         </Text>
         <Flex gap='xs' mt='md' direction='column'>
           <Flex gap='xs' align='center'>
             <CalendarClock size={18} />
-            <Text>{dayjs().format('HH:mm:ss')}</Text>
+            <Text>{dayjs(route.departure).format('HH:mm:ss')}</Text>
           </Flex>
           <Flex gap='xs' align='center'>
             <MapPin size={18} />
-            <Text>Харків</Text>
+            <Text>{route.route}</Text>
           </Flex>
           <Flex gap='xs' align='center'>
             <Truck size={18} />
-            <Text>SCANIA P-410 ВК9782ІА</Text>
+            <Text>{route.transport}</Text>
           </Flex>
         </Flex>
       </Card>
@@ -47,14 +60,22 @@ function Route() {
         <Tabs defaultValue='main'>
           <Tabs.List>
             <Tabs.Tab value='main'>Основна інформація</Tabs.Tab>
-            <Tabs.Tab value='orders'>Інформація про замовлення</Tabs.Tab>
+            <Tabs.Tab value='points'>Шляхи</Tabs.Tab>
+            <Tabs.Tab value='pyramids'>Піраміди</Tabs.Tab>
+            <Tabs.Tab value='tasks'>Завдання</Tabs.Tab>
           </Tabs.List>
 
           <Tabs.Panel value='main'>
-            <MainTab />
+            <MainTab route={route} />
           </Tabs.Panel>
-          <Tabs.Panel value='orders'>
-            <OrdersTab />
+          <Tabs.Panel value='points'>
+            <StationsTab route={route} />
+          </Tabs.Panel>
+          <Tabs.Panel value='pyramids'>
+            <PyramidsTab route={route} />
+          </Tabs.Panel>
+          <Tabs.Panel value='tasks'>
+            <TasksTab route={route} />
           </Tabs.Panel>
         </Tabs>
       </Drawer>

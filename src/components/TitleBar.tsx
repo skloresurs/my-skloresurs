@@ -14,9 +14,17 @@ interface IProps {
 export default function TitleBar({ title, description, backHref }: IProps) {
   return (
     <div>
-      <Text>
+      <Text span>
         {backHref && (
-          <ActionIcon display='inline' variant='subtle' aria-label='Settings' mr='sm' component={Link} href={backHref}>
+          <ActionIcon
+            display='inline-flex'
+            variant='subtle'
+            aria-label='Back'
+            mr='sm'
+            h='100%'
+            component={Link}
+            href={backHref}
+          >
             <ArrowLeft size={28} />
           </ActionIcon>
         )}

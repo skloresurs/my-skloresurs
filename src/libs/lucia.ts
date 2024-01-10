@@ -1,16 +1,23 @@
-import { prisma } from '@lucia-auth/adapter-prisma';
+import { pg } from '@lucia-auth/adapter-postgresql';
 import { facebook, google } from '@lucia-auth/oauth/providers';
 import { lucia } from 'lucia';
 import { nextjs_future } from 'lucia/middleware';
 
 import { env } from '@/env.mjs';
-import client from '@/libs/prisma';
+import ISession from '@/types/Session';
+import IUser from '@/types/User';
+
+import { pool } from './db';
 
 export const auth = lucia({
-  adapter: prisma(client),
+  adapter: pg(pool, {
+    user: 'auth_user',
+    session: 'user_session',
+    key: 'user_key',
+  }),
   env: process.env.NODE_ENV === 'production' ? 'PROD' : 'DEV',
-  getSessionAttributes: (data) => ({ ...data }),
-  getUserAttributes: (data) => ({ ...data }),
+  getSessionAttributes: (data: ISession) => ({ ...data }),
+  getUserAttributes: (data: IUser) => ({ ...data }),
   middleware: nextjs_future(),
   sessionCookie: {
     expires: false,

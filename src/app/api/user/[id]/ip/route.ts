@@ -12,7 +12,7 @@ export async function POST(req: NextRequest, { params }: { params: { id: string 
     const session = await getSession(req);
 
     verifyPermissionServer(session.user.permissions, 'Admin');
-    await verifyIp(req, session.user.ip);
+    await verifyIp(req, session.user.allowed_ips);
 
     const { ip } = await req.json();
     if (!ip) {
@@ -20,10 +20,10 @@ export async function POST(req: NextRequest, { params }: { params: { id: string 
     }
 
     await auth.updateUserAttributes(params.id, {
-      ip,
+      allowed_ips: ip,
     });
     return NextResponse.json(null, { status: 200 });
   } catch (error) {
-    return apiErrorHandler(error, `/user/${params.id}/ip`);
+    return apiErrorHandler(req, error);
   }
 }

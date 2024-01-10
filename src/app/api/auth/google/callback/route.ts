@@ -1,13 +1,14 @@
-import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
+import { eq } from 'drizzle-orm';
 import { constant, toLower } from 'lodash';
 import { nanoid } from 'nanoid';
 import { cookies } from 'next/headers';
-import { type NextRequest, NextResponse } from 'next/server';
+import { type NextRequest } from 'next/server';
 
-import CustomError, { EmailExistsError, ServerError } from '@/classes/CustomError';
+import CustomError from '@/classes/CustomError';
+import { db, getDbError } from '@/libs/db';
+import { userSchema } from '@/libs/db/schema';
 import { auth, googleAuth } from '@/libs/lucia';
-import oauthErrorRedirect from '@/libs/oauth-middleware';
-import prisma from '@/libs/prisma';
+import oauthRedirect, { oauthErrorRedirect } from '@/libs/oauth-middleware';
 import { getSession, setSession } from '@/libs/sessions';
 import verifyIp from '@/libs/verify-ip';
 
@@ -30,62 +31,52 @@ export const GET = async (req: NextRequest) => {
       return oauthErrorRedirect('Не вдалось отримати ваш E-mail', activeSessionBoolean);
     }
 
-    const existUser = await prisma.user.findFirst({
-      where: {
-        googleId: googleUser.sub,
-      },
-    });
+    const userByGoogleId = await db
+      .select()
+      .from(userSchema)
+      .where(eq(userSchema.google_id, googleUser.sub))
+      .limit(1)
+      .execute()
+      .then((data) => data[0])
+      .catch(constant(null));
+
+    if (activeSession && userByGoogleId) {
+      return oauthErrorRedirect("Цей oauth аккаунт вже зв'язаний з іншим аккаунтом", activeSessionBoolean);
+    }
 
     if (activeSession) {
-      if (existUser) {
-        return oauthErrorRedirect("Цей oauth аккаунт вже зв'язаний з іншим аккаунтом", activeSessionBoolean);
-      }
       await auth.updateUserAttributes(activeSession.user.id, {
-        google: googleUser.email,
-        googleId: googleUser.sub,
+        google_id: googleUser.sub,
       });
-      return NextResponse.json(null, {
-        headers: {
-          Location: '/profile?tab=link',
+      return oauthRedirect(activeSessionBoolean);
+    }
+
+    if (userByGoogleId) {
+      verifyIp(req, userByGoogleId.allowed_ips);
+      await setSession(req, userByGoogleId.id);
+      return oauthRedirect(activeSessionBoolean);
+    }
+
+    const user = await auth
+      .createUser({
+        attributes: {
+          email: googleUser.email,
+          google_id: googleUser.sub,
+          fullname: googleUser.name,
         },
-        status: 302,
+        key: {
+          password: null,
+          providerId: 'email',
+          providerUserId: toLower(googleUser.email),
+        },
+        userId: nanoid(12),
+      })
+      .catch((error) => {
+        throw getDbError(error);
       });
-    }
 
-    if (existUser) {
-      verifyIp(req, existUser.ip);
-      await setSession(req, existUser.id);
-    } else {
-      const user = await auth
-        .createUser({
-          attributes: {
-            email: googleUser.email,
-            fullname: googleUser.name,
-            google: googleUser.email,
-            googleId: googleUser.sub,
-          },
-          key: {
-            password: null,
-            providerId: 'email',
-            providerUserId: toLower(googleUser.email),
-          },
-          userId: nanoid(),
-        })
-        .catch((error) => {
-          if ((error as PrismaClientKnownRequestError) && error.code === 'P2002') {
-            throw EmailExistsError;
-          }
-          throw ServerError;
-        });
-      await setSession(req, user.id);
-    }
-
-    return NextResponse.json(null, {
-      headers: {
-        Location: '/',
-      },
-      status: 302,
-    });
+    await setSession(req, user.id);
+    return oauthRedirect(activeSessionBoolean);
   } catch (error) {
     if (error instanceof CustomError) {
       return oauthErrorRedirect(error.message, activeSessionBoolean);

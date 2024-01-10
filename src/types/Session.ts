@@ -1,6 +1,4 @@
-export default interface ISession {
-  id: string;
-  created_at: Date;
-  browser: string;
-  os: string;
-}
+import { sessionSchema } from '@/libs/db/schema';
+
+type ISession = typeof sessionSchema.$inferSelect;
+export default ISession;

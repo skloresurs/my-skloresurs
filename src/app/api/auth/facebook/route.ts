@@ -4,7 +4,7 @@ import { facebookAuth } from '@/libs/lucia';
 
 export const GET = async () => {
   const [url, state] = await facebookAuth.getAuthorizationUrl();
-  // store state
+
   context.cookies().set('facebook_oauth_state', state, {
     httpOnly: true,
     maxAge: 60 * 60,

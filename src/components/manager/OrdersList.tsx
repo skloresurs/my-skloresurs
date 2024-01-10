@@ -1,17 +1,19 @@
 'use client';
 
-import { Grid, StyleProp } from '@mantine/core';
+import { Center, Grid, StyleProp } from '@mantine/core';
 import { map } from 'lodash';
 import { useSearchParams } from 'next/navigation';
 import React from 'react';
 import useSWR from 'swr';
 
+import DefaultManagerOrder from '@/data/default-manager-order';
 import IManaderOrder from '@/types/ManagerOrder';
 
-import ErrorOnPage from '../ErrorOnPage';
+import ErrorAlert from '../ui/ErrorAlert';
+import GridSkeleton from '../ui/GridSkeleton';
+import InfoAlert from '../ui/InfoAlert';
 import Pagination from '../ui/Pagination';
 import OrderItem from './OrderItem';
-import SkeletonOrderItem from './SkeletonOrderItem';
 
 const span: StyleProp<number> = {
   base: 12,
@@ -28,44 +30,53 @@ interface IResponse {
 
 export default function OrdersList() {
   const query = useSearchParams();
-  const { data, error, isValidating } = useSWR<IResponse>(`/api/manager/order/?${query.toString()}`);
+  const { data, error, isValidating, mutate } = useSWR<IResponse>(`/api/manager/order/?${query.toString()}`);
 
   if (isValidating) {
     return (
-      <Grid>
-        <SkeletonOrderItem span={span} />
-        <SkeletonOrderItem span={span} />
-        <SkeletonOrderItem span={span} />
-      </Grid>
+      <GridSkeleton span={span} times={12}>
+        <OrderItem order={DefaultManagerOrder} />
+      </GridSkeleton>
     );
   }
 
   if (error) {
     return (
-      <ErrorOnPage
-        description='Не вдалось завантажити список замовлень'
-        code={error.response?.status}
-        detailedMessage={error?.message}
-      />
+      <Center>
+        <ErrorAlert
+          maw={576}
+          w={576}
+          title='Помилка'
+          description='Не вдалось завантажити список замовлень'
+          refresh={mutate}
+        />
+      </Center>
     );
   }
 
   if (!data || data.data.length === 0) {
     return (
-      <ErrorOnPage title='Немає замовлень' description='Не знайдено жодного замовлення за вашим запитом' code={404} />
+      <Center>
+        <InfoAlert
+          maw={576}
+          w={576}
+          title='Немає замовлень'
+          description='Не знадено жодного замовлення за вказаними параметрами'
+        />
+      </Center>
     );
   }
+
   return (
     <>
-      <Pagination baseRoute='/manager' total={Math.floor(data.total / 50)} query={query} />
-      <Grid grow>
+      <Grid>
         {map(data.data, (order) => (
           <Grid.Col span={span} key={order.id}>
             <OrderItem order={order} />
           </Grid.Col>
         ))}
       </Grid>
-      <Pagination baseRoute='/manager' total={Math.floor(data.total / 50)} query={query} />
+      <Pagination baseRoute='/manager' total={Math.ceil(data.total / 50)} query={query} />
     </>
   );
 }

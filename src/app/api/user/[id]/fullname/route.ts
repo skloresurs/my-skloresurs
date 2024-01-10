@@ -12,7 +12,7 @@ export async function POST(req: NextRequest, { params }: { params: { id: string 
     const session = await getSession(req);
 
     verifyPermissionServer(session.user.permissions, 'Admin');
-    await verifyIp(req, session.user.ip);
+    await verifyIp(req, session.user.allowed_ips);
 
     const { fullname } = await req.json();
 
@@ -25,6 +25,6 @@ export async function POST(req: NextRequest, { params }: { params: { id: string 
     });
     return NextResponse.json(null, { status: 200 });
   } catch (error) {
-    return apiErrorHandler(error, `/user/${params.id}/fullname`);
+    return apiErrorHandler(req, error);
   }
 }

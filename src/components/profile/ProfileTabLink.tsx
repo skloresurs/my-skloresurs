@@ -1,6 +1,6 @@
 'use client';
 
-import { Button, Divider, Flex, Paper, Stack, Text, TextInput, Title } from '@mantine/core';
+import { Button, Flex, Paper, Stack, Text, Title } from '@mantine/core';
 import { Link, Unlink } from 'lucide-react';
 import React from 'react';
 import useSWR from 'swr';
@@ -10,26 +10,23 @@ import { IUserMeRequest } from '@/types/User';
 interface ILinkItem {
   id: string;
   label: string;
-  valueId?: string;
-  value?: string;
+  linked: boolean;
 }
 
-function LinkItem({ id, label, valueId, value }: ILinkItem) {
+function LinkItem({ id, label, linked }: ILinkItem) {
   return (
     <Paper withBorder shadow='md' radius='md' p='md'>
       <Title order={2} size='h3'>
         {label}
       </Title>
       <Text size='sm'>Входьте в свій аккаунт за допомогою облікового запису {label}</Text>
-      <TextInput mt='sm' value={value ?? valueId ?? "Не з'єднано"} readOnly />
-      <Divider mt='md' />
       <Flex mt='sm' direction='row-reverse'>
         <Button
-          onClick={() => window.location.replace(valueId ? `/api/profile/unlink/${id}` : `/api/auth/${id}`)}
-          leftSection={valueId ? <Unlink size={20} /> : <Link size={20} />}
-          color={valueId ? 'red' : 'blue'}
+          onClick={() => window.location.replace(linked ? `/api/profile/unlink/${id}` : `/api/auth/${id}`)}
+          leftSection={linked ? <Unlink size={20} /> : <Link size={20} />}
+          color={linked ? 'red' : 'blue'}
         >
-          {valueId ? "Від'єднанти" : "Прив'язати"}
+          {linked ? "Від'єднанти" : "Прив'язати"}
         </Button>
       </Flex>
     </Paper>
@@ -41,8 +38,8 @@ export default function ProfileTabLink() {
 
   return (
     <Stack gap='sm' maw='576'>
-      <LinkItem key='google' id='google' label='Google' value={user?.google} valueId={user?.googleId} />
-      <LinkItem key='facebook' id='facebook' label='Facebook' value={user?.facebook} valueId={user?.facebookId} />
+      <LinkItem key='google' id='google' label='Google' linked={!!user?.google_id} />
+      <LinkItem key='facebook' id='facebook' label='Facebook' linked={!!user?.facebook_id} />
     </Stack>
   );
 }

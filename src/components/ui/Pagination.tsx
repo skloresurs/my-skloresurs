@@ -17,7 +17,8 @@ export default function Pagination({ total, query, baseRoute }: PaginationProps)
       <MantinePagination
         value={page}
         total={total}
-        withEdges
+        radius='xl'
+        size='sm'
         getItemProps={(e) => {
           searchParam.set('page', e.toString());
           return {
@@ -26,12 +27,6 @@ export default function Pagination({ total, query, baseRoute }: PaginationProps)
           };
         }}
         getControlProps={(e) => {
-          if (e === 'first') {
-            searchParam.delete('page');
-          }
-          if (e === 'last') {
-            searchParam.set('page', total.toString());
-          }
           if (e === 'next') {
             searchParam.set('page', (page + 1).toString());
           }

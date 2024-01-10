@@ -37,7 +37,7 @@ export default function UserSecurityTab({ user }: { user?: IUserRequest }) {
   const [loading, { open: enableLoading, close: disableLoading }] = useDisclosure();
   const form = useForm({
     initialValues: {
-      ips: map(user?.ip, (e) => ({ ip: e, key: nanoid() })) ?? [],
+      ips: map(user?.allowed_ips, (e) => ({ ip: e, key: nanoid() })) ?? [],
     },
     validate: zodResolver(formSchema),
   });

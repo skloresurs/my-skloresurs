@@ -9,14 +9,6 @@ const myFormat = printf(
 
 const logger = winston.createLogger({
   format: combine(colorize(), myFormat),
-  levels: {
-    debug: 4,
-    error: 0,
-    info: 2,
-    silly: 5,
-    verbose: 3,
-    warn: 1,
-  },
   transports: [new winston.transports.Console({})],
 });
 

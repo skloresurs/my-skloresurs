@@ -28,7 +28,7 @@ function OrderItem({ order }: IProps) {
         h='100%'
         withBorder={order.locked}
         onClick={open}
-        className='cursor-pointer select-none border-[var(--mantine-color-red-5)] duration-300 hover:bg-[var(--mantine-color-dark-5)]'
+        className='cursor-pointer select-none duration-300 hover:bg-[var(--mantine-color-dark-5)]'
       >
         <Flex justify='space-between' gap='sm'>
           <Title order={2}>{order.id}</Title>
@@ -84,7 +84,7 @@ function OrderItem({ order }: IProps) {
       </Card>
 
       <Drawer opened={opened} onClose={close} position='right' title='Замовлення' size='xl'>
-        <Tabs variant='outline' defaultValue='main'>
+        <Tabs defaultValue='main'>
           <Tabs.List>
             <Tabs.Tab value='main'>Інформація</Tabs.Tab>
             <Tabs.Tab value='specification'>Специфікація</Tabs.Tab>
