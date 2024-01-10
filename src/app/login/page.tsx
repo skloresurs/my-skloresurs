@@ -41,7 +41,7 @@ export default function AuthenticationImage() {
         </Title>
         <Stack>
           <Button
-            component={Link}
+            component='a'
             href='/api/auth/google'
             leftSection={<Image src='https://cdn.simpleicons.org/google/white' alt='Google' width={20} height={20} />}
             variant='outline'
@@ -51,7 +51,7 @@ export default function AuthenticationImage() {
             Вхід за допомогою Google
           </Button>
           <Button
-            component={Link}
+            component='a'
             href='/api/auth/facebook'
             leftSection={
               <Image src='https://cdn.simpleicons.org/facebook/white' alt='Facebook' width={20} height={20} />
