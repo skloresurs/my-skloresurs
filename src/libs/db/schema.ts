@@ -1,7 +1,7 @@
 import { sql } from 'drizzle-orm';
 import { bigint, pgEnum, pgTable, text, timestamp, uuid } from 'drizzle-orm/pg-core';
 
-export const permissionsEnum = pgEnum('Permissions', ['SuperAdmin', 'Admin', 'Driver', 'Manager', 'Beta']);
+export const permissionsEnum = pgEnum('permissions', ['SuperAdmin', 'Admin', 'Driver', 'Manager', 'Beta']);
 
 export const userSchema = pgTable('auth_user', {
   id: text('id').primaryKey(),
