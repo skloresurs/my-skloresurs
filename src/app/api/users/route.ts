@@ -1,15 +1,34 @@
+import { and, count, desc, like } from 'drizzle-orm';
 import { NextRequest, NextResponse } from 'next/server';
 
 import apiErrorHandler from '@/libs/api-error-handler';
-import prisma from '@/libs/prisma';
+import { db } from '@/libs/db';
+import { userSchema } from '@/libs/db/schema';
 import { getSession } from '@/libs/sessions';
 import verifyIp from '@/libs/verify-ip';
 import { verifyPermissionServer } from '@/libs/verify-permission';
 
+function getSortByVariable(key: string) {
+  switch (key) {
+    case 'id': {
+      return userSchema.id;
+    }
+    case 'fullname': {
+      return userSchema.fullname;
+    }
+    case 'email': {
+      return userSchema.email;
+    }
+    default: {
+      return userSchema.fullname;
+    }
+  }
+}
+
 export async function GET(req: NextRequest) {
   try {
     const session = await getSession(req);
-    await verifyIp(req, session.user.ip);
+    await verifyIp(req, session.user.allowed_ips);
     verifyPermissionServer(session.user.permissions, 'Admin');
 
     const params = req.nextUrl.searchParams;
@@ -23,41 +42,33 @@ export async function GET(req: NextRequest) {
     const filterByName = params.get('filterByName') ?? '';
     const filterByEmail = params.get('filterByEmail') ?? '';
 
-    const where = {
-      AND: [
-        {
-          id: {
-            contains: filterById,
-          },
-        },
-        {
-          fullname: {
-            contains: filterByName,
-          },
-        },
-        {
-          email: {
-            contains: filterByEmail,
-          },
-        },
-      ],
-    };
+    const total = await db
+      .select({ count: count() })
+      .from(userSchema)
+      .where(
+        and(
+          like(userSchema.fullname, `%${filterByName}%`),
+          like(userSchema.email, `%${filterByEmail}%`),
+          like(userSchema.id, `%${filterById}%`)
+        )
+      );
 
-    const users = await prisma.user.findMany({
-      where,
-      orderBy: {
-        [sortBy]: sortDirection,
-      },
-      skip: (Number(page) - 1) * +pageSize,
-      take: +pageSize,
-    });
+    const users = await db
+      .select()
+      .from(userSchema)
+      .where(
+        and(
+          like(userSchema.fullname, `%${filterByName}%`),
+          like(userSchema.email, `%${filterByEmail}%`),
+          like(userSchema.id, `%${filterById}%`)
+        )
+      )
+      .orderBy(sortDirection === 'desc' ? desc(getSortByVariable(sortBy)) : getSortByVariable(sortBy))
+      .limit(Number(pageSize))
+      .offset((Number(page) - 1) * Number(pageSize));
 
-    const total = await prisma.user.count({
-      where,
-    });
-
-    return NextResponse.json({ total, users }, { status: 200 });
+    return NextResponse.json({ total: total[0].count, users }, { status: 200 });
   } catch (error) {
-    return apiErrorHandler(error, '/users');
+    return apiErrorHandler(req, error);
   }
 }

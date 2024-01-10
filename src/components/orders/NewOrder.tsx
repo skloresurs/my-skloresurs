@@ -5,15 +5,15 @@ import { useForm } from '@mantine/form';
 import { zodResolver } from 'mantine-form-zod-resolver';
 import React, { useState } from 'react';
 
-import { defaultData, formSchema, ValidationSchema } from '@/types/NewOrder';
+import formSchema, { defaultFormData, ValidationSchema } from '@/types/newOrder/Form';
 
 import MainInformation from './MainInformation';
-import Specification from './Specification';
-import Visualization from './Visualization';
+import Specification from './specification/Specification';
+import Visualization from './visualization/Visualization';
 
 export default function NewOrder() {
   const form = useForm<ValidationSchema>({
-    initialValues: defaultData,
+    initialValues: defaultFormData,
     validate: zodResolver(formSchema),
   });
   const [activeTab, setActiveTab] = useState<string | null>('0');

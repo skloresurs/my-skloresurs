@@ -1,6 +1,6 @@
 import { Badge, DefaultMantineColor } from '@mantine/core';
 import { toLower, trim } from 'lodash';
-import React from 'react';
+import React, { memo } from 'react';
 
 interface IStatusConfig {
   name: string;
@@ -24,7 +24,7 @@ function getStatusConfig(status: string): IStatusConfig {
     case 'производство': {
       return {
         color: 'blue',
-        name: 'Производство',
+        name: 'Виробництво',
       };
     }
     case 'утверждено производством': {
@@ -84,10 +84,10 @@ function getStatusConfig(status: string): IStatusConfig {
   }
 }
 
-export default function StatusBadge({ status }: { status: string }) {
-  return (
-    <Badge className='cursor-default select-none' variant='light' color={getStatusConfig(status).color}>
-      {getStatusConfig(status).name}
-    </Badge>
-  );
-}
+const StatusBadge = ({ status }: { status: string }) => (
+  <Badge className='cursor-default select-none' variant='light' color={getStatusConfig(status).color}>
+    {getStatusConfig(status).name}
+  </Badge>
+);
+
+export default memo(StatusBadge);

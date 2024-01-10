@@ -1,14 +1,9 @@
-'use client';
-
-import 'moment/locale/uk';
-
-import { Drawer, NumberFormatter, Paper, Tabs, Title } from '@mantine/core';
+import { Card, Drawer, Flex, Group, NumberFormatter, Tabs, Text, Title } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
+import dayjs from 'dayjs';
 import { trim } from 'lodash';
-import { CircleUserRound, Lock, MapPin } from 'lucide-react';
-import moment from 'moment';
-import React from 'react';
-import Moment from 'react-moment';
+import { CircleUserRound, Lock, MapPin, Receipt } from 'lucide-react';
+import React, { memo, useMemo } from 'react';
 
 import IManaderOrder from '@/types/ManagerOrder';
 
@@ -20,47 +15,60 @@ interface IProps {
   order: IManaderOrder;
 }
 
-export default function OrderItem({ order }: IProps) {
+function OrderItem({ order }: IProps) {
+  const createdAt = useMemo(() => dayjs(order.createdAt), [order.createdAt]);
   const [opened, { open, close }] = useDisclosure(false);
-  const createdAt = moment(order.createdAt, 'DD.MM.YYYY HH:mm:ss').toDate();
 
   return (
     <>
-      <Paper
-        radius='lg'
-        p='md'
+      <Card
         shadow='sm'
-        component='button'
-        onClick={open}
+        radius='md'
+        p='md'
+        h='100%'
         withBorder={order.locked}
-        className='relative h-full w-full cursor-pointer justify-start border-[var(--mantine-color-red-5)] bg-[var(--mantine-color-dark-8)] duration-300 hover:bg-[var(--mantine-color-dark-9)]'
+        onClick={open}
+        className='cursor-pointer select-none duration-300 hover:bg-[var(--mantine-color-dark-5)]'
       >
-        <div className='flex flex-row items-center justify-between'>
+        <Flex justify='space-between' gap='sm'>
           <Title order={2}>{order.id}</Title>
-          <div className='flex flex-col text-right text-sm text-[var(--mantine-color-dimmed)]'>
-            <Moment date={createdAt} format='ll' locale='uk' />
-            <Moment date={createdAt} format='LTS' locale='uk' />
-          </div>
-        </div>
+          <Flex direction='column' align='end' c='dimmed'>
+            <Text size='sm'>{createdAt.format('DD.MM.YYYY')}</Text>
+            <Text size='sm'>{createdAt.format('HH:mm:ss')}</Text>
+          </Flex>
+        </Flex>
         {order.locked && (
-          <div className='flex flex-row items-center gap-1 text-sm text-[var(--mantine-color-red-5)]'>
+          <Group c='red' gap='4px' mb='4px'>
             <Lock size={16} />
-            <span className=''>Заблоковано</span>
-          </div>
+            <Text>Заблоковано</Text>
+          </Group>
         )}
-        <div className='mt-1 flex'>
-          <StatusBadge status={order.status} />
-        </div>
-        <div className='mt-3 flex w-full flex-col gap-1 text-[var(--mantine-color-placeholder)]'>
-          <div className='flex flex-row items-center gap-1'>
+        <StatusBadge status={order.status} />
+        <Flex mt='xs' direction='column' c='dimmed' gap='4px'>
+          <Flex gap='4px'>
             <CircleUserRound />
-            <span className='line-clamp-1 w-full text-left'>{trim(order.agent)}</span>
-          </div>
-          <div className='flex flex-row items-center gap-1'>
+            <Text className='line-clamp-1'>{trim(order.agent)}</Text>
+          </Flex>
+          <Flex gap='4px'>
             <MapPin />
-            <span className='line-clamp-1 w-full text-left'>{trim(order.location)}</span>
-          </div>
-        </div>
+            <Text className='line-clamp-1 w-full text-left'>{trim(order.location)}</Text>
+          </Flex>
+          {order.finance && (
+            <Flex gap='4px'>
+              <Receipt />
+              <Text c={order.finance.final < 0 ? 'red' : 'dimmed'}>
+                <NumberFormatter
+                  value={order.finance.final}
+                  suffix={` ${order.finance.currency}`}
+                  decimalScale={2}
+                  thousandSeparator=' '
+                  fixedDecimalScale
+                />
+              </Text>
+            </Flex>
+          )}
+        </Flex>
+        <div className='flex-1' />
         {order.finance && (
           <div className='flex flex-row justify-end'>
             <NumberFormatter
@@ -68,12 +76,15 @@ export default function OrderItem({ order }: IProps) {
               value={order.finance.total}
               suffix={` ${order.finance.currency}`}
               decimalScale={2}
+              thousandSeparator=' '
+              fixedDecimalScale
             />
           </div>
         )}
-      </Paper>
-      <Drawer offset={8} radius='md' opened={opened} onClose={close} position='right' title='Замовлення' size='xl'>
-        <Tabs variant='outline' defaultValue='main'>
+      </Card>
+
+      <Drawer opened={opened} onClose={close} position='right' title='Замовлення' size='xl'>
+        <Tabs defaultValue='main'>
           <Tabs.List>
             <Tabs.Tab value='main'>Інформація</Tabs.Tab>
             <Tabs.Tab value='specification'>Специфікація</Tabs.Tab>
@@ -89,3 +100,5 @@ export default function OrderItem({ order }: IProps) {
     </>
   );
 }
+
+export default memo(OrderItem);

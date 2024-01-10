@@ -8,11 +8,11 @@ export async function POST(req: NextRequest) {
   try {
     const session = await getSession(req);
     if (session) {
-      await auth.invalidateSession(session.sessionId);
-      await auth.deleteDeadUserSessions(session.user.userId);
+      await auth.invalidateSession(session.id);
+      await auth.deleteDeadUserSessions(session.user.id);
     }
     return NextResponse.json(null, { status: 200 });
   } catch (error) {
-    return apiErrorHandler(error, '/auth/logout');
+    return apiErrorHandler(req, error);
   }
 }

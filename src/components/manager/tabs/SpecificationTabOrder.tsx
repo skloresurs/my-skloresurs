@@ -1,10 +1,10 @@
 'use client';
 
-import { Stack } from '@mantine/core';
+import { Container, Stack, Text } from '@mantine/core';
 import { reduce, sortBy } from 'lodash';
 import { Sigma } from 'lucide-react';
 import { DataTable, DataTableSortStatus } from 'mantine-datatable';
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { memo, useMemo, useState } from 'react';
 import { useWindowSize } from 'react-use';
 import useSWR from 'swr';
 
@@ -14,20 +14,21 @@ interface IProps {
   order: IManaderOrder;
 }
 
-export default function SpecificationTabOrder({ order }: IProps) {
-  const { data: goods, isValidating } = useSWR<IGoods[]>(`/api/manager/order/${order.id}?server=${order.server}`);
+function SpecificationTabOrder({ order }: IProps) {
+  const { data: goods, isValidating } = useSWR<IGoods[]>(`/api/manager/order/${order.id}`);
   const { height } = useWindowSize();
   const [sortStatus, setSortStatus] = useState<DataTableSortStatus<IGoods>>({
     columnAccessor: 'position',
     direction: 'asc',
   });
 
-  const [records, setRecords] = useState(sortBy(goods, 'position'));
-
-  useEffect(() => {
-    const data = sortBy(goods, sortStatus.columnAccessor);
-    setRecords(sortStatus.direction === 'desc' ? data.toReversed() : data);
-  }, [goods, sortStatus]);
+  const records = useMemo(
+    () =>
+      sortStatus.direction === 'desc'
+        ? sortBy(goods, sortStatus.columnAccessor).toReversed()
+        : sortBy(goods, sortStatus.columnAccessor),
+    [goods, sortStatus]
+  );
 
   const groups = useMemo(
     () => [
@@ -101,32 +102,40 @@ export default function SpecificationTabOrder({ order }: IProps) {
   );
 
   return (
-    <DataTable
-      withTableBorder
-      withColumnBorders
-      highlightOnHover
-      groups={groups}
-      records={records}
-      sortStatus={sortStatus}
-      onSortStatusChange={setSortStatus}
-      minHeight={goods?.length === 0 ? 150 : 0}
-      height={height - 150}
-      fetching={isValidating}
-      noRecordsText='Немає даних'
-      idAccessor='position'
-      rowExpansion={{
-        content: ({ record }) => (
-          <Stack className='flex flex-col gap-1 px-3 py-2'>
-            <div>
-              <span className='font-bold'>Номенклатура: </span> {record.name}
-            </div>
-            <div>
-              <span className='font-bold'>Розміри: </span>
-              {` ${record.width} x ${record.height} m²`}
-            </div>
-          </Stack>
-        ),
-      }}
-    />
+    <Container mt='sm' fluid p='0' h={height - 200}>
+      <DataTable
+        withTableBorder
+        withColumnBorders
+        highlightOnHover
+        groups={groups}
+        records={records}
+        sortStatus={sortStatus}
+        onSortStatusChange={setSortStatus}
+        minHeight='100%'
+        fetching={isValidating}
+        noRecordsText='Немає даних'
+        idAccessor='position'
+        rowExpansion={{
+          content: ({ record }) => (
+            <Stack className='flex flex-col gap-1 px-3 py-2'>
+              <Text>
+                <Text span inherit fw={600}>
+                  Номенклатура:
+                </Text>
+                {` ${record.name}`}
+              </Text>
+              <Text>
+                <Text span inherit fw={600}>
+                  Розміри:
+                </Text>
+                {` ${record.width} x ${record.height} m²`}
+              </Text>
+            </Stack>
+          ),
+        }}
+      />
+    </Container>
   );
 }
+
+export default memo(SpecificationTabOrder);

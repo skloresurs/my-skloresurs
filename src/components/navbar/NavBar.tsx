@@ -29,26 +29,18 @@ const navbar: RootNavBarItem[] = [
     icon: <Boxes {...props} />,
   },
   {
-    id: 'manager',
-    label: 'Менеджер',
+    id: 'manager-orders',
+    label: 'Замовлення (менеджер)',
     icon: <GanttChartSquare {...props} />,
     permission: 'Manager',
-    children: [
-      {
-        href: '/manager/orders',
-        icon: <Boxes {...props} />,
-        id: 'manager-orders',
-        label: 'Замовлення',
-        permission: 'Manager',
-      },
-    ],
+    href: '/manager',
   },
   {
-    id: 'driver',
-    label: 'Водій',
+    id: 'routes',
+    label: 'Маршрути',
     icon: <Truck {...props} />,
     permission: 'Driver',
-    children: [],
+    href: '/routes',
   },
   {
     id: 'admin',

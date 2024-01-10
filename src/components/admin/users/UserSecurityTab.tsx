@@ -1,6 +1,6 @@
 'use client';
 
-import { ActionIcon, Button, Divider, Paper, Text, TextInput, Title } from '@mantine/core';
+import { ActionIcon, Button, Divider, Flex, Group, Paper, Stack, Text, TextInput, Title } from '@mantine/core';
 import { useForm, zodResolver } from '@mantine/form';
 import { useDisclosure } from '@mantine/hooks';
 import { notifications } from '@mantine/notifications';
@@ -37,7 +37,7 @@ export default function UserSecurityTab({ user }: { user?: IUserRequest }) {
   const [loading, { open: enableLoading, close: disableLoading }] = useDisclosure();
   const form = useForm({
     initialValues: {
-      ips: map(user?.ip, (e) => ({ ip: e, key: nanoid() })) ?? [],
+      ips: map(user?.allowed_ips, (e) => ({ ip: e, key: nanoid() })) ?? [],
     },
     validate: zodResolver(formSchema),
   });
@@ -101,51 +101,52 @@ export default function UserSecurityTab({ user }: { user?: IUserRequest }) {
     return null;
   }
   return (
-    <form onSubmit={form.onSubmit(updateIps)} className='flex w-full max-w-xl flex-col gap-5'>
-      <Paper withBorder shadow='md' radius='md' className='py-3'>
-        <div className='px-4'>
-          <Title order={2} size='h3'>
-            Дозволені IP адреси
-          </Title>
-          <span className='text-sm'>Список дозволених IP адрес для входу в систему</span>
-          {form.values.ips.length === 0 && (
-            <Title order={3} size='h5' className='text-center'>
-              Не вказано жодної ip адреси. Вхід дозволено з будь-якого IP
+    <form onSubmit={form.onSubmit(updateIps)}>
+      <Stack maw={576}>
+        <Paper withBorder shadow='md' radius='md' p='md'>
+          <Stack gap='xs'>
+            <Title order={2} size='h3'>
+              Дозволені IP адреси
             </Title>
-          )}
-          <div className='flex flex-col gap-1'>
-            {map(form.values.ips, (ip, i) => (
-              <div key={ip.key} className='flex flex-row items-center gap-2'>
-                <TextInput {...form.getInputProps(`ips.${i}.ip`)} className='w-full' />
-                <ActionIcon color='red' variant='subtle' onClick={() => form.removeListItem('ips', i)}>
-                  <XCircle />
-                </ActionIcon>
-              </div>
-            ))}
-          </div>
-          {form.errors.ips && (
-            <Text c='red' size='sm' className='mt-2 text-center'>
-              {form.errors.ips}
-            </Text>
-          )}
-          <div className='mt-2 flex flex-row items-center justify-end'>
-            <Button
-              onClick={() => form.insertListItem('ips', { ip: '', key: nanoid() })}
-              color='green'
-              leftSection={<PlusCircle size={20} />}
-            >
-              Додати
-            </Button>
-          </div>
-        </div>
-        <Divider className='my-3' />
-        <div className='flex flex-row items-center justify-between px-4'>
-          <span className='text-sm text-[var(--mantine-color-dimmed)]'>Це не вплине на активні сесії!</span>
-          <Button onClick={updateIps} loading={loading} leftSection={<Save size={20} />}>
-            Зберегти
-          </Button>
-        </div>
-      </Paper>
+            <Text size='sm'>Список дозволених IP адрес для входу в систему</Text>
+            {form.values.ips.length === 0 && (
+              <Text ta='center' fw={500}>
+                Не вказано жодної ip адреси. Вхід дозволено з будь-якого IP
+              </Text>
+            )}
+            <Stack gap='4px'>
+              {map(form.values.ips, (ip, i) => (
+                <Group key={nanoid(i)} gap='xs'>
+                  <TextInput {...form.getInputProps(`ips.${i}.ip`)} placeholder='127.0.0.1' className='flex-1' />
+                  <ActionIcon color='red' variant='subtle' onClick={() => form.removeListItem('ips', i)}>
+                    <XCircle />
+                  </ActionIcon>
+                </Group>
+              ))}
+            </Stack>
+            {form.errors.ips && (
+              <Text c='red' size='sm' ta='center'>
+                {form.errors.ips}
+              </Text>
+            )}
+            <Flex justify='end'>
+              <Button
+                onClick={() => form.insertListItem('ips', { ip: '', key: nanoid() })}
+                color='green'
+                leftSection={<PlusCircle size={20} />}
+              >
+                Додати
+              </Button>
+            </Flex>
+            <Divider />
+            <Flex justify='end' align='center' gap='xs'>
+              <Button onClick={updateIps} loading={loading} leftSection={<Save size={20} />}>
+                Зберегти
+              </Button>
+            </Flex>
+          </Stack>
+        </Paper>
+      </Stack>
     </form>
   );
 }

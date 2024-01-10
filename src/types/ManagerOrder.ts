@@ -5,7 +5,7 @@ export default interface IManaderOrder {
   server: Server;
 
   responsible: string;
-  manadger: string;
+  manager: string;
   agent: string;
 
   createdAt: string;

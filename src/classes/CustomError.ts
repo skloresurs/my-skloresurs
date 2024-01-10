@@ -78,6 +78,13 @@ const ReCatpchaError = new CustomError('Помилка рекаптчи', Status
 const EmailExistsError = new CustomError('Користувач з такою поштою вже існує', StatusCodes.CONFLICT);
 
 /**
+ * Error indicating that the user is required to have at least one connection.
+ * @class
+ * @extends CustomError
+ */
+const RequiredOneConnections = new CustomError("Ви не можете від'єднати єдине з'єднання", StatusCodes.BAD_REQUEST);
+
+/**
  * Error indicating a server error.
  * @class
  * @extends CustomError
@@ -90,6 +97,7 @@ export {
   MissingParamsError,
   MissingPermissionError,
   ReCatpchaError,
+  RequiredOneConnections,
   ServerError,
   SessionNotFoundError,
   UnauthorizedError,

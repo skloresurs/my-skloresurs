@@ -1,14 +1,14 @@
 'use client';
 
-import { Divider, Switch } from '@mantine/core';
+import { Divider, Stack, Switch } from '@mantine/core';
 import { notifications } from '@mantine/notifications';
 import axios from 'axios';
 import { includes, map, startsWith } from 'lodash';
-import { CheckCircle, XCircle } from 'lucide-react';
 import { nanoid } from 'nanoid';
 import React, { useMemo } from 'react';
 import useSWR, { useSWRConfig } from 'swr';
 
+import { errorNotificationProps, loadingNotificationProps, successNotificationProps } from '@/components/Notification';
 import verifyPermission from '@/libs/verify-permission';
 import { IUserMeRequest, IUserRequest, Permission } from '@/types/User';
 
@@ -28,42 +28,29 @@ export default function UserPermissionsTab({ user }: { user?: IUserRequest }) {
   const permissionsData: (IPermission | null)[] = useMemo(
     () => [
       {
-        description: 'Повні права',
-        disabled: true,
         id: 'SuperAdmin',
         title: 'Супер-адмін',
+        description: 'Повні права',
+        disabled: true,
       },
       {
-        description: 'Доступ до адмін-панелі',
-        disabled: !verifyPermission(activeUser?.permissions ?? [], 'SuperAdmin'),
         id: 'Admin',
         title: 'Адмін',
+        description: 'Доступ до адмін-панелі',
+        disabled: !verifyPermission(activeUser?.permissions ?? [], 'SuperAdmin'),
       },
       null,
       {
-        description: 'Доступ до замовлень менеджера',
-        disabled: false,
         id: 'Manager',
         title: 'Менеджер',
+        description: 'Доступ до замовлень менеджера',
+        disabled: false,
       },
       {
-        description: 'Доступ до замовлень всіх менеджерів',
-        disabled: false,
-        id: 'ManagerAllOrders',
-        title: 'Всі замовлення менеджерів',
-      },
-      {
-        description: 'Доступ до фінансових показників',
-        disabled: false,
-        id: 'ManagerFinance',
-        title: 'Фінансові показники менеджера',
-      },
-      null,
-      {
-        description: 'Доступ до меню водія',
-        disabled: false,
         id: 'Driver',
         title: 'Водій',
+        description: 'Доступ до меню водія',
+        disabled: false,
       },
     ],
     [activeUser]
@@ -71,11 +58,9 @@ export default function UserPermissionsTab({ user }: { user?: IUserRequest }) {
 
   const updatePermission = async (permissionKey: string, value: boolean) => {
     const notification = notifications.show({
-      autoClose: false,
-      loading: true,
       message: 'Оновлення прав...',
       title: NotificationTitle,
-      withCloseButton: false,
+      ...loadingNotificationProps,
     });
 
     const response = await axios
@@ -85,19 +70,16 @@ export default function UserPermissionsTab({ user }: { user?: IUserRequest }) {
       })
       .catch((error) => {
         notifications.update({
-          autoClose: 3000,
-          color: 'red',
-          icon: <XCircle />,
           id: notification,
-          loading: false,
           message: error.response?.data.error ?? error.message ?? 'Невідома помилка',
           title: NotificationTitle,
-          withCloseButton: true,
+          ...errorNotificationProps,
         });
       });
-    await mutate(`/api/user/${user?.id}`);
 
     if (!response || response.status !== 200) return null;
+
+    await mutate(`/api/user/${user?.id}`);
 
     if (activeUser?.id === user?.id) {
       await mutate('/api/user');
@@ -108,19 +90,15 @@ export default function UserPermissionsTab({ user }: { user?: IUserRequest }) {
     });
 
     return notifications.update({
-      autoClose: 3000,
-      color: 'green',
-      icon: <CheckCircle />,
       id: notification,
-      loading: false,
       message: 'Оновлено',
       title: NotificationTitle,
-      withCloseButton: true,
+      ...successNotificationProps,
     });
   };
 
   return (
-    <div className='flex w-full max-w-xl flex-col gap-5'>
+    <Stack gap='md' maw='576'>
       {map(permissionsData, (e) => (
         <div key={e?.id ?? nanoid()}>
           {e ? (
@@ -138,6 +116,6 @@ export default function UserPermissionsTab({ user }: { user?: IUserRequest }) {
           )}
         </div>
       ))}
-    </div>
+    </Stack>
   );
 }

@@ -1,13 +1,14 @@
-import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
+import { eq } from 'drizzle-orm';
 import { constant, toLower } from 'lodash';
 import { nanoid } from 'nanoid';
 import { cookies } from 'next/headers';
-import { type NextRequest, NextResponse } from 'next/server';
+import { type NextRequest } from 'next/server';
 
-import CustomError, { EmailExistsError, ServerError } from '@/classes/CustomError';
+import CustomError from '@/classes/CustomError';
+import { db, getDbError } from '@/libs/db';
+import { userSchema } from '@/libs/db/schema';
 import { auth, facebookAuth } from '@/libs/lucia';
-import oauthErrorRedirect from '@/libs/oauth-middleware';
-import prisma from '@/libs/prisma';
+import oauthRedirect, { oauthErrorRedirect } from '@/libs/oauth-middleware';
 import { getSession, setSession } from '@/libs/sessions';
 import verifyIp from '@/libs/verify-ip';
 
@@ -26,70 +27,56 @@ export const GET = async (req: NextRequest) => {
     }
     const { facebookUser } = await facebookAuth.validateCallback(code);
 
-    const existUser = await prisma.user.findFirst({
-      where: {
-        facebookId: facebookUser.id,
-      },
-    });
+    if (!facebookUser.email) {
+      return oauthErrorRedirect('Не вдалось отримати ваш E-mail', activeSessionBoolean);
+    }
+
+    const userByFacebookId = await db
+      .select()
+      .from(userSchema)
+      .where(eq(userSchema.facebook_id, facebookUser.id))
+      .limit(1)
+      .execute()
+      .then((data) => data[0])
+      .catch(constant(null));
+
+    if (activeSession && userByFacebookId) {
+      return oauthErrorRedirect("Цей oauth аккаунт вже зв'язаний з іншим аккаунтом", activeSessionBoolean);
+    }
 
     if (activeSession) {
-      if (existUser) {
-        return oauthErrorRedirect("Цей oauth аккаунт вже зв'язаний з іншим аккаунтом", activeSessionBoolean);
-      }
       await auth.updateUserAttributes(activeSession.user.id, {
-        facebook: facebookUser.name,
-        facebookId: facebookUser.id,
+        facebook_id: facebookUser.id,
       });
-      return NextResponse.json(null, {
-        headers: {
-          Location: '/profile?tab=link',
+      return oauthRedirect(activeSessionBoolean);
+    }
+
+    if (userByFacebookId) {
+      verifyIp(req, userByFacebookId.allowed_ips);
+      await setSession(req, userByFacebookId.id);
+      return oauthRedirect(activeSessionBoolean);
+    }
+
+    const user = await auth
+      .createUser({
+        attributes: {
+          email: facebookUser.email,
+          facebook_id: facebookUser.id,
+          fullname: facebookUser.name,
         },
-        status: 302,
+        key: {
+          password: null,
+          providerId: 'email',
+          providerUserId: toLower(facebookUser.email),
+        },
+        userId: nanoid(12),
+      })
+      .catch((error) => {
+        throw getDbError(error);
       });
-    }
 
-    if (existUser) {
-      verifyIp(req, existUser.ip);
-      await auth.updateUserAttributes(existUser.id, {
-        facebook: facebookUser.name,
-      });
-      await setSession(req, existUser.id);
-    } else if (facebookUser.email) {
-      const user = await auth
-        .createUser({
-          attributes: {
-            email: facebookUser.email,
-            facebook: facebookUser.name,
-            facebookId: facebookUser.id,
-            fullname: facebookUser.name,
-          },
-          key: {
-            password: null,
-            providerId: 'email',
-            providerUserId: toLower(facebookUser.email),
-          },
-          userId: nanoid(),
-        })
-        .catch((error) => {
-          if ((error as PrismaClientKnownRequestError) && error.code === 'P2002') {
-            throw EmailExistsError;
-          }
-          throw ServerError;
-        });
-      await setSession(req, user.id);
-    } else {
-      return oauthErrorRedirect(
-        'Не вдалось отримати ваш E-mail. Для створення аккаунту за допомогою Facebook у вас повинен бути зареєстрований E-mail у вашому профілі Facebook',
-        activeSessionBoolean
-      );
-    }
-
-    return NextResponse.json(null, {
-      headers: {
-        Location: '/',
-      },
-      status: 302,
-    });
+    await setSession(req, user.id);
+    return oauthRedirect(activeSessionBoolean);
   } catch (error) {
     if (error instanceof CustomError) {
       return oauthErrorRedirect(error.message, activeSessionBoolean);

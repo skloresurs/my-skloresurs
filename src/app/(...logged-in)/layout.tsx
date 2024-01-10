@@ -105,7 +105,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     redirect('/login');
   }
 
-  if (user.ip.length > 0 && !includes(user.ip, ip.IPv4)) {
+  if (user.allowed_ips.length > 0 && !includes(user.allowed_ips, ip.IPv4)) {
     return (
       <ErrorPage
         code={403}

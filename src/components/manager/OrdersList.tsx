@@ -1,57 +1,82 @@
 'use client';
 
-import { Grid, Title } from '@mantine/core';
+import { Center, Grid, StyleProp } from '@mantine/core';
 import { map } from 'lodash';
 import { useSearchParams } from 'next/navigation';
-import React, { useEffect } from 'react';
+import React from 'react';
 import useSWR from 'swr';
 
+import DefaultManagerOrder from '@/data/default-manager-order';
 import IManaderOrder from '@/types/ManagerOrder';
 
-import LoadingOverlay from '../LoadingOverlay';
-import MoreItem from './MoreItem';
+import ErrorAlert from '../ui/ErrorAlert';
+import GridSkeleton from '../ui/GridSkeleton';
+import InfoAlert from '../ui/InfoAlert';
+import Pagination from '../ui/Pagination';
 import OrderItem from './OrderItem';
+
+const span: StyleProp<number> = {
+  base: 12,
+  md: 6,
+  lg: 4,
+  xl: 3,
+  '2xl': 2,
+};
+
+interface IResponse {
+  data: IManaderOrder[];
+  total: number;
+}
 
 export default function OrdersList() {
   const query = useSearchParams();
-  const { data, error, isValidating, mutate } = useSWR<IManaderOrder[]>(`/api/manager/order/?${query.toString()}`);
-
-  useEffect(() => {
-    mutate();
-  }, [mutate, query]);
+  const { data, error, isValidating, mutate } = useSWR<IResponse>(`/api/manager/order/?${query.toString()}`);
 
   if (isValidating) {
     return (
-      <div className='relative mt-3 h-[400px] w-full'>
-        <LoadingOverlay />
-      </div>
+      <GridSkeleton span={span} times={12}>
+        <OrderItem order={DefaultManagerOrder} />
+      </GridSkeleton>
     );
   }
 
   if (error) {
     return (
-      <div className='flex flex-col gap-6 text-center'>
-        <Title order={2}>Помилка</Title>
-        <Title order={3}>Сталася помилка при завантаженні замовлень</Title>
-      </div>
+      <Center>
+        <ErrorAlert
+          maw={576}
+          w={576}
+          title='Помилка'
+          description='Не вдалось завантажити список замовлень'
+          refresh={mutate}
+        />
+      </Center>
     );
   }
 
-  if (!data || data.length === 0) {
+  if (!data || data.data.length === 0) {
     return (
-      <div className='flex flex-col gap-6 text-center'>
-        <Title order={2}>Не знайдено жодного замовлення</Title>
-      </div>
+      <Center>
+        <InfoAlert
+          maw={576}
+          w={576}
+          title='Немає замовлень'
+          description='Не знадено жодного замовлення за вказаними параметрами'
+        />
+      </Center>
     );
   }
+
   return (
-    <Grid>
-      {map(data, (order: IManaderOrder) => (
-        <Grid.Col span={{ base: 12, lg: 3, md: 6 }} key={order.id}>
-          <OrderItem order={order} />
-        </Grid.Col>
-      ))}
-      {data.length >= 250 && <MoreItem />}
-    </Grid>
+    <>
+      <Grid>
+        {map(data.data, (order) => (
+          <Grid.Col span={span} key={order.id}>
+            <OrderItem order={order} />
+          </Grid.Col>
+        ))}
+      </Grid>
+      <Pagination baseRoute='/manager' total={Math.ceil(data.total / 50)} query={query} />
+    </>
   );
 }

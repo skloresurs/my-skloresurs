@@ -22,6 +22,6 @@ export async function DELETE(req: NextRequest, { params }: { params: { id: strin
     await auth.invalidateSession(params.id);
     return NextResponse.json(null, { status: 200 });
   } catch (error) {
-    return apiErrorHandler(error, `/sessions/${params.id}`);
+    return apiErrorHandler(req, error);
   }
 }

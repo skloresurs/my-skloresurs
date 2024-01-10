@@ -16,23 +16,15 @@ interface IResponse {
 export async function GET(req: NextRequest, { params }: { params: { id: string } }) {
   try {
     const session = await getSession(req);
-    await verifyIp(req, session.user.ip);
+    await verifyIp(req, session.user.allowed_ips);
     verifyPermissionServer(session.user.permissions, 'Manager');
 
-    const { searchParams } = req.nextUrl;
-
-    const server = searchParams.get('server');
-
-    if (server === 'main') {
-      const response = await axios1cMain.get<IResponse>(`/manager/order/${params.id}`).catch((error) => {
-        logger.error(error.response.data);
-        throw ServerError;
-      });
-      return NextResponse.json(response.data.data, { status: 200 });
-    }
-
-    return NextResponse.json({ error: 'Server not found' }, { status: 404 });
+    const response = await axios1cMain.get<IResponse>(`/manager/order/${params.id}`).catch((error) => {
+      logger.error(error.response.data);
+      throw ServerError;
+    });
+    return NextResponse.json(response.data.data, { status: 200 });
   } catch (error) {
-    return apiErrorHandler(error, `/orders/manager/${params.id}`);
+    return apiErrorHandler(req, error);
   }
 }

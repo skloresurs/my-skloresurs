@@ -1,18 +1,18 @@
 'use client';
 
-import { Divider, NumberFormatter } from '@mantine/core';
+import { Divider, NumberFormatter, Space, Stack, Text } from '@mantine/core';
+import dayjs from 'dayjs';
 import { trim } from 'lodash';
-import React from 'react';
+import React, { memo } from 'react';
 
+import DrawerItem from '@/components/ui/DrawerItem';
 import IManaderOrder from '@/types/ManagerOrder';
 
-import DrawerItem from '../DrawerItem';
-import DrawerItemMultiLine from '../DrawerItemMultiLine';
 import StatusBadge from '../StatusBadge';
 
 const NotFoundData = 'Не вказано';
 
-export default function MainTabOrder({ order }: { order: IManaderOrder }) {
+function MainTabOrder({ order }: { order: IManaderOrder }) {
   const moneyFormatProps = {
     suffix: ` ${order.finance?.currency}`,
     decimalScale: 2,
@@ -20,45 +20,49 @@ export default function MainTabOrder({ order }: { order: IManaderOrder }) {
     fixedDecimalScale: true,
   };
   return (
-    <div className='mt-2'>
-      <div className='flex flex-col gap-1'>
-        <DrawerItem title='ID' data={trim(order.id)} enableCopy />
-        <div className='my-0.5' />
-        <DrawerItem title='Дата створення' data={trim(order.createdAt)} />
-        <DrawerItem title='Дата відправлення' data={trim(order.shipmentAt) ?? NotFoundData} />
-        <div className='my-0.5' />
-        <DrawerItem title='Статус' data={<StatusBadge status={order.status} />} />
-        <div className='my-0.5' />
-        <DrawerItem title='Контрагент' data={trim(order.agent) ?? NotFoundData} />
-        <DrawerItem title='Менеджер' data={trim(order.manadger) ?? NotFoundData} />
-        <DrawerItem title='Відповідальний' data={trim(order.responsible) ?? NotFoundData} />
-        <div className='my-0.5' />
-        {order.finance && <DrawerItem title='Номер рахунку' data={trim(order.finance.bill) ?? NotFoundData} />}
-        <DrawerItem title='Заблоковано для виробництва' data={order.locked ? 'Так' : 'Ні'} />
-      </div>
+    <Stack gap='4px' mt='sm'>
+      <DrawerItem label='ID' value={trim(order.id)} />
+      <Space h='8px' />
+      <DrawerItem label='Дата створення' value={dayjs(trim(order.createdAt)).format('DD.MM.YYYY HH:mm:ss')} />
+      <DrawerItem
+        label='Дата відправлення'
+        value={order.shipmentAt ? dayjs(trim(order.shipmentAt)).format('DD.MM.YYYY') : NotFoundData}
+      />
+      <Space h='8px' />
+      <DrawerItem label='Статус' value={<StatusBadge status={order.status} />} />
+      <Space h='8px' />
+      <DrawerItem label='Контрагент' value={trim(order.agent) ?? NotFoundData} />
+      <DrawerItem label='Менеджер' value={trim(order.manager) ?? NotFoundData} />
+      <DrawerItem label='Відповідальний' value={trim(order.responsible) ?? NotFoundData} />
+      <Space h='8px' />
+      {order.finance && <DrawerItem label='Номер рахунку' value={trim(order.finance.bill) ?? NotFoundData} />}
+      <DrawerItem label='Заблоковано для виробництва' value={order.locked ? 'Так' : 'Ні'} />
       <Divider my='sm' />
       {order.finance && (
         <>
-          <div className='flex flex-col'>
-            <DrawerItem
-              title='Сума замовлення'
-              data={<NumberFormatter value={order.finance.total} {...moneyFormatProps} />}
-            />
-            <DrawerItem title='Оплачено' data={<NumberFormatter value={order.finance.pay} {...moneyFormatProps} />} />
-            <DrawerItem
-              title='Кінцевий залишок'
-              data={<NumberFormatter value={order.finance.final} {...moneyFormatProps} />}
-            />
-            <DrawerItem
-              title='Борг до відвантаження'
-              className='mt-1'
-              data={<NumberFormatter value={order.finance.total - order.finance.pay} {...moneyFormatProps} />}
-            />
-          </div>
+          <DrawerItem
+            label='Сума замовлення'
+            value={<NumberFormatter value={order.finance.total} {...moneyFormatProps} />}
+          />
+          <DrawerItem label='Оплачено' value={<NumberFormatter value={order.finance.pay} {...moneyFormatProps} />} />
+          <DrawerItem
+            label='Кінцевий залишок'
+            value={
+              <Text c={order.finance.final < 0 ? 'red' : ''}>
+                <NumberFormatter value={order.finance.final} {...moneyFormatProps} />
+              </Text>
+            }
+          />
+          <DrawerItem
+            label='Борг до відвантаження'
+            value={<NumberFormatter value={order.finance.total - order.finance.pay} {...moneyFormatProps} />}
+          />
           <Divider my='sm' />
         </>
       )}
-      <DrawerItemMultiLine title='Адреса' data={trim(order.location)} enableCopy />
-    </div>
+      <DrawerItem label='Адреса' value={trim(order.location)} />
+    </Stack>
   );
 }
+
+export default memo(MainTabOrder);

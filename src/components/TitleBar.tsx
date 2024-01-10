@@ -1,8 +1,8 @@
 'use client';
 
-import { Divider, Title } from '@mantine/core';
+import { ActionIcon, Divider, Text, Title } from '@mantine/core';
 import { ArrowLeft } from 'lucide-react';
-import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import React from 'react';
 
 interface IProps {
@@ -12,20 +12,31 @@ interface IProps {
 }
 
 export default function TitleBar({ title, description, backHref }: IProps) {
-  const router = useRouter();
   return (
     <div>
-      <div className='flex flex-row items-center gap-2'>
+      <Text span>
         {backHref && (
-          <ArrowLeft
-            size={28}
-            className='min-w-[30px] cursor-pointer duration-300 hover:scale-105 hover:text-[var(--mantine-color-blue-5)]'
-            onClick={() => router.push(backHref)}
-          />
+          <ActionIcon
+            display='inline-flex'
+            variant='subtle'
+            aria-label='Back'
+            mr='sm'
+            h='100%'
+            component={Link}
+            href={backHref}
+          >
+            <ArrowLeft size={28} />
+          </ActionIcon>
         )}
-        <Title order={1}>{title}</Title>
-      </div>
-      {description && <span className='my-2 text-sm'>{description}</span>}
+        <Title display='inline' order={1}>
+          {title}
+        </Title>
+      </Text>
+      {description && (
+        <Text size='sm' my='sm'>
+          {description}
+        </Text>
+      )}
       <Divider className='my-2' />
     </div>
   );

@@ -1,9 +1,11 @@
-import { filter } from 'lodash';
+import { eq } from 'drizzle-orm';
+import { constant, filter } from 'lodash';
 import { NextRequest, NextResponse } from 'next/server';
 
 import { MissingParamsError, UserNotFoundError } from '@/classes/CustomError';
 import apiErrorHandler from '@/libs/api-error-handler';
-import { auth } from '@/libs/lucia';
+import { db } from '@/libs/db';
+import { userSchema } from '@/libs/db/schema';
 import { getSession } from '@/libs/sessions';
 import verifyIp from '@/libs/verify-ip';
 import { verifyPermissionServer } from '@/libs/verify-permission';
@@ -13,25 +15,33 @@ export async function POST(req: NextRequest, { params }: { params: { id: string 
     const session = await getSession(req);
 
     verifyPermissionServer(session.user.permissions, 'Admin');
-    await verifyIp(req, session.user.ip);
+    await verifyIp(req, session.user.allowed_ips);
 
     const { key, value } = await req.json();
 
     if (!key) throw MissingParamsError;
 
-    const user = await auth.getUser(params.id);
+    const user = await db
+      .select()
+      .from(userSchema)
+      .where(eq(userSchema.id, params.id))
+      .execute()
+      .then((res) => res[0])
+      .catch(constant(null));
 
     if (!user) throw UserNotFoundError;
 
-    await (value
-      ? auth.updateUserAttributes(params.id, {
-          permissions: [...user.permissions, key],
-        })
-      : auth.updateUserAttributes(params.id, {
-          permissions: filter(user.permissions, (permission: string) => permission !== key),
-        }));
+    await db
+      .update(userSchema)
+      .set({
+        permissions: value
+          ? [...user.permissions, key]
+          : filter(user.permissions, (permission: string) => permission !== key),
+      })
+      .where(eq(userSchema.id, params.id))
+      .execute();
     return NextResponse.json(null, { status: 200 });
   } catch (error) {
-    return apiErrorHandler(error, `/user/${params.id}/permissions`);
+    return apiErrorHandler(req, error);
   }
 }

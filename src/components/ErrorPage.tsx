@@ -14,7 +14,7 @@ interface IProps {
 export default function ErrorPage({ code, title, description, buttonLabel, onClick }: IProps) {
   return (
     <Container className={classes.root}>
-      <div className={classes.label}>{code}</div>
+      <Text className={classes.label}>{code}</Text>
       <Title className={classes.title}>{title}</Title>
       <Text c='dimmed' size='lg' ta='center' className={classes.description}>
         {description}
