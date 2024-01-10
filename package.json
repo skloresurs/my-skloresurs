@@ -21,7 +21,7 @@
   ],
   "scripts": {
     "dev": "next dev",
-    "build": "pnpm db && next build",
+    "build": "next build",
     "start": "next start",
     "lint": "next lint -f mo --fix",
     "format": "prettier --write .",
