@@ -33,6 +33,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang='uk'>
       <head>
         <ColorSchemeScript defaultColorScheme='dark' />
+        <link rel='icon' href='/favicon.ico' sizes='any' />
       </head>
       <body className={GeistSans.className}>
         <Providers>{children}</Providers>
