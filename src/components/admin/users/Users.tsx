@@ -1,7 +1,7 @@
 'use client';
 
 import { ActionIcon, Box, Group, TextInput } from '@mantine/core';
-import { map } from 'lodash';
+import { endsWith, map } from 'lodash';
 import { Pencil, Search, X } from 'lucide-react';
 import { DataTable, DataTableColumn, DataTableSortStatus } from 'mantine-datatable';
 import Link from 'next/link';
@@ -9,6 +9,8 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import React, { useMemo, useState } from 'react';
 import useSWR from 'swr';
 
+import Have1Cid from '@/components/badges/Have1Cid';
+import OfficialMail from '@/components/badges/OfficialMail';
 import PermissionBadge from '@/components/PermissionBadge';
 import { IUserRequest } from '@/types/User';
 
@@ -109,6 +111,17 @@ export default function Users() {
           />
         ),
         filtering: filterByEmail !== '',
+      },
+      {
+        accessor: 'badges',
+        title: 'Інформація',
+        width: 120,
+        render: (record: IUserRequest) => (
+          <Group gap='xs'>
+            {endsWith(record.email, '@skloresurs.com') && <OfficialMail />}
+            {record.id_1c && <Have1Cid />}
+          </Group>
+        ),
       },
       {
         accessor: 'permissions',
