@@ -1,7 +1,6 @@
 import { Stack } from '@mantine/core';
 import { Save } from 'lucide-react';
 import React from 'react';
-import { z } from 'zod';
 
 import ProfileCard from '@/components/ui/ProfileCard';
 import { IUserRequest } from '@/types/User';
@@ -24,7 +23,7 @@ export default function User1CTab({ user }: { user?: IUserRequest }) {
           apiUrl: `/api/user/${user.id}/1c/main`,
           key: 'id',
           userId: user.id,
-          validators: [{ validator: z.string().uuid(), errorMessage: 'ID повинен бути типу UUID' }],
+          nullOnEmpty: true,
         }}
       />
     </Stack>

@@ -43,20 +43,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         const hash = HmacSHA256(user.email, env.NEXT_PUBLIC_TAWK_API_KEY).toString();
         supportRef.current?.setAttributes(
           {
+            id: user.id,
             email: user.email,
+            fullname: user.fullname,
             hash,
             userId: user.id,
           },
           noop
         );
-        if (user.fullname) {
-          supportRef.current?.setAttributes(
-            {
-              name: user.fullname,
-            },
-            noop
-          );
-        }
       } catch (error) {
         /* empty */
       }

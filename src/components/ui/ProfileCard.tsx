@@ -34,6 +34,7 @@ interface IProps {
     key: string;
     userId?: string;
     validators?: IValidator[];
+    nullOnEmpty?: boolean;
   };
 }
 
@@ -79,7 +80,7 @@ export default function ProfileCard({
 
     const response = await axios
       .post(submitSettings?.apiUrl, {
-        [submitSettings?.key]: inputValue,
+        [submitSettings?.key]: submitSettings?.nullOnEmpty && inputValue === '' ? null : inputValue,
       })
       .catch((error) => {
         notifications.update({

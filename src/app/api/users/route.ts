@@ -1,4 +1,4 @@
-import { and, count, desc, like } from 'drizzle-orm';
+import { and, count, desc, like, sql } from 'drizzle-orm';
 import { NextRequest, NextResponse } from 'next/server';
 
 import apiErrorHandler from '@/libs/api-error-handler';
@@ -63,7 +63,10 @@ export async function GET(req: NextRequest) {
           like(userSchema.id, `%${filterById}%`)
         )
       )
-      .orderBy(sortDirection === 'desc' ? desc(getSortByVariable(sortBy)) : getSortByVariable(sortBy))
+      .orderBy(
+        sql`"id_1c" is null desc`,
+        sortDirection === 'desc' ? desc(getSortByVariable(sortBy)) : getSortByVariable(sortBy)
+      )
       .limit(Number(pageSize))
       .offset((Number(page) - 1) * Number(pageSize));
 
