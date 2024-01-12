@@ -117,19 +117,19 @@ function SpecificationTabOrder({ order }: IProps) {
         idAccessor='position'
         rowExpansion={{
           content: ({ record }) => (
-            <Stack className='flex flex-col gap-1 px-3 py-2'>
-              <Text>
-                <Text span inherit fw={600}>
+            <Stack w='100%' p='md' gap='md'>
+              <Stack gap='0'>
+                <Text span fw={600}>
                   Номенклатура:
                 </Text>
-                {` ${record.name}`}
-              </Text>
-              <Text>
-                <Text span inherit fw={600}>
+                {record.name}
+              </Stack>
+              <Stack gap='0'>
+                <Text span fw={600}>
                   Розміри:
                 </Text>
-                {` ${record.width} x ${record.height} m²`}
-              </Text>
+                {`${record.width} x ${record.height} m²`}
+              </Stack>
             </Stack>
           ),
         }}

@@ -29,10 +29,14 @@ export default function Users() {
   const searchParams = useSearchParams();
   const pageParam = searchParams.get('page');
   const [search, setSearch] = useState(searchParams.get('search') ?? '');
-  const params = new URLSearchParams({
-    page: pageParam ?? '1',
-    search,
-  });
+  const params = useMemo(
+    () =>
+      new URLSearchParams({
+        page: pageParam ?? '1',
+        search,
+      }),
+    [pageParam, search]
+  );
   const { data, isValidating } = useSWR<Response>(`/api/users-1c?${params.toString()}`);
 
   const onPageChange = (p: number) => router.push(`/admin/users-1c?page=${p}`);
@@ -65,7 +69,7 @@ export default function Users() {
         filtering: search !== '',
       },
     ],
-    [search]
+    [params, search]
   );
 
   return (
