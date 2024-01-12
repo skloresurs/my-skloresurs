@@ -56,7 +56,7 @@ function OrderItem({ order }: IProps) {
           {order.finance && (
             <Flex gap='4px'>
               <Receipt />
-              <Text c={order.finance.final < 0 ? 'red' : 'dimmed'}>
+              <Text c={order.finance.total - order.finance.pay > 0 ? 'red' : 'dimmed'}>
                 <NumberFormatter
                   value={order.finance.final}
                   suffix={` ${order.finance.currency}`}
