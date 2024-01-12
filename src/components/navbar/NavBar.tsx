@@ -1,4 +1,4 @@
-import { Boxes, GanttChartSquare, LogOut, LucideProps, Shield, Truck, UserRound, Users } from 'lucide-react';
+import { Boxes, Database, GanttChartSquare, LogOut, LucideProps, Shield, Truck, UserRound, Users } from 'lucide-react';
 import React, { ReactNode } from 'react';
 
 import { Permission } from '@/types/User';
@@ -53,6 +53,13 @@ const navbar: RootNavBarItem[] = [
         label: 'Користувачі',
         href: '/admin/users',
         icon: <Users {...props} />,
+        permission: 'Admin',
+      },
+      {
+        id: 'admin-users-1c',
+        label: 'Користувачі 1C',
+        href: '/admin/users-1c',
+        icon: <Database {...props} />,
         permission: 'Admin',
       },
     ],
