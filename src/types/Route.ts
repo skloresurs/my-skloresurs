@@ -20,6 +20,7 @@ export interface IStation {
   weight: number;
   manager: string;
   address: string;
+  addressShort: string;
   maxLength: number;
   comments: {
     main: string;
