@@ -80,7 +80,7 @@ function StationsTab({ route }: IProps) {
             title: 'Вага',
             render: ({ value }) => (
               <Text>
-                <NumberFormatter value={reduce(value, (acc, item) => acc + item.weight, 0)} decimalScale={3} />
+                <NumberFormatter value={reduce(value, (acc, item) => acc + item.weight, 0)} decimalScale={0} />
               </Text>
             ),
           },
