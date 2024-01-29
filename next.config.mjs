@@ -6,6 +6,7 @@ import withPWAInit from '@ducanh2912/next-pwa';
 const nextConfig = {
   experimental: {
     optimizePackageImports: ['@mantine/core', '@mantine/hooks'],
+    missingSuspenseWithCSRBailout: false,
   },
   images: {
     dangerouslyAllowSVG: true,
