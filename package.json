@@ -20,7 +20,7 @@
     "not op_mini all"
   ],
   "scripts": {
-    "prepare": "husky install && drizzle-kit push:pg",
+    "prepare": "husky install",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
