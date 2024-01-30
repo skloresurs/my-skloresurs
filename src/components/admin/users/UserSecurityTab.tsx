@@ -115,7 +115,7 @@ export default function UserSecurityTab({ user }: { user?: IUserRequest }) {
               </Text>
             )}
             <Stack gap='4px'>
-              {map(form.values.ips, (ip, i) => (
+              {map(form.values.ips, (_, i) => (
                 <Group key={nanoid(i)} gap='xs'>
                   <TextInput {...form.getInputProps(`ips.${i}.ip`)} placeholder='127.0.0.1' className='flex-1' />
                   <ActionIcon color='red' variant='subtle' onClick={() => form.removeListItem('ips', i)}>

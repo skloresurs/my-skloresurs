@@ -25,4 +25,6 @@ export default function PermissionBadge({ permission }: IProps) {
       return <Badge color='red'>Водій</Badge>;
     }
   }
+
+  return null;
 }

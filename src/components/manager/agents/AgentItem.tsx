@@ -44,7 +44,7 @@ export default function AgentItem({ agent }: IProps) {
           </Text>
         </Group>
         <Flex mt='xs' direction='row-reverse'>{`${agent.orders} ${
-          plurals.order[plural('uk', agent.orders) ?? '']
+          plurals.order![plural('uk', agent.orders) ?? '']
         }`}</Flex>
       </Flex>
     </Card>

@@ -70,7 +70,7 @@ export async function GET(req: NextRequest) {
       .limit(Number(pageSize))
       .offset((Number(page) - 1) * Number(pageSize));
 
-    return NextResponse.json({ total: total[0].count, users }, { status: 200 });
+    return NextResponse.json({ total: total[0]?.count, users }, { status: 200 });
   } catch (error) {
     return apiErrorHandler(req, error);
   }

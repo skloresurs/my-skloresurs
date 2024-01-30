@@ -21,11 +21,12 @@ function StationsTab({ route }: IProps) {
       reduce(
         groupBy(data, 'order'),
         (acc, value) => {
+          const v = value[0];
           acc.push({
-            order: value[0].order,
-            time: value[0].time,
-            address: value[0].address,
-            addressShort: value[0].addressShort,
+            order: v?.order ?? 0,
+            time: v?.time ?? '',
+            address: v?.address ?? '',
+            addressShort: v?.addressShort ?? '',
             value,
           });
           return acc;
