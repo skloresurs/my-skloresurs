@@ -1,3 +1,4 @@
+import { slice } from 'lodash';
 import { NextRequest, NextResponse } from 'next/server';
 
 import { ServerError } from '@/classes/CustomError';
@@ -7,11 +8,13 @@ import logger from '@/libs/logger';
 import { getSession } from '@/libs/sessions';
 import verifyIp from '@/libs/verify-ip';
 import { verifyPermissionServer } from '@/libs/verify-permission';
-import IManaderOrder from '@/types/ManagerOrder';
+import { IAgent } from '@/types/ManagerOrder';
 
 interface IResponse {
-  data: IManaderOrder[];
+  data: IAgent[];
 }
+
+const PAGE_SIZE = 48;
 
 export async function GET(req: NextRequest) {
   try {
@@ -23,8 +26,7 @@ export async function GET(req: NextRequest) {
 
     const search = params.get('search');
     const all = params.get('all');
-    const page = params.get('page');
-    const agent = params.get('agent');
+    const page = Number(params.get('page') ?? 1);
 
     const paramsQuery = new URLSearchParams();
     if (search) {
@@ -32,12 +34,6 @@ export async function GET(req: NextRequest) {
     }
     if (all) {
       paramsQuery.append('all', 'true');
-    }
-    if (page) {
-      paramsQuery.append('page', page);
-    }
-    if (agent) {
-      paramsQuery.append('agent', agent);
     }
 
     const query = paramsQuery.toString().replaceAll('+', '%20');
@@ -47,7 +43,7 @@ export async function GET(req: NextRequest) {
     }
 
     const response = await axios1cMain
-      .get<IResponse>(`/manager/order?${query}`, {
+      .get<IResponse>(`/manager/agents?${query}`, {
         headers: {
           user: session.user.id_1c,
         },
@@ -57,9 +53,12 @@ export async function GET(req: NextRequest) {
         throw ServerError;
       });
 
-    return NextResponse.json(response.data, {
-      status: 200,
-    });
+    return NextResponse.json(
+      { total: response.data.data.length, data: slice(response.data.data, (page - 1) * PAGE_SIZE, page * PAGE_SIZE) },
+      {
+        status: 200,
+      }
+    );
   } catch (error) {
     return apiErrorHandler(req, error);
   }

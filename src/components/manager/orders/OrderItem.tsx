@@ -7,7 +7,7 @@ import React, { memo, useMemo } from 'react';
 
 import IManaderOrder from '@/types/ManagerOrder';
 
-import StatusBadge from './StatusBadge';
+import StatusBadge from '../StatusBadge';
 import MainTabOrder from './tabs/MainTabOrder';
 import SpecificationTabOrder from './tabs/SpecificationTabOrder';
 
@@ -47,7 +47,7 @@ function OrderItem({ order }: IProps) {
         <Flex mt='xs' direction='column' c='dimmed' gap='4px'>
           <Flex gap='4px'>
             <CircleUserRound />
-            <Text className='line-clamp-1'>{trim(order.agent)}</Text>
+            <Text className='line-clamp-1'>{trim(order.agent.name)}</Text>
           </Flex>
           <Flex gap='4px'>
             <MapPin />
@@ -70,7 +70,7 @@ function OrderItem({ order }: IProps) {
         </Flex>
         <div className='flex-1' />
         {order.finance && (
-          <div className='flex flex-row justify-end'>
+          <Flex direction='row-reverse'>
             <NumberFormatter
               className='text-lg'
               value={order.finance.total}
@@ -79,7 +79,7 @@ function OrderItem({ order }: IProps) {
               thousandSeparator=' '
               fixedDecimalScale
             />
-          </div>
+          </Flex>
         )}
       </Card>
 

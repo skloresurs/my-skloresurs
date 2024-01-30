@@ -1,16 +1,16 @@
 import React from 'react';
 
-import OrdersInstruments from '@/components/manager/OrdersInstruments';
-import OrdersList from '@/components/manager/OrdersList';
+import ManagerClientPage from '@/components/manager/ManagerClientPage';
+import ManagerInstruments from '@/components/manager/ManagerInstruments';
 import TitleBar from '@/components/TitleBar';
 
-export default function Orders() {
+export default function ManagerPage() {
   return (
     <>
       <TitleBar title='Замовлення' />
-      <OrdersInstruments />
+      <ManagerInstruments />
       <div className='mt-3'>
-        <OrdersList />
+        <ManagerClientPage />
       </div>
     </>
   );

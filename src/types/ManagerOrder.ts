@@ -6,7 +6,10 @@ export default interface IManaderOrder {
 
   responsible: string;
   manager: string;
-  agent: string;
+  agent: {
+    id: string;
+    name: string;
+  };
 
   createdAt: string;
   shipmentAt: string;
@@ -34,4 +37,10 @@ export interface IGoods {
   pieces: number;
   in: number;
   out: number;
+}
+
+export interface IAgent {
+  id: string;
+  name: string;
+  orders: number;
 }

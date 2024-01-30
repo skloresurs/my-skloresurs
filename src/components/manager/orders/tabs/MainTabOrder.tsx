@@ -3,12 +3,13 @@
 import { Divider, NumberFormatter, Space, Stack, Text } from '@mantine/core';
 import dayjs from 'dayjs';
 import { trim } from 'lodash';
+import Link from 'next/link';
 import React, { memo } from 'react';
 
 import DrawerItem from '@/components/ui/DrawerItem';
 import IManaderOrder from '@/types/ManagerOrder';
 
-import StatusBadge from '../StatusBadge';
+import StatusBadge from '../../StatusBadge';
 
 const NotFoundData = 'Не вказано';
 
@@ -31,7 +32,18 @@ function MainTabOrder({ order }: { order: IManaderOrder }) {
       <Space h='8px' />
       <DrawerItem label='Статус' value={<StatusBadge status={order.status} />} />
       <Space h='8px' />
-      <DrawerItem label='Контрагент' value={trim(order.agent) ?? NotFoundData} />
+      <DrawerItem
+        label='Контрагент'
+        value={
+          <Text
+            component={Link}
+            href={`/manager?agent=${order.agent.id}`}
+            className='cursor-pointer text-[var(--mantine-color-blue-5)] underline duration-300 hover:text-[var(--mantine-color-blue-7)]'
+          >
+            {order.agent.name ?? NotFoundData}
+          </Text>
+        }
+      />
       <DrawerItem label='Менеджер' value={trim(order.manager) ?? NotFoundData} />
       <DrawerItem label='Відповідальний' value={trim(order.responsible) ?? NotFoundData} />
       <Space h='8px' />

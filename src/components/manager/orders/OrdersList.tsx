@@ -9,10 +9,10 @@ import useSWR from 'swr';
 import DefaultManagerOrder from '@/data/default-manager-order';
 import IManaderOrder from '@/types/ManagerOrder';
 
-import ErrorAlert from '../ui/ErrorAlert';
-import GridSkeleton from '../ui/GridSkeleton';
-import InfoAlert from '../ui/InfoAlert';
-import Pagination from '../ui/Pagination';
+import ErrorAlert from '../../ui/ErrorAlert';
+import GridSkeleton from '../../ui/GridSkeleton';
+import InfoAlert from '../../ui/InfoAlert';
+import Pagination from '../../ui/Pagination';
 import OrderItem from './OrderItem';
 
 const span: StyleProp<number> = {

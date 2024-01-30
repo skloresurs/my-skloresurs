@@ -1,14 +1,14 @@
 import { Center, Pagination as MantinePagination } from '@mantine/core';
 import Link from 'next/link';
 import { ReadonlyURLSearchParams } from 'next/navigation';
-import React from 'react';
+import React, { memo } from 'react';
 
 interface PaginationProps {
   total: number;
   query: ReadonlyURLSearchParams;
   baseRoute: string;
 }
-export default function Pagination({ total, query, baseRoute }: PaginationProps) {
+function Pagination({ total, query, baseRoute }: PaginationProps) {
   const searchParam = new URLSearchParams([...query.entries()]);
   const pageNumber = query.get('page') ?? 1;
   const page = Number.isNaN(Number(pageNumber)) ? 1 : Number(pageNumber);
@@ -20,7 +20,12 @@ export default function Pagination({ total, query, baseRoute }: PaginationProps)
         radius='xl'
         size='sm'
         getItemProps={(e) => {
-          searchParam.set('page', e.toString());
+          if (e === 1) {
+            searchParam.delete('page');
+          } else {
+            searchParam.set('page', e.toString());
+          }
+
           return {
             component: Link,
             href: `${baseRoute}?${searchParam.toString()}`,
@@ -28,10 +33,20 @@ export default function Pagination({ total, query, baseRoute }: PaginationProps)
         }}
         getControlProps={(e) => {
           if (e === 'next') {
+            if (page >= total) {
+              return { disabled: true };
+            }
             searchParam.set('page', (page + 1).toString());
           }
           if (e === 'previous') {
-            searchParam.set('page', (page - 1).toString());
+            if (page <= 1) {
+              return { disabled: true };
+            }
+            if (+page - 1 === 1) {
+              searchParam.delete('page');
+            } else {
+              searchParam.set('page', (page - 1).toString());
+            }
           }
 
           return {
@@ -43,3 +58,5 @@ export default function Pagination({ total, query, baseRoute }: PaginationProps)
     </Center>
   );
 }
+
+export default memo(Pagination);
