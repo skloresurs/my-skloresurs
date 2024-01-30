@@ -26,7 +26,7 @@ export default function Visualization({ form, activeTab, setActiveTab }: IProps)
         ))
       ) : (
         <div className='h-[75px]'>
-          <Title className='flex h-full w-full items-center justify-center' order={2} size='h3'>
+          <Title className='flex size-full items-center justify-center' order={2} size='h3'>
             Виберіть тип замовлення для перегляду візуалізації
           </Title>
         </div>

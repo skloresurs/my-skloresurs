@@ -5,7 +5,10 @@ const DefaultManagerOrder: IManaderOrder = {
   server: 'main',
   responsible: 'Відповідальний',
   manager: 'Менеджер',
-  agent: 'Агент',
+  agent: {
+    id: '000000',
+    name: 'Агент',
+  },
   createdAt: '2024/01/01 00:00:00',
   shipmentAt: '2024/01/01 00:00:00',
   status: '',

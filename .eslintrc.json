@@ -43,9 +43,6 @@
     "plugin:promise/recommended",
     "plugin:drizzle/recommended",
 
-    // Other files
-    "plugin:jsonc/recommended-with-jsonc",
-
     // Prettier
     "prettier"
   ],
@@ -111,7 +108,6 @@
         "jsx": "never",
         "ts": "never",
         "tsx": "never",
-        "json": "always",
         "mjs": "always"
       }
     ],

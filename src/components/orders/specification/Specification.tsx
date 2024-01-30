@@ -68,7 +68,7 @@ export default function Specification({ form, activeTab, setActiveTab }: IProps)
           <SpecificationItem activeTab={activeTab} form={form} />
         </>
       ) : (
-        <div className='flex h-full w-full items-center justify-center'>
+        <div className='flex size-full items-center justify-center'>
           <Title order={2} size='h3'>
             Виберіть вид замовлення, для налаштування специфікацій
           </Title>

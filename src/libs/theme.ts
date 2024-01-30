@@ -1,9 +1,5 @@
 import { createTheme } from '@mantine/core';
 
-const theme = createTheme({
-  headings: {
-    textWrap: 'balance',
-  },
-});
+const theme = createTheme({});
 
 export default theme;
