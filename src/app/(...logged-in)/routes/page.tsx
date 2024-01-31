@@ -19,7 +19,7 @@ export default function Routes() {
           <InstrumentSwitch
             paramKey='all'
             title='Всі маршрути'
-            description='Показати лише затвержені та не завершені маршрути'
+            description='Показати лише маршрути з статусом "Затверджено"'
             enabledDescription='Показати всі маршрути'
           />
           <InstrumentReset />
