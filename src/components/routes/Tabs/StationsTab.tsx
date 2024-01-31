@@ -1,9 +1,11 @@
 'use client';
 
-import { Container, NumberFormatter, Stack, Text } from '@mantine/core';
+import { ActionIcon, Container, Flex, NumberFormatter, Stack, Text } from '@mantine/core';
 import dayjs from 'dayjs';
 import { groupBy, reduce } from 'lodash';
+import { Compass } from 'lucide-react';
 import { DataTable } from 'mantine-datatable';
+import Link from 'next/link';
 import React, { memo, useMemo } from 'react';
 import useSWR from 'swr';
 
@@ -89,12 +91,21 @@ function StationsTab({ route }: IProps) {
         rowExpansion={{
           content: ({ record: station }) => (
             <Stack gap='4px'>
-              <Stack gap='0' w='100%' px='md' py='xs'>
-                <Text fw={600} span>
-                  Адреса доставки:
-                </Text>
-                {station.address}
-              </Stack>
+              <Flex direction='row' justify='space-between' px='md' py='xs'>
+                <Stack gap='0' w='100%'>
+                  <Text fw={600} span>
+                    Адреса доставки:
+                  </Text>
+                  {station.address}
+                </Stack>
+                <ActionIcon
+                  component={Link}
+                  href={`https://www.google.com/maps/dir/?api=1&destination=${station.addressShort}`}
+                  target='_blank'
+                >
+                  <Compass size='18px' />
+                </ActionIcon>
+              </Flex>
               <DataTable
                 withTableBorder
                 withColumnBorders
