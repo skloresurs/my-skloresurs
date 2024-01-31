@@ -1,6 +1,6 @@
 'use client';
 
-import { Switch, Text, UnstyledButton } from '@mantine/core';
+import { Checkbox, Text, UnstyledButton } from '@mantine/core';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 
@@ -12,7 +12,7 @@ interface IProps {
   disabled?: boolean;
 }
 
-export default function InstrumentSwitch({ paramKey, title, description, enabledDescription, disabled }: IProps) {
+export default function InstrumentCheckbox({ paramKey, title, description, enabledDescription, disabled }: IProps) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -44,7 +44,17 @@ export default function InstrumentSwitch({ paramKey, title, description, enabled
       onClick={onChange}
       disabled={disabled}
     >
-      <Switch tabIndex={-1} size='md' mr='xs' aria-hidden checked={checked} disabled={disabled} />
+      <Checkbox
+        tabIndex={-1}
+        size='md'
+        mr='xs'
+        aria-hidden
+        checked={checked}
+        disabled={disabled}
+        onChange={() => {
+          setChecked(!checked);
+        }}
+      />
 
       <div>
         <Text fw={500} mb={7} lh={1}>
