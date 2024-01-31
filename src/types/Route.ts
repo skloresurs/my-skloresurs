@@ -1,6 +1,7 @@
 export default interface IRoute {
   id: string;
   date: string;
+  approved: boolean;
   completed: boolean;
   route: string;
   transport: string;

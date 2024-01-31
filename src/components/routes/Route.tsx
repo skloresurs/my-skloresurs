@@ -3,10 +3,10 @@ import { useDisclosure } from '@mantine/hooks';
 import dayjs from 'dayjs';
 import { CalendarClock, MapPin, Truck } from 'lucide-react';
 import React, { memo } from 'react';
-import { twMerge } from 'tailwind-merge';
 
 import IRoute from '@/types/Route';
 
+import StatusBadge from './StatusBadge';
 import MainTab from './Tabs/MainTab';
 import PyramidsTab from './Tabs/PyramidsTab';
 import StationsTab from './Tabs/StationsTab';
@@ -25,10 +25,7 @@ function Route({ route }: IProps) {
         padding='lg'
         radius='md'
         withBorder
-        className={twMerge(
-          'cursor-pointer duration-300 hover:bg-[var(--mantine-color-dark-5)]',
-          route.completed ? 'border-[var(--mantine-color-green-9)]' : ''
-        )}
+        className='cursor-pointer duration-300 hover:bg-[var(--mantine-color-dark-5)]'
         h='100%'
         onClick={() => {
           open();
@@ -40,7 +37,8 @@ function Route({ route }: IProps) {
         <Text size='xs' c='dimmed'>
           {dayjs(route.date).format('DD.MM.YYYY HH:mm:ss')}
         </Text>
-        <Flex gap='xs' mt='md' direction='column'>
+        <StatusBadge route={route} />
+        <Flex gap='1px' mt='md' direction='column'>
           <Flex gap='xs' align='center'>
             <CalendarClock size={18} />
             <Text>{dayjs(route.departure).format('HH:mm:ss')}</Text>

@@ -22,10 +22,19 @@ export async function GET(req: NextRequest) {
     const params = req.nextUrl.searchParams;
 
     const page = params.get('page');
+    const search = params.get('search');
+    const all = params.get('all');
 
     const paramsQuery = new URLSearchParams();
+
     if (page) {
       paramsQuery.append('page', page);
+    }
+    if (search) {
+      paramsQuery.append('search', search);
+    }
+    if (all) {
+      paramsQuery.append('all', 'true');
     }
 
     const query = paramsQuery.toString().replaceAll('+', '%20');
