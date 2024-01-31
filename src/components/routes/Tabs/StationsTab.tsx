@@ -1,8 +1,8 @@
 'use client';
 
-import { ActionIcon, Container, Flex, NumberFormatter, Stack, Text } from '@mantine/core';
+import { ActionIcon, Button, Container, Flex, NumberFormatter, Stack, Text } from '@mantine/core';
 import dayjs from 'dayjs';
-import { groupBy, reduce } from 'lodash';
+import { filter, groupBy, join, lowerCase, map, reduce, slice } from 'lodash';
 import { Compass } from 'lucide-react';
 import { DataTable } from 'mantine-datatable';
 import Link from 'next/link';
@@ -38,8 +38,34 @@ function StationsTab({ route }: IProps) {
     [data]
   );
 
+  const googleMapFullRoute = useMemo(() => {
+    if (ordersList.length === 0) {
+      return '#';
+    }
+    const waypoints = join(
+      map(
+        filter(slice(ordersList, 0, -1), ({ addressShort }) => lowerCase(addressShort) !== 'самовивіз'),
+        ({ addressShort }) => addressShort
+      ),
+      '|'
+    );
+    return `https://www.google.com/maps/dir/?api=1&destination=${ordersList.at(-1)?.addressShort}&waypoints=${waypoints}`;
+  }, [ordersList]);
+
   return (
     <Container mt='sm' fluid p='0'>
+      {googleMapFullRoute !== '#' && (
+        <Button
+          mb='xs'
+          fullWidth
+          leftSection={<Compass size={18} />}
+          component={Link}
+          href={googleMapFullRoute}
+          target='_blank'
+        >
+          Прокласти маршрут
+        </Button>
+      )}
       <DataTable
         withTableBorder
         borderRadius='md'
@@ -100,8 +126,19 @@ function StationsTab({ route }: IProps) {
                 </Stack>
                 <ActionIcon
                   component={Link}
-                  href={`https://www.google.com/maps/dir/?api=1&destination=${station.addressShort}`}
+                  href={
+                    lowerCase(station.addressShort) === 'самовивіз'
+                      ? '#'
+                      : `https://www.google.com/maps/dir/?api=1&destination=${station.addressShort}`
+                  }
                   target='_blank'
+                  data-disabled={lowerCase(station.addressShort) === 'самовивіз'}
+                  onClick={(e) => {
+                    if (lowerCase(station.addressShort) === 'самовивіз') {
+                      return e.preventDefault();
+                    }
+                    return {};
+                  }}
                 >
                   <Compass size='18px' />
                 </ActionIcon>
