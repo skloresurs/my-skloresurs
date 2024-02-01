@@ -182,11 +182,13 @@ function StationsTab({ route }: IProps) {
                         <Stack w='100%' p='md' gap='md'>
                           <Stack gap='0'>
                             <Text fw={600}>Контрагент:</Text>
-                            {order.agent}
+                            <Link href={order.agent?.tel ? `tel:${order.agent?.tel}` : '#'}>{order.agent?.name}</Link>
                           </Stack>
                           <Stack gap='0'>
                             <Text fw={600}>Менеджер:</Text>
-                            <Link href={order.manager?.tel ?? '#'}>{order.manager?.name}</Link>
+                            <Link href={order.manager?.tel ? `tel:${order.manager?.tel}` : '#'}>
+                              {order.manager?.name}
+                            </Link>
                           </Stack>
                           {order.comments.main && (
                             <Stack gap='0'>

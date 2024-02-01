@@ -5,7 +5,10 @@ export default interface IRoute {
   completed: boolean;
   route: string;
   transport: string;
-  driver: string;
+  driver: {
+    name: string;
+    tel: string | null;
+  } | null;
   responsible: string;
   departure: string;
 }
@@ -15,14 +18,17 @@ export interface IStation {
   orderId: string;
   order: number;
   time: string;
-  agent?: string;
+  agent: {
+    name: string;
+    tel: string | null;
+  } | null;
   pieces: number;
   amount: number;
   weight: number;
-  manager?: {
+  manager: {
     name: string;
-    tel?: string;
-  };
+    tel: string | null;
+  } | null;
   address: string;
   addressShort: string;
   maxLength: number;

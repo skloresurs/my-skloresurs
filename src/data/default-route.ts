@@ -7,7 +7,7 @@ const DefaultRoute: IRoute = {
   completed: false,
   route: 'Placeholder',
   transport: 'Placeholder',
-  driver: 'Placeholder',
+  driver: null,
   responsible: 'Placeholder',
   departure: 'Placeholder',
 };
