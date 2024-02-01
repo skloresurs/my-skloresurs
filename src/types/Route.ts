@@ -1,3 +1,5 @@
+import IUser1C from './User1CData';
+
 export default interface IRoute {
   id: string;
   date: string;
@@ -5,10 +7,7 @@ export default interface IRoute {
   completed: boolean;
   route: string;
   transport: string;
-  driver: {
-    name: string;
-    tel: string | null;
-  } | null;
+  driver: IUser1C | null;
   responsible: string;
   departure: string;
 }
@@ -18,17 +17,11 @@ export interface IStation {
   orderId: string;
   order: number;
   time: string;
-  agent: {
-    name: string;
-    tel: string | null;
-  } | null;
+  agent: IUser1C | null;
   pieces: number;
   amount: number;
   weight: number;
-  manager: {
-    name: string;
-    tel: string | null;
-  } | null;
+  manager: IUser1C | null;
   address: string;
   addressShort: string;
   maxLength: number;

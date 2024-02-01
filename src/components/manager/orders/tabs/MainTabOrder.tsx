@@ -1,12 +1,14 @@
 'use client';
 
-import { Divider, NumberFormatter, Space, Stack, Text } from '@mantine/core';
+import { ActionIcon, Divider, NumberFormatter, Space, Stack, Text } from '@mantine/core';
 import dayjs from 'dayjs';
 import { trim } from 'lodash';
+import { Filter } from 'lucide-react';
 import Link from 'next/link';
 import React, { memo } from 'react';
 
 import DrawerItem from '@/components/ui/DrawerItem';
+import TelephoneButton from '@/components/ui/TelephoneButton';
 import IManaderOrder from '@/types/ManagerOrder';
 
 import StatusBadge from '../../StatusBadge';
@@ -30,45 +32,45 @@ function MainTabOrder({ order }: { order: IManaderOrder }) {
         value={order.shipmentAt ? dayjs(trim(order.shipmentAt)).format('DD.MM.YYYY') : NotFoundData}
       />
       <Space h='8px' />
-      <DrawerItem label='Статус' value={<StatusBadge status={order.status} />} />
+      <DrawerItem label='Статус'>
+        <StatusBadge status={order.status} />
+      </DrawerItem>
       <Space h='8px' />
-      <DrawerItem
-        label='Контрагент'
-        value={
-          <Text
-            component={Link}
-            href={`/manager?agent=${order.agent.id}`}
-            className='cursor-pointer text-[var(--mantine-color-blue-5)] underline duration-300 hover:text-[var(--mantine-color-blue-7)]'
-          >
-            {order.agent.name ?? NotFoundData}
-          </Text>
-        }
-      />
-      <DrawerItem label='Менеджер' value={trim(order.manager) ?? NotFoundData} />
-      <DrawerItem label='Відповідальний' value={trim(order.responsible) ?? NotFoundData} />
+      <DrawerItem label='Контрагент' value={order.agent?.name ?? NotFoundData}>
+        <TelephoneButton tel={order.agent?.tel} />
+        <ActionIcon component={Link} href={`/manager?agent=${order.agent?.id}`} variant='light'>
+          <Filter size={16} />
+        </ActionIcon>
+      </DrawerItem>
+      <DrawerItem label='Контактна особа' value={order.contact?.name ?? NotFoundData}>
+        <TelephoneButton tel={order.contact?.tel} />
+      </DrawerItem>
+      <DrawerItem label='Менеджер' value={trim(order.manager?.name) ?? NotFoundData}>
+        <TelephoneButton tel={order.manager?.tel} />
+      </DrawerItem>
+      <DrawerItem label='Відповідальний' value={trim(order.responsible?.name) ?? NotFoundData}>
+        <TelephoneButton tel={order.responsible?.tel} />
+      </DrawerItem>
       <Space h='8px' />
       {order.finance && <DrawerItem label='Номер рахунку' value={trim(order.finance.bill) ?? NotFoundData} />}
       <DrawerItem label='Заблоковано для виробництва' value={order.locked ? 'Так' : 'Ні'} />
       <Divider my='sm' />
       {order.finance && (
         <>
-          <DrawerItem
-            label='Сума замовлення'
-            value={<NumberFormatter value={order.finance.total} {...moneyFormatProps} />}
-          />
-          <DrawerItem label='Оплачено' value={<NumberFormatter value={order.finance.pay} {...moneyFormatProps} />} />
-          <DrawerItem
-            label='Кінцевий залишок'
-            value={
-              <Text c={order.finance.final < 0 ? 'red' : ''}>
-                <NumberFormatter value={order.finance.final} {...moneyFormatProps} />
-              </Text>
-            }
-          />
-          <DrawerItem
-            label='Борг до відвантаження'
-            value={<NumberFormatter value={order.finance.total - order.finance.pay} {...moneyFormatProps} />}
-          />
+          <DrawerItem label='Сума замовлення'>
+            <NumberFormatter value={order.finance.total} {...moneyFormatProps} />
+          </DrawerItem>
+          <DrawerItem label='Оплачено'>
+            <NumberFormatter value={order.finance.pay} {...moneyFormatProps} />
+          </DrawerItem>
+          <DrawerItem label='Кінцевий залишок'>
+            <Text c={order.finance.final < 0 ? 'red' : ''}>
+              <NumberFormatter value={order.finance.final} {...moneyFormatProps} />
+            </Text>
+          </DrawerItem>
+          <DrawerItem label='Борг до відвантаження'>
+            <NumberFormatter value={order.finance.total - order.finance.pay} {...moneyFormatProps} />
+          </DrawerItem>
           <Divider my='sm' />
         </>
       )}

@@ -47,7 +47,7 @@ function OrderItem({ order }: IProps) {
         <Flex mt='xs' direction='column' c='dimmed' gap='4px'>
           <Flex gap='4px'>
             <CircleUserRound />
-            <Text className='line-clamp-1'>{trim(order.agent.name)}</Text>
+            <Text className='line-clamp-1'>{trim(order.agent?.name)}</Text>
           </Flex>
           <Flex gap='4px'>
             <MapPin />

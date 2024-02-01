@@ -1,15 +1,14 @@
 import Server from './Server';
+import IUser1C from './User1CData';
 
 export default interface IManaderOrder {
   id: string;
   server: Server;
 
-  responsible: string;
-  manager: string;
-  agent: {
-    id: string;
-    name: string;
-  };
+  responsible: IUser1C | null;
+  manager: IUser1C | null;
+  agent: IUser1C | null;
+  contact: IUser1C | null;
 
   createdAt: string;
   shipmentAt: string;
