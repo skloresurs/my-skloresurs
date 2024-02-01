@@ -1,9 +1,11 @@
+'use client';
+
 import { Space, Stack } from '@mantine/core';
 import dayjs from 'dayjs';
-import Link from 'next/link';
 import React, { memo } from 'react';
 
 import DrawerItem from '@/components/ui/DrawerItem';
+import TelephoneLink from '@/components/ui/TelephoneLink';
 import IRoute from '@/types/Route';
 
 import StatusBadge from '../StatusBadge';
@@ -22,10 +24,7 @@ function MainTab({ route }: IProps) {
       <DrawerItem label='Виїзд' value={dayjs(route.departure).format('HH:mm:ss')} />
       <DrawerItem label='Транспорт' value={route.transport} />
       <Space />
-      <DrawerItem
-        label='Водій'
-        value={<Link href={route.driver?.tel ? `tel:${route.driver?.tel}` : '#'}>{route.driver?.name}</Link>}
-      />
+      <DrawerItem label='Водій' value={<TelephoneLink label={route.driver?.name ?? ''} tel={route.driver?.tel} />} />
       <DrawerItem label='Відповідальний' value={route.responsible} />
     </Stack>
   );

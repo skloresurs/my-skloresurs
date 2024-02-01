@@ -3,10 +3,12 @@ import { useDisclosure } from '@mantine/hooks';
 import dayjs from 'dayjs';
 import { CalendarClock, MapPin, Truck } from 'lucide-react';
 import React, { memo } from 'react';
+import useSWR from 'swr';
 
-import IRoute from '@/types/Route';
+import IRoute, { IPyramid, IStation, ITask } from '@/types/Route';
 
 import StatusBadge from './StatusBadge';
+import TabCountBadge from './TabCountBadge';
 import MainTab from './Tabs/MainTab';
 import PyramidsTab from './Tabs/PyramidsTab';
 import StationsTab from './Tabs/StationsTab';
@@ -17,6 +19,24 @@ interface IProps {
 }
 
 function Route({ route }: IProps) {
+  const {
+    data: pyramids,
+    isValidating: pyramidsLoading,
+    error: pyramidsError,
+  } = useSWR<IPyramid[]>(`/api/routes/${route.id}/pyramids`);
+
+  const {
+    data: stations,
+    isValidating: stationsLoading,
+    error: stationsError,
+  } = useSWR<IStation[]>(`/api/routes/${route.id}/stations`);
+
+  const {
+    data: tasks,
+    isValidating: tasksLoading,
+    error: tasksError,
+  } = useSWR<ITask[]>(`/api/routes/${route.id}/tasks`);
+
   const [opened, { open, close }] = useDisclosure(false);
   return (
     <>
@@ -65,9 +85,15 @@ function Route({ route }: IProps) {
         <Tabs defaultValue='main'>
           <Tabs.List>
             <Tabs.Tab value='main'>Основна інформація</Tabs.Tab>
-            <Tabs.Tab value='points'>Шляхи</Tabs.Tab>
-            <Tabs.Tab value='pyramids'>Піраміди</Tabs.Tab>
-            <Tabs.Tab value='tasks'>Завдання</Tabs.Tab>
+            <Tabs.Tab value='points'>
+              Шляхи <TabCountBadge data={stations} isLoading={stationsLoading} error={stationsError} />
+            </Tabs.Tab>
+            <Tabs.Tab value='pyramids'>
+              Піраміди <TabCountBadge data={pyramids} isLoading={pyramidsLoading} error={pyramidsError} />
+            </Tabs.Tab>
+            <Tabs.Tab value='tasks'>
+              Завдання <TabCountBadge data={tasks} isLoading={tasksLoading} error={tasksError} />
+            </Tabs.Tab>
           </Tabs.List>
 
           <Tabs.Panel value='main'>

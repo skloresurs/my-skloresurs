@@ -10,6 +10,7 @@ import Link from 'next/link';
 import React, { memo, useMemo } from 'react';
 import useSWR from 'swr';
 
+import TelephoneLink from '@/components/ui/TelephoneLink';
 import { getGoogleMapsRouteUrl } from '@/libs/maps-api';
 import IRoute, { IStation } from '@/types/Route';
 
@@ -182,13 +183,11 @@ function StationsTab({ route }: IProps) {
                         <Stack w='100%' p='md' gap='md'>
                           <Stack gap='0'>
                             <Text fw={600}>Контрагент:</Text>
-                            <Link href={order.agent?.tel ? `tel:${order.agent?.tel}` : '#'}>{order.agent?.name}</Link>
+                            <TelephoneLink label={order.agent?.name ?? ''} tel={order.agent?.tel} />
                           </Stack>
                           <Stack gap='0'>
                             <Text fw={600}>Менеджер:</Text>
-                            <Link href={order.manager?.tel ? `tel:${order.manager?.tel}` : '#'}>
-                              {order.manager?.name}
-                            </Link>
+                            <TelephoneLink label={order.manager?.name ?? ''} tel={order.manager?.tel} />
                           </Stack>
                           {order.comments.main && (
                             <Stack gap='0'>
