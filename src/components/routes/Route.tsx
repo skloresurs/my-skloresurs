@@ -1,4 +1,4 @@
-import { Card, Drawer, Flex, Tabs, Text, Title } from '@mantine/core';
+import { Card, Drawer, Flex, ScrollArea, Tabs, Text, Title } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import dayjs from 'dayjs';
 import { CalendarClock, MapPin, Truck } from 'lucide-react';
@@ -54,7 +54,14 @@ function Route({ route }: IProps) {
         </Flex>
       </Card>
 
-      <Drawer opened={opened} onClose={close} title='Маршрут' position='right' size='lg'>
+      <Drawer
+        opened={opened}
+        onClose={close}
+        title='Маршрут'
+        position='right'
+        size='lg'
+        scrollAreaComponent={ScrollArea.Autosize}
+      >
         <Tabs defaultValue='main'>
           <Tabs.List>
             <Tabs.Tab value='main'>Основна інформація</Tabs.Tab>

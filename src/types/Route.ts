@@ -15,11 +15,14 @@ export interface IStation {
   orderId: string;
   order: number;
   time: string;
-  agent: string;
+  agent?: string;
   pieces: number;
   amount: number;
   weight: number;
-  manager: string;
+  manager?: {
+    name: string;
+    tel?: string;
+  };
   address: string;
   addressShort: string;
   maxLength: number;
