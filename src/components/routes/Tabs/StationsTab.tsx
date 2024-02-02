@@ -1,19 +1,20 @@
 'use client';
 
-import { Button, Container, Group, NumberFormatter, Stack, Text } from '@mantine/core';
+import { Center, Container, NumberFormatter, Stack, Text } from '@mantine/core';
 import dayjs from 'dayjs';
 import { filter, groupBy, map, reduce, reject } from 'lodash';
 import { Compass } from 'lucide-react';
 import { DataTable } from 'mantine-datatable';
 import { nanoid } from 'nanoid';
-import Link from 'next/link';
 import React, { memo, useMemo } from 'react';
 import useSWR from 'swr';
 
 import DrawerItem from '@/components/ui/DrawerItem';
+import OutsideLinkButton from '@/components/ui/OutsideLinkButton';
 import TelephoneButton from '@/components/ui/TelephoneButton';
 import { getGoogleMapsRouteUrl } from '@/libs/maps-api';
 import IRoute, { IStation } from '@/types/Route';
+import IUser1C from '@/types/User1CData';
 
 interface IProps {
   route: IRoute;
@@ -61,6 +62,7 @@ function StationsTab({ route }: IProps) {
           time: v.time,
           address: v.address,
           addressShort: v.addressShort,
+          contact: v.contact,
           value,
         });
         return acc;
@@ -71,6 +73,7 @@ function StationsTab({ route }: IProps) {
         time: string;
         address: string;
         addressShort: string;
+        contact: IUser1C | null;
         value: IStation[];
       }[]
     );
@@ -132,29 +135,16 @@ function StationsTab({ route }: IProps) {
           content: ({ record: station }) => (
             <div className='bg-[var(--mantine-color-dark-9)]'>
               <Stack gap='8px' p='8px'>
-                <Stack gap='0' w='100%' p='4px'>
-                  <Text fw={600} span>
-                    Адреса доставки:
-                  </Text>
-                  {station.address}
-                </Stack>
-                <Group grow>
-                  <Button
-                    component={Link}
-                    href={getGoogleMapsRouteUrl([station.addressShort]) ?? '#'}
-                    data-disabled={!getGoogleMapsRouteUrl([station.addressShort])}
-                    onClick={(event) => {
-                      if (!getGoogleMapsRouteUrl([station.addressShort])) {
-                        event.preventDefault();
-                      }
-                    }}
-                    target='_blank'
-                    variant='light'
-                    leftSection={<Compass size={16} />}
-                  >
-                    Прокласти маршрут
-                  </Button>
-                </Group>
+                <DrawerItem label='Контактна особа' value={station.contact?.name}>
+                  <TelephoneButton tel={station.contact?.tel} />
+                </DrawerItem>
+                <OutsideLinkButton
+                  label='Прокласти маршрут'
+                  icon={<Compass size={16} />}
+                  target='_blank'
+                  link={getGoogleMapsRouteUrl([station.addressShort])}
+                  full
+                />
                 <DataTable
                   borderRadius='sm'
                   withTableBorder
@@ -228,18 +218,16 @@ function StationsTab({ route }: IProps) {
         }}
       />
 
-      {googleMapFullRoute !== '#' && (
-        <Button
-          mt='xs'
+      <Center mt='xs'>
+        <OutsideLinkButton
+          label='Прокласти весь маршрут'
+          full
           fullWidth
-          leftSection={<Compass size={18} />}
-          component={Link}
-          href={googleMapFullRoute}
+          icon={<Compass size={16} />}
           target='_blank'
-        >
-          Прокласти весь маршрут (<Text c='orange'>ALPHA</Text>)
-        </Button>
-      )}
+          link={googleMapFullRoute}
+        />
+      </Center>
     </Container>
   );
 }

@@ -23,6 +23,7 @@ export interface IStation {
   weight: number;
   manager: IUser1C | null;
   engineer: IUser1C | null;
+  contact: IUser1C | null;
   address: string;
   addressShort: string;
   maxLength: number;

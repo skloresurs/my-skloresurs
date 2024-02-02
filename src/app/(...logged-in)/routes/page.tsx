@@ -19,8 +19,8 @@ export default function Routes() {
           <InstrumentCheckbox
             paramKey='all'
             title='Всі маршрути'
-            description='Показати лише маршрути з статусом "Затверджено" та створені не пізніше ніж місяць тому'
-            enabledDescription='Показати всі маршрути'
+            description='Показати лише маршрути з статусом "Затверджено" та створені не пізніше ніж тиждень тому. Сховати маршрути з самовивозом.'
+            enabledDescription='Показати всі маршрути.'
           />
           <InstrumentReset />
         </InstrumentPopover>
