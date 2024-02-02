@@ -9,10 +9,10 @@ interface IProps {
 
 export default function DrawerItem({ label, value, children }: IProps) {
   return (
-    <Group>
+    <Group align='center'>
       <Text>{label}:</Text>
       <div className='flex-1' />
-      <Group align='end' gap='xs'>
+      <Group align='center' gap='xs'>
         {value && <Text>{value}</Text>}
         {children}
       </Group>

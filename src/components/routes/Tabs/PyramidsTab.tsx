@@ -1,8 +1,8 @@
 'use client';
 
-import { Accordion, Badge, Flex, Group, Stack } from '@mantine/core';
-import { groupBy, map, orderBy, reduce } from 'lodash';
-import { Pyramid, UserRound } from 'lucide-react';
+import { Accordion, Badge, Divider, Flex, Group, Stack } from '@mantine/core';
+import { groupBy, map, orderBy, reduce, uniq } from 'lodash';
+import { UserRound } from 'lucide-react';
 import { nanoid } from 'nanoid';
 import plural from 'plurals-cldr';
 import React, { memo, useMemo, useState } from 'react';
@@ -21,10 +21,32 @@ interface IProps {
   route: IRoute;
 }
 
+function groupByAddress(pyramids: IPyramid[]) {
+  return reduce(
+    groupBy(pyramids, 'address'),
+    (acc, value) => {
+      const v = value[0];
+      if (!v) return acc;
+      acc.push({
+        id: nanoid(),
+        address: v.address,
+        pyramids: map(value, 'id').join(', '),
+        tels: uniq(map(value, 'tel')),
+      });
+      return acc;
+    },
+    [] as {
+      id: string;
+      address: string;
+      pyramids: string;
+      tels: string[];
+    }[]
+  );
+}
+
 function PyramidsTab({ route }: IProps) {
   const { data, isValidating, error, mutate } = useSWR<IPyramid[]>(`/api/routes/${route.id}/pyramids`);
   const [mainAccordion, setMainAccordion] = useState<string | null>(null);
-  const [subAccordion, setSubAccordion] = useState<string | null>(null);
 
   const pyramidsGroup = useMemo(() => {
     if (!data) {
@@ -97,62 +119,25 @@ function PyramidsTab({ route }: IProps) {
                   <DrawerItem label='Менеджер' value={manager?.name}>
                     <TelephoneButton tel={manager?.tel} />
                   </DrawerItem>
-                  <Accordion value={subAccordion} onChange={setSubAccordion}>
-                    {map(pyramids, (pyramid) => (
-                      <div className={subAccordion === pyramid.id ? 'bg-[var(--mantine-color-dark-9)]' : ''}>
-                        <Accordion.Item value={pyramid.id} key={pyramid.id}>
-                          <Accordion.Control icon={<Pyramid />}>{pyramid.id}</Accordion.Control>
-                          <Accordion.Panel>
-                            <Stack gap='sm'>
-                              <DrawerItem label='Адреса' value={pyramid.address}></DrawerItem>
-                              <DrawerItem label='Телефон' value={pyramid.tel}>
-                                <TelephoneButton tel={pyramid.tel} />
-                              </DrawerItem>
-                            </Stack>
-                          </Accordion.Panel>
-                        </Accordion.Item>
-                      </div>
-                    ))}
-                  </Accordion>
+                  <Divider />
+                  {map(groupByAddress(pyramids), (e) => (
+                    <Stack id={e.id} gap='4px'>
+                      <DrawerItem label='Адреса' value={e.address} />
+                      <DrawerItem label='Піраміди' value={e.pyramids} />
+                      {map(e.tels, (tel, i) => (
+                        <DrawerItem label={`Телефон №${i + 1}`} value={tel}>
+                          <TelephoneButton tel={tel} />
+                        </DrawerItem>
+                      ))}
+                      <Divider mt='sm' />
+                    </Stack>
+                  ))}
                 </Stack>
               </Accordion.Panel>
             </div>
           </Accordion.Item>
         </div>
       ))}
-      {/* {map(pyramids, (pyramid) => (
-        <Accordion.Item value={pyramid.id} key={pyramid.id}>
-          <Accordion.Control icon={<Pyramid />}>{pyramid.id}</Accordion.Control>
-          <Accordion.Panel>
-            <Stack gap='sm'>
-              <Text>
-                <Text span fw={600}>
-                  Контагент:
-                </Text>
-                {` ${pyramid.agent}`}
-              </Text>
-              <Text>
-                <Text span fw={600}>
-                  Менеджер:
-                </Text>
-                {` ${pyramid.manager}`}
-              </Text>
-              <Text>
-                <Text span fw={600}>
-                  Адреса:
-                </Text>
-                {` ${pyramid.address}`}
-              </Text>
-              <Text>
-                <Text span fw={600}>
-                  {`Телефон: `}
-                </Text>
-                <Link href={`tel:${pyramid.tel}`}>{`${pyramid.tel}`}</Link>
-              </Text>
-            </Stack>
-          </Accordion.Panel>
-        </Accordion.Item>
-      ))} */}
     </Accordion>
   );
 }
