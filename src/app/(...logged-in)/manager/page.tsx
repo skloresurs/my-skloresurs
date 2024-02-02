@@ -23,10 +23,15 @@ export default function ManagerPage() {
             description='Не показувати замовлення з статусом "Прийнятий Менеджером", "Відхилено", "Виконано" та замовлення старіші за 2 роки'
             enabledDescription='Показати всі замовлення'
           />
-
+          <InstrumentCheckbox
+            paramKey='storage'
+            title='Показати замовлення на складі'
+            description='Не показувати замовлення з статусом "Склад" (ігнорується при "Всі замовлення")'
+            enabledDescription='Показувати замовлення з статусом "Склад"'
+          />
           <InstrumentCheckbox
             paramKey='group-by-agents'
-            title='Групувати за контрагентами (BETA)'
+            title='Групувати за контрагентами'
             description='Показати список замовлень за заданими параметрами'
             enabledDescription='Показати список контагентів за заданими параметрами'
           />

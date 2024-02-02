@@ -25,6 +25,7 @@ export async function GET(req: NextRequest) {
     const all = params.get('all');
     const page = params.get('page');
     const agent = params.get('agent');
+    const storage = params.get('storage');
 
     const paramsQuery = new URLSearchParams();
     if (search) {
@@ -38,6 +39,9 @@ export async function GET(req: NextRequest) {
     }
     if (agent) {
       paramsQuery.append('agent', agent);
+    }
+    if (storage) {
+      paramsQuery.append('storage', 'true');
     }
 
     const query = paramsQuery.toString().replaceAll('+', '%20');

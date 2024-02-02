@@ -37,9 +37,8 @@ function MainTabOrder({ order }: { order: IManaderOrder }) {
       </DrawerItem>
       <Space h='8px' />
       <DrawerItem label='Контрагент' value={order.agent?.name ?? NotFoundData}>
-        <TelephoneButton tel={order.agent?.tel} />
-        <ActionIcon component={Link} href={`/manager?agent=${order.agent?.id}`} variant='light'>
-          <Filter size={16} />
+        <ActionIcon size='lg' component={Link} href={`/manager?agent=${order.agent?.id}`} variant='light'>
+          <Filter size={18} />
         </ActionIcon>
       </DrawerItem>
       <DrawerItem label='Контактна особа' value={order.contact?.name ?? NotFoundData}>
