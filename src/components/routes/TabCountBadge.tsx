@@ -13,8 +13,16 @@ export default function TabCountBadge({ data, error, isLoading }: IProps) {
   }
 
   if (error || !data) {
-    return <Badge color='red'>Помилка</Badge>;
+    return (
+      <Badge color='red' variant='light'>
+        Помилка
+      </Badge>
+    );
   }
 
-  return <Badge>{data.length}</Badge>;
+  return (
+    <Badge circle variant='light'>
+      {data.length}
+    </Badge>
+  );
 }
