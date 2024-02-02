@@ -10,7 +10,7 @@ import { includes } from 'lodash';
 import { ChevronUp } from 'lucide-react';
 import { ReCaptchaProvider } from 'next-recaptcha-v3';
 import { Next13ProgressBar } from 'next13-progressbar';
-import React from 'react';
+import React, { Suspense } from 'react';
 import { SWRConfig } from 'swr';
 
 import { env } from '@/env.mjs';
@@ -48,6 +48,7 @@ export default function Providers({ children }: Readonly<{ children: React.React
   const supportRef = useSupportStore((state) => state.supportRef);
   return (
     <MantineProvider theme={theme} defaultColorScheme='dark'>
+      <Notifications position='top-right' />
       <SWRConfig
         value={{
           fetcher,
@@ -72,14 +73,15 @@ export default function Providers({ children }: Readonly<{ children: React.React
           widgetId={env.NEXT_PUBLIC_TAWK_WIDGET_ID}
           ref={supportRef}
         />
-        <Next13ProgressBar
-          height='4px'
-          color='var(--mantine-color-blue-5)'
-          options={{ showSpinner: true }}
-          showOnShallow
-        />
+        <Suspense>
+          <Next13ProgressBar
+            height='4px'
+            color='var(--mantine-color-blue-5)'
+            options={{ showSpinner: true }}
+            showOnShallow
+          />
+        </Suspense>
         <NavigationProgress />
-        <Notifications position='top-right' />
         <AuthProvider>
           <Affix position={{ bottom: 90, right: 28 }}>
             <Transition transition='slide-up' mounted={scroll.y > 0}>
