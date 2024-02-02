@@ -8,7 +8,7 @@ export default interface IRoute {
   route: string;
   transport: string;
   driver: IUser1C | null;
-  responsible: string;
+  responsible: IUser1C | null;
   departure: string;
 }
 
@@ -22,6 +22,7 @@ export interface IStation {
   amount: number;
   weight: number;
   manager: IUser1C | null;
+  engineer: IUser1C | null;
   address: string;
   addressShort: string;
   maxLength: number;
@@ -35,10 +36,10 @@ export interface IStation {
 
 export interface IPyramid {
   id: string;
-  agent: string;
+  agent: IUser1C | null;
   address: string;
   tel: string;
-  manager: string;
+  manager: IUser1C | null;
 }
 
 export interface ITask {

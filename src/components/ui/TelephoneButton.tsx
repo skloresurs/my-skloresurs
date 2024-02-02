@@ -20,8 +20,8 @@ export default function TelephoneButton({ tel, full }: IProps) {
   }
 
   return (
-    <ActionIcon component={Link} href={`tel:${tel}`} variant='light'>
-      <Phone size={16} />
+    <ActionIcon component={Link} href={`tel:${tel}`} variant='light' size='lg'>
+      <Phone size={20} />
     </ActionIcon>
   );
 }

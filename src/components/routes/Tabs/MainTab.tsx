@@ -29,7 +29,9 @@ function MainTab({ route }: IProps) {
       <DrawerItem label='Водій' value={route.driver?.name}>
         <TelephoneButton tel={route.driver?.tel} />
       </DrawerItem>
-      <DrawerItem label='Відповідальний' value={route.responsible} />
+      <DrawerItem label='Відповідальний' value={route.responsible?.name}>
+        <TelephoneButton tel={route.responsible?.tel} />
+      </DrawerItem>
     </Stack>
   );
 }

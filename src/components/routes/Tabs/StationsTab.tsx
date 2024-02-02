@@ -10,6 +10,7 @@ import Link from 'next/link';
 import React, { memo, useMemo } from 'react';
 import useSWR from 'swr';
 
+import DrawerItem from '@/components/ui/DrawerItem';
 import TelephoneButton from '@/components/ui/TelephoneButton';
 import { getGoogleMapsRouteUrl } from '@/libs/maps-api';
 import IRoute, { IStation } from '@/types/Route';
@@ -181,15 +182,16 @@ function StationsTab({ route }: IProps) {
                     content: ({ record: order }) => (
                       <div className='bg-[var(--mantine-color-dark-9)]'>
                         <Stack w='100%' p='md' gap='md'>
-                          <Stack gap='0'>
-                            <Text fw={600}>Контрагент:</Text>
-                            <Text>{order.agent?.name}</Text>
-                            <TelephoneButton full tel={order.agent?.tel} />
-                          </Stack>
-                          <Stack gap='0'>
-                            <Text fw={600}>Менеджер:</Text>
-                            <Text>{order.manager?.name}</Text>
-                            <TelephoneButton full tel={order.manager?.tel} />
+                          <Stack w='100%' gap='4px'>
+                            <DrawerItem label='Контрагент' value={order.agent?.name}>
+                              <TelephoneButton tel={order.agent?.tel} />
+                            </DrawerItem>
+                            <DrawerItem label='Менеджер' value={order.manager?.name}>
+                              <TelephoneButton tel={order.manager?.tel} />
+                            </DrawerItem>
+                            <DrawerItem label='Інженер' value={order.engineer?.name}>
+                              <TelephoneButton tel={order.engineer?.tel} />
+                            </DrawerItem>
                           </Stack>
                           {order.comments.main && (
                             <Stack gap='0'>
