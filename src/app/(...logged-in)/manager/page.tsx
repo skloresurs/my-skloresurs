@@ -36,6 +36,7 @@ export default function ManagerPage() {
             enabledDescription='Показати список контагентів за заданими параметрами'
           />
           <InstrumentResetOne title='Скинути контрагента' paramKey='agent' />
+          <InstrumentResetOne title='Скинути рахунок' paramKey='bill' />
           <InstrumentReset />
         </InstrumentPopover>
       </InstrumentsBar>
