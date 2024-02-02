@@ -2,7 +2,7 @@
 
 import { Accordion, Badge, Divider, Flex, Group, Stack } from '@mantine/core';
 import { groupBy, map, orderBy, reduce, uniq } from 'lodash';
-import { UserRound } from 'lucide-react';
+import { Globe, UserRound } from 'lucide-react';
 import { nanoid } from 'nanoid';
 import plural from 'plurals-cldr';
 import React, { memo, useMemo, useState } from 'react';
@@ -12,7 +12,9 @@ import DrawerItem from '@/components/ui/DrawerItem';
 import ErrorAlert from '@/components/ui/ErrorAlert';
 import InfoAlert from '@/components/ui/InfoAlert';
 import LoadingAlert from '@/components/ui/LoadingAlert';
+import OutsideLinkButton from '@/components/ui/OutsideLinkButton';
 import TelephoneButton from '@/components/ui/TelephoneButton';
+import { getGoogleMapsRouteUrl } from '@/libs/maps-api';
 import plurals from '@/libs/plurals';
 import IRoute, { IPyramid } from '@/types/Route';
 import IUser1C from '@/types/User1CData';
@@ -122,7 +124,13 @@ function PyramidsTab({ route }: IProps) {
                   <Divider />
                   {map(groupByAddress(pyramids), (e) => (
                     <Stack id={e.id} gap='4px'>
-                      <DrawerItem label='Адреса' value={e.address} />
+                      <DrawerItem label='Адреса' value={e.address}>
+                        <OutsideLinkButton
+                          icon={<Globe size={20} />}
+                          target='_blank'
+                          link={getGoogleMapsRouteUrl([e.address])}
+                        />
+                      </DrawerItem>
                       <DrawerItem label='Піраміди' value={e.pyramids} />
                       {map(e.tels, (tel, i) => (
                         <DrawerItem label={`Телефон №${i + 1}`} value={tel}>
