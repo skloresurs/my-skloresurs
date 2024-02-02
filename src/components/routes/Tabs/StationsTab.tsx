@@ -79,7 +79,7 @@ function StationsTab({ route }: IProps) {
     );
   }, [data]);
 
-  const googleMapFullRoute = useMemo(() => getGoogleMapsRouteUrl(map(ordersList, 'addressShort')) ?? '#', [ordersList]);
+  const googleMapFullRoute = useMemo(() => getGoogleMapsRouteUrl(map(ordersList, 'addressShort')), [ordersList]);
 
   return (
     <Container mt='sm' fluid p='0'>
