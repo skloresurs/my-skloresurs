@@ -173,9 +173,7 @@ function StationsTab({ route }: IProps) {
                       <div className='bg-[var(--mantine-color-dark-9)]'>
                         <Stack w='100%' p='md' gap='md'>
                           <Stack w='100%' gap='4px'>
-                            <DrawerItem label='Контрагент' value={order.agent?.name}>
-                              <TelephoneButton tel={order.agent?.tel} />
-                            </DrawerItem>
+                            <DrawerItem label='Контрагент' value={order.agent?.name} />
                             <DrawerItem label='Менеджер' value={order.manager?.name}>
                               <TelephoneButton tel={order.manager?.tel} />
                             </DrawerItem>
