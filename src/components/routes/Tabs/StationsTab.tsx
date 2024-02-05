@@ -59,10 +59,13 @@ function StationsTab({ route }: IProps) {
           },
           {
             accessor: 'amount',
-            title: 'К-сть (m²)',
+            title: 'm²',
             render: ({ value }) => (
               <Text>
-                <NumberFormatter value={reduce(value, (acc, item) => acc + item.amount, 0)} decimalScale={2} />
+                <NumberFormatter
+                  value={Math.round(reduce(value, (acc, item) => acc + item.amount, 0))}
+                  decimalScale={2}
+                />
               </Text>
             ),
           },
@@ -107,10 +110,12 @@ function StationsTab({ route }: IProps) {
                     {
                       accessor: 'amount',
                       title: 'К-сть (m²)',
+                      render: ({ amount }) => <Text>{Math.round(amount)}</Text>,
                     },
                     {
                       accessor: 'weight',
                       title: 'Вага',
+                      render: ({ weight }) => <Text>{Math.round(weight)}</Text>,
                     },
                   ]}
                   rowExpansion={{
