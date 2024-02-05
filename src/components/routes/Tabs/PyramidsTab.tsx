@@ -111,7 +111,6 @@ function PyramidsTab({ route }: IProps) {
                   <Badge variant='light'>
                     {pyramids.length} {plurals.pyramid![plural('uk', pyramids.length) ?? '']}
                   </Badge>
-                  <TelephoneButton tel={agent.tel} />
                 </Group>
               </Flex>
             </Accordion.Control>
