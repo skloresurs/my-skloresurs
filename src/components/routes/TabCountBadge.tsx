@@ -21,6 +21,10 @@ export default function TabCountBadge({ count, data, error, isLoading }: IProps)
     );
   }
 
+  if (count === 0) {
+    return null;
+  }
+
   return (
     <Badge circle variant='light'>
       {count}
