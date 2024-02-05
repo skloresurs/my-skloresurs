@@ -52,10 +52,15 @@ function MainTabOrder({ order }: { order: IManaderOrder }) {
       </DrawerItem>
       <Space h='8px' />
       {order.finance && (
-        <DrawerItem label='Номер рахунку' value={trim(order.finance.bill) ?? NotFoundData}>
-          <ActionIcon size='lg' component={Link} href={`/manager?bill=${order.finance.bill}`} variant='light'>
-            <Filter size={18} />
-          </ActionIcon>
+        <DrawerItem
+          label='Номер рахунку'
+          value={order.finance.bill.length > 0 ? trim(order.finance.bill) : NotFoundData}
+        >
+          {order.finance.bill.length > 0 && (
+            <ActionIcon size='lg' component={Link} href={`/manager?bill=${order.finance.bill}`} variant='light'>
+              <Filter size={18} />
+            </ActionIcon>
+          )}
         </DrawerItem>
       )}
       <DrawerItem label='Заблоковано для виробництва' value={order.locked ? 'Так' : 'Ні'} />
