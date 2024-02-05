@@ -26,7 +26,7 @@ export default function ManagerPage() {
           <InstrumentCheckbox
             paramKey='storage'
             title='Показати лише замовлення на складі'
-            description='Не показувати замовлення з статусом "Склад" (ігнорується при "Всі замовлення")'
+            description='Показувати замоелння з іншими статусами'
             enabledDescription='Показувати замовлення лише з статусом "Склад"'
           />
           <InstrumentCheckbox
