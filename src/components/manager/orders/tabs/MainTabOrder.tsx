@@ -47,7 +47,7 @@ function MainTabOrder({ order }: { order: IManaderOrder }) {
       <DrawerItem label='Менеджер' value={trim(order.manager?.name) ?? NotFoundData}>
         <TelephoneButton tel={order.manager?.tel} />
       </DrawerItem>
-      <DrawerItem label='Відповідальний' value={trim(order.responsible?.name) ?? NotFoundData}>
+      <DrawerItem label='Інженер' value={trim(order.responsible?.name) ?? NotFoundData}>
         <TelephoneButton tel={order.responsible?.tel} />
       </DrawerItem>
       <Space h='8px' />
