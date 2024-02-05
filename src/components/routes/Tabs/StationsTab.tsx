@@ -109,7 +109,7 @@ function StationsTab({ route }: IProps) {
                     },
                     {
                       accessor: 'amount',
-                      title: 'К-сть (m²)',
+                      title: 'm²',
                       render: ({ amount }) => <Text>{Math.round(amount)}</Text>,
                     },
                     {
