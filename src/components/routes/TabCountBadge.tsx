@@ -2,12 +2,13 @@ import { Badge } from '@mantine/core';
 import React from 'react';
 
 interface IProps {
+  count: number;
   data?: unknown[];
   error?: unknown;
   isLoading?: boolean;
 }
 
-export default function TabCountBadge({ data, error, isLoading }: IProps) {
+export default function TabCountBadge({ count, data, error, isLoading }: IProps) {
   if (isLoading) {
     return null;
   }
@@ -22,7 +23,7 @@ export default function TabCountBadge({ data, error, isLoading }: IProps) {
 
   return (
     <Badge circle variant='light'>
-      {data.length}
+      {count}
     </Badge>
   );
 }

@@ -2,10 +2,9 @@
 
 import { Center, Container, NumberFormatter, Stack, Text } from '@mantine/core';
 import dayjs from 'dayjs';
-import { filter, groupBy, map, reduce, reject } from 'lodash';
+import { map, reduce } from 'lodash';
 import { Compass } from 'lucide-react';
 import { DataTable } from 'mantine-datatable';
-import { nanoid } from 'nanoid';
 import React, { memo, useMemo } from 'react';
 import useSWR from 'swr';
 
@@ -13,8 +12,8 @@ import DrawerItem from '@/components/ui/DrawerItem';
 import OutsideLinkButton from '@/components/ui/OutsideLinkButton';
 import TelephoneButton from '@/components/ui/TelephoneButton';
 import { getGoogleMapsRouteUrl } from '@/libs/maps-api';
+import getGroupedStations from '@/libs/station-group';
 import IRoute, { IStation } from '@/types/Route';
-import IUser1C from '@/types/User1CData';
 
 interface IProps {
   route: IRoute;
@@ -23,61 +22,7 @@ interface IProps {
 function StationsTab({ route }: IProps) {
   const { data, isValidating } = useSWR<IStation[]>(`/api/routes/${route.id}/stations`);
 
-  const ordersList = useMemo(() => {
-    const orderWithoutOrder = reduce(
-      groupBy(filter(data, ['order', 0]), 'addressShort'),
-      (acc, value) => {
-        const v = value[0];
-        if (!v) return acc;
-
-        acc.push({
-          id: nanoid(),
-          order: v.order,
-          time: v.time,
-          address: v.address,
-          addressShort: v.addressShort,
-          value,
-        });
-        return acc;
-      },
-      [] as {
-        id: string;
-        order: number;
-        time: string;
-        address: string;
-        addressShort: string;
-        value: IStation[];
-      }[]
-    );
-
-    return reduce(
-      groupBy(reject(data, ['order', 0]), 'order'),
-      (acc, value) => {
-        const v = value[0];
-        if (!v) return acc;
-
-        acc.push({
-          id: nanoid(),
-          order: v.order,
-          time: v.time,
-          address: v.address,
-          addressShort: v.addressShort,
-          contact: v.contact,
-          value,
-        });
-        return acc;
-      },
-      [...orderWithoutOrder] as {
-        id: string;
-        order: number;
-        time: string;
-        address: string;
-        addressShort: string;
-        contact: IUser1C | null;
-        value: IStation[];
-      }[]
-    );
-  }, [data]);
+  const ordersList = useMemo(() => getGroupedStations(data ?? []), [data]);
 
   const googleMapFullRoute = useMemo(() => getGoogleMapsRouteUrl(map(ordersList, 'addressShort')), [ordersList]);
 

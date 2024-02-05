@@ -5,6 +5,7 @@ import { CalendarClock, MapPin, Truck } from 'lucide-react';
 import React, { memo } from 'react';
 import useSWR from 'swr';
 
+import { getStationCount } from '@/libs/station-group';
 import IRoute, { IPyramid, IStation, ITask } from '@/types/Route';
 
 import StatusBadge from './StatusBadge';
@@ -86,13 +87,26 @@ function Route({ route }: IProps) {
           <Tabs.List>
             <Tabs.Tab value='main'>Основна інформація</Tabs.Tab>
             <Tabs.Tab value='points'>
-              Шляхи <TabCountBadge data={stations} isLoading={stationsLoading} error={stationsError} />
+              Шляхи{' '}
+              <TabCountBadge
+                count={getStationCount(stations ?? [])}
+                data={stations}
+                isLoading={stationsLoading}
+                error={stationsError}
+              />
             </Tabs.Tab>
             <Tabs.Tab value='pyramids'>
-              Піраміди <TabCountBadge data={pyramids} isLoading={pyramidsLoading} error={pyramidsError} />
+              Піраміди{' '}
+              <TabCountBadge
+                count={pyramids?.length ?? 0}
+                data={pyramids}
+                isLoading={pyramidsLoading}
+                error={pyramidsError}
+              />
             </Tabs.Tab>
             <Tabs.Tab value='tasks'>
-              Завдання <TabCountBadge data={tasks} isLoading={tasksLoading} error={tasksError} />
+              Завдання{' '}
+              <TabCountBadge count={tasks?.length ?? 0} data={tasks} isLoading={tasksLoading} error={tasksError} />
             </Tabs.Tab>
           </Tabs.List>
 
