@@ -6,6 +6,7 @@ import { Trash } from 'lucide-react';
 import React from 'react';
 import useSWR from 'swr';
 
+import { mutateAdminUsersList } from '@/libs/mutate';
 import ISession from '@/types/Session';
 import { IUserMeRequest } from '@/types/User';
 
@@ -31,6 +32,7 @@ export default function SessionItem({ session }: { session: ISession }) {
       });
     });
 
+    await mutateAdminUsersList();
     await mutate();
 
     if (!response || response.status !== 200) return;

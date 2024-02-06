@@ -63,7 +63,8 @@
     "prettier",
     "lodash",
     "compat",
-    "zod"
+    "zod",
+    "unused-imports"
   ],
   "root": true,
   "settings": {
@@ -136,6 +137,14 @@
     // The following rules are disabled due to clashing with other plugins
     "import/order": "off",
     "sort-imports": "off",
-    "react/require-default-props": "off"
+    "react/require-default-props": "off",
+
+    // Remove unused-imports
+    "@typescript-eslint/no-unused-vars": "off",
+    "unused-imports/no-unused-imports": "error",
+    "unused-imports/no-unused-vars": [
+      "warn",
+      { "vars": "all", "varsIgnorePattern": "^_", "args": "after-used", "argsIgnorePattern": "^_" }
+    ]
   }
 }

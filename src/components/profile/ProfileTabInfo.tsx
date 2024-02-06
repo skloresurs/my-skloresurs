@@ -8,6 +8,7 @@ import { Save } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
 import useSWR from 'swr';
 
+import { mutateAdminUsersList } from '@/libs/mutate';
 import { IUserMeRequest } from '@/types/User';
 
 import { errorNotificationProps, loadingNotificationProps, successNotificationProps } from '../Notification';
@@ -55,6 +56,7 @@ export default function ProfileTabInfo() {
       });
 
     if (!response || response.status !== 200) return disableLoading();
+    await mutateAdminUsersList();
     mutate();
 
     disableLoading();

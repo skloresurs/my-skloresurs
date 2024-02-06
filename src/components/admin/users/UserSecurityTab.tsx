@@ -5,13 +5,14 @@ import { useForm, zodResolver } from '@mantine/form';
 import { useDisclosure } from '@mantine/hooks';
 import { notifications } from '@mantine/notifications';
 import axios from 'axios';
-import { map, startsWith } from 'lodash';
+import { map } from 'lodash';
 import { CheckCircle, PlusCircle, Save, XCircle } from 'lucide-react';
 import { nanoid } from 'nanoid';
 import React from 'react';
 import useSWR, { useSWRConfig } from 'swr';
 import { z } from 'zod';
 
+import { mutateAdminUsersList } from '@/libs/mutate';
 import { IUserMeRequest, IUserRequest } from '@/types/User';
 
 const NotificationTitle = 'Керування користувачем';
@@ -76,9 +77,7 @@ export default function UserSecurityTab({ user }: { user?: IUserRequest }) {
     if (!response || response.status !== 200) return disableLoading();
     await mutate(`/api/user/${user?.id}`);
 
-    await mutate((key: string) => startsWith(key, '/api/admin/users'), undefined, {
-      revalidate: false,
-    });
+    await mutateAdminUsersList();
 
     if (activeUser?.id === user?.id) {
       await mutate('/api/user');

@@ -4,11 +4,11 @@ import { Button, Divider, Flex, Paper, Stack, Text, TextInput, Title } from '@ma
 import { useDisclosure } from '@mantine/hooks';
 import { notifications } from '@mantine/notifications';
 import axios from 'axios';
-import { startsWith } from 'lodash';
 import React from 'react';
 import useSWR, { useSWRConfig } from 'swr';
 import { ZodSchema } from 'zod';
 
+import { mutateAdminUsersList } from '@/libs/mutate';
 import { IUserMeRequest } from '@/types/User';
 
 import { errorNotificationProps, loadingNotificationProps, successNotificationProps } from '../Notification';
@@ -94,9 +94,7 @@ export default function ProfileCard({
     if (!response || response.status !== 200) return disableLoading();
     await mutate(`/api/user/${submitSettings?.userId}`);
 
-    await mutate((key: string) => startsWith(key, '/api/admin/users'), undefined, {
-      revalidate: false,
-    });
+    await mutateAdminUsersList();
 
     if (activeUser?.id === submitSettings.userId) {
       await mutate('/api/user');

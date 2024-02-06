@@ -3,12 +3,13 @@
 import { Divider, Stack, Switch } from '@mantine/core';
 import { notifications } from '@mantine/notifications';
 import axios from 'axios';
-import { includes, map, startsWith } from 'lodash';
+import { includes, map } from 'lodash';
 import { nanoid } from 'nanoid';
 import React, { useMemo } from 'react';
 import useSWR, { useSWRConfig } from 'swr';
 
 import { errorNotificationProps, loadingNotificationProps, successNotificationProps } from '@/components/Notification';
+import { mutateAdminUsersList } from '@/libs/mutate';
 import verifyPermission from '@/libs/verify-permission';
 import { IUserMeRequest, IUserRequest, Permission } from '@/types/User';
 
@@ -85,9 +86,7 @@ export default function UserPermissionsTab({ user }: { user?: IUserRequest }) {
       await mutate('/api/user');
     }
 
-    await mutate((key: string) => startsWith(key, '/api/users'), undefined, {
-      revalidate: false,
-    });
+    await mutateAdminUsersList();
 
     return notifications.update({
       id: notification,

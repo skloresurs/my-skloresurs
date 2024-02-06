@@ -14,6 +14,8 @@ import OfficialMail from '@/components/badges/OfficialMail';
 import PermissionBadge from '@/components/PermissionBadge';
 import { IUserRequest } from '@/types/User';
 
+import RemoveUserButton from './RemoveUserButton';
+
 const PAGE_SIZES = [5, 10, 15, 20, 25, 50, 100];
 
 interface Response {
@@ -40,15 +42,19 @@ export default function Users() {
   const [filterByName, setFilterByName] = useState('');
   const [filterById, setFilterById] = useState('');
   const [filterByEmail, setFilterByEmail] = useState('');
-  const params = new URLSearchParams({
-    page: pageParam ?? '1',
-    sortBy: sortStatus.columnAccessor,
-    sortDirection: sortStatus.direction,
-    filterByName,
-    filterById,
-    filterByEmail,
-    pageSize: pageSize.toString(),
-  });
+  const params = useMemo(
+    () =>
+      new URLSearchParams({
+        page: pageParam ?? '1',
+        sortBy: sortStatus.columnAccessor,
+        sortDirection: sortStatus.direction,
+        filterByName,
+        filterById,
+        filterByEmail,
+        pageSize: pageSize.toString(),
+      }),
+    [pageParam, sortStatus, filterByName, filterById, filterByEmail, pageSize]
+  );
   const { data, isValidating } = useSWR<Response>(`/api/users?${params.toString()}`);
 
   const onPageChange = (p: number) => router.push(`/admin/users?page=${p}`);
@@ -137,17 +143,18 @@ export default function Users() {
       {
         accessor: 'actions',
         render: (record) => (
-          <Group gap={4} justify='right' wrap='nowrap'>
-            <ActionIcon component={Link} size='sm' variant='subtle' color='yellow' href={`/admin/users/${record.id}`}>
+          <Group gap='sm' justify='right' wrap='nowrap'>
+            <ActionIcon component={Link} variant='subtle' color='yellow' href={`/admin/users/${record.id}`}>
               <Pencil />
             </ActionIcon>
+            <RemoveUserButton user={record} params={params.toString()} />
           </Group>
         ),
         textAlign: 'right',
         title: <Box mr={6}>Дії</Box>,
       },
     ],
-    [filterByEmail, filterById, filterByName]
+    [filterByEmail, filterById, filterByName, params]
   );
 
   return (

@@ -34,6 +34,7 @@ const tabs: readonly Tab[] = [
     key: 'link',
   },
 ] as const;
+
 export default function ProfileTabs() {
   const searchParams = useSearchParams();
   const router = useRouter();
