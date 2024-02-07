@@ -1,4 +1,4 @@
-import { Group, Text } from '@mantine/core';
+import { Flex, Text } from '@mantine/core';
 import React, { memo } from 'react';
 
 interface IProps {
@@ -9,14 +9,14 @@ interface IProps {
 
 function DrawerItem({ label, value, children }: IProps) {
   return (
-    <Group align='center'>
+    <Flex wrap='nowrap' align='center' gap='sm'>
       <Text fw='bold'>{label}:</Text>
       <div className='flex-1' />
-      <Group align='center' gap='xs'>
-        {value && <Text>{value}</Text>}
+      <Flex align='center' gap='xs'>
+        {value && <Text className='text-right'>{value}</Text>}
         {children}
-      </Group>
-    </Group>
+      </Flex>
+    </Flex>
   );
 }
 
