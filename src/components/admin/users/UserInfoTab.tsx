@@ -1,12 +1,12 @@
 import { Stack } from '@mantine/core';
 import { Save } from 'lucide-react';
-import React from 'react';
+import React, { memo } from 'react';
 import { z } from 'zod';
 
 import ProfileCard from '@/components/ui/ProfileCard';
 import { IUserRequest } from '@/types/User';
 
-export default function UserInfoTab({ user }: { user?: IUserRequest }) {
+function UserInfoTab({ user }: { user?: IUserRequest }) {
   if (!user) {
     return null;
   }
@@ -49,3 +49,5 @@ export default function UserInfoTab({ user }: { user?: IUserRequest }) {
     </Stack>
   );
 }
+
+export default memo(UserInfoTab);

@@ -4,14 +4,14 @@ import { Button } from '@mantine/core';
 import { FilterX } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname, useSearchParams } from 'next/navigation';
-import React, { useMemo } from 'react';
+import React, { memo, useMemo } from 'react';
 
 interface IProps {
   paramKey: string;
   title: string;
 }
 
-export default function InstrumentResetOne({ paramKey, title }: IProps) {
+function InstrumentResetOne({ paramKey, title }: IProps) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
@@ -34,3 +34,5 @@ export default function InstrumentResetOne({ paramKey, title }: IProps) {
     </Button>
   );
 }
+
+export default memo(InstrumentResetOne);

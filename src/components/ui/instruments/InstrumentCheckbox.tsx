@@ -2,7 +2,7 @@
 
 import { Checkbox, Text, UnstyledButton } from '@mantine/core';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import React, { useEffect, useState } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 
 interface IProps {
   paramKey: string;
@@ -12,7 +12,7 @@ interface IProps {
   disabled?: boolean;
 }
 
-export default function InstrumentCheckbox({ paramKey, title, description, enabledDescription, disabled }: IProps) {
+function InstrumentCheckbox({ paramKey, title, description, enabledDescription, disabled }: IProps) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -67,3 +67,5 @@ export default function InstrumentCheckbox({ paramKey, title, description, enabl
     </UnstyledButton>
   );
 }
+
+export default memo(InstrumentCheckbox);

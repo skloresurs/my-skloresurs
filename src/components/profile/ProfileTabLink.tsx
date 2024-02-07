@@ -2,7 +2,7 @@
 
 import { Button, Flex, Paper, Stack, Text, Title } from '@mantine/core';
 import { Link, Unlink } from 'lucide-react';
-import React from 'react';
+import React, { memo } from 'react';
 import useSWR from 'swr';
 
 import { IUserMeRequest } from '@/types/User';
@@ -33,7 +33,7 @@ function LinkItem({ id, label, linked }: ILinkItem) {
   );
 }
 
-export default function ProfileTabLink() {
+function ProfileTabLink() {
   const { data: user } = useSWR<IUserMeRequest>(`/api/user`);
 
   return (
@@ -43,3 +43,5 @@ export default function ProfileTabLink() {
     </Stack>
   );
 }
+
+export default memo(ProfileTabLink);

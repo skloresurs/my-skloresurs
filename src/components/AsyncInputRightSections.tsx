@@ -1,6 +1,6 @@
 import { Loader } from '@mantine/core';
 import { CircleSlash, ServerCrash } from 'lucide-react';
-import React, { ReactNode } from 'react';
+import React, { memo, ReactNode } from 'react';
 
 interface IProps {
   isValidating?: boolean;
@@ -9,7 +9,7 @@ interface IProps {
   defaultValue?: ReactNode;
 }
 
-export default function AsyncInputRightSections({ isValidating, error, forbidden, defaultValue }: IProps) {
+function AsyncInputRightSections({ isValidating, error, forbidden, defaultValue }: IProps) {
   if (isValidating) {
     return <Loader color='blue' />;
   }
@@ -21,3 +21,5 @@ export default function AsyncInputRightSections({ isValidating, error, forbidden
   }
   return defaultValue;
 }
+
+export default memo(AsyncInputRightSections);

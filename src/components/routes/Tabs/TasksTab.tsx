@@ -1,14 +1,17 @@
 'use client';
 
-import { Accordion, Stack, Text } from '@mantine/core';
+import { Accordion, Flex, Stack, Text } from '@mantine/core';
 import { map } from 'lodash';
 import { AlarmClockCheck } from 'lucide-react';
 import React, { memo } from 'react';
 import useSWR from 'swr';
 
+import DrawerItem from '@/components/ui/DrawerItem';
 import ErrorAlert from '@/components/ui/ErrorAlert';
 import InfoAlert from '@/components/ui/InfoAlert';
 import LoadingAlert from '@/components/ui/LoadingAlert';
+import TelephoneButton from '@/components/ui/TelephoneButton';
+import { phoneRegexp } from '@/libs/regexp';
 import IRoute, { ITask } from '@/types/Route';
 
 interface IProps {
@@ -44,18 +47,11 @@ function TasksTab({ route }: IProps) {
           <Accordion.Control icon={<AlarmClockCheck />}>Завдання №{task.id}</Accordion.Control>
           <Accordion.Panel>
             <Stack gap='sm'>
-              <Text>
-                <Text span fw={600}>
-                  Менеджер:
-                </Text>
-                {` ${task.manager}`}
-              </Text>
-              <Text>
-                <Text span fw={600}>
-                  Опис:
-                </Text>
-                {` ${task.description}`}
-              </Text>
+              <DrawerItem label='Менеджер' value={task.manager} />
+              <Flex align='center' gap='xs'>
+                <Text>{task.description}</Text>
+                <TelephoneButton tel={task.description.match(phoneRegexp)?.at(0)} />
+              </Flex>
             </Stack>
           </Accordion.Panel>
         </Accordion.Item>

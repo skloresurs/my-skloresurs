@@ -1,5 +1,5 @@
 import { ActionIcon, Button } from '@mantine/core';
-import React from 'react';
+import React, { memo } from 'react';
 
 interface IProps {
   link: string | null;
@@ -10,7 +10,7 @@ interface IProps {
   target?: React.HTMLAttributeAnchorTarget;
 }
 
-export default function OutsideLinkButton({ link, full, fullWidth, label, icon, target }: IProps) {
+function OutsideLinkButton({ link, full, fullWidth, label, icon, target }: IProps) {
   if (full) {
     return (
       <Button
@@ -46,3 +46,5 @@ export default function OutsideLinkButton({ link, full, fullWidth, label, icon, 
     </ActionIcon>
   );
 }
+
+export default memo(OutsideLinkButton);

@@ -1,7 +1,7 @@
 'use client';
 
 import { Button, Flex, Popover } from '@mantine/core';
-import React from 'react';
+import React, { memo } from 'react';
 
 interface IProps {
   buttonLabel: string;
@@ -9,7 +9,7 @@ interface IProps {
   children: React.ReactNode;
 }
 
-export default function InstrumentPopover({ buttonLabel, buttonIcon, children }: IProps) {
+function InstrumentPopover({ buttonLabel, buttonIcon, children }: IProps) {
   const [opened, setOpened] = React.useState(false);
 
   return (
@@ -27,3 +27,5 @@ export default function InstrumentPopover({ buttonLabel, buttonIcon, children }:
     </Popover>
   );
 }
+
+export default memo(InstrumentPopover);

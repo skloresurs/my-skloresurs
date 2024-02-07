@@ -1,13 +1,13 @@
 import { ActionIcon, Button } from '@mantine/core';
 import { Phone } from 'lucide-react';
-import React from 'react';
+import React, { memo } from 'react';
 
 interface IProps {
   tel?: string | null;
   full?: boolean;
 }
 
-export default function TelephoneButton({ tel, full }: IProps) {
+function TelephoneButton({ tel, full }: IProps) {
   if (full) {
     return (
       <Button
@@ -40,3 +40,5 @@ export default function TelephoneButton({ tel, full }: IProps) {
     </ActionIcon>
   );
 }
+
+export default memo(TelephoneButton);

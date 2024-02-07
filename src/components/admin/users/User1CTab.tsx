@@ -1,11 +1,11 @@
 import { Stack } from '@mantine/core';
 import { Save } from 'lucide-react';
-import React from 'react';
+import React, { memo } from 'react';
 
 import ProfileCard from '@/components/ui/ProfileCard';
 import { IUserRequest } from '@/types/User';
 
-export default function User1CTab({ user }: { user?: IUserRequest }) {
+function User1CTab({ user }: { user?: IUserRequest }) {
   if (!user) return null;
 
   return (
@@ -29,3 +29,5 @@ export default function User1CTab({ user }: { user?: IUserRequest }) {
     </Stack>
   );
 }
+
+export default memo(User1CTab);

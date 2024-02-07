@@ -5,7 +5,7 @@ import { useDisclosure } from '@mantine/hooks';
 import { notifications } from '@mantine/notifications';
 import axios from 'axios';
 import { Trash } from 'lucide-react';
-import React, { useCallback } from 'react';
+import React, { memo, useCallback } from 'react';
 import useSWR, { mutate } from 'swr';
 
 import { errorNotificationProps, loadingNotificationProps, successNotificationProps } from '@/components/Notification';
@@ -19,7 +19,7 @@ interface IProps {
   params: string;
 }
 
-export default function RemoveUserButton({ user, params }: IProps) {
+function RemoveUserButton({ user, params }: IProps) {
   const [opened, { open, close }] = useDisclosure(false);
   const { data: me } = useSWR<IUserMeRequest>(`/api/user`);
   const DeleteUser = useCallback(async () => {
@@ -66,3 +66,5 @@ export default function RemoveUserButton({ user, params }: IProps) {
     </>
   );
 }
+
+export default memo(RemoveUserButton);

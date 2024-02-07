@@ -1,7 +1,7 @@
 import { Card, Flex, Group, Text, Title } from '@mantine/core';
 import { useRouter, useSearchParams } from 'next/navigation';
 import plural from 'plurals-cldr';
-import React from 'react';
+import React, { memo } from 'react';
 
 import plurals from '@/libs/plurals';
 import { IAgent } from '@/types/ManagerOrder';
@@ -10,7 +10,7 @@ interface IProps {
   agent: IAgent;
 }
 
-export default function AgentItem({ agent }: IProps) {
+function AgentItem({ agent }: IProps) {
   const query = useSearchParams();
   const router = useRouter();
   function onClick() {
@@ -50,3 +50,5 @@ export default function AgentItem({ agent }: IProps) {
     </Card>
   );
 }
+
+export default memo(AgentItem);

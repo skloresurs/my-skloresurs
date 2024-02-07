@@ -2,14 +2,14 @@
 
 import { Stack } from '@mantine/core';
 import { map } from 'lodash';
-import React from 'react';
+import React, { memo } from 'react';
 import useSWR from 'swr';
 
 import { IUserMeRequest } from '@/types/User';
 
 import SessionItem from '../ui/SessionItem';
 
-export default function ProfileTabSessions() {
+function ProfileTabSessions() {
   const { data: user } = useSWR<IUserMeRequest>(`/api/user`);
   return (
     <Stack gap='md' maw='576px'>
@@ -19,3 +19,5 @@ export default function ProfileTabSessions() {
     </Stack>
   );
 }
+
+export default memo(ProfileTabSessions);

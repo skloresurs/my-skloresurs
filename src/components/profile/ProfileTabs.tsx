@@ -4,7 +4,7 @@ import { Tabs } from '@mantine/core';
 import { map } from 'lodash';
 import { Fingerprint, Info, Link, Shield } from 'lucide-react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import React, { ReactNode } from 'react';
+import React, { memo, ReactNode } from 'react';
 
 import ProfileTabInfo from './ProfileTabInfo';
 import ProfileTabLink from './ProfileTabLink';
@@ -35,7 +35,7 @@ const tabs: readonly Tab[] = [
   },
 ] as const;
 
-export default function ProfileTabs() {
+function ProfileTabs() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const activeTab = searchParams.get('tab') ?? 'info';
@@ -64,3 +64,5 @@ export default function ProfileTabs() {
     </Tabs>
   );
 }
+
+export default memo(ProfileTabs);

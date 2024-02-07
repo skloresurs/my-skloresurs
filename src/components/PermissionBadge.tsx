@@ -1,5 +1,5 @@
 import { Badge } from '@mantine/core';
-import React from 'react';
+import React, { memo } from 'react';
 
 import { Permission } from '@/types/User';
 
@@ -7,7 +7,7 @@ interface IProps {
   permission: Permission;
 }
 
-export default function PermissionBadge({ permission }: IProps) {
+function PermissionBadge({ permission }: IProps) {
   switch (permission) {
     case 'SuperAdmin': {
       return <Badge color='purple'>Супер-адмін</Badge>;
@@ -28,3 +28,5 @@ export default function PermissionBadge({ permission }: IProps) {
 
   return null;
 }
+
+export default memo(PermissionBadge);

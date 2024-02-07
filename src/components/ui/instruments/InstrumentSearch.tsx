@@ -4,7 +4,7 @@ import { ActionIcon, Flex, TextInput } from '@mantine/core';
 import { Search, SearchX } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { memo, useEffect, useMemo, useState } from 'react';
 
 interface IProps {
   label: string;
@@ -13,7 +13,7 @@ interface IProps {
   disabled?: boolean;
 }
 
-export default function InstrumentSearch({ label, description, placeholder, disabled }: IProps) {
+function InstrumentSearch({ label, description, placeholder, disabled }: IProps) {
   const pathname = usePathname();
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -77,3 +77,5 @@ export default function InstrumentSearch({ label, description, placeholder, disa
     </Flex>
   );
 }
+
+export default memo(InstrumentSearch);

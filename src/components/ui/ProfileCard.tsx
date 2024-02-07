@@ -4,7 +4,7 @@ import { Button, Divider, Flex, Paper, Stack, Text, TextInput, Title } from '@ma
 import { useDisclosure } from '@mantine/hooks';
 import { notifications } from '@mantine/notifications';
 import axios from 'axios';
-import React from 'react';
+import React, { memo } from 'react';
 import useSWR, { useSWRConfig } from 'swr';
 import { ZodSchema } from 'zod';
 
@@ -40,7 +40,7 @@ interface IProps {
 
 const NotificationTitle = 'Оновлення профілю';
 
-export default function ProfileCard({
+function ProfileCard({
   title,
   description,
   value,
@@ -140,3 +140,5 @@ export default function ProfileCard({
     </Paper>
   );
 }
+
+export default memo(ProfileCard);

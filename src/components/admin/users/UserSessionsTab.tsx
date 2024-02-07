@@ -1,12 +1,12 @@
 import { Center } from '@mantine/core';
 import { map } from 'lodash';
-import React from 'react';
+import React, { memo } from 'react';
 
 import InfoAlert from '@/components/ui/InfoAlert';
 import SessionItem from '@/components/ui/SessionItem';
 import { IUserRequest } from '@/types/User';
 
-export default function UserSessionsTab({ user }: { user?: IUserRequest }) {
+function UserSessionsTab({ user }: { user?: IUserRequest }) {
   if (!user || !user.sessions)
     return (
       <Center>
@@ -22,3 +22,5 @@ export default function UserSessionsTab({ user }: { user?: IUserRequest }) {
     </div>
   );
 }
+
+export default memo(UserSessionsTab);

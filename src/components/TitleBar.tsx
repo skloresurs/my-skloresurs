@@ -3,7 +3,7 @@
 import { ActionIcon, Divider, Text, Title } from '@mantine/core';
 import { ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
-import React from 'react';
+import React, { memo } from 'react';
 
 interface IProps {
   title: string;
@@ -11,7 +11,7 @@ interface IProps {
   backHref?: string;
 }
 
-export default function TitleBar({ title, description, backHref }: IProps) {
+function TitleBar({ title, description, backHref }: IProps) {
   return (
     <div>
       <Text span>
@@ -41,3 +41,5 @@ export default function TitleBar({ title, description, backHref }: IProps) {
     </div>
   );
 }
+
+export default memo(TitleBar);

@@ -5,7 +5,7 @@ import { notifications } from '@mantine/notifications';
 import axios from 'axios';
 import { includes, map } from 'lodash';
 import { nanoid } from 'nanoid';
-import React, { useMemo } from 'react';
+import React, { memo, useMemo } from 'react';
 import useSWR, { useSWRConfig } from 'swr';
 
 import { errorNotificationProps, loadingNotificationProps, successNotificationProps } from '@/components/Notification';
@@ -22,7 +22,7 @@ interface IPermission {
 
 const NotificationTitle = 'Керування користувачем';
 
-export default function UserPermissionsTab({ user }: { user?: IUserRequest }) {
+function UserPermissionsTab({ user }: { user?: IUserRequest }) {
   const { mutate } = useSWRConfig();
   const { data: activeUser } = useSWR<IUserMeRequest>(`/api/user`);
 
@@ -118,3 +118,5 @@ export default function UserPermissionsTab({ user }: { user?: IUserRequest }) {
     </Stack>
   );
 }
+
+export default memo(UserPermissionsTab);

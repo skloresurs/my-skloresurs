@@ -1,6 +1,6 @@
 import { Alert, Button, Stack, Text } from '@mantine/core';
 import { RefreshCw, ServerCrash } from 'lucide-react';
-import React from 'react';
+import React, { memo } from 'react';
 
 interface IProps extends React.ComponentPropsWithoutRef<typeof Alert> {
   title?: string;
@@ -8,12 +8,7 @@ interface IProps extends React.ComponentPropsWithoutRef<typeof Alert> {
   refresh?: () => void;
 }
 
-export default function ErrorAlert({
-  title = 'Помилка',
-  description = 'Помилка завантаження',
-  refresh,
-  ...otherProps
-}: IProps) {
+function ErrorAlert({ title = 'Помилка', description = 'Помилка завантаження', refresh, ...otherProps }: IProps) {
   return (
     <Alert title={title} icon={<ServerCrash />} color='red' radius='md' {...otherProps}>
       <Stack>
@@ -27,3 +22,5 @@ export default function ErrorAlert({
     </Alert>
   );
 }
+
+export default memo(ErrorAlert);

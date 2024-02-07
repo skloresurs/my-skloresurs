@@ -4,9 +4,9 @@ import { Button } from '@mantine/core';
 import { FilterX } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import React from 'react';
+import React, { memo } from 'react';
 
-export default function InstrumentReset() {
+function InstrumentReset() {
   const pathname = usePathname();
   return (
     <Button component={Link} href={pathname} color='red' variant='outline' leftSection={<FilterX size={16} />}>
@@ -14,3 +14,5 @@ export default function InstrumentReset() {
     </Button>
   );
 }
+
+export default memo(InstrumentReset);

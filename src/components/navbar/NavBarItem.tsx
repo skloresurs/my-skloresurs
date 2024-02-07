@@ -2,7 +2,7 @@ import { NavLink } from '@mantine/core';
 import { map } from 'lodash';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import React from 'react';
+import React, { memo } from 'react';
 
 import { NavBarItem, RootNavBarItem } from '@/components/navbar/NavBar';
 
@@ -14,7 +14,7 @@ interface IProps {
 
 const isRootItem = (item: NavBarItem): item is RootNavBarItem => 'children' in item;
 
-export default function NavBarItemCompnent({ item, hide = false, toogle }: IProps) {
+function NavBarItemCompnent({ item, hide = false, toogle }: IProps) {
   const pathname = usePathname();
 
   if (hide) {
@@ -59,3 +59,5 @@ export default function NavBarItemCompnent({ item, hide = false, toogle }: IProp
     />
   );
 }
+
+export default memo(NavBarItemCompnent);

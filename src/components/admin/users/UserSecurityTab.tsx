@@ -8,7 +8,7 @@ import axios from 'axios';
 import { map } from 'lodash';
 import { CheckCircle, PlusCircle, Save, XCircle } from 'lucide-react';
 import { nanoid } from 'nanoid';
-import React from 'react';
+import React, { memo } from 'react';
 import useSWR, { useSWRConfig } from 'swr';
 import { z } from 'zod';
 
@@ -32,7 +32,7 @@ const formSchema = z
   })
   .strict();
 
-export default function UserSecurityTab({ user }: { user?: IUserRequest }) {
+function UserSecurityTab({ user }: { user?: IUserRequest }) {
   const { mutate } = useSWRConfig();
   const { data: activeUser } = useSWR<IUserMeRequest>(`/api/user`);
   const [loading, { open: enableLoading, close: disableLoading }] = useDisclosure();
@@ -149,3 +149,5 @@ export default function UserSecurityTab({ user }: { user?: IUserRequest }) {
     </form>
   );
 }
+
+export default memo(UserSecurityTab);

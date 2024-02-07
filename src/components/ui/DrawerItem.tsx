@@ -1,5 +1,5 @@
 import { Group, Text } from '@mantine/core';
-import React from 'react';
+import React, { memo } from 'react';
 
 interface IProps {
   label: string;
@@ -7,10 +7,10 @@ interface IProps {
   children?: React.ReactNode;
 }
 
-export default function DrawerItem({ label, value, children }: IProps) {
+function DrawerItem({ label, value, children }: IProps) {
   return (
     <Group align='center'>
-      <Text>{label}:</Text>
+      <Text fw='bold'>{label}:</Text>
       <div className='flex-1' />
       <Group align='center' gap='xs'>
         {value && <Text>{value}</Text>}
@@ -19,3 +19,5 @@ export default function DrawerItem({ label, value, children }: IProps) {
     </Group>
   );
 }
+
+export default memo(DrawerItem);

@@ -5,7 +5,7 @@ import { useDisclosure } from '@mantine/hooks';
 import { notifications } from '@mantine/notifications';
 import axios from 'axios';
 import { Save } from 'lucide-react';
-import React, { useEffect, useState } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 import useSWR from 'swr';
 
 import { mutateAdminUsersList } from '@/libs/mutate';
@@ -15,7 +15,7 @@ import { errorNotificationProps, loadingNotificationProps, successNotificationPr
 
 const NotificationTitle = 'Оновлення профілю';
 
-export default function ProfileTabInfo() {
+function ProfileTabInfo() {
   const { data: user, mutate } = useSWR<IUserMeRequest>(`/api/user`);
   const [fullname, setFullName] = useState('');
   const [loading, { open: enableLoading, close: disableLoading }] = useDisclosure();
@@ -122,3 +122,5 @@ export default function ProfileTabInfo() {
     </Stack>
   );
 }
+
+export default memo(ProfileTabInfo);

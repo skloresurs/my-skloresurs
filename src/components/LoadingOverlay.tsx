@@ -1,6 +1,8 @@
 import { LoadingOverlay as MantineLoadingOverlay } from '@mantine/core';
-import React from 'react';
+import React, { memo } from 'react';
 
-export default function LoadingOverlay() {
+function LoadingOverlay() {
   return <MantineLoadingOverlay visible zIndex={100} overlayProps={{ blur: 2, radius: 'sm', zIndex: 100 }} />;
 }
+
+export default memo(LoadingOverlay);

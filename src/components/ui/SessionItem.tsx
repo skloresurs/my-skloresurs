@@ -3,7 +3,7 @@ import { notifications } from '@mantine/notifications';
 import axios from 'axios';
 import dayjs from 'dayjs';
 import { Trash } from 'lucide-react';
-import React from 'react';
+import React, { memo } from 'react';
 import useSWR from 'swr';
 
 import { mutateAdminUsersList } from '@/libs/mutate';
@@ -14,7 +14,7 @@ import { errorNotificationProps, loadingNotificationProps, successNotificationPr
 
 const NotificationTitle = 'Сесії';
 
-export default function SessionItem({ session }: { session: ISession }) {
+function SessionItem({ session }: { session: ISession }) {
   const { data: user, mutate } = useSWR<IUserMeRequest>(`/api/user`);
   const removeSession = async (id: string) => {
     const notification = notifications.show({
@@ -71,3 +71,5 @@ export default function SessionItem({ session }: { session: ISession }) {
     </Paper>
   );
 }
+
+export default memo(SessionItem);

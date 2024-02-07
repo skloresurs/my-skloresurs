@@ -1,5 +1,5 @@
 import { Button, Container, Group, Text, Title } from '@mantine/core';
-import React from 'react';
+import React, { memo } from 'react';
 
 import classes from '@/css/Error.module.css';
 
@@ -11,7 +11,7 @@ interface IProps {
   onClick: () => void;
 }
 
-export default function ErrorPage({ code, title, description, buttonLabel, onClick }: IProps) {
+function ErrorPage({ code, title, description, buttonLabel, onClick }: IProps) {
   return (
     <Container className={classes.root}>
       <Text className={classes.label}>{code}</Text>
@@ -27,3 +27,5 @@ export default function ErrorPage({ code, title, description, buttonLabel, onCli
     </Container>
   );
 }
+
+export default memo(ErrorPage);

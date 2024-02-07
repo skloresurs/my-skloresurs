@@ -1,11 +1,11 @@
 import { Center, Divider, Flex, Paper, Stack, Text, TextInput, Title } from '@mantine/core';
 import { map } from 'lodash';
-import React from 'react';
+import React, { memo } from 'react';
 import useSWR from 'swr';
 
 import { IUserMeRequest } from '@/types/User';
 
-export default function ProfileTabSecurity() {
+function ProfileTabSecurity() {
   const { data: user } = useSWR<IUserMeRequest>('/api/user');
 
   return (
@@ -37,3 +37,5 @@ export default function ProfileTabSecurity() {
     </Flex>
   );
 }
+
+export default memo(ProfileTabSecurity);

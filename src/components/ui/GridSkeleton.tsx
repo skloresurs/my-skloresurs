@@ -1,6 +1,6 @@
 import { Grid, Skeleton, StyleProp } from '@mantine/core';
 import { times } from 'lodash';
-import React from 'react';
+import React, { memo } from 'react';
 
 interface IProps {
   span: StyleProp<number>;
@@ -8,7 +8,7 @@ interface IProps {
   times: number;
 }
 
-export default function GridSkeleton({ span, children, times: timesNumber }: IProps) {
+function GridSkeleton({ span, children, times: timesNumber }: IProps) {
   return (
     <Grid>
       {times(timesNumber, (i) => (
@@ -19,3 +19,5 @@ export default function GridSkeleton({ span, children, times: timesNumber }: IPr
     </Grid>
   );
 }
+
+export default memo(GridSkeleton);

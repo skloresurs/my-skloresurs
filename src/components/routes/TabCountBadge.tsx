@@ -1,5 +1,5 @@
 import { Badge } from '@mantine/core';
-import React from 'react';
+import React, { memo } from 'react';
 
 interface IProps {
   count: number;
@@ -8,7 +8,7 @@ interface IProps {
   isLoading?: boolean;
 }
 
-export default function TabCountBadge({ count, data, error, isLoading }: IProps) {
+function TabCountBadge({ count, data, error, isLoading }: IProps) {
   if (isLoading) {
     return null;
   }
@@ -31,3 +31,5 @@ export default function TabCountBadge({ count, data, error, isLoading }: IProps)
     </Badge>
   );
 }
+
+export default memo(TabCountBadge);
