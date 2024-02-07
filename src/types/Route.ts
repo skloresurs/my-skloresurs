@@ -38,6 +38,7 @@ export interface IStation {
 export interface IPyramid {
   id: string;
   agent: IUser1C | null;
+  city: string;
   address: string;
   tel: string;
   manager: IUser1C | null;

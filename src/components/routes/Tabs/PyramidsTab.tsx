@@ -31,6 +31,7 @@ function groupByAddress(pyramids: IPyramid[]) {
       if (!v) return acc;
       acc.push({
         id: nanoid(),
+        city: v.city,
         address: v.address,
         pyramids: map(value, 'id').join(', '),
         tels: uniq(map(value, 'tel')),
@@ -39,6 +40,7 @@ function groupByAddress(pyramids: IPyramid[]) {
     },
     [] as {
       id: string;
+      city: string;
       address: string;
       pyramids: string;
       tels: string[];
@@ -123,11 +125,11 @@ function PyramidsTab({ route }: IProps) {
                   <Divider />
                   {map(groupByAddress(pyramids), (e) => (
                     <Stack id={e.id} gap='4px'>
-                      <DrawerItem label='Адреса' value={e.address}>
+                      <DrawerItem label='Адреса' value={`${e.city}, ${e.address}`}>
                         <OutsideLinkButton
                           icon={<Globe size={20} />}
                           target='_blank'
-                          link={getGoogleMapsRouteUrl([e.address])}
+                          link={getGoogleMapsRouteUrl([`${e.city}, ${e.address}`])}
                         />
                       </DrawerItem>
                       <DrawerItem label='Піраміди' value={e.pyramids} />
