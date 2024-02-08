@@ -1,6 +1,6 @@
 'use client';
 
-import { AppShell as MantineAppShell, Burger, Center, Divider, Flex, ScrollArea, Title } from '@mantine/core';
+import { AppShell as MantineAppShell, Burger, Divider, Flex, ScrollArea, Text, Title } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { notifications } from '@mantine/notifications';
 import axios from 'axios';
@@ -69,7 +69,7 @@ export default function AppShell({ children }: { children: ReactNode }) {
 
       <MantineAppShell.Navbar p='md'>
         <MantineAppShell.Section>
-          <Center>Вітаємо, {user?.fullname}</Center>
+          <Text ta='center'>Вітаємо, {user?.fullname}</Text>
         </MantineAppShell.Section>
         <MantineAppShell.Section grow my='md' component={ScrollArea}>
           {map(navbar, (e) => (
