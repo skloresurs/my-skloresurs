@@ -11,10 +11,6 @@
     "url": "https://github.com/Skloresurs/my-skloresurs"
   },
   "private": true,
-  "engines": {
-    "node": ">=20",
-    "pnpm": ">=7"
-  },
   "browserslist": [
     "defaults",
     "not op_mini all"
