@@ -1,28 +1,35 @@
-import { and, count, desc, like, sql } from 'drizzle-orm';
+import { and, arrayOverlaps, count, like, not } from 'drizzle-orm';
+import { find } from 'lodash';
 import { NextRequest, NextResponse } from 'next/server';
 
 import apiErrorHandler from '@/libs/api-error-handler';
 import { db } from '@/libs/db';
-import { userSchema } from '@/libs/db/schema';
+import { permissionsEnum, userSchema } from '@/libs/db/schema';
 import { getSession } from '@/libs/sessions';
 import verifyIp from '@/libs/verify-ip';
 import { verifyPermissionServer } from '@/libs/verify-permission';
+import { Permission } from '@/types/User';
 
-function getSortByVariable(key: string) {
-  switch (key) {
-    case 'id': {
-      return userSchema.id;
-    }
-    case 'fullname': {
-      return userSchema.fullname;
-    }
-    case 'email': {
-      return userSchema.email;
-    }
-    default: {
-      return userSchema.fullname;
-    }
+function getFilter(
+  permission: Permission | undefined,
+  filterByName: string,
+  filterByEmail: string,
+  filterById: string
+) {
+  if (!permission) {
+    return and(
+      like(userSchema.fullname, `%${filterByName}%`),
+      like(userSchema.email, `%${filterByEmail}%`),
+      like(userSchema.id, `%${filterById}%`),
+      not(arrayOverlaps(userSchema.permissions, permissionsEnum.enumValues))
+    );
   }
+  return and(
+    like(userSchema.fullname, `%${filterByName}%`),
+    like(userSchema.email, `%${filterByEmail}%`),
+    like(userSchema.id, `%${filterById}%`),
+    arrayOverlaps(userSchema.permissions, [permission])
+  );
 }
 
 export async function GET(req: NextRequest) {
@@ -33,40 +40,24 @@ export async function GET(req: NextRequest) {
 
     const params = req.nextUrl.searchParams;
 
+    const pageSize = 10;
     const page = params.get('page') ?? 1;
-    const pageSize = params.get('pageSize') ?? 10;
-    const sortBy = params.get('sortBy') ?? 'fullname';
-    const sortDirection = params.get('sortDirection') ?? 'asc';
 
     const filterById = params.get('filterById') ?? '';
     const filterByName = params.get('filterByName') ?? '';
     const filterByEmail = params.get('filterByEmail') ?? '';
+    const filterByPermission = find(permissionsEnum.enumValues, (e) => e === params.get('permission'));
 
     const total = await db
       .select({ count: count() })
       .from(userSchema)
-      .where(
-        and(
-          like(userSchema.fullname, `%${filterByName}%`),
-          like(userSchema.email, `%${filterByEmail}%`),
-          like(userSchema.id, `%${filterById}%`)
-        )
-      );
+      .where(getFilter(filterByPermission, filterByName, filterByEmail, filterById));
 
     const users = await db
       .select()
       .from(userSchema)
-      .where(
-        and(
-          like(userSchema.fullname, `%${filterByName}%`),
-          like(userSchema.email, `%${filterByEmail}%`),
-          like(userSchema.id, `%${filterById}%`)
-        )
-      )
-      .orderBy(
-        sql`"id_1c" is null desc`,
-        sortDirection === 'desc' ? desc(getSortByVariable(sortBy)) : getSortByVariable(sortBy)
-      )
+      .where(getFilter(filterByPermission, filterByName, filterByEmail, filterById))
+      .orderBy(userSchema.fullname)
       .limit(Number(pageSize))
       .offset((Number(page) - 1) * Number(pageSize));
 
