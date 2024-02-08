@@ -30,9 +30,9 @@ export default function UsersList() {
   const columns: DataTableColumn<IGroup>[] = useMemo(
     () => [
       {
-        accessor: 'id',
-        title: 'Права / ID',
-        width: '175px',
+        accessor: 'name',
+        title: "Права / Повне ім'я",
+        width: '300px',
         render: ({ id, title }) => (
           <Flex gap='xs' wrap='nowrap'>
             <ChevronRight className={twMerge(includes(expandedIds, id) ? 'rotate-90' : '', 'duration-300')} />
@@ -41,27 +41,18 @@ export default function UsersList() {
           </Flex>
         ),
         filter: (
-          <TextInput
-            label='Пошук по ID'
-            leftSection={<Search size={16} />}
-            rightSection={
-              <ActionIcon size='sm' variant='transparent' c='dimmed' onClick={() => setFilterById('')}>
-                <X size={14} />
-              </ActionIcon>
-            }
-            value={filterById}
-            onChange={(e) => setFilterById(e.currentTarget.value)}
-          />
-        ),
-        filtering: filterById !== '',
-      },
-      {
-        accessor: 'name',
-        title: "Повне ім'я",
-        width: '300px',
-        render: () => <div />,
-        filter: (
           <Stack>
+            <TextInput
+              label='Пошук по ID'
+              leftSection={<Search size={16} />}
+              rightSection={
+                <ActionIcon size='sm' variant='transparent' c='dimmed' onClick={() => setFilterById('')}>
+                  <X size={14} />
+                </ActionIcon>
+              }
+              value={filterById}
+              onChange={(e) => setFilterById(e.currentTarget.value)}
+            />
             <TextInput
               label='Пошук за повним ім`ям'
               leftSection={<Search size={16} />}
@@ -86,7 +77,7 @@ export default function UsersList() {
             />
           </Stack>
         ),
-        filtering: filterByName !== '' || filterByEmail !== '',
+        filtering: filterByName !== '' || filterByEmail !== '' || filterById !== '',
       },
       {
         accessor: 'persmissions',

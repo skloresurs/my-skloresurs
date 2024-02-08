@@ -1,11 +1,12 @@
 'use client';
 
-import { ActionIcon, Flex, Group, Stack, Text } from '@mantine/core';
-import { map } from 'lodash';
+import { ActionIcon, Avatar, Flex, Group, Stack, Text } from '@mantine/core';
+import { map, split } from 'lodash';
 import { Pencil } from 'lucide-react';
 import { DataTable, DataTableColumn } from 'mantine-datatable';
 import Link from 'next/link';
 import React, { useState } from 'react';
+import sha256 from 'sha256';
 import useSWR from 'swr';
 
 import PermissionBadge from '@/components/PermissionBadge';
@@ -20,20 +21,25 @@ interface IResponse {
 
 const columns: DataTableColumn<IUserRequest>[] = [
   {
-    accessor: 'id',
-    width: '175px',
-    render: ({ id }) => <Text ta='center'>{id}</Text>,
-  },
-  {
     accessor: 'name',
     title: "Повне ім'я",
     width: '300px',
-    render: ({ fullname, email, id_1c }) => (
-      <Stack gap='0px'>
-        <Text size='lg'>{fullname}</Text>
-        <Text>{email}</Text>
-        <Text size='xs'>{id_1c}</Text>
-      </Stack>
+    render: ({ fullname, email, id, id_1c }) => (
+      <Flex align='center' wrap='nowrap' gap='sm'>
+        <Avatar alt={fullname} radius='xl' src={`https://gravatar.com/avatar/${sha256(email)}?s=64`}>
+          {`${split(fullname, ' ')?.at(0)?.at(0) ?? ''}${split(fullname, ' ')?.at(1)?.at(0) ?? ''}`}
+        </Avatar>
+        <Stack gap='0px'>
+          <Text size='lg'>{fullname}</Text>
+          <Text>{email}</Text>
+          <Text size='xs' c='dimmed'>
+            {id}
+          </Text>
+          <Text size='xs' c='dimmed'>
+            {id_1c}
+          </Text>
+        </Stack>
+      </Flex>
     ),
   },
   {
