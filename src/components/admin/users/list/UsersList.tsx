@@ -32,7 +32,7 @@ export default function UsersList() {
       {
         accessor: 'id',
         title: 'Права / ID',
-        width: '150px',
+        width: '175px',
         render: ({ id, title }) => (
           <Flex gap='xs' wrap='nowrap'>
             <ChevronRight className={twMerge(includes(expandedIds, id) ? 'rotate-90' : '', 'duration-300')} />
@@ -58,7 +58,7 @@ export default function UsersList() {
       {
         accessor: 'name',
         title: "Повне ім'я",
-        width: '50%',
+        width: '300px',
         render: () => <div />,
         filter: (
           <Stack>
@@ -91,13 +91,13 @@ export default function UsersList() {
       {
         accessor: 'persmissions',
         title: 'Права',
-        width: '25%',
+        width: '200px',
         render: () => <div />,
       },
       {
         accessor: 'actions',
         title: '',
-        width: '10%',
+        width: '100px',
         render: () => <div />,
       },
     ],

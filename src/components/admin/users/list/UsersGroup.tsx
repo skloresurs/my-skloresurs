@@ -21,13 +21,13 @@ interface IResponse {
 const columns: DataTableColumn<IUserRequest>[] = [
   {
     accessor: 'id',
-    width: '150px',
+    width: '175px',
     render: ({ id }) => <Text ta='center'>{id}</Text>,
   },
   {
     accessor: 'name',
     title: "Повне ім'я",
-    width: '50%',
+    width: '300px',
     render: ({ fullname, email, id_1c }) => (
       <Stack gap='0px'>
         <Text size='lg'>{fullname}</Text>
@@ -38,7 +38,7 @@ const columns: DataTableColumn<IUserRequest>[] = [
   },
   {
     accessor: 'persmissions',
-    width: '25%',
+    width: '200px',
     render: ({ permissions }) => (
       <Flex gap='xs' wrap='wrap'>
         {map(permissions, (e) => (
@@ -49,7 +49,7 @@ const columns: DataTableColumn<IUserRequest>[] = [
   },
   {
     accessor: 'actions',
-    width: '10%',
+    width: '100px',
     render: (record) => (
       <Group gap='sm' justify='right' wrap='nowrap'>
         <ActionIcon component={Link} variant='subtle' color='yellow' href={`/admin/users/${record.id}`}>
