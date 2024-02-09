@@ -18,6 +18,10 @@ export const userSchema = pgTable('auth_user', {
     .array()
     .default(sql`'{}'`)
     .notNull(),
+  active_days: text('active_days')
+    .array()
+    .default(sql`'{}'`)
+    .notNull(),
 });
 
 export const sessionSchema = pgTable('user_session', {

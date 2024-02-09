@@ -2,12 +2,13 @@
 
 import { ScrollArea, Tabs, Title } from '@mantine/core';
 import { map } from 'lodash';
-import { BookKey, Boxes, Fingerprint, Info, Key, Shield } from 'lucide-react';
+import { Activity, BookKey, Boxes, Fingerprint, Info, Key, Shield } from 'lucide-react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import React, { ReactNode, useMemo } from 'react';
 import useSWR from 'swr';
 
 import User1CTab from '@/components/admin/users/User1CTab';
+import UserActivityTab from '@/components/admin/users/UserActivityTab';
 import UserInfoTab from '@/components/admin/users/UserInfoTab';
 import UserPermissionsTab from '@/components/admin/users/UserPermissionsTab';
 import UserSecurityTab from '@/components/admin/users/UserSecurityTab';
@@ -57,6 +58,10 @@ export default function UserSettingsPage({ params }: { params: { id: string } })
         {
           content: <UserSecurityTab user={user} />,
           key: 'security',
+        },
+        {
+          content: <UserActivityTab user={user} />,
+          key: 'activity',
         },
       ] as const,
     [user]
@@ -112,6 +117,9 @@ export default function UserSettingsPage({ params }: { params: { id: string } })
             </Tabs.Tab>
             <Tabs.Tab value='sessions' leftSection={<Fingerprint size={20} />}>
               Сесії
+            </Tabs.Tab>
+            <Tabs.Tab value='activity' leftSection={<Activity size={20} />}>
+              Активність
             </Tabs.Tab>
           </Tabs.List>
         </ScrollArea>

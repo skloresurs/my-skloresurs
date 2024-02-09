@@ -2,6 +2,7 @@ import '@mantine/core/styles.layer.css';
 import '@mantine/notifications/styles.layer.css';
 import '@mantine/nprogress/styles.layer.css';
 import 'mantine-datatable/styles.layer.css';
+import '@mantine/dates/styles.css';
 import './globals.css';
 
 import { ColorSchemeScript } from '@mantine/core';
