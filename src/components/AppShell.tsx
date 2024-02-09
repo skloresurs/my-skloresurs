@@ -4,16 +4,17 @@ import { AppShell as MantineAppShell, Burger, Divider, Flex, ScrollArea, Text, T
 import { useDisclosure } from '@mantine/hooks';
 import { notifications } from '@mantine/notifications';
 import axios from 'axios';
-import { constant, map } from 'lodash';
+import { constant } from 'lodash';
+import { Boxes, Database, GanttChartSquare, LogOut, Shield, Truck, UserRound } from 'lucide-react';
 import Image from 'next/image';
 import React, { ReactNode } from 'react';
 import useSWR, { useSWRConfig } from 'swr';
 
-import navbar, { footer } from '@/components/navbar/NavBar';
-import NavBarItemCompnent from '@/components/navbar/NavBarItem';
 import verifyPermission from '@/libs/verify-permission';
 import { IUserMeRequest } from '@/types/User';
 
+import NavBarItem from './navbar/NavBarItem';
+import NavBarItemAdminUsers from './navbar/NavBarItemAdminUsers';
 import { errorNotificationProps, loadingNotificationProps, successNotificationProps } from './Notification';
 
 const NotificationTitle = 'Вихід';
@@ -72,23 +73,33 @@ export default function AppShell({ children }: { children: ReactNode }) {
           <Text ta='center'>Вітаємо, {user?.fullname}</Text>
         </MantineAppShell.Section>
         <MantineAppShell.Section grow my='md' component={ScrollArea}>
-          {map(navbar, (e) => (
-            <NavBarItemCompnent
-              toogle={toggle}
-              key={e.id}
-              item={e}
-              hide={!verifyPermission(user?.permissions ?? [], e.permission, true)}
+          <NavBarItem label='Замовлення' href='/' icon={<Boxes />} />
+          <NavBarItem
+            label='Менеджер'
+            href='/manager'
+            icon={<GanttChartSquare />}
+            hide={!verifyPermission(user?.permissions ?? [], 'Manager')}
+          />
+          <NavBarItem
+            label='Маршрути'
+            href='/manager'
+            icon={<Truck />}
+            hide={!verifyPermission(user?.permissions ?? [], 'Driver')}
+          />
+          <NavBarItem label='Адмін-панель' icon={<Shield />} hide={!verifyPermission(user?.permissions ?? [], 'Admin')}>
+            <NavBarItemAdminUsers user={user} />
+            <NavBarItem
+              label='Користувачі 1C'
+              href='/admin/users-1c'
+              icon={<Database />}
+              hide={!verifyPermission(user?.permissions ?? [], 'Admin')}
             />
-          ))}
+          </NavBarItem>
         </MantineAppShell.Section>
         <MantineAppShell.Section>
           <Divider my='md' />
-          {map(
-            footer(() => logout()),
-            (e) => (
-              <NavBarItemCompnent key={e.id} toogle={toggle} item={e} hide={false} />
-            )
-          )}
+          <NavBarItem label='Профіль' href='/profile' icon={<UserRound />} />
+          <NavBarItem label='Вийти' icon={<LogOut />} onClick={logout} />
         </MantineAppShell.Section>
       </MantineAppShell.Navbar>
 

@@ -8,6 +8,7 @@ import React, { useMemo, useState } from 'react';
 import { twMerge } from 'tailwind-merge';
 
 import { permissionsEnum } from '@/libs/db/schema';
+import { permissions } from '@/libs/dictionaries';
 
 import UsersGroup from './UsersGroup';
 
@@ -18,7 +19,7 @@ interface IGroup {
 
 const groups: IGroup[] = [
   { id: 'none', title: 'Без прав' },
-  ...map(sortBy(permissionsEnum.enumValues), (e) => ({ id: e, title: e })),
+  ...map(sortBy(permissionsEnum.enumValues), (e) => ({ id: e, title: permissions.get(e) ?? e })),
 ];
 
 export default function UsersList() {

@@ -1,63 +1,49 @@
 import { NavLink } from '@mantine/core';
-import { map } from 'lodash';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import React, { memo } from 'react';
+import React, { memo, useMemo } from 'react';
 
-import { NavBarItem, RootNavBarItem } from '@/components/navbar/NavBar';
+type Props = {
+  children?: React.ReactNode;
+  label: string;
+  description?: string;
+  icon: React.ReactNode;
+  hide?: boolean;
+  rightSection?: React.ReactNode;
+} & ({ href: string; onClick?: undefined } | { href?: undefined; onClick?: () => void });
 
-interface IProps {
-  item: NavBarItem | RootNavBarItem;
-  hide: boolean;
-  toogle: () => void;
-}
-
-const isRootItem = (item: NavBarItem): item is RootNavBarItem => 'children' in item;
-
-function NavBarItemCompnent({ item, hide = false, toogle }: IProps) {
+function NavBarItem({ children, hide, href, label, icon, description, rightSection, onClick }: Props) {
   const pathname = usePathname();
+
+  const props = useMemo(
+    () => ({
+      label,
+      leftSection: icon,
+      description,
+      active: pathname === href,
+      opened: !rightSection,
+      rightSection,
+    }),
+    [description, href, icon, label, pathname, rightSection]
+  );
 
   if (hide) {
     return null;
   }
 
-  if (isRootItem(item) && item.children) {
+  if (href) {
     return (
-      <NavLink label={item.label} leftSection={item.icon} description={item.description} opened>
-        {map(item.children, (e) => (
-          <NavBarItemCompnent key={e.id} item={e} hide={hide} toogle={toogle} />
-        ))}
+      <NavLink component={Link} href={href} {...props}>
+        {children}
       </NavLink>
     );
   }
 
-  if (item.href) {
-    return (
-      <NavLink
-        component={Link}
-        label={item.label}
-        leftSection={item.icon}
-        href={item.href ?? '#'}
-        description={item.description}
-        active={pathname === item.href}
-        onClick={() => toogle()}
-      />
-    );
-  }
-
   return (
-    <NavLink
-      label={item.label}
-      leftSection={item.icon}
-      description={item.description}
-      onClick={() => {
-        if (item.onClick) {
-          item.onClick();
-        }
-        toogle();
-      }}
-    />
+    <NavLink onClick={onClick} {...props}>
+      {children}
+    </NavLink>
   );
 }
 
-export default memo(NavBarItemCompnent);
+export default memo(NavBarItem);
