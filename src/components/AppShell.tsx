@@ -82,7 +82,7 @@ export default function AppShell({ children }: { children: ReactNode }) {
           />
           <NavBarItem
             label='Маршрути'
-            href='/manager'
+            href='/routes'
             icon={<Truck />}
             hide={!verifyPermission(user?.permissions ?? [], 'Driver')}
           />

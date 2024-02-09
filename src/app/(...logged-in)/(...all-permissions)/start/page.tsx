@@ -23,7 +23,7 @@ export default function Start() {
   }
 
   if (verifyPermission(user.permissions ?? [], 'Driver')) {
-    redirect('/driver');
+    redirect('/routes');
   }
 
   redirect('/');
