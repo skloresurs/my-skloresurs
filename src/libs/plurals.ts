@@ -15,6 +15,11 @@ const plurals: IPlural = {
     few: 'піраміди',
     many: 'пірамід',
   },
+  session: {
+    one: 'сесія',
+    few: 'сесії',
+    many: 'сесій',
+  },
 };
 
 export default plurals;

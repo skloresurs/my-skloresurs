@@ -1,10 +1,11 @@
 import { and, arrayOverlaps, count, like, not } from 'drizzle-orm';
-import { find } from 'lodash';
+import { find, map } from 'lodash';
 import { NextRequest, NextResponse } from 'next/server';
 
 import apiErrorHandler from '@/libs/api-error-handler';
 import { db } from '@/libs/db';
 import { permissionsEnum, userSchema } from '@/libs/db/schema';
+import { auth } from '@/libs/lucia';
 import { getSession } from '@/libs/sessions';
 import verifyIp from '@/libs/verify-ip';
 import { verifyPermissionServer } from '@/libs/verify-permission';
@@ -61,7 +62,14 @@ export async function GET(req: NextRequest) {
       .limit(Number(pageSize))
       .offset((Number(page) - 1) * Number(pageSize));
 
-    return NextResponse.json({ total: total[0]?.count, users }, { status: 200 });
+    const usersWithSessions = await Promise.all(
+      map(users, async (user) => ({
+        ...user,
+        sessions: await auth.getAllUserSessions(user.id),
+      }))
+    );
+
+    return NextResponse.json({ total: total[0]?.count, users: usersWithSessions }, { status: 200 });
   } catch (error) {
     return apiErrorHandler(req, error);
   }

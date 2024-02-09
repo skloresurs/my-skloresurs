@@ -1,15 +1,17 @@
 'use client';
 
-import { ActionIcon, Avatar, Flex, Group, Stack, Text } from '@mantine/core';
+import { ActionIcon, Avatar, Badge, Flex, Group, Stack, Text } from '@mantine/core';
 import { map, split } from 'lodash';
 import { Pencil } from 'lucide-react';
 import { DataTable, DataTableColumn } from 'mantine-datatable';
 import Link from 'next/link';
+import plural from 'plurals-cldr';
 import React, { useState } from 'react';
 import sha256 from 'sha256';
 import useSWR from 'swr';
 
 import PermissionBadge from '@/components/PermissionBadge';
+import plurals from '@/libs/plurals';
 import { IUserRequest } from '@/types/User';
 
 import RemoveUserButton from './RemoveUserButton';
@@ -58,6 +60,7 @@ const columns: DataTableColumn<IUserRequest>[] = [
     width: '100px',
     render: (record) => (
       <Group gap='sm' justify='right' wrap='nowrap'>
+        <Badge variant='light'>{`${record.sessions.length} ${plurals.session![plural('uk', record.sessions.length) ?? '']}`}</Badge>
         <ActionIcon component={Link} variant='subtle' color='yellow' href={`/admin/users/${record.id}`}>
           <Pencil />
         </ActionIcon>
