@@ -75,6 +75,14 @@
       "node": true
     }
   },
+  "overrides": [
+    {
+      "extends": ["plugin:package-json/recommended"],
+      "files": ["package.json"],
+      "parser": "jsonc-eslint-parser",
+      "plugins": ["package-json"]
+    }
+  ],
   "rules": {
     // no-secrets plugin
     "no-secrets/no-secrets": "error",
@@ -141,10 +149,10 @@
 
     // Remove unused-imports
     "@typescript-eslint/no-unused-vars": "off",
-    "unused-imports/no-unused-imports":  [ "error", {"vars": "local", "varsIgnorePattern": "React|createElement"}],
+    "unused-imports/no-unused-imports": ["error", { "vars": "local", "varsIgnorePattern": "React|createElement" }],
     "unused-imports/no-unused-vars": [
       "warn",
       { "vars": "all", "varsIgnorePattern": "^_", "args": "after-used", "argsIgnorePattern": "^_" }
     ]
   }
-} 
+}

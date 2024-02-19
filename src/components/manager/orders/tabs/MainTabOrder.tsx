@@ -63,7 +63,8 @@ function MainTabOrder({ order }: { order: IManaderOrder }) {
           )}
         </DrawerItem>
       )}
-      <DrawerItem label='Заблоковано для виробництва' value={order.locked ? 'Так' : 'Ні'} />
+      <DrawerItem label='Заблоковано для виробництва' value={order.locked || order.lockedComment ? 'Так' : 'Ні'} />
+      {order.lockedComment && <DrawerItem label='Коментар блокування' value={order.lockedComment} />}
       <Divider my='sm' />
       {order.finance && (
         <>

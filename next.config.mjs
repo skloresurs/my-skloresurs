@@ -1,6 +1,11 @@
 import './src/env.mjs';
 
 import withPWAInit from '@ducanh2912/next-pwa';
+import withBundleAnalyzer from '@next/bundle-analyzer';
+
+const withBunbleAbalyzerWithConfig = withBundleAnalyzer({
+  enabled: process.env.ANALYZE === 'true',
+})
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -29,4 +34,4 @@ const withPWA = withPWAInit({
   disable: process.env.NODE_ENV === 'development',
 });
 
-export default withPWA(nextConfig);
+export default withBunbleAbalyzerWithConfig(withPWA(nextConfig));

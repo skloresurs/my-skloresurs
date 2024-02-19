@@ -17,6 +17,7 @@ export default interface IManaderOrder {
   location: string;
 
   locked: boolean;
+  lockedComment: string;
 
   finance?: {
     bill: string;
