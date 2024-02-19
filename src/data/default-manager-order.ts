@@ -12,6 +12,7 @@ const DefaultManagerOrder: IManaderOrder = {
   status: '',
   location: 'ЛокаціяЛокаціяЛокаціяЛокаціяЛокація',
   locked: true,
+  lockedComment: '',
   finance: {
     bill: '0000000000',
     total: 100_000,
