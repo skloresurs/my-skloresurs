@@ -1,7 +1,7 @@
 'use client';
 
 import { Accordion, Flex, Stack, Text } from '@mantine/core';
-import { map } from 'lodash';
+import { map, split } from 'lodash';
 import { AlarmClockCheck } from 'lucide-react';
 import React, { memo } from 'react';
 import useSWR from 'swr';
@@ -49,7 +49,11 @@ function TasksTab({ route }: IProps) {
             <Stack gap='sm'>
               <DrawerItem label='Менеджер' value={task.manager} />
               <Flex align='center' gap='xs'>
-                <Text>{task.description}</Text>
+                <Stack gap='0px' className='flex-1'>
+                  {map(split(task.description, '¶'), (d) => (
+                    <Text>{d}</Text>
+                  ))}
+                </Stack>
                 <TelephoneButton tel={task.description.match(phoneRegexp)?.at(0)} />
               </Flex>
             </Stack>
