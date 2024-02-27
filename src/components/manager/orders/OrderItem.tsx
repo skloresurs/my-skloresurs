@@ -4,6 +4,7 @@ import dayjs from 'dayjs';
 import { trim } from 'lodash';
 import { CircleUserRound, Lock, MapPin, Receipt } from 'lucide-react';
 import React, { memo, useMemo } from 'react';
+import { twMerge } from 'tailwind-merge';
 
 import IManaderOrder from '@/types/ManagerOrder';
 
@@ -28,7 +29,10 @@ function OrderItem({ order }: IProps) {
         h='100%'
         withBorder={order.locked}
         onClick={open}
-        className='cursor-pointer select-none duration-300 hover:bg-[var(--mantine-color-dark-5)]'
+        className={twMerge(
+          'cursor-pointer select-none duration-300 hover:bg-[var(--mantine-color-dark-5)]',
+          order.locked && 'bg-[#3d2f2f] hover:bg-[#4d3f3f]'
+        )}
       >
         <Flex justify='space-between' gap='sm'>
           <Title order={2}>{order.id}</Title>
