@@ -22,7 +22,7 @@ function MainTab({ route }: IProps) {
         <StatusBadge route={route} />
       </DrawerItem>
       <Space />
-      <DrawerItem label='Дата' value={dayjs(route.date).format('DD.MM.YYYY HH:mm:ss')} />
+      <DrawerItem label='Дата' value={dayjs(route.date).format('DD.MM.YYYY')} />
       <DrawerItem label='Виїзд' value={dayjs(route.departure).format('HH:mm:ss')} />
       <DrawerItem label='Транспорт' value={route.transport} />
       <Space />
