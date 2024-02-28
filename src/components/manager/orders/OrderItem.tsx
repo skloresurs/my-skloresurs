@@ -17,7 +17,7 @@ interface IProps {
 }
 
 function OrderItem({ order }: IProps) {
-  const createdAt = useMemo(() => dayjs(order.createdAt), [order.createdAt]);
+  const shipmentAt = useMemo(() => dayjs(order.shipmentAt), [order.shipmentAt]);
   const [opened, { open, close }] = useDisclosure(false);
 
   return (
@@ -37,8 +37,7 @@ function OrderItem({ order }: IProps) {
         <Flex justify='space-between' gap='sm'>
           <Title order={2}>{order.id}</Title>
           <Flex direction='column' align='end' c='dimmed'>
-            <Text size='sm'>{createdAt.format('DD.MM.YYYY')}</Text>
-            <Text size='sm'>{createdAt.format('HH:mm:ss')}</Text>
+            <Text size='sm'>{shipmentAt.format('DD.MM.YYYY')}</Text>
           </Flex>
         </Flex>
         {order.locked && (
