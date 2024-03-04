@@ -7,10 +7,10 @@ import logger from '@/libs/logger';
 import { getSession } from '@/libs/sessions';
 import verifyIp from '@/libs/verify-ip';
 import { verifyPermissionServer } from '@/libs/verify-permission';
-import IManaderOrder from '@/types/ManagerOrder';
+import { Order } from '@/types/manager/Order';
 
 interface IResponse {
-  data: IManaderOrder[];
+  data: Order[];
 }
 
 export async function GET(req: NextRequest) {
@@ -55,7 +55,7 @@ export async function GET(req: NextRequest) {
     }
 
     const response = await axios1cMain
-      .get<IResponse>(`/manager/order?${query}`, {
+      .get<IResponse>(`/manager/orders?${query}`, {
         headers: {
           user: session.user.id_1c,
         },

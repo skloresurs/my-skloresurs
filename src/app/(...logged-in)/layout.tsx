@@ -52,7 +52,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           noop
         );
       } catch (error) {
-        /* empty */
+        noop();
       }
     }
   }, [supportRef, user]);

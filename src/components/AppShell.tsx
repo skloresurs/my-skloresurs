@@ -103,7 +103,7 @@ export default function AppShell({ children }: { children: ReactNode }) {
         </MantineAppShell.Section>
       </MantineAppShell.Navbar>
 
-      <MantineAppShell.Main pb='135px'>{children}</MantineAppShell.Main>
+      <MantineAppShell.Main>{children}</MantineAppShell.Main>
     </MantineAppShell>
   );
 }

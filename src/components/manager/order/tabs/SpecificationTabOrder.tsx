@@ -6,16 +6,15 @@ import { Sigma } from 'lucide-react';
 import { DataTable, DataTableSortStatus } from 'mantine-datatable';
 import React, { memo, useMemo, useState } from 'react';
 import { useWindowSize } from 'react-use';
-import useSWR from 'swr';
 
-import IManaderOrder, { IGoods } from '@/types/ManagerOrder';
+import { FullOrder } from '@/types/manager/Order';
+import { IGoods } from '@/types/ManagerOrder';
 
 interface IProps {
-  order: IManaderOrder;
+  order: FullOrder;
 }
 
 function SpecificationTabOrder({ order }: IProps) {
-  const { data: goods, isValidating } = useSWR<IGoods[]>(`/api/manager/order/${order.id}`);
   const { height } = useWindowSize();
   const [sortStatus, setSortStatus] = useState<DataTableSortStatus<IGoods>>({
     columnAccessor: 'position',
@@ -25,9 +24,9 @@ function SpecificationTabOrder({ order }: IProps) {
   const records = useMemo(
     () =>
       sortStatus.direction === 'desc'
-        ? sortBy(goods, sortStatus.columnAccessor).toReversed()
-        : sortBy(goods, sortStatus.columnAccessor),
-    [goods, sortStatus]
+        ? sortBy(order.googs, sortStatus.columnAccessor).toReversed()
+        : sortBy(order.googs, sortStatus.columnAccessor),
+    [order, sortStatus]
   );
 
   const groups = useMemo(
@@ -53,14 +52,14 @@ function SpecificationTabOrder({ order }: IProps) {
         columns: [
           {
             accessor: 'amount',
-            footer: <span>{Math.round(reduce(goods, (a, b) => a + b.amount, 0) * 1000) / 1000}</span>,
+            footer: <span>{Math.round(reduce(order.googs, (a, b) => a + b.amount, 0) * 1000) / 1000}</span>,
             footerClassName: 'bg-dark-6',
             sortable: true,
             title: 'S m²',
           },
           {
             accessor: 'pieces',
-            footer: <span>{Math.round(reduce(goods, (a, b) => a + b.pieces, 0) * 1000) / 1000}</span>,
+            footer: <span>{Math.round(reduce(order.googs, (a, b) => a + b.pieces, 0) * 1000) / 1000}</span>,
             footerClassName: 'bg-dark-6',
             sortable: true,
             title: 'Шт.',
@@ -73,7 +72,7 @@ function SpecificationTabOrder({ order }: IProps) {
         columns: [
           {
             accessor: 'in',
-            footer: <span>{Math.round(reduce(goods, (a, b) => a + b.in, 0) * 1000) / 1000}</span>,
+            footer: <span>{Math.round(reduce(order.googs, (a, b) => a + b.in, 0) * 1000) / 1000}</span>,
             footerClassName: 'bg-dark-6',
             render: (record: IGoods) => <span>{record.in === 0 ? '' : record.in}</span>,
             sortable: true,
@@ -87,7 +86,7 @@ function SpecificationTabOrder({ order }: IProps) {
         columns: [
           {
             accessor: 'out',
-            footer: <span>{Math.round(reduce(goods, (a, b) => a + b.out, 0) * 1000) / 1000}</span>,
+            footer: <span>{Math.round(reduce(order.googs, (a, b) => a + b.out, 0) * 1000) / 1000}</span>,
             footerClassName: 'bg-dark-6',
             render: (record: IGoods) => <span>{record.out === 0 ? '' : record.out}</span>,
             sortable: true,
@@ -98,11 +97,11 @@ function SpecificationTabOrder({ order }: IProps) {
         title: 'Клієнт',
       },
     ],
-    [goods]
+    [order]
   );
 
   return (
-    <Container mt='sm' fluid p='0' h={height - 200}>
+    <Container mt='sm' fluid p='0' h={height - 300}>
       <DataTable
         withTableBorder
         withColumnBorders
@@ -112,7 +111,6 @@ function SpecificationTabOrder({ order }: IProps) {
         sortStatus={sortStatus}
         onSortStatusChange={setSortStatus}
         minHeight='100%'
-        fetching={isValidating}
         noRecordsText='Немає даних'
         idAccessor='position'
         rowExpansion={{

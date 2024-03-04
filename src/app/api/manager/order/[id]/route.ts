@@ -7,10 +7,10 @@ import logger from '@/libs/logger';
 import { getSession } from '@/libs/sessions';
 import verifyIp from '@/libs/verify-ip';
 import { verifyPermissionServer } from '@/libs/verify-permission';
-import { IGoods } from '@/types/ManagerOrder';
+import { FullOrder } from '@/types/manager/Order';
 
 interface IResponse {
-  data: IGoods[];
+  data: FullOrder[];
 }
 
 export async function GET(req: NextRequest, { params }: { params: { id: string } }) {
@@ -19,11 +19,13 @@ export async function GET(req: NextRequest, { params }: { params: { id: string }
     await verifyIp(req, session.user.allowed_ips);
     verifyPermissionServer(session.user.permissions, 'Manager');
 
-    const response = await axios1cMain.get<IResponse>(`/manager/order/${params.id}`).catch((error) => {
-      logger.error(error.response.data);
-      throw ServerError;
-    });
-    return NextResponse.json(response.data.data, { status: 200 });
+    const response = await axios1cMain
+      .get<IResponse>(`/manager/orders/${params.id}`, { headers: { user: session.user.id_1c } })
+      .catch((error) => {
+        logger.error(error.response.data);
+        throw ServerError;
+      });
+    return NextResponse.json(response.data, { status: 200 });
   } catch (error) {
     return apiErrorHandler(req, error);
   }

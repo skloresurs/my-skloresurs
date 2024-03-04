@@ -1,7 +1,7 @@
 import { Filter } from 'lucide-react';
 import React from 'react';
 
-import ManagerClientPage from '@/components/manager/ManagerClientPage';
+import OrdersList from '@/components/manager/orders/OrdersList';
 import TitleBar from '@/components/TitleBar';
 import InstrumentCheckbox from '@/components/ui/instruments/InstrumentCheckbox';
 import InstrumentPopover from '@/components/ui/instruments/InstrumentPopover';
@@ -41,7 +41,7 @@ export default function ManagerPage() {
         </InstrumentPopover>
       </InstrumentsBar>
       <div className='mt-3'>
-        <ManagerClientPage />
+        <OrdersList />
       </div>
     </>
   );

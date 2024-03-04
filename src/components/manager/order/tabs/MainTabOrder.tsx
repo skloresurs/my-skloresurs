@@ -9,13 +9,13 @@ import React, { memo } from 'react';
 
 import DrawerItem from '@/components/ui/DrawerItem';
 import TelephoneButton from '@/components/ui/TelephoneButton';
-import IManaderOrder from '@/types/ManagerOrder';
+import { FullOrder } from '@/types/manager/Order';
 
 import StatusBadge from '../../StatusBadge';
 
 const NotFoundData = 'Не вказано';
 
-function MainTabOrder({ order }: { order: IManaderOrder }) {
+function MainTabOrder({ order }: { order: FullOrder }) {
   const moneyFormatProps = {
     suffix: ` ${order.finance?.currency}`,
     decimalScale: 2,
@@ -54,9 +54,9 @@ function MainTabOrder({ order }: { order: IManaderOrder }) {
       {order.finance && (
         <DrawerItem
           label='Номер рахунку'
-          value={order.finance.bill.length > 0 ? trim(order.finance.bill) : NotFoundData}
+          value={(order.finance.bill?.length ?? 0) > 0 ? trim(order.finance.bill) : NotFoundData}
         >
-          {order.finance.bill.length > 0 && (
+          {(order.finance.bill?.length ?? 0) > 0 && (
             <ActionIcon size='lg' component={Link} href={`/manager?bill=${order.finance.bill}`} variant='light'>
               <Filter size={18} />
             </ActionIcon>

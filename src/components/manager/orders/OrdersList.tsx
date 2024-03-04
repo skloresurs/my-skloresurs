@@ -6,8 +6,7 @@ import { useSearchParams } from 'next/navigation';
 import React from 'react';
 import useSWR from 'swr';
 
-import DefaultManagerOrder from '@/data/default-manager-order';
-import IManaderOrder from '@/types/ManagerOrder';
+import { Order } from '@/types/manager/Order';
 
 import ErrorAlert from '../../ui/ErrorAlert';
 import GridSkeleton from '../../ui/GridSkeleton';
@@ -24,7 +23,7 @@ const span: StyleProp<number> = {
 };
 
 interface IResponse {
-  data: IManaderOrder[];
+  data: Order[];
   total: number;
 }
 
@@ -35,7 +34,7 @@ export default function OrdersList() {
   if (isValidating) {
     return (
       <GridSkeleton span={span} times={12}>
-        <OrderItem order={DefaultManagerOrder} />
+        <div className='h-[250px]' />
       </GridSkeleton>
     );
   }

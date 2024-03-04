@@ -1,106 +1,87 @@
-import { Card, Drawer, Flex, Group, NumberFormatter, Tabs, Text, Title } from '@mantine/core';
-import { useDisclosure } from '@mantine/hooks';
+import { Card, Flex, Group, NumberFormatter, Text, Title } from '@mantine/core';
 import dayjs from 'dayjs';
 import { trim } from 'lodash';
 import { CircleUserRound, Lock, MapPin, Receipt } from 'lucide-react';
+import Link from 'next/link';
 import React, { memo, useMemo } from 'react';
 import { twMerge } from 'tailwind-merge';
 
-import IManaderOrder from '@/types/ManagerOrder';
+import { Order } from '@/types/manager/Order';
 
 import StatusBadge from '../StatusBadge';
-import MainTabOrder from './tabs/MainTabOrder';
-import SpecificationTabOrder from './tabs/SpecificationTabOrder';
 
 interface IProps {
-  order: IManaderOrder;
+  order: Order;
 }
 
 function OrderItem({ order }: IProps) {
   const shipmentAt = useMemo(() => dayjs(order.shipmentAt), [order.shipmentAt]);
-  const [opened, { open, close }] = useDisclosure(false);
 
   return (
-    <>
-      <Card
-        shadow='sm'
-        radius='md'
-        p='md'
-        h='100%'
-        withBorder={order.locked}
-        onClick={open}
-        className={twMerge(
-          'cursor-pointer select-none duration-300 hover:bg-[var(--mantine-color-dark-5)]',
-          order.locked && 'bg-[#3d2f2f] hover:bg-[#4d3f3f]'
-        )}
-      >
-        <Flex justify='space-between' gap='sm'>
-          <Title order={2}>{order.id}</Title>
-          <Flex direction='column' align='end' c='dimmed'>
-            <Text size='sm'>{shipmentAt.format('DD.MM.YYYY')}</Text>
-          </Flex>
+    <Card
+      component={Link}
+      href={`/manager/${order.id}`}
+      shadow='sm'
+      radius='md'
+      p='md'
+      h='100%'
+      withBorder={order.locked}
+      className={twMerge(
+        'cursor-pointer select-none duration-300 hover:bg-[var(--mantine-color-dark-5)]',
+        order.locked && 'bg-[#3d2f2f] hover:bg-[#4d3f3f]'
+      )}
+    >
+      <Flex justify='space-between' gap='sm'>
+        <Title order={2}>{order.id}</Title>
+        <Flex direction='column' align='end' c='dimmed'>
+          <Text size='sm'>{shipmentAt.format('DD.MM.YYYY')}</Text>
         </Flex>
-        {order.locked && (
-          <Group c='red' gap='4px' mb='4px'>
-            <Lock size={16} />
-            <Text>Заблоковано</Text>
-          </Group>
-        )}
-        <StatusBadge status={order.status} />
-        <Flex mt='xs' direction='column' c='dimmed' gap='4px'>
-          <Flex gap='4px'>
-            <CircleUserRound />
-            <Text className='line-clamp-1'>{trim(order.agent?.name)}</Text>
-          </Flex>
-          <Flex gap='4px'>
-            <MapPin />
-            <Text className='line-clamp-1 w-full text-left'>{trim(order.location)}</Text>
-          </Flex>
-          {order.finance && (
-            <Flex gap='4px'>
-              <Receipt />
-              <Text c={order.finance.total - order.finance.pay > 0 ? 'red' : 'dimmed'}>
-                <NumberFormatter
-                  value={order.finance.final}
-                  suffix={` ${order.finance.currency}`}
-                  decimalScale={2}
-                  thousandSeparator=' '
-                  fixedDecimalScale
-                />
-              </Text>
-            </Flex>
-          )}
+      </Flex>
+      {order.locked && (
+        <Group c='red' gap='4px' mb='4px'>
+          <Lock size={16} />
+          <Text>Заблоковано</Text>
+        </Group>
+      )}
+      <StatusBadge status={order.status} />
+      <Flex mt='xs' direction='column' c='dimmed' gap='4px'>
+        <Flex gap='4px'>
+          <CircleUserRound />
+          <Text className='line-clamp-1'>{trim(order.agent?.name)}</Text>
         </Flex>
-        <div className='flex-1' />
+        <Flex gap='4px'>
+          <MapPin />
+          <Text className='line-clamp-1 w-full text-left'>{trim(order.location)}</Text>
+        </Flex>
         {order.finance && (
-          <Flex direction='row-reverse'>
-            <NumberFormatter
-              className='text-lg'
-              value={order.finance.total}
-              suffix={` ${order.finance.currency}`}
-              decimalScale={2}
-              thousandSeparator=' '
-              fixedDecimalScale
-            />
+          <Flex gap='4px'>
+            <Receipt />
+            <Text c={order.finance.total - order.finance.pay > 0 ? 'red' : 'dimmed'}>
+              <NumberFormatter
+                value={order.finance.final}
+                suffix={` ${order.finance.currency}`}
+                decimalScale={2}
+                thousandSeparator=' '
+                fixedDecimalScale
+              />
+            </Text>
           </Flex>
         )}
-      </Card>
-
-      <Drawer opened={opened} onClose={close} position='right' title='Замовлення' size='xl'>
-        <Tabs defaultValue='main'>
-          <Tabs.List>
-            <Tabs.Tab value='main'>Інформація</Tabs.Tab>
-            <Tabs.Tab value='specification'>Специфікація</Tabs.Tab>
-          </Tabs.List>
-          <Tabs.Panel value='main'>
-            <MainTabOrder order={order} />
-          </Tabs.Panel>
-          <Tabs.Panel value='specification'>
-            <SpecificationTabOrder order={order} />
-          </Tabs.Panel>
-        </Tabs>
-      </Drawer>
-    </>
+      </Flex>
+      <div className='flex-1' />
+      {order.finance && (
+        <Flex direction='row-reverse'>
+          <NumberFormatter
+            className='text-lg'
+            value={order.finance.total}
+            suffix={` ${order.finance.currency}`}
+            decimalScale={2}
+            thousandSeparator=' '
+            fixedDecimalScale
+          />
+        </Flex>
+      )}
+    </Card>
   );
 }
 
