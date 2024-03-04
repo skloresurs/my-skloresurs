@@ -24,8 +24,8 @@ function SpecificationTabOrder({ order }: IProps) {
   const records = useMemo(
     () =>
       sortStatus.direction === 'desc'
-        ? sortBy(order.googs, sortStatus.columnAccessor).toReversed()
-        : sortBy(order.googs, sortStatus.columnAccessor),
+        ? sortBy(order.goods, sortStatus.columnAccessor).toReversed()
+        : sortBy(order.goods, sortStatus.columnAccessor),
     [order, sortStatus]
   );
 
@@ -52,14 +52,14 @@ function SpecificationTabOrder({ order }: IProps) {
         columns: [
           {
             accessor: 'amount',
-            footer: <span>{Math.round(reduce(order.googs, (a, b) => a + b.amount, 0) * 1000) / 1000}</span>,
+            footer: <span>{Math.round(reduce(order.goods, (a, b) => a + b.amount, 0) * 1000) / 1000}</span>,
             footerClassName: 'bg-dark-6',
             sortable: true,
             title: 'S m²',
           },
           {
             accessor: 'pieces',
-            footer: <span>{Math.round(reduce(order.googs, (a, b) => a + b.pieces, 0) * 1000) / 1000}</span>,
+            footer: <span>{Math.round(reduce(order.goods, (a, b) => a + b.pieces, 0) * 1000) / 1000}</span>,
             footerClassName: 'bg-dark-6',
             sortable: true,
             title: 'Шт.',
@@ -72,7 +72,7 @@ function SpecificationTabOrder({ order }: IProps) {
         columns: [
           {
             accessor: 'in',
-            footer: <span>{Math.round(reduce(order.googs, (a, b) => a + b.in, 0) * 1000) / 1000}</span>,
+            footer: <span>{Math.round(reduce(order.goods, (a, b) => a + b.in, 0) * 1000) / 1000}</span>,
             footerClassName: 'bg-dark-6',
             render: (record: IGoods) => <span>{record.in === 0 ? '' : record.in}</span>,
             sortable: true,
@@ -86,7 +86,7 @@ function SpecificationTabOrder({ order }: IProps) {
         columns: [
           {
             accessor: 'out',
-            footer: <span>{Math.round(reduce(order.googs, (a, b) => a + b.out, 0) * 1000) / 1000}</span>,
+            footer: <span>{Math.round(reduce(order.goods, (a, b) => a + b.out, 0) * 1000) / 1000}</span>,
             footerClassName: 'bg-dark-6',
             render: (record: IGoods) => <span>{record.out === 0 ? '' : record.out}</span>,
             sortable: true,

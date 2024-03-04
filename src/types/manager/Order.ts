@@ -34,7 +34,7 @@ type FullOrder = Order & {
   createdAt: string;
   lockedComment: string;
   contact: PersonData;
-  googs: Goods[];
+  goods: Goods[];
 };
 
 export type { FullOrder, Order };
