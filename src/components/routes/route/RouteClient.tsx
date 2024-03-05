@@ -5,6 +5,7 @@ import { redirect } from 'next/navigation';
 import React from 'react';
 import useSWR from 'swr';
 
+import getGroupedStations from '@/libs/station-group';
 import { FullRoute } from '@/types/route/Route';
 
 import TabCountBadge from '../TabCountBadge';
@@ -28,7 +29,7 @@ export default function RouteClient({ id }: { id: string }) {
       <Tabs.List>
         <Tabs.Tab value='main'>Основна інформація</Tabs.Tab>
         <Tabs.Tab value='points'>
-          Шляхи <TabCountBadge count={data.routes.length} />
+          Шляхи <TabCountBadge count={getGroupedStations(data.routes ?? []).length} />
         </Tabs.Tab>
         <Tabs.Tab value='pyramids'>
           Піраміди <TabCountBadge count={data.pyramids.length} />
