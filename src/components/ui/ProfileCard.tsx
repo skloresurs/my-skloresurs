@@ -4,11 +4,12 @@ import { Button, Divider, Flex, Paper, Stack, Text, TextInput, Title } from '@ma
 import { useDisclosure } from '@mantine/hooks';
 import { notifications } from '@mantine/notifications';
 import axios from 'axios';
+import { every, map } from 'lodash';
 import React, { memo } from 'react';
 import useSWR, { useSWRConfig } from 'swr';
 import { ZodSchema } from 'zod';
 
-import { mutateAdminUsersList } from '@/libs/mutate';
+import { mutateAllKeysStartingWith } from '@/libs/mutate';
 import { IUserMeRequest } from '@/types/User';
 
 import { errorNotificationProps, loadingNotificationProps, successNotificationProps } from '../Notification';
@@ -59,14 +60,20 @@ function ProfileCard({
     if (!submitSettings) return null;
 
     if (submitSettings?.validators) {
-      for (const validator of submitSettings.validators) {
+      const result = map(submitSettings?.validators, (validator) => {
+        const status = validator.validator.safeParse(inputValue).success;
         if (!validator.validator.safeParse(inputValue).success) {
-          return notifications.show({
+          notifications.show({
             message: validator.errorMessage,
             title: NotificationTitle,
             ...errorNotificationProps,
           });
         }
+        return status;
+      });
+
+      if (!every(result, true)) {
+        return null;
       }
     }
 
@@ -94,7 +101,7 @@ function ProfileCard({
     if (!response || response.status !== 200) return disableLoading();
     await mutate(`/api/user/${submitSettings?.userId}`);
 
-    await mutateAdminUsersList();
+    await mutateAllKeysStartingWith('/api/user/');
 
     if (activeUser?.id === submitSettings.userId) {
       await mutate('/api/user');

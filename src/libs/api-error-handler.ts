@@ -7,12 +7,14 @@ import CustomError from '@/classes/CustomError';
 import logger from './logger';
 
 /**
- * Handles errors thrown by the API.
+ * A function that handles API errors and returns a NextResponse.
  *
- * @param {unknown} error - The error object.
- * @param {string} [key] - Optional key parameter.
- * @return {NextResponse} The response object.
+ * @param {NextRequest} req - the request object
+ * @param {unknown} error - the error object
+ * @param {string} [key] - an optional key parameter
+ * @return {NextResponse} the response object
  */
+
 export default function apiErrorHandler(req: NextRequest, error: unknown, key?: string): NextResponse {
   if (error instanceof CustomError) {
     logger.error(`API Error: [${error.code}] - ${error} (${req.nextUrl.toString()})`);

@@ -4,7 +4,6 @@ import { Affix, Button, MantineProvider, Transition } from '@mantine/core';
 import { useWindowScroll } from '@mantine/hooks';
 import { Notifications } from '@mantine/notifications';
 import { NavigationProgress } from '@mantine/nprogress';
-import TawkMessengerReact from '@tawk.to/tawk-messenger-react';
 import { StatusCodes } from 'http-status-codes';
 import { includes } from 'lodash';
 import { ChevronUp } from 'lucide-react';
@@ -16,7 +15,6 @@ import { SWRConfig } from 'swr';
 import { env } from '@/env.mjs';
 import fetcher from '@/libs/fetcher';
 import theme from '@/libs/theme';
-import useSupportStore from '@/stores/support';
 
 import AuthProvider from './AuthProvider';
 
@@ -45,7 +43,6 @@ const NO_RETRY_STATUS_CODES: StatusCodes[] = [
 
 export default function Providers({ children }: Readonly<{ children: React.ReactNode }>) {
   const [scroll, scrollTo] = useWindowScroll();
-  const supportRef = useSupportStore((state) => state.supportRef);
   return (
     <MantineProvider theme={theme} defaultColorScheme='dark'>
       <Notifications position='top-right' />
@@ -68,11 +65,6 @@ export default function Providers({ children }: Readonly<{ children: React.React
           revalidateOnReconnect: false,
         }}
       >
-        <TawkMessengerReact
-          propertyId={env.NEXT_PUBLIC_TAWK_PROPERTY_ID}
-          widgetId={env.NEXT_PUBLIC_TAWK_WIDGET_ID}
-          ref={supportRef}
-        />
         <Next13ProgressBar
           height='4px'
           color='var(--mantine-color-blue-5)'

@@ -17,10 +17,6 @@ import LoadingOverlay from '@/components/LoadingOverlay';
 import TitleBar from '@/components/TitleBar';
 import { IUserRequest } from '@/types/User';
 
-const defaultProps = {
-  backHref: '/admin/users',
-};
-
 interface Tab {
   key: string;
   content: ReactNode;
@@ -70,7 +66,7 @@ export default function UserSettingsPage({ params }: { params: { id: string } })
   if (isValidating)
     return (
       <>
-        <TitleBar title='Керування користувачем' {...defaultProps} />
+        <TitleBar title='Керування користувачем' enableBackButton />
         <div className='relative h-[400px] w-full'>
           <LoadingOverlay />
         </div>
@@ -81,14 +77,14 @@ export default function UserSettingsPage({ params }: { params: { id: string } })
     if (error.response?.status === 404) {
       return (
         <>
-          <TitleBar title='Керування користувачем' {...defaultProps} />
+          <TitleBar title='Керування користувачем' enableBackButton />
           <Title order={2}>Користувача не знайдено</Title>
         </>
       );
     }
     return (
       <>
-        <TitleBar title='Керування користувачем' {...defaultProps} />
+        <TitleBar title='Керування користувачем' enableBackButton />
         <Title order={2}>Невідома помилка</Title>
       </>
     );
@@ -96,7 +92,7 @@ export default function UserSettingsPage({ params }: { params: { id: string } })
 
   return (
     <>
-      <TitleBar title={`Керування користувачем ${user?.fullname}`} {...defaultProps} />
+      <TitleBar title={`Керування користувачем ${user?.fullname}`} enableBackButton />
       <Tabs value={activeTab} onChange={(key) => router.push(`/admin/users/${user?.id}?tab=${key}`)}>
         <ScrollArea type='never'>
           <Tabs.List className='flex-nowrap'>

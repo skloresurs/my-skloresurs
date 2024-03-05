@@ -6,6 +6,12 @@ import { RequiredOneConnections, UserNotFoundError } from '@/classes/CustomError
 import { db } from './db';
 import { userSchema } from './db/schema';
 
+/**
+ * Asynchronously verifies the connections for a given user ID.
+ *
+ * @param {string} id - the ID of the user to verify connections for
+ * @return {Promise<void>} a Promise that resolves with no value upon successful verification
+ */
 export default async function verifyConnections(id: string): Promise<void> {
   const user = await db
     .select()

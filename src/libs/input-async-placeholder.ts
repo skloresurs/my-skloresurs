@@ -1,3 +1,5 @@
+// TODO: need rewrite
+
 export default function getInputPlaceholder(
   isValidating: boolean,
   error: unknown,

@@ -1,10 +1,10 @@
 import { Badge } from '@mantine/core';
 import React, { memo } from 'react';
 
-import IRoute from '@/types/Route';
+import { Route } from '@/types/route/Route';
 
 interface IProps {
-  route: IRoute;
+  route: Route;
 }
 
 function StatusBadge({ route }: IProps) {

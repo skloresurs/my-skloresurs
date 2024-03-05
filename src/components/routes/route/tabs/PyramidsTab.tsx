@@ -6,24 +6,21 @@ import { Globe, UserRound } from 'lucide-react';
 import { nanoid } from 'nanoid';
 import plural from 'plurals-cldr';
 import React, { memo, useMemo, useState } from 'react';
-import useSWR from 'swr';
 
 import DrawerItem from '@/components/ui/DrawerItem';
-import ErrorAlert from '@/components/ui/ErrorAlert';
-import InfoAlert from '@/components/ui/InfoAlert';
-import LoadingAlert from '@/components/ui/LoadingAlert';
 import OutsideLinkButton from '@/components/ui/OutsideLinkButton';
 import TelephoneButton from '@/components/ui/TelephoneButton';
 import { getGoogleMapsRouteUrl } from '@/libs/maps-api';
 import plurals from '@/libs/plurals';
-import IRoute, { IPyramid } from '@/types/Route';
-import IUser1C from '@/types/User1CData';
+import PersonData from '@/types/1c/User';
+import Pyramid from '@/types/route/Pyramid';
+import { FullRoute } from '@/types/route/Route';
 
 interface IProps {
-  route: IRoute;
+  route: FullRoute;
 }
 
-function groupByAddress(pyramids: IPyramid[]) {
+function groupByAddress(pyramids: Pyramid[]) {
   return reduce(
     groupBy(pyramids, 'address'),
     (acc, value) => {
@@ -49,16 +46,12 @@ function groupByAddress(pyramids: IPyramid[]) {
 }
 
 function PyramidsTab({ route }: IProps) {
-  const { data, isValidating, error, mutate } = useSWR<IPyramid[]>(`/api/routes/${route.id}/pyramids`);
   const [mainAccordion, setMainAccordion] = useState<string | null>(null);
 
   const pyramidsGroup = useMemo(() => {
-    if (!data) {
-      return [];
-    }
     return orderBy(
       reduce(
-        groupBy(data, 'agent.id'),
+        groupBy(route.pyramids, 'agent.id'),
         (acc, value) => {
           const v = value[0];
           if (!v || !v.agent) return acc;
@@ -72,34 +65,15 @@ function PyramidsTab({ route }: IProps) {
         },
         [] as {
           id: string;
-          agent: IUser1C;
-          manager: IUser1C | null;
-          value: IPyramid[];
+          agent: PersonData;
+          manager: PersonData;
+          value: Pyramid[];
         }[]
       ),
       (e) => e.value.length,
       'desc'
     );
-  }, [data]);
-
-  if (isValidating) {
-    return <LoadingAlert title='Завантаженя' description='Завантаження пірамід, будь ласка зачекайте...' mt='sm' />;
-  }
-
-  if (error) {
-    return (
-      <ErrorAlert
-        title='Помилка завантаження'
-        description='Не вдалось завантажити список пірамід'
-        refresh={mutate}
-        mt='sm'
-      />
-    );
-  }
-
-  if (!data || data.length === 0) {
-    return <InfoAlert title='Немає пірамід' description='Не знадено жодної піраміди' mt='sm' />;
-  }
+  }, [route]);
 
   return (
     <Accordion mt='sm' value={mainAccordion} onChange={setMainAccordion}>

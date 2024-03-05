@@ -8,7 +8,7 @@ import { getSession } from '@/libs/sessions';
 import verifyIp from '@/libs/verify-ip';
 import { verifyPermissionServer } from '@/libs/verify-permission';
 
-export async function GET(req: NextRequest, { params }: { params: { id: string; type: string } }) {
+export async function GET(req: NextRequest, { params }: { params: { id: string } }) {
   try {
     const session = await getSession(req);
     await verifyIp(req, session.user.allowed_ips);
@@ -19,7 +19,7 @@ export async function GET(req: NextRequest, { params }: { params: { id: string; 
     }
 
     const response = await axios1cMain
-      .get(`/driver/routes/${params.id}/${params.type}`, {
+      .get(`/driver/routes/${params.id}`, {
         headers: {
           user: session.user.id_1c,
         },
@@ -29,7 +29,7 @@ export async function GET(req: NextRequest, { params }: { params: { id: string; 
         throw ServerError;
       });
 
-    return NextResponse.json(response.data.data ?? [], {
+    return NextResponse.json(response.data, {
       status: 200,
     });
   } catch (error) {

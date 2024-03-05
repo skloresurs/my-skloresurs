@@ -3,6 +3,12 @@ import axios from 'axios';
 import { ReCatpchaError } from '@/classes/CustomError';
 import { env } from '@/env.mjs';
 
+/**
+ * Verify ReCaptcha token.
+ *
+ * @param {string} token - The ReCaptcha token to verify
+ * @return {Promise<void>} A Promise that resolves when the ReCaptcha token is verified
+ */
 export default async function verifyReCaptcha(token: string): Promise<void> {
   const reCaptchaKey: string = env.RECAPTCHA_SECRET_KEY;
 

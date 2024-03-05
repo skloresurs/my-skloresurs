@@ -16,9 +16,9 @@ export async function GET(req: NextRequest) {
 
     const now = dayjs(new Date()).format('YYYY-MM-DD');
 
-    const active_days = [...new Set([...session.user.active_days, now])];
+    const activeDays = [...new Set([...session.user.active_days, now])];
 
-    await db.update(userSchema).set({ active_days }).where(eq(userSchema.id, session.user.id)).execute();
+    await db.update(userSchema).set({ active_days: activeDays }).where(eq(userSchema.id, session.user.id)).execute();
     return NextResponse.json(
       {
         ...session.user,

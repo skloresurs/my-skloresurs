@@ -10,6 +10,13 @@ import IUser from '@/types/User';
 
 import { auth } from './lucia';
 
+/**
+ * Asynchronously generates a session for a user based on the incoming request and user ID.
+ *
+ * @param {NextRequest} request - the incoming request object
+ * @param {string} userId - the ID of the user for whom the session is being generated
+ * @return {Promise<ISession>} a promise that resolves to the generated session
+ */
 export default async function generateSession(request: NextRequest, userId: string): Promise<ISession> {
   const parser = new UAParser(request.headers.get('user-agent') ?? '');
   return auth.createSession({
@@ -21,7 +28,14 @@ export default async function generateSession(request: NextRequest, userId: stri
   });
 }
 
-export async function setSession(request: NextRequest, userId: string) {
+/**
+ * Sets the session for a specific user based on the provided request and user ID.
+ *
+ * @param {NextRequest} request - The request object containing the necessary information.
+ * @param {string} userId - The unique identifier of the user.
+ * @return {Promise<void>} A promise indicating the completion of the session setting process.
+ */
+export async function setSession(request: NextRequest, userId: string): Promise<void> {
   const session = await generateSession(request, userId);
   const authRequest = auth.handleRequest(request.method, context);
   await auth.deleteDeadUserSessions(userId);
@@ -32,6 +46,12 @@ interface ISessionExtended extends ISession {
   user: IUser;
 }
 
+/**
+ * Retrieves the session information for the given request.
+ *
+ * @param {NextRequest} request - the request object
+ * @return {Promise<ISessionExtended>} the extended session information
+ */
 export async function getSession(request: NextRequest): Promise<ISessionExtended> {
   const authRequest = auth.handleRequest(request.method, context);
   const session = await authRequest.validate();

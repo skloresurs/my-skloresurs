@@ -6,7 +6,7 @@ import TitleBar from '@/components/TitleBar';
 export default async function ManagerOrderPage({ params }: { params: { id: string } }) {
   return (
     <>
-      <TitleBar title={`Замовлення #${params.id}`} backHref='/manager' />
+      <TitleBar title={`Замовлення #${params.id}`} enableBackButton />
       <OrderClient id={params.id} />
     </>
   );

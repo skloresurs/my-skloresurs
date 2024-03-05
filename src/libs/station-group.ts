@@ -1,8 +1,10 @@
 import { filter, groupBy, reduce, reject } from 'lodash';
 import { nanoid } from 'nanoid';
 
-import { IStation } from '@/types/Route';
-import IUser1C from '@/types/User1CData';
+import PersonData from '@/types/1c/User';
+import RouteData from '@/types/route/RouteData';
+
+// TODO: Need rewrite
 
 interface IGroupData {
   id: string;
@@ -10,11 +12,11 @@ interface IGroupData {
   time: string;
   address: string;
   addressShort: string;
-  contact: IUser1C | null;
-  value: IStation[];
+  contact?: PersonData;
+  value: RouteData[];
 }
 
-function group(acc: IGroupData[], value: IStation[]) {
+function group(acc: IGroupData[], value: RouteData[]) {
   const v = value[0];
   if (!v) return acc;
   acc.push({
@@ -29,7 +31,7 @@ function group(acc: IGroupData[], value: IStation[]) {
   return acc;
 }
 
-export default function getGroupedStations(stations: IStation[]) {
+export default function getGroupedStations(stations: RouteData[]) {
   const orderWithoutOrder = reduce(
     groupBy(filter(stations, ['order', 0]), 'addressShort'),
     (acc, value) => group(acc, value),
@@ -41,6 +43,6 @@ export default function getGroupedStations(stations: IStation[]) {
   ]);
 }
 
-export function getStationCount(stations: IStation[]) {
+export function getStationCount(stations: RouteData[]) {
   return getGroupedStations(stations).length;
 }

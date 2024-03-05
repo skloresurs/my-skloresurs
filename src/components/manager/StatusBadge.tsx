@@ -84,10 +84,12 @@ function getStatusConfig(status: string): IStatusConfig {
   }
 }
 
-const StatusBadge = ({ status }: { status: string }) => (
-  <Badge className='cursor-default select-none' variant='light' color={getStatusConfig(status).color}>
-    {getStatusConfig(status).name}
-  </Badge>
-);
+function StatusBadge({ status }: { status: string }) {
+  return (
+    <Badge className='cursor-default select-none' variant='light' color={getStatusConfig(status).color}>
+      {getStatusConfig(status).name}
+    </Badge>
+  );
+}
 
 export default memo(StatusBadge);

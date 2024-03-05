@@ -7,8 +7,8 @@ import { DataTable, DataTableSortStatus } from 'mantine-datatable';
 import React, { memo, useMemo, useState } from 'react';
 import { useWindowSize } from 'react-use';
 
-import { FullOrder } from '@/types/manager/Order';
-import { IGoods } from '@/types/ManagerOrder';
+import type Goods from '@/types/manager/Goods';
+import type { FullOrder } from '@/types/manager/Order';
 
 interface IProps {
   order: FullOrder;
@@ -16,7 +16,7 @@ interface IProps {
 
 function SpecificationTabOrder({ order }: IProps) {
   const { height } = useWindowSize();
-  const [sortStatus, setSortStatus] = useState<DataTableSortStatus<IGoods>>({
+  const [sortStatus, setSortStatus] = useState<DataTableSortStatus<Goods>>({
     columnAccessor: 'position',
     direction: 'asc',
   });
@@ -74,7 +74,7 @@ function SpecificationTabOrder({ order }: IProps) {
             accessor: 'in',
             footer: <span>{Math.round(reduce(order.goods, (a, b) => a + b.in, 0) * 1000) / 1000}</span>,
             footerClassName: 'bg-dark-6',
-            render: (record: IGoods) => <span>{record.in === 0 ? '' : record.in}</span>,
+            render: (record: Goods) => <span>{record.in === 0 ? '' : record.in}</span>,
             sortable: true,
             title: 'Шт.',
           },
@@ -88,7 +88,7 @@ function SpecificationTabOrder({ order }: IProps) {
             accessor: 'out',
             footer: <span>{Math.round(reduce(order.goods, (a, b) => a + b.out, 0) * 1000) / 1000}</span>,
             footerClassName: 'bg-dark-6',
-            render: (record: IGoods) => <span>{record.out === 0 ? '' : record.out}</span>,
+            render: (record: Goods) => <span>{record.out === 0 ? '' : record.out}</span>,
             sortable: true,
             title: 'Шт.',
           },
@@ -114,6 +114,7 @@ function SpecificationTabOrder({ order }: IProps) {
         noRecordsText='Немає даних'
         idAccessor='position'
         rowExpansion={{
+          // eslint-disable-next-line react/no-unstable-nested-components -- Library component
           content: ({ record }) => (
             <Stack w='100%' p='md' gap='md'>
               <Stack gap='0'>

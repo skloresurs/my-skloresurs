@@ -6,12 +6,12 @@ import React, { memo } from 'react';
 
 import DrawerItem from '@/components/ui/DrawerItem';
 import TelephoneButton from '@/components/ui/TelephoneButton';
-import IRoute from '@/types/Route';
+import { FullRoute } from '@/types/route/Route';
 
-import StatusBadge from '../StatusBadge';
+import StatusBadge from '../../StatusBadge';
 
 interface IProps {
-  route: IRoute;
+  route: FullRoute;
 }
 
 function MainTab({ route }: IProps) {

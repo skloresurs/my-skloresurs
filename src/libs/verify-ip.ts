@@ -5,6 +5,13 @@ import { NextRequest } from 'next/server';
 
 import { ForbriddenIpError } from '@/classes/CustomError';
 
+/**
+ * Asynchronously verifies the IP address of the request against a list of allowed IP addresses.
+ *
+ * @param {NextRequest} req - the request object
+ * @param {string[] | null} ips - an optional array of IP addresses to compare against
+ * @return {Promise<void>} a promise that resolves with no value, or rejects with a ForbiddenIpError
+ */
 export default async function verifyIp(req: NextRequest, ips?: string[] | null): Promise<void> {
   if (!ips || ips.length === 0) return;
 

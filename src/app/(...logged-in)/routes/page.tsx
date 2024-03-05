@@ -1,7 +1,7 @@
 import { Filter } from 'lucide-react';
 import React from 'react';
 
-import RoutesList from '@/components/routes/RoutesList';
+import RoutesList from '@/components/routes/list/RoutesList';
 import TitleBar from '@/components/TitleBar';
 import InstrumentCheckbox from '@/components/ui/instruments/InstrumentCheckbox';
 import InstrumentPopover from '@/components/ui/instruments/InstrumentPopover';

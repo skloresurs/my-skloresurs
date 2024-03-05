@@ -7,10 +7,10 @@ import logger from '@/libs/logger';
 import { getSession } from '@/libs/sessions';
 import verifyIp from '@/libs/verify-ip';
 import { verifyPermissionServer } from '@/libs/verify-permission';
-import IRoute from '@/types/Route';
+import { Route } from '@/types/route/Route';
 
 interface IResponse {
-  data: IRoute[];
+  data: Route[];
 }
 
 export async function GET(req: NextRequest) {

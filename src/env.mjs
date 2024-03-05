@@ -3,6 +3,10 @@ import { createEnv } from '@t3-oss/env-nextjs';
 import _ from 'lodash';
 import { z } from 'zod';
 
+/**
+ * Creates an environment configuration.
+ * @returns {EnvironmentConfiguration}
+ */
 export const env = createEnv({
   client: {
     NEXT_PUBLIC_GOOGLE_MAPS_API_KEY: z
@@ -15,22 +19,10 @@ export const env = createEnv({
         required_error: 'NEXT_PUBLIC_RECAPTCHA_SITE_KEY is required [https://www.google.com/recaptcha/admin/]',
       })
       .min(1),
-    NEXT_PUBLIC_TAWK_API_KEY: z.string({
-      required_error: 'NEXT_PUBLIC_TAWK_API_KEY is required [https://dashboard.tawk.to/]',
-    }),
-    NEXT_PUBLIC_TAWK_PROPERTY_ID: z.string({
-      required_error: 'NEXT_PUBLIC_TAWK_PROPERTY_ID is required [https://dashboard.tawk.to/]',
-    }),
-    NEXT_PUBLIC_TAWK_WIDGET_ID: z.string({
-      required_error: 'NEXT_PUBLIC_TAWK_WIDGET_ID is required [https://dashboard.tawk.to/]',
-    }),
   },
   experimental__runtimeEnv: {
     NEXT_PUBLIC_GOOGLE_MAPS_API_KEY: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY,
     NEXT_PUBLIC_RECAPTCHA_SITE_KEY: process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY,
-    NEXT_PUBLIC_TAWK_API_KEY: process.env.NEXT_PUBLIC_TAWK_API_KEY,
-    NEXT_PUBLIC_TAWK_PROPERTY_ID: process.env.NEXT_PUBLIC_TAWK_PROPERTY_ID,
-    NEXT_PUBLIC_TAWK_WIDGET_ID: process.env.NEXT_PUBLIC_TAWK_WIDGET_ID,
   },
   onInvalidAccess: (error) => {
     throw new Error(`❌ Attempted to access a server-side environment variable on the client: ${error}`);

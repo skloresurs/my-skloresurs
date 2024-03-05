@@ -6,23 +6,20 @@ import { map, reduce } from 'lodash';
 import { Compass } from 'lucide-react';
 import { DataTable } from 'mantine-datatable';
 import React, { memo, useMemo } from 'react';
-import useSWR from 'swr';
 
 import DrawerItem from '@/components/ui/DrawerItem';
 import OutsideLinkButton from '@/components/ui/OutsideLinkButton';
 import TelephoneButton from '@/components/ui/TelephoneButton';
 import { getGoogleMapsRouteUrl } from '@/libs/maps-api';
 import getGroupedStations from '@/libs/station-group';
-import IRoute, { IStation } from '@/types/Route';
+import { FullRoute } from '@/types/route/Route';
 
 interface IProps {
-  route: IRoute;
+  route: FullRoute;
 }
 
 function StationsTab({ route }: IProps) {
-  const { data, isValidating } = useSWR<IStation[]>(`/api/routes/${route.id}/stations`);
-
-  const ordersList = useMemo(() => getGroupedStations(data ?? []), [data]);
+  const ordersList = useMemo(() => getGroupedStations(route.routes ?? []), [route]);
 
   const googleMapFullRoute = useMemo(() => getGoogleMapsRouteUrl(map(ordersList, 'addressShort')), [ordersList]);
 
@@ -35,7 +32,6 @@ function StationsTab({ route }: IProps) {
         records={ordersList}
         minHeight={ordersList.length === 0 ? '150px' : 'auto'}
         noRecordsText='Не знайдено жодного шляху'
-        fetching={isValidating}
         idAccessor='id'
         columns={[
           {
@@ -80,6 +76,7 @@ function StationsTab({ route }: IProps) {
           },
         ]}
         rowExpansion={{
+          // eslint-disable-next-line react/no-unstable-nested-components -- Library component
           content: ({ record: station }) => (
             <div className='bg-[var(--mantine-color-dark-9)]'>
               <Stack gap='8px' p='8px'>
@@ -119,6 +116,7 @@ function StationsTab({ route }: IProps) {
                     },
                   ]}
                   rowExpansion={{
+                    // eslint-disable-next-line react/no-unstable-nested-components -- Library component
                     content: ({ record: order }) => (
                       <div className='bg-[var(--mantine-color-dark-9)]'>
                         <Stack w='100%' p='md' gap='md'>

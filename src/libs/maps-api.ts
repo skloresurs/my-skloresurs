@@ -6,6 +6,12 @@ const GOOGLE_MAPS_ROUTE_API = 'https://www.google.com/maps/dir/?api=1';
 
 const SYMBOLS_FOR_REMOVE = ['№'];
 
+/**
+ * Returns a Google Maps route URL based on the provided waypoints.
+ *
+ * @param {string[]} waypoints - An array of waypoints to be used in the route.
+ * @return {string | null} - The generated Google Maps route URL or null if no waypoints are provided.
+ */
 export function getGoogleMapsRouteUrl(waypoints: string[]): string | null {
   const filteredWaypoints = filter(waypoints, (waypoint) => lowerCase(waypoint) !== 'самовивіз');
 

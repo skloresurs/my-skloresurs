@@ -3,24 +3,9 @@ import React, { memo } from 'react';
 
 interface IProps {
   count: number;
-  data?: unknown[];
-  error?: unknown;
-  isLoading?: boolean;
 }
 
-function TabCountBadge({ count, data, error, isLoading }: IProps) {
-  if (isLoading) {
-    return null;
-  }
-
-  if (error || !data) {
-    return (
-      <Badge color='red' variant='light'>
-        Помилка
-      </Badge>
-    );
-  }
-
+function TabCountBadge({ count }: IProps) {
   if (count === 0) {
     return null;
   }

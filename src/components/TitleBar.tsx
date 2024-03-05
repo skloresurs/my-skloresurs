@@ -2,28 +2,28 @@
 
 import { ActionIcon, Divider, Text, Title } from '@mantine/core';
 import { ArrowLeft } from 'lucide-react';
-import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import React, { memo } from 'react';
 
 interface IProps {
   title: string;
   description?: string;
-  backHref?: string;
+  enableBackButton?: true;
 }
 
-function TitleBar({ title, description, backHref }: IProps) {
+function TitleBar({ title, description, enableBackButton }: IProps) {
+  const router = useRouter();
   return (
     <div>
       <Text span>
-        {backHref && (
+        {enableBackButton && (
           <ActionIcon
             display='inline-flex'
             variant='subtle'
             aria-label='Back'
             mr='sm'
             h='100%'
-            component={Link}
-            href={backHref}
+            onClick={() => router.back()}
           >
             <ArrowLeft size={28} />
           </ActionIcon>

@@ -107,6 +107,7 @@ export default function UsersList() {
       rowExpansion={{
         allowMultiple: true,
         expanded: { recordIds: expandedIds, onRecordIdsChange: setExpandedIds },
+        // eslint-disable-next-line react/no-unstable-nested-components -- Library component
         content: ({ record }) => (
           <UsersGroup
             groupId={record.id}

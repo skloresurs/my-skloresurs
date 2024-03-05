@@ -9,7 +9,7 @@ import React, { memo, useCallback } from 'react';
 import useSWR, { mutate } from 'swr';
 
 import { errorNotificationProps, loadingNotificationProps, successNotificationProps } from '@/components/Notification';
-import { mutateAdminUsersList } from '@/libs/mutate';
+import { mutateAllKeysStartingWith } from '@/libs/mutate';
 import { IUserMeRequest, IUserRequest } from '@/types/User';
 
 const NotificationTitle = 'Керування користувачами';
@@ -39,7 +39,7 @@ function RemoveUserButton({ user, params }: IProps) {
     });
 
     if (!response || response.status !== 200) return null;
-    await mutateAdminUsersList();
+    await mutateAllKeysStartingWith('/api/admin');
     mutate(`/api/users?${params}`);
 
     return notifications.update({
