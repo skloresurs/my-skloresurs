@@ -64,7 +64,7 @@ export default function RoutesList() {
         ))}
       </Grid>
 
-      <Pagination query={query} total={Math.ceil(data.total / 60)} baseRoute='/routes' />
+      <Pagination query={query} total={Math.ceil(data.total / 60)} />
     </>
   );
 }

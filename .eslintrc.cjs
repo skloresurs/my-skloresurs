@@ -90,5 +90,7 @@ module.exports = {
     'react/require-default-props': 'off',
     'react/jsx-props-no-spreading': 'off',
     'react/jsx-no-bind': 'off',
+
+    'tailwindcss/no-custom-classname': ['warn', { whitelist: ['text-truncate-scroll'] }],
   },
 };

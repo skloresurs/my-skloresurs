@@ -1,23 +1,22 @@
 'use client';
 
-import { Button, Flex, Popover } from '@mantine/core';
+import { ActionIcon, Flex, Popover } from '@mantine/core';
 import React, { memo } from 'react';
 
 interface IProps {
-  buttonLabel: string;
-  buttonIcon?: React.ReactNode;
+  buttonIcon: React.ReactNode;
   children: React.ReactNode;
 }
 
-function InstrumentPopover({ buttonLabel, buttonIcon, children }: IProps) {
+function InstrumentPopover({ buttonIcon, children }: IProps) {
   const [opened, setOpened] = React.useState(false);
 
   return (
     <Popover width={350} position='bottom-end' withArrow shadow='md' opened={opened} onChange={setOpened}>
       <Popover.Target>
-        <Button onClick={() => setOpened((o) => !o)} leftSection={buttonIcon}>
-          {buttonLabel}
-        </Button>
+        <ActionIcon size='lg' onClick={() => setOpened((o) => !o)}>
+          {buttonIcon}
+        </ActionIcon>
       </Popover.Target>
       <Popover.Dropdown>
         <Flex direction='column' w='100%' gap='4px'>

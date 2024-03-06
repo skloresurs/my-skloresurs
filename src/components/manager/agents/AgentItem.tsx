@@ -1,52 +1,46 @@
-import { Card, Flex, Group, Text, Title } from '@mantine/core';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { Card, Divider, Flex, Stack, Text, Title } from '@mantine/core';
+import { ArrowUpRight } from 'lucide-react';
+import Link from 'next/link';
 import plural from 'plurals-cldr';
 import React, { memo } from 'react';
 
+import TruncateScroll from '@/components/ui/TruncateScroll';
 import plurals from '@/libs/plurals';
-import { IAgent } from '@/types/ManagerOrder';
+import Agent from '@/types/manager/Agent';
 
 interface IProps {
-  agent: IAgent;
+  agent: Agent;
 }
 
 function AgentItem({ agent }: IProps) {
-  const query = useSearchParams();
-  const router = useRouter();
-  function onClick() {
-    const current = new URLSearchParams([...query.entries()]);
-
-    current.delete('page');
-    current.delete('group-by-agents');
-    current.set('agent', agent.id);
-
-    const filter = current.toString();
-    const newQuery = filter ? `?${filter}` : '';
-
-    router.replace(`/manager${newQuery}`);
-  }
   return (
     <Card
+      component={Link}
+      href={`/manager?agent=${agent.id}`}
       shadow='sm'
       radius='md'
-      onClick={onClick}
       p='md'
+      w='100%'
       h='100%'
-      className='cursor-pointer select-none duration-300 hover:bg-[var(--mantine-color-dark-5)]'
+      className='group cursor-pointer select-none duration-300 hover:bg-[var(--mantine-color-dark-5)]'
     >
-      <Flex align='center' gap='xs' direction='row' justify='space-between'>
-        <Group>
-          <Title order={2} size='h3'>
+      <Stack className='relative' gap='4px'>
+        <TruncateScroll>
+          <Title order={2} size='lg' className='text-truncate-scroll'>
             {agent.name}
           </Title>
-          <Text c='dimmed' size='xs'>
-            {agent.id}
+        </TruncateScroll>
+        <Text size='xs' c='dimmed'>
+          {agent.id}
+        </Text>
+        <Divider />
+        <Flex justify='space-between' align='center'>
+          <Text>
+            {agent.orders} {plurals.order![plural('uk', agent.orders) ?? '']}
           </Text>
-        </Group>
-        <Flex mt='xs' direction='row-reverse'>{`${agent.orders} ${
-          plurals.order![plural('uk', agent.orders) ?? '']
-        }`}</Flex>
-      </Flex>
+          <ArrowUpRight className='duration-300 group-hover:text-[var(--mantine-color-blue-5)]' />
+        </Flex>
+      </Stack>
     </Card>
   );
 }

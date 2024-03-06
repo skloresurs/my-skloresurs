@@ -75,7 +75,7 @@ export default function OrdersList() {
           </Grid.Col>
         ))}
       </Grid>
-      <Pagination baseRoute='/manager' total={Math.ceil(data.total / 50)} query={query} />
+      <Pagination total={Math.ceil(data.total / 50)} query={query} />
     </>
   );
 }

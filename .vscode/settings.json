@@ -49,6 +49,5 @@
   },
   "[yaml]": {
     "editor.defaultFormatter": "dbaeumer.vscode-eslint"
-  },
-  "prettier.enable": false
+  }
 }

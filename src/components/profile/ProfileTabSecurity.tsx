@@ -1,3 +1,5 @@
+'use client';
+
 import { Center, Divider, Flex, Paper, Stack, Text, TextInput, Title } from '@mantine/core';
 import { map } from 'lodash';
 import React, { memo } from 'react';

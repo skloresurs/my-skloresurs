@@ -1,15 +1,15 @@
 import { Center, Pagination as MantinePagination } from '@mantine/core';
 import Link from 'next/link';
-import { ReadonlyURLSearchParams } from 'next/navigation';
+import { ReadonlyURLSearchParams, usePathname } from 'next/navigation';
 import React, { memo } from 'react';
 
 interface PaginationProps {
   total: number;
   query: ReadonlyURLSearchParams;
-  baseRoute: string;
 }
-function Pagination({ total, query, baseRoute }: PaginationProps) {
+function Pagination({ total, query }: PaginationProps) {
   const searchParam = new URLSearchParams([...query.entries()]);
+  const pathname = usePathname();
   const pageNumber = query.get('page') ?? 1;
   const page = Number.isNaN(Number(pageNumber)) ? 1 : Number(pageNumber);
   return (
@@ -28,7 +28,7 @@ function Pagination({ total, query, baseRoute }: PaginationProps) {
 
           return {
             component: Link,
-            href: `${baseRoute}?${searchParam.toString()}`,
+            href: `${pathname}?${searchParam.toString()}`,
           };
         }}
         getControlProps={(e) => {
@@ -51,7 +51,7 @@ function Pagination({ total, query, baseRoute }: PaginationProps) {
 
           return {
             component: Link,
-            href: `${baseRoute}?${searchParam.toString()}`,
+            href: `${pathname}?${searchParam.toString()}`,
           };
         }}
       />

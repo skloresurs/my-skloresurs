@@ -8,10 +8,10 @@ import logger from '@/libs/logger';
 import { getSession } from '@/libs/sessions';
 import verifyIp from '@/libs/verify-ip';
 import { verifyPermissionServer } from '@/libs/verify-permission';
-import { IAgent } from '@/types/ManagerOrder';
+import Agent from '@/types/manager/Agent';
 
 interface IResponse {
-  data: IAgent[];
+  data: Agent[];
 }
 
 const PAGE_SIZE = 48;

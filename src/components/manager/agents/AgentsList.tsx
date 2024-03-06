@@ -10,17 +10,21 @@ import ErrorAlert from '@/components/ui/ErrorAlert';
 import GridSkeleton from '@/components/ui/GridSkeleton';
 import InfoAlert from '@/components/ui/InfoAlert';
 import Pagination from '@/components/ui/Pagination';
-import { IAgent } from '@/types/ManagerOrder';
+import Agent from '@/types/manager/Agent';
 
 import AgentItem from './AgentItem';
 
 const span: StyleProp<number> = {
   base: 12,
+  md: 6,
+  lg: 4,
+  xl: 3,
+  '2xl': 2,
 };
 
 interface IResponse {
   total: number;
-  data: IAgent[];
+  data: Agent[];
 }
 
 export default function AgentsList() {
@@ -29,7 +33,7 @@ export default function AgentsList() {
   if (isValidating) {
     return (
       <GridSkeleton span={span} times={12}>
-        <AgentItem agent={{ id: '1', name: 'Приклад контрагента', orders: 1 }} />
+        <div className='h-[125px]' />
       </GridSkeleton>
     );
   }
@@ -69,7 +73,7 @@ export default function AgentsList() {
         </Grid.Col>
       ))}
       <Center w='100%'>
-        <Pagination total={Math.ceil(data.total / 48)} query={query} baseRoute='/manager' />
+        <Pagination total={Math.ceil(data.total / 48)} query={query} />
       </Center>
     </Grid>
   );

@@ -14,7 +14,7 @@ export default function Routes() {
     <>
       <TitleBar title='Маршрути' />
       <InstrumentsBar>
-        <InstrumentPopover buttonLabel='Фільтри' buttonIcon={<Filter size={16} />}>
+        <InstrumentPopover buttonIcon={<Filter size={16} />}>
           <InstrumentSearch label='Пошук маршрутів' description='Пошук маршрутів за їх ID та водієм' />
           <InstrumentCheckbox
             paramKey='all'

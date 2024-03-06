@@ -43,6 +43,7 @@ const NO_RETRY_STATUS_CODES: StatusCodes[] = [
 
 export default function Providers({ children }: Readonly<{ children: React.ReactNode }>) {
   const [scroll, scrollTo] = useWindowScroll();
+
   return (
     <MantineProvider theme={theme} defaultColorScheme='dark'>
       <Notifications position='top-right' />
