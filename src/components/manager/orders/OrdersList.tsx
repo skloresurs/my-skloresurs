@@ -29,7 +29,7 @@ interface IResponse {
 
 export default function OrdersList() {
   const query = useSearchParams();
-  const { data, error, isValidating, mutate } = useSWR<IResponse>(`/api/manager/order/?${query.toString()}`);
+  const { data, error, isValidating, mutate } = useSWR<IResponse>(`/api/manager/orders/?${query.toString()}`);
 
   if (isValidating) {
     return (

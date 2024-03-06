@@ -31,6 +31,7 @@ export default function ManagerPage() {
             enabledDescription='Показувати замовлення лише з статусом "Склад"'
           />
           <InstrumentResetOne title='Скинути контрагента' paramKey='agent' />
+          <InstrumentResetOne title='Скинути регіон' paramKey='region' />
           <InstrumentResetOne title='Скинути рахунок' paramKey='bill' />
           <InstrumentReset />
         </InstrumentPopover>
