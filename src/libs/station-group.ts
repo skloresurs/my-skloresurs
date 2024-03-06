@@ -33,7 +33,7 @@ function group(acc: IGroupData[], value: RouteData[]) {
 
 export default function getGroupedStations(stations: RouteData[]) {
   const orderWithoutOrder = reduce(
-    groupBy(filter(stations, ['order', 0]), 'addressShort'),
+    groupBy(filter(stations, ['order', 0]), 'address'),
     (acc, value) => group(acc, value),
     [] as IGroupData[]
   );

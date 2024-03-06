@@ -21,7 +21,7 @@ interface IProps {
 function StationsTab({ route }: IProps) {
   const ordersList = useMemo(() => getGroupedStations(route.routes ?? []), [route]);
 
-  const googleMapFullRoute = useMemo(() => getGoogleMapsRouteUrl(map(ordersList, 'addressShort')), [ordersList]);
+  const googleMapFullRoute = useMemo(() => getGoogleMapsRouteUrl(map(ordersList, 'address')), [ordersList]);
 
   return (
     <Container mt='sm' fluid p='0'>
@@ -37,7 +37,7 @@ function StationsTab({ route }: IProps) {
           {
             accessor: 'order',
             title: 'Позиція',
-            render: ({ order, addressShort }) => `${order}. ${addressShort}`,
+            render: ({ order, address }) => `${order}. ${address}`,
           },
           {
             accessor: 'time',

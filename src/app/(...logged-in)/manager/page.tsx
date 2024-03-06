@@ -1,4 +1,4 @@
-import { CircleUserRound, Filter } from 'lucide-react';
+import { CircleUserRound, Filter, Map } from 'lucide-react';
 import React from 'react';
 
 import OrdersList from '@/components/manager/orders/OrdersList';
@@ -34,6 +34,7 @@ export default function ManagerPage() {
           <InstrumentResetOne title='Скинути рахунок' paramKey='bill' />
           <InstrumentReset />
         </InstrumentPopover>
+        <InstrumentRedirectButton href='/manager/regions' icon={<Map />} tooltip='Регіони' />
         <InstrumentRedirectButton href='/manager/agents' icon={<CircleUserRound />} tooltip='Контрагенти' />
       </InstrumentsBar>
       <div className='mt-3'>
