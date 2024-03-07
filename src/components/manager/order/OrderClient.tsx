@@ -12,7 +12,7 @@ import MainTabOrder from './tabs/MainTabOrder';
 import SpecificationTabOrder from './tabs/SpecificationTabOrder';
 
 export default function OrderClient({ id }: { id: string }) {
-  const { data, error, isValidating } = useSWR<FullOrder>(`/api/manager/order/${id}`);
+  const { data, error, isValidating } = useSWR<FullOrder>(`/api/manager/orders/${id}`);
   if (isValidating) {
     return <Skeleton height={150} width='100%' />;
   }

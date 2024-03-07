@@ -50,7 +50,7 @@
     "**/*.mts",
     "**/*.json",
     "**/*.cjs",
-    "**/*.mts",
+    "**/*.mjs",
     ".next/types/**/*.ts",
     ".eslintrc.cjs",
     ".lintstagedrc.cjs"

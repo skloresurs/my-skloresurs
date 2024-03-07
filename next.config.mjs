@@ -26,7 +26,9 @@ const nextConfig = {
       },
     ],
   },
-  reactStrictMode: false,
+  devIndicators: {
+    buildActivityPosition: 'top-right',
+  },
 };
 
 const withPWA = withPWAInit({
