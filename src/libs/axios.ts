@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { setupCache } from 'axios-cache-interceptor';
 
 import { env } from '@/env.mjs';
 
@@ -11,4 +12,8 @@ const axios1cMain = axios.create({
   },
 });
 
+const cachedAxios = setupCache(axios.create());
+
 export default axios1cMain;
+
+export { cachedAxios };

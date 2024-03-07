@@ -38,9 +38,9 @@ dependencies:
   '@t3-oss/env-nextjs':
     specifier: ^0.9.2
     version: 0.9.2(typescript@5.3.3)(zod@3.22.4)
-  '@types/sha256':
-    specifier: ^0.2.2
-    version: 0.2.2
+  async:
+    specifier: ^3.2.5
+    version: 3.2.5
   axios:
     specifier: ^1.6.7
     version: 1.6.7
@@ -148,6 +148,9 @@ dependencies:
     version: 3.22.4
 
 devDependencies:
+  '@types/async':
+    specifier: ^3.2.24
+    version: 3.2.24
   '@types/crypto-js':
     specifier: ^4.2.2
     version: 4.2.2
@@ -169,6 +172,9 @@ devDependencies:
   '@types/react-dom':
     specifier: ^18.2.20
     version: 18.2.20
+  '@types/sha256':
+    specifier: ^0.2.2
+    version: 0.2.2
   '@types/ua-parser-js':
     specifier: ^0.7.39
     version: 0.7.39
@@ -2433,6 +2439,10 @@ packages:
       zod: 3.22.4
     dev: false
 
+  /@types/async@3.2.24:
+    resolution: {integrity: sha512-8iHVLHsCCOBKjCF2KwFe0p9Z3rfM9mL+sSP8btyR5vTjJRAqpBYD28/ZLgXPf0pjG1VxOvtCV/BgXkQbpSe8Hw==}
+    dev: true
+
   /@types/cookie@0.6.0:
     resolution: {integrity: sha512-4Kh9a6B2bQciAhf7FSuMRRkUWecJgJu9nPnx3yzpsfXX/c50REIqpHY4C82bXP90qrLtXtkDxTZosYO3UpOwlA==}
     dev: false
@@ -2541,7 +2551,7 @@ packages:
     resolution: {integrity: sha512-uKMaDzyzfcDYGEwTgLh+hmgDMxXWyIVodY8T+qt7A+NYvikW0lmGLMGbQ7BipCB8dzXHa55C9g+Ii/3Lgt1KmA==}
     dependencies:
       '@types/node': 20.11.24
-    dev: false
+    dev: true
 
   /@types/tinycolor2@1.4.6:
     resolution: {integrity: sha512-iEN8J0BoMnsWBqjVbWH/c0G0Hh7O21lpR2/+PrvAVgWdzL7eexIFm4JN/Wn10PTcmNdtS6U67r499mlWMXOxNw==}

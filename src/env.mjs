@@ -61,5 +61,13 @@ export const env = createEnv({
     RECAPTCHA_SECRET_KEY: z.string({
       required_error: 'RECAPTCHA_SECRET_KEY is required [https://www.google.com/recaptcha/admin/]',
     }),
+    GPS_API: z
+      .string({
+        required_error: 'GPS_API is required',
+      })
+      .url('GPS_API must be a valid URL'),
+    GPS_API_KEY: z.string({
+      required_error: 'GPS_API_KEY is required',
+    }),
   },
 });

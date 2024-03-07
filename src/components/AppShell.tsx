@@ -5,7 +5,7 @@ import { useDisclosure } from '@mantine/hooks';
 import { notifications } from '@mantine/notifications';
 import axios from 'axios';
 import { constant } from 'lodash';
-import { Boxes, Database, GanttChartSquare, LogOut, Shield, Truck, UserRound } from 'lucide-react';
+import { Boxes, Database, GanttChartSquare, Locate, LogOut, Shield, Truck, UserRound } from 'lucide-react';
 import Image from 'next/image';
 import React, { ReactNode } from 'react';
 import useSWR, { useSWRConfig } from 'swr';
@@ -85,6 +85,12 @@ export default function AppShell({ children }: { children: ReactNode }) {
             href='/routes'
             icon={<Truck />}
             hide={!verifyPermission(user?.permissions ?? [], 'Driver')}
+          />
+          <NavBarItem
+            label='GPS'
+            href='/gps'
+            icon={<Locate />}
+            hide={!verifyPermission(user?.permissions ?? [], 'GPS')}
           />
           <NavBarItem label='Адмін-панель' icon={<Shield />} hide={!verifyPermission(user?.permissions ?? [], 'Admin')}>
             <NavBarItemAdminUsers user={user} />

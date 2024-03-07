@@ -36,6 +36,9 @@ const verifyPermission = (
     case 'Beta': {
       return includes(userPermissions, 'Beta');
     }
+    case 'GPS': {
+      return includes(userPermissions, 'GPS') || includes(userPermissions, 'Admin');
+    }
     default: {
       return defaultState;
     }

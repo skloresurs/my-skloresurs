@@ -53,6 +53,12 @@ function UserPermissionsTab({ user }: { user?: IUserRequest }) {
         description: 'Доступ до меню водія',
         disabled: false,
       },
+      {
+        id: 'GPS',
+        title: 'GPS',
+        description: 'Доступ по GPS автомобілів',
+        disabled: false,
+      },
     ],
     [activeUser]
   );
