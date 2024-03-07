@@ -26,7 +26,6 @@ export default async function GpsPage() {
         <Table stickyHeader withColumnBorders withTableBorder striped stickyHeaderOffset={60}>
           <TableThead>
             <TableTr>
-              <TableTh>ID</TableTh>
               <TableTh>Автомобіль</TableTh>
               <TableTh>Локація</TableTh>
               <TableTh>Дистанція</TableTh>

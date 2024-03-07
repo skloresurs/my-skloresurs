@@ -20,7 +20,6 @@ export default function GpsTableRow({ car }: IProps) {
   const { data, error, isValidating } = useSWR<IReposponse>(`/api/gps/${car.id}`);
   return (
     <TableTr key={car.id}>
-      <TableTd>{car.id}</TableTd>
       <TableTd>{car.name}</TableTd>
       {isValidating && (
         <>
