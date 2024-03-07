@@ -11,6 +11,7 @@ import DrawerItem from '@/components/ui/DrawerItem';
 import OutsideLinkButton from '@/components/ui/OutsideLinkButton';
 import TelephoneButton from '@/components/ui/TelephoneButton';
 import { getGoogleMapsRouteUrl } from '@/libs/maps-api';
+import { phoneRegexp } from '@/libs/regexp';
 import getGroupedStations from '@/libs/station-group';
 import { FullRoute } from '@/types/route/Route';
 
@@ -80,8 +81,8 @@ function StationsTab({ route }: IProps) {
           content: ({ record: station }) => (
             <div className='bg-[var(--mantine-color-dark-9)]'>
               <Stack gap='8px' p='8px'>
-                <DrawerItem label='Контактна особа' value={station.contact?.name}>
-                  <TelephoneButton tel={station.contact?.tel} />
+                <DrawerItem label='Контактна особа' value={station.contact}>
+                  <TelephoneButton tel={station.contact.match(phoneRegexp)?.at(0)} />
                 </DrawerItem>
                 <OutsideLinkButton
                   label='Прокласти маршрут'

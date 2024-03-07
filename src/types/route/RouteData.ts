@@ -13,7 +13,7 @@ type RouteData = {
   maxKength: number;
   agent?: PersonData;
   manager?: PersonData;
-  contact?: PersonData;
+  contact: string;
   engineer?: PersonData;
   comments: {
     main: string;

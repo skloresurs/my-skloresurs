@@ -1,7 +1,6 @@
 import { filter, groupBy, reduce, reject } from 'lodash';
 import { nanoid } from 'nanoid';
 
-import PersonData from '@/types/1c/User';
 import RouteData from '@/types/route/RouteData';
 
 // TODO: Need rewrite
@@ -12,7 +11,7 @@ interface IGroupData {
   time: string;
   address: string;
   addressShort: string;
-  contact?: PersonData;
+  contact: string;
   value: RouteData[];
 }
 
