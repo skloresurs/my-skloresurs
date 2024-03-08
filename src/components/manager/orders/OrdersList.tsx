@@ -16,7 +16,7 @@ import OrderItem from './OrderItem';
 
 const span: StyleProp<number> = {
   base: 12,
-  xs: 6,
+  '2xs': 6,
   lg: 4,
   xl: 3,
   '2xl': 2,
