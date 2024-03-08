@@ -1,6 +1,5 @@
 /**
  * Represents financial information for order.
- * @typedef {Object} Finance
  * @property {string} bill - The bill number.
  * @property {number} total - The total amount.
  * @property {number} pay - The amount paid.

@@ -51,7 +51,7 @@ function OrderItem({ order }: IProps) {
         </Flex>
         <Flex gap='4px'>
           <MapPin />
-          <Text className='line-clamp-1 w-full text-left'>{trim(order.location)}</Text>
+          <Text className='line-clamp-1 w-full text-left'>{trim(order.region)}</Text>
         </Flex>
         {order.finance && (
           <Flex gap='4px'>

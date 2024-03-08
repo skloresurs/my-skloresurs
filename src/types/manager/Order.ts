@@ -8,7 +8,7 @@ import Goods from './Goods';
  * @property {PersonData} agent - The agent associated with the order.
  * @property {string} shipmentAt - The shipment date of the order.
  * @property {string} status - The status of the order.
- * @property {string} location - The location of the order.
+ * @property {string} region - The region of the order.
  * @property {boolean} locked - Indicates if the order is locked.
  * @property {Finance} [finance] - The financial details of the order.
  */
@@ -17,7 +17,7 @@ type Order = {
   agent: PersonData;
   shipmentAt: string;
   status: string;
-  location: string;
+  region: string;
   locked: boolean;
   finance?: Finance;
 };
@@ -30,6 +30,7 @@ type Order = {
  * @property {string} lockedComment - The comment when the order is locked.
  * @property {PersonData} contact - The contact person associated with the order.
  * @property {Goods[]} goods - The goods associated with the order.
+ * @property {string} location - The location of the order.
  */
 type FullOrder = Order & {
   responsible: PersonData;
@@ -38,6 +39,7 @@ type FullOrder = Order & {
   lockedComment: string;
   contact: PersonData;
   goods: Goods[];
+  location: string;
 };
 
 export type { FullOrder, Order };

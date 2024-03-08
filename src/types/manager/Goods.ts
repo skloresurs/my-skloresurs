@@ -1,6 +1,5 @@
 /**
  * Represents a type for goods of an order.
- * @typedef {Object} Goods
  * @property {number} position - The position of the goods.
  * @property {string} name - The name of the goods.
  * @property {number} width - The width of the goods.
