@@ -2,7 +2,7 @@ import { createTheme } from '@mantine/core';
 
 const theme = createTheme({
   breakpoints: {
-    '2xs': '31em',
+    '2xs': '24em',
   },
 });
 

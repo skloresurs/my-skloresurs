@@ -1,7 +1,7 @@
-import { Card, Flex, Group, NumberFormatter, Text, Title } from '@mantine/core';
+import { Badge, Card, Flex, NumberFormatter, Text, Title } from '@mantine/core';
 import dayjs from 'dayjs';
-import { trim } from 'lodash';
-import { CircleUserRound, Lock, MapPin, Receipt } from 'lucide-react';
+import { split, trim } from 'lodash';
+import { CircleUserRound, MapPin, Receipt } from 'lucide-react';
 import Link from 'next/link';
 import React, { memo, useMemo } from 'react';
 import { twMerge } from 'tailwind-merge';
@@ -31,27 +31,26 @@ function OrderItem({ order }: IProps) {
         order.locked && 'bg-[#3d2f2f] hover:bg-[#4d3f3f]'
       )}
     >
-      <Flex justify='space-between' gap='sm'>
-        <Title order={2}>{order.id}</Title>
-        <Flex direction='column' align='end' c='dimmed'>
-          <Text size='sm'>{shipmentAt.format('DD.MM.YYYY')}</Text>
+      <Title order={2}>{order.id}</Title>
+      <Text size='sm' c='dimmed'>
+        {shipmentAt.format('DD.MM.YYYY')}
+      </Text>
+      <Flex direction='column' c='dimmed' gap='4px'>
+        <Flex wrap='wrap' gap='4px'>
+          {order.locked && (
+            <Badge className='cursor-default select-none' variant='light' color='red'>
+              Заблоковано
+            </Badge>
+          )}
+          <StatusBadge status={order.status} />
         </Flex>
-      </Flex>
-      {order.locked && (
-        <Group c='red' gap='4px' mb='4px'>
-          <Lock size={16} />
-          <Text>Заблоковано</Text>
-        </Group>
-      )}
-      <StatusBadge status={order.status} />
-      <Flex mt='xs' direction='column' c='dimmed' gap='4px'>
         <Flex gap='4px'>
           <CircleUserRound />
           <Text className='line-clamp-1'>{trim(order.agent?.name)}</Text>
         </Flex>
         <Flex gap='4px'>
           <MapPin />
-          <Text className='line-clamp-1 w-full text-left'>{trim(order.region)}</Text>
+          <Text className='line-clamp-1 w-full text-left'>{split(trim(order.region), ' ')[0] ?? ''}</Text>
         </Flex>
         {order.finance && (
           <Flex gap='4px'>
@@ -60,7 +59,7 @@ function OrderItem({ order }: IProps) {
               <NumberFormatter
                 value={order.finance.final}
                 suffix={` ${order.finance.currency}`}
-                decimalScale={2}
+                decimalScale={0}
                 thousandSeparator=' '
                 fixedDecimalScale
               />
@@ -70,12 +69,12 @@ function OrderItem({ order }: IProps) {
       </Flex>
       <div className='flex-1' />
       {order.finance && (
-        <Flex direction='row-reverse'>
+        <Flex direction='row' mt='4px' justify={{ base: 'flex-end', '2xs': 'center', xs: 'flex-end' }}>
           <NumberFormatter
             className='text-lg'
             value={order.finance.total}
             suffix={` ${order.finance.currency}`}
-            decimalScale={2}
+            decimalScale={0}
             thousandSeparator=' '
             fixedDecimalScale
           />
