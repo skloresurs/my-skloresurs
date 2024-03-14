@@ -82,7 +82,7 @@ function StationsTab({ route }: IProps) {
             <div className='bg-[var(--mantine-color-dark-9)]'>
               <Stack gap='8px' p='8px'>
                 <DrawerItem label='Контактна особа' value={station.contact}>
-                  <TelephoneButton tel={station.contact.match(phoneRegexp)?.at(0)} />
+                  <TelephoneButton tel={[station.contact.match(phoneRegexp)?.at(0) ?? '']} />
                 </DrawerItem>
                 <OutsideLinkButton
                   label='Прокласти маршрут'

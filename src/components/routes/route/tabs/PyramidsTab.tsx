@@ -109,7 +109,7 @@ function PyramidsTab({ route }: IProps) {
                       <DrawerItem label='Піраміди' value={e.pyramids} />
                       {map(e.tels, (tel, i) => (
                         <DrawerItem label={`Телефон №${i + 1}`} value={tel}>
-                          <TelephoneButton tel={tel} />
+                          <TelephoneButton tel={[tel]} />
                         </DrawerItem>
                       ))}
                       <Divider mt='sm' />

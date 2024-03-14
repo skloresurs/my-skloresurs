@@ -29,7 +29,7 @@ function TasksTab({ route }: IProps) {
                     <Text>{d}</Text>
                   ))}
                 </Stack>
-                <TelephoneButton tel={task.description.match(phoneRegexp)?.at(0)} />
+                <TelephoneButton tel={[task.description.match(phoneRegexp)?.at(0) ?? '']} />
               </Flex>
             </Stack>
           </Accordion.Panel>
