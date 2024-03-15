@@ -69,8 +69,6 @@ export async function GET(req: NextRequest) {
         throw ServerError;
       });
 
-    console.log(response);
-
     return NextResponse.json(
       {
         ...response.data,
