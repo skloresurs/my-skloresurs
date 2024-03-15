@@ -1,3 +1,4 @@
+import { slice } from 'lodash';
 import { NextRequest, NextResponse } from 'next/server';
 
 import { ServerError } from '@/classes/CustomError';
@@ -8,6 +9,8 @@ import { getSession } from '@/libs/sessions';
 import verifyIp from '@/libs/verify-ip';
 import { verifyPermissionServer } from '@/libs/verify-permission';
 import { Order } from '@/types/manager/Order';
+
+const PAGE_SIZE = 48;
 
 interface IResponse {
   data: Order[];
@@ -23,7 +26,7 @@ export async function GET(req: NextRequest) {
 
     const search = params.get('search');
     const all = params.get('all');
-    const page = params.get('page');
+    const page = params.get('page') ?? 1;
     const agent = params.get('agent');
     const storage = params.get('storage');
     const bill = params.get('bill');
@@ -35,9 +38,6 @@ export async function GET(req: NextRequest) {
     }
     if (all) {
       paramsQuery.append('all', 'true');
-    }
-    if (page) {
-      paramsQuery.append('page', page);
     }
     if (agent) {
       paramsQuery.append('agent', agent);
@@ -69,9 +69,17 @@ export async function GET(req: NextRequest) {
         throw ServerError;
       });
 
-    return NextResponse.json(response.data, {
-      status: 200,
-    });
+    console.log(response);
+
+    return NextResponse.json(
+      {
+        ...response.data,
+        data: slice(response.data.data, PAGE_SIZE * Number(page) - PAGE_SIZE, PAGE_SIZE * Number(page)),
+      },
+      {
+        status: 200,
+      }
+    );
   } catch (error) {
     return apiErrorHandler(req, error);
   }
