@@ -1,34 +1,34 @@
-import { eq } from 'drizzle-orm';
-import { constant, toLower } from 'lodash';
-import { nanoid } from 'nanoid';
-import { cookies } from 'next/headers';
-import { type NextRequest } from 'next/server';
+import { eq } from "drizzle-orm";
+import { constant, toLower } from "lodash";
+import { nanoid } from "nanoid";
+import { cookies } from "next/headers";
+import type { NextRequest } from "next/server";
 
-import CustomError from '@/classes/CustomError';
-import { db, getDbError } from '@/libs/db';
-import { userSchema } from '@/libs/db/schema';
-import { auth, facebookAuth } from '@/libs/lucia';
-import oauthRedirect, { oauthErrorRedirect } from '@/libs/oauth-middleware';
-import { getSession, setSession } from '@/libs/sessions';
-import verifyIp from '@/libs/verify-ip';
+import CustomError from "@/classes/CustomError";
+import { db, getDbError } from "@/libs/db";
+import { userSchema } from "@/libs/db/schema";
+import { auth, facebookAuth } from "@/libs/lucia";
+import oauthRedirect, { oauthErrorRedirect } from "@/libs/oauth-middleware";
+import { getSession, setSession } from "@/libs/sessions";
+import verifyIp from "@/libs/verify-ip";
 
 export const GET = async (req: NextRequest) => {
   const activeSession = await getSession(req).catch(constant(null));
   const activeSessionBoolean = activeSession !== null;
 
   try {
-    const storedState = cookies().get('facebook_oauth_state')?.value;
+    const storedState = cookies().get("facebook_oauth_state")?.value;
     const url = new URL(req.url);
-    const state = url.searchParams.get('state');
-    const code = url.searchParams.get('code');
+    const state = url.searchParams.get("state");
+    const code = url.searchParams.get("code");
 
     if (!storedState || !state || storedState !== state || !code) {
-      return oauthErrorRedirect('Токен авторизації недійсний', !!activeSession);
+      return oauthErrorRedirect("Токен авторизації недійсний", !!activeSession);
     }
     const { facebookUser } = await facebookAuth.validateCallback(code);
 
     if (!facebookUser.email) {
-      return oauthErrorRedirect('Не вдалось отримати ваш E-mail', activeSessionBoolean);
+      return oauthErrorRedirect("Не вдалось отримати ваш E-mail", activeSessionBoolean);
     }
 
     const userByFacebookId = await db
@@ -66,7 +66,7 @@ export const GET = async (req: NextRequest) => {
         },
         key: {
           password: null,
-          providerId: 'email',
+          providerId: "email",
           providerUserId: toLower(facebookUser.email),
         },
         userId: nanoid(12),
@@ -81,6 +81,6 @@ export const GET = async (req: NextRequest) => {
     if (error instanceof CustomError) {
       return oauthErrorRedirect(error.message, activeSessionBoolean);
     }
-    return oauthErrorRedirect('Помилка сервера', activeSessionBoolean);
+    return oauthErrorRedirect("Помилка сервера", activeSessionBoolean);
   }
 };

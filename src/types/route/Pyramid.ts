@@ -1,4 +1,4 @@
-import PersonData from '../1c/User';
+import type PersonData from "../1c/User";
 
 type Pyramid = {
   id: string;

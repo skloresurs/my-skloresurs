@@ -1,3 +1,3 @@
-type Server = 'main';
+type Server = "main";
 
 export default Server;

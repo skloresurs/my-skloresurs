@@ -1,7 +1,7 @@
-import { includes } from 'lodash';
+import { includes } from "lodash";
 
-import { MissingPermissionError } from '@/classes/CustomError';
-import { Permission } from '@/types/User';
+import { MissingPermissionError } from "@/classes/CustomError";
+import type { Permission } from "@/types/User";
 
 /**
  * Verify user's permission based on their role.
@@ -11,33 +11,29 @@ import { Permission } from '@/types/User';
  * @param {boolean} defaultState - the default state if permission is not provided
  * @return {boolean} the result of permission verification
  */
-const verifyPermission = (
-  userPermissions: Permission[],
-  permission?: Permission,
-  defaultState: boolean = false
-): boolean => {
-  if (includes(userPermissions, 'SuperAdmin')) {
+const verifyPermission = (userPermissions: Permission[], permission?: Permission, defaultState = false): boolean => {
+  if (includes(userPermissions, "SuperAdmin")) {
     return true;
   }
 
   switch (permission) {
-    case 'Manager': {
-      return includes(userPermissions, 'Manager') || includes(userPermissions, 'Admin');
+    case "Manager": {
+      return includes(userPermissions, "Manager") || includes(userPermissions, "Admin");
     }
-    case 'Driver': {
-      return includes(userPermissions, 'Driver') || includes(userPermissions, 'Admin');
+    case "Driver": {
+      return includes(userPermissions, "Driver") || includes(userPermissions, "Admin");
     }
-    case 'Admin': {
-      return includes(userPermissions, 'Admin');
+    case "Admin": {
+      return includes(userPermissions, "Admin");
     }
-    case 'SuperAdmin': {
-      return includes(userPermissions, 'SuperAdmin');
+    case "SuperAdmin": {
+      return includes(userPermissions, "SuperAdmin");
     }
-    case 'Beta': {
-      return includes(userPermissions, 'Beta');
+    case "Beta": {
+      return includes(userPermissions, "Beta");
     }
-    case 'GPS': {
-      return includes(userPermissions, 'GPS') || includes(userPermissions, 'Admin');
+    case "GPS": {
+      return includes(userPermissions, "GPS") || includes(userPermissions, "Admin");
     }
     default: {
       return defaultState;

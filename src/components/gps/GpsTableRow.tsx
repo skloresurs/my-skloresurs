@@ -1,10 +1,9 @@
-'use client';
+"use client";
 
-import { TableTd, TableTr } from '@mantine/core';
-import React from 'react';
-import useSWR from 'swr';
+import { TableTd, TableTr } from "@mantine/core";
+import useSWR from "swr";
 
-import Car from '@/types/gps/Car';
+import type Car from "@/types/gps/Car";
 
 interface IProps {
   car: Car;
@@ -36,7 +35,7 @@ export default function GpsTableRow({ car }: IProps) {
         </>
       )}
       {data &&
-        (data.address === 'вулиця Семидубська, 105, Дубно, Рівненська область, Україна, 35600' ? (
+        (data.address === "вулиця Семидубська, 105, Дубно, Рівненська область, Україна, 35600" ? (
           <>
             <TableTd>Склоресурс</TableTd>
             <TableTd />

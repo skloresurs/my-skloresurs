@@ -1,22 +1,22 @@
-'use client';
+"use client";
 
-import { Affix, Button, MantineProvider, Transition } from '@mantine/core';
-import { useWindowScroll } from '@mantine/hooks';
-import { Notifications } from '@mantine/notifications';
-import { NavigationProgress } from '@mantine/nprogress';
-import { StatusCodes } from 'http-status-codes';
-import { includes } from 'lodash';
-import { ChevronUp } from 'lucide-react';
-import { ReCaptchaProvider } from 'next-recaptcha-v3';
-import Next13ProgressBar from 'next13-progressbar';
-import React from 'react';
-import { SWRConfig } from 'swr';
+import { Affix, Button, MantineProvider, Transition } from "@mantine/core";
+import { useWindowScroll } from "@mantine/hooks";
+import { Notifications } from "@mantine/notifications";
+import { NavigationProgress } from "@mantine/nprogress";
+import { StatusCodes } from "http-status-codes";
+import { includes } from "lodash";
+import { ChevronUp } from "lucide-react";
+import { ReCaptchaProvider } from "next-recaptcha-v3";
+import Next13ProgressBar from "next13-progressbar";
+import type React from "react";
+import { SWRConfig } from "swr";
 
-import { env } from '@/env.mjs';
-import fetcher from '@/libs/fetcher';
-import theme from '@/libs/theme';
+import { env } from "@/env.mjs";
+import fetcher from "@/libs/fetcher";
+import theme from "@/libs/theme";
 
-import AuthProvider from './AuthProvider';
+import AuthProvider from "./AuthProvider";
 
 const NO_RETRY_STATUS_CODES: StatusCodes[] = [
   StatusCodes.BAD_REQUEST,
@@ -45,8 +45,8 @@ export default function Providers({ children }: Readonly<{ children: React.React
   const [scroll, scrollTo] = useWindowScroll();
 
   return (
-    <MantineProvider theme={theme} defaultColorScheme='dark'>
-      <Notifications position='top-right' />
+    <MantineProvider theme={theme} defaultColorScheme="dark">
+      <Notifications position="top-right" />
       <SWRConfig
         value={{
           fetcher,
@@ -67,23 +67,23 @@ export default function Providers({ children }: Readonly<{ children: React.React
         }}
       >
         <Next13ProgressBar
-          height='4px'
-          color='var(--mantine-color-blue-5)'
+          height="4px"
+          color="var(--mantine-color-blue-5)"
           options={{ showSpinner: true }}
           showOnShallow
         />
         <NavigationProgress />
         <AuthProvider>
           <Affix position={{ bottom: 90, right: 28 }}>
-            <Transition transition='slide-up' mounted={scroll.y > 0}>
+            <Transition transition="slide-up" mounted={scroll.y > 0}>
               {(transitionStyles) => (
-                <Button radius='xl' style={transitionStyles} onClick={() => scrollTo({ y: 0 })}>
+                <Button radius="xl" style={transitionStyles} onClick={() => scrollTo({ y: 0 })}>
                   <ChevronUp size={16} />
                 </Button>
               )}
             </Transition>
           </Affix>
-          <ReCaptchaProvider reCaptchaKey={env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY} language='uk'>
+          <ReCaptchaProvider reCaptchaKey={env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY} language="uk">
             {children}
           </ReCaptchaProvider>
         </AuthProvider>

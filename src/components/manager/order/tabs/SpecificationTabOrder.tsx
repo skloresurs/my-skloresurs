@@ -1,14 +1,14 @@
-'use client';
+"use client";
 
-import { Container, Stack, Text } from '@mantine/core';
-import { reduce, sortBy } from 'lodash';
-import { Sigma } from 'lucide-react';
-import { DataTable, DataTableSortStatus } from 'mantine-datatable';
-import React, { memo, useMemo, useState } from 'react';
-import { useWindowSize } from 'react-use';
+import { Container, Stack, Text } from "@mantine/core";
+import { reduce, sortBy } from "lodash";
+import { Sigma } from "lucide-react";
+import { DataTable, type DataTableSortStatus } from "mantine-datatable";
+import { memo, useMemo, useState } from "react";
+import { useWindowSize } from "react-use";
 
-import type Goods from '@/types/manager/Goods';
-import type { FullOrder } from '@/types/manager/Order';
+import type Goods from "@/types/manager/Goods";
+import type { FullOrder } from "@/types/manager/Order";
 
 interface IProps {
   order: FullOrder;
@@ -17,16 +17,16 @@ interface IProps {
 function SpecificationTabOrder({ order }: IProps) {
   const { height } = useWindowSize();
   const [sortStatus, setSortStatus] = useState<DataTableSortStatus<Goods>>({
-    columnAccessor: 'position',
-    direction: 'asc',
+    columnAccessor: "position",
+    direction: "asc",
   });
 
   const records = useMemo(
     () =>
-      sortStatus.direction === 'desc'
+      sortStatus.direction === "desc"
         ? sortBy(order.goods, sortStatus.columnAccessor).toReversed()
         : sortBy(order.goods, sortStatus.columnAccessor),
-    [order, sortStatus]
+    [order, sortStatus],
   );
 
   const groups = useMemo(
@@ -34,74 +34,74 @@ function SpecificationTabOrder({ order }: IProps) {
       {
         columns: [
           {
-            accessor: 'position',
+            accessor: "position",
             footer: (
-              <div className='flex items-center'>
+              <div className="flex items-center">
                 <Sigma size={20} />
               </div>
             ),
-            footerClassName: 'bg-dark-6',
+            footerClassName: "bg-dark-6",
             sortable: true,
-            title: '#',
+            title: "#",
           },
         ],
-        id: 'base',
-        title: '',
+        id: "base",
+        title: "",
       },
       {
         columns: [
           {
-            accessor: 'amount',
+            accessor: "amount",
             footer: <span>{Math.round(reduce(order.goods, (a, b) => a + b.amount, 0) * 1000) / 1000}</span>,
-            footerClassName: 'bg-dark-6',
+            footerClassName: "bg-dark-6",
             sortable: true,
-            title: 'S m²',
+            title: "S m²",
           },
           {
-            accessor: 'pieces',
+            accessor: "pieces",
             footer: <span>{Math.round(reduce(order.goods, (a, b) => a + b.pieces, 0) * 1000) / 1000}</span>,
-            footerClassName: 'bg-dark-6',
+            footerClassName: "bg-dark-6",
             sortable: true,
-            title: 'Шт.',
+            title: "Шт.",
           },
         ],
-        id: 'count',
-        title: 'Замовлення',
+        id: "count",
+        title: "Замовлення",
       },
       {
         columns: [
           {
-            accessor: 'in',
+            accessor: "in",
             footer: <span>{Math.round(reduce(order.goods, (a, b) => a + b.in, 0) * 1000) / 1000}</span>,
-            footerClassName: 'bg-dark-6',
-            render: (record: Goods) => <span>{record.in === 0 ? '' : record.in}</span>,
+            footerClassName: "bg-dark-6",
+            render: (record: Goods) => <span>{record.in === 0 ? "" : record.in}</span>,
             sortable: true,
-            title: 'Шт.',
+            title: "Шт.",
           },
         ],
-        id: 'movements',
-        title: 'Склад',
+        id: "movements",
+        title: "Склад",
       },
       {
         columns: [
           {
-            accessor: 'out',
+            accessor: "out",
             footer: <span>{Math.round(reduce(order.goods, (a, b) => a + b.out, 0) * 1000) / 1000}</span>,
-            footerClassName: 'bg-dark-6',
-            render: (record: Goods) => <span>{record.out === 0 ? '' : record.out}</span>,
+            footerClassName: "bg-dark-6",
+            render: (record: Goods) => <span>{record.out === 0 ? "" : record.out}</span>,
             sortable: true,
-            title: 'Шт.',
+            title: "Шт.",
           },
         ],
-        id: 'client',
-        title: 'Клієнт',
+        id: "client",
+        title: "Клієнт",
       },
     ],
-    [order]
+    [order],
   );
 
   return (
-    <Container mt='sm' fluid p='0' h={height - 300}>
+    <Container mt="sm" fluid p="0" h={height - 300}>
       <DataTable
         withTableBorder
         withColumnBorders
@@ -110,20 +110,20 @@ function SpecificationTabOrder({ order }: IProps) {
         records={records}
         sortStatus={sortStatus}
         onSortStatusChange={setSortStatus}
-        minHeight='100%'
-        noRecordsText='Немає даних'
-        idAccessor='position'
+        minHeight="100%"
+        noRecordsText="Немає даних"
+        idAccessor="position"
         rowExpansion={{
           // eslint-disable-next-line react/no-unstable-nested-components -- Library component
           content: ({ record }) => (
-            <Stack w='100%' p='md' gap='md'>
-              <Stack gap='0'>
+            <Stack w="100%" p="md" gap="md">
+              <Stack gap="0">
                 <Text span fw={600}>
                   Номенклатура:
                 </Text>
                 {record.name}
               </Stack>
-              <Stack gap='0'>
+              <Stack gap="0">
                 <Text span fw={600}>
                   Розміри:
                 </Text>

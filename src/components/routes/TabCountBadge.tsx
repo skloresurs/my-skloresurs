@@ -1,5 +1,5 @@
-import { Badge } from '@mantine/core';
-import React, { memo } from 'react';
+import { Badge } from "@mantine/core";
+import { memo } from "react";
 
 interface IProps {
   count: number;
@@ -11,7 +11,7 @@ function TabCountBadge({ count }: IProps) {
   }
 
   return (
-    <Badge circle variant='light'>
+    <Badge circle variant="light">
       {count}
     </Badge>
   );

@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { Checkbox, Text, UnstyledButton } from '@mantine/core';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import React, { memo, useEffect, useState } from 'react';
+import { Checkbox, Text, UnstyledButton } from "@mantine/core";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { memo, useEffect, useState } from "react";
 
 interface IProps {
   paramKey: string;
@@ -26,12 +26,12 @@ function InstrumentCheckbox({ paramKey, title, description, enabledDescription, 
     setChecked(!checked);
 
     const current = new URLSearchParams([...searchParams]);
-    current.delete('page');
+    current.delete("page");
 
     if (checked) {
       current.delete(paramKey);
     } else {
-      current.set(paramKey, 'true');
+      current.set(paramKey, "true");
     }
 
     const filter = current.toString();
@@ -40,14 +40,14 @@ function InstrumentCheckbox({ paramKey, title, description, enabledDescription, 
 
   return (
     <UnstyledButton
-      className='flex w-full rounded-[var(--mantine-radius-sm)] bg-[var(--mantine-color-dark-7)] p-[var(--mantine-spacing-md)] duration-300 hover:bg-[var(--mantine-color-dark-8)] disabled:cursor-not-allowed'
+      className="flex w-full rounded-[var(--mantine-radius-sm)] bg-[var(--mantine-color-dark-7)] p-[var(--mantine-spacing-md)] duration-300 hover:bg-[var(--mantine-color-dark-8)] disabled:cursor-not-allowed"
       onClick={onChange}
       disabled={disabled}
     >
       <Checkbox
         tabIndex={-1}
-        size='md'
-        mr='xs'
+        size="md"
+        mr="xs"
         aria-hidden
         checked={checked}
         disabled={disabled}
@@ -60,7 +60,7 @@ function InstrumentCheckbox({ paramKey, title, description, enabledDescription, 
         <Text fw={500} mb={7} lh={1}>
           {title}
         </Text>
-        <Text fz='sm' c='dimmed'>
+        <Text fz="sm" c="dimmed">
           {checked ? enabledDescription ?? description : description}
         </Text>
       </div>

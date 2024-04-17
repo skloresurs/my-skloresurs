@@ -1,9 +1,9 @@
 /**
  * Represents a user object.
  */
-import { permissionsEnum, userSchema } from '@/libs/db/schema';
+import type { permissionsEnum, userSchema } from "@/libs/db/schema";
 
-import ISession from './Session';
+import type ISession from "./Session";
 
 type IUser = typeof userSchema.$inferSelect;
 

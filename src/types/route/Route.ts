@@ -1,7 +1,7 @@
-import PersonData from '../1c/User';
-import Pyramid from './Pyramid';
-import RouteData from './RouteData';
-import Task from './Task';
+import type PersonData from "../1c/User";
+import type Pyramid from "./Pyramid";
+import type RouteData from "./RouteData";
+import type Task from "./Task";
 
 type Route = {
   id: string;

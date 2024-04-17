@@ -1,6 +1,6 @@
-import PersonData from '../1c/User';
-import Finance from './Finance';
-import Goods from './Goods';
+import type PersonData from "../1c/User";
+import type Finance from "./Finance";
+import type Goods from "./Goods";
 
 /**
  * Represents an order.

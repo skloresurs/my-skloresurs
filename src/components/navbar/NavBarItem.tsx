@@ -1,7 +1,8 @@
-import { NavLink } from '@mantine/core';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import React, { memo, useMemo } from 'react';
+import { NavLink } from "@mantine/core";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import type React from "react";
+import { memo, useMemo } from "react";
 
 type Props = {
   children?: React.ReactNode;
@@ -24,7 +25,7 @@ function NavBarItem({ children, hide, href, label, icon, description, rightSecti
       opened: !rightSection,
       rightSection,
     }),
-    [description, href, icon, label, pathname, rightSection]
+    [description, href, icon, label, pathname, rightSection],
   );
 
   if (hide) {

@@ -1,10 +1,10 @@
-import { StatusCodes } from 'http-status-codes';
-import { LuciaError } from 'lucia';
-import { NextRequest, NextResponse } from 'next/server';
+import { StatusCodes } from "http-status-codes";
+import { LuciaError } from "lucia";
+import { type NextRequest, NextResponse } from "next/server";
 
-import CustomError from '@/classes/CustomError';
+import CustomError from "@/classes/CustomError";
 
-import logger from './logger';
+import logger from "./logger";
 
 /**
  * A function that handles API errors and returns a NextResponse.
@@ -23,28 +23,28 @@ export default function apiErrorHandler(req: NextRequest, error: unknown, key?: 
         code: error.code,
         error: error.message,
       },
-      { status: error.code }
+      { status: error.code },
     );
   }
 
   if (error instanceof LuciaError) {
-    if (error.message === 'AUTH_INVALID_USER_ID') {
+    if (error.message === "AUTH_INVALID_USER_ID") {
       return NextResponse.json(
-        { code: StatusCodes.NOT_FOUND, error: 'Користувача не знайдено' },
-        { status: StatusCodes.NOT_FOUND }
+        { code: StatusCodes.NOT_FOUND, error: "Користувача не знайдено" },
+        { status: StatusCodes.NOT_FOUND },
       );
     }
 
-    if (error.message === 'AUTH_INVALID_KEY_ID' || error.message === 'AUTH_INVALID_PASSWORD') {
-      if (key === 'old-password') {
+    if (error.message === "AUTH_INVALID_KEY_ID" || error.message === "AUTH_INVALID_PASSWORD") {
+      if (key === "old-password") {
         return NextResponse.json(
-          { code: StatusCodes.BAD_REQUEST, error: 'Невірний старий пароль' },
-          { status: StatusCodes.BAD_REQUEST }
+          { code: StatusCodes.BAD_REQUEST, error: "Невірний старий пароль" },
+          { status: StatusCodes.BAD_REQUEST },
         );
       }
       return NextResponse.json(
-        { code: StatusCodes.UNAUTHORIZED, error: 'Невірний логін або пароль' },
-        { status: StatusCodes.UNAUTHORIZED }
+        { code: StatusCodes.UNAUTHORIZED, error: "Невірний логін або пароль" },
+        { status: StatusCodes.UNAUTHORIZED },
       );
     }
   }
@@ -54,8 +54,8 @@ export default function apiErrorHandler(req: NextRequest, error: unknown, key?: 
   return NextResponse.json(
     {
       code: StatusCodes.INTERNAL_SERVER_ERROR,
-      error: 'Невідома помилка',
+      error: "Невідома помилка",
     },
-    { status: StatusCodes.INTERNAL_SERVER_ERROR }
+    { status: StatusCodes.INTERNAL_SERVER_ERROR },
   );
 }

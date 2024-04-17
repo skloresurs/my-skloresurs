@@ -1,18 +1,17 @@
-'use client';
+"use client";
 
-import { Center, Grid } from '@mantine/core';
-import { map } from 'lodash';
-import { useSearchParams } from 'next/navigation';
-import React from 'react';
-import useSWR from 'swr';
+import { Center, Grid } from "@mantine/core";
+import { map } from "lodash";
+import { useSearchParams } from "next/navigation";
+import useSWR from "swr";
 
-import type { Route } from '@/types/route/Route';
+import type { Route } from "@/types/route/Route";
 
-import ErrorAlert from '../../ui/ErrorAlert';
-import GridSkeleton from '../../ui/GridSkeleton';
-import InfoAlert from '../../ui/InfoAlert';
-import Pagination from '../../ui/Pagination';
-import RouteItem from './RouteItem';
+import ErrorAlert from "../../ui/ErrorAlert";
+import GridSkeleton from "../../ui/GridSkeleton";
+import InfoAlert from "../../ui/InfoAlert";
+import Pagination from "../../ui/Pagination";
+import RouteItem from "./RouteItem";
 
 interface IResponse {
   data: Route[];
@@ -27,7 +26,7 @@ export default function RoutesList() {
   if (isValidating) {
     return (
       <GridSkeleton span={span} times={10}>
-        <div className='h-[250px]' />
+        <div className="h-[250px]" />
       </GridSkeleton>
     );
   }
@@ -38,8 +37,8 @@ export default function RoutesList() {
         <ErrorAlert
           maw={576}
           w={576}
-          title='Помилка'
-          description='Не вдалось завантажити список маршрутів'
+          title="Помилка"
+          description="Не вдалось завантажити список маршрутів"
           refresh={mutate}
         />
       </Center>
@@ -49,14 +48,14 @@ export default function RoutesList() {
   if (!data || data.data.length === 0) {
     return (
       <Center>
-        <InfoAlert maw={576} w={576} title='Немає маршрутів' description='Не знадено жодного маршруту' />
+        <InfoAlert maw={576} w={576} title="Немає маршрутів" description="Не знадено жодного маршруту" />
       </Center>
     );
   }
 
   return (
     <>
-      <Grid gutter='xs'>
+      <Grid gutter="xs">
         {map(data.data, (e) => (
           <Grid.Col key={e.id} span={span}>
             <RouteItem route={e} />

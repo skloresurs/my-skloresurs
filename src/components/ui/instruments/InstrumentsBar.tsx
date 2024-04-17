@@ -1,5 +1,6 @@
-import { Flex } from '@mantine/core';
-import React, { memo } from 'react';
+import { Flex } from "@mantine/core";
+import type React from "react";
+import { memo } from "react";
 
 interface IProps {
   children: React.ReactNode;
@@ -7,7 +8,7 @@ interface IProps {
 
 function InstrumentsBar({ children }: IProps) {
   return (
-    <Flex direction='row-reverse' gap='xs' my='md'>
+    <Flex direction="row-reverse" gap="xs" my="md">
       {children}
     </Flex>
   );

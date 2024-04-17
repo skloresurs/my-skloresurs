@@ -1,20 +1,20 @@
-import { eq } from 'drizzle-orm';
-import { constant, filter } from 'lodash';
-import { NextRequest, NextResponse } from 'next/server';
+import { eq } from "drizzle-orm";
+import { constant, filter } from "lodash";
+import { type NextRequest, NextResponse } from "next/server";
 
-import { MissingParamsError, UserNotFoundError } from '@/classes/CustomError';
-import apiErrorHandler from '@/libs/api-error-handler';
-import { db } from '@/libs/db';
-import { userSchema } from '@/libs/db/schema';
-import { getSession } from '@/libs/sessions';
-import verifyIp from '@/libs/verify-ip';
-import { verifyPermissionServer } from '@/libs/verify-permission';
+import { MissingParamsError, UserNotFoundError } from "@/classes/CustomError";
+import apiErrorHandler from "@/libs/api-error-handler";
+import { db } from "@/libs/db";
+import { userSchema } from "@/libs/db/schema";
+import { getSession } from "@/libs/sessions";
+import verifyIp from "@/libs/verify-ip";
+import { verifyPermissionServer } from "@/libs/verify-permission";
 
 export async function POST(req: NextRequest, { params }: { params: { id: string } }) {
   try {
     const session = await getSession(req);
 
-    verifyPermissionServer(session.user.permissions, 'Admin');
+    verifyPermissionServer(session.user.permissions, "Admin");
     await verifyIp(req, session.user.allowed_ips);
 
     const { key, value } = await req.json();

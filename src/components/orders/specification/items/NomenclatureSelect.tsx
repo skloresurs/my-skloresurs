@@ -1,14 +1,13 @@
-'use client';
+"use client";
 
-import { Select, TextInput } from '@mantine/core';
-import { find } from 'lodash';
-import React from 'react';
-import useSWR from 'swr';
+import { Select, TextInput } from "@mantine/core";
+import { find } from "lodash";
+import useSWR from "swr";
 
-import AsyncInputRightSections from '@/components/AsyncInputRightSections';
-import getInputPlaceholder from '@/libs/input-async-placeholder';
-import { FormType } from '@/types/newOrder/Form';
-import INomenclature from '@/types/newOrder/Nomenclature';
+import AsyncInputRightSections from "@/components/AsyncInputRightSections";
+import getInputPlaceholder from "@/libs/input-async-placeholder";
+import type { FormType } from "@/types/newOrder/Form";
+import type INomenclature from "@/types/newOrder/Nomenclature";
 
 interface IProps {
   activeTab: string | null;
@@ -19,14 +18,14 @@ export default function NomenclatureSelect({ activeTab, form }: IProps) {
   const thisInputProps = form.getInputProps(`specifications.${activeTab}.nomenclature`);
   const specificationTypeInputProps = form.getInputProps(`specifications.${activeTab}.type`);
   const { data, isValidating, error } = useSWR<{ data: INomenclature[] }>(
-    `/api/data/nomenclatures/${specificationTypeInputProps.value}`
+    `/api/data/nomenclatures/${specificationTypeInputProps.value}`,
   );
 
   return (
-    <div className='flex w-full flex-row gap-2'>
+    <div className="flex w-full flex-row gap-2">
       <Select
-        className='flex-1'
-        label='Номенклатура'
+        className="flex-1"
+        label="Номенклатура"
         {...thisInputProps}
         data={data?.data ?? []}
         searchable
@@ -36,13 +35,13 @@ export default function NomenclatureSelect({ activeTab, form }: IProps) {
         disabled={error || isValidating}
         rightSection={<AsyncInputRightSections isValidating={isValidating} error={error} />}
         onChange={(e) => {
-          const specification = find(data?.data, ['value', e]);
+          const specification = find(data?.data, ["value", e]);
           thisInputProps.onChange(e);
           form.setFieldValue(`specifications.${activeTab}.tempAllowHardening`, specification?.allowHardening);
           form.setFieldValue(`specifications.${activeTab}.tempRequireHardening`, specification?.requireHardening);
           form.setFieldValue(
             `specifications.${activeTab}.tempRequireEdgeProcessing`,
-            specification?.requireEdgeProcessing
+            specification?.requireEdgeProcessing,
           );
 
           form.setFieldValue(`specifications.${activeTab}.edgeProcessing`, null);
@@ -58,11 +57,11 @@ export default function NomenclatureSelect({ activeTab, form }: IProps) {
         }}
       />
       <TextInput
-        className='w-[100px]'
-        label='Товщина'
-        value={find(data?.data, ['value', thisInputProps.value])?.thickness ?? '-'}
+        className="w-[100px]"
+        label="Товщина"
+        value={find(data?.data, ["value", thisInputProps.value])?.thickness ?? "-"}
         readOnly
-        rightSection='мм'
+        rightSection="мм"
       />
     </div>
   );

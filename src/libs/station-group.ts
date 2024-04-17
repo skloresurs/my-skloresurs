@@ -1,7 +1,7 @@
-import { filter, groupBy, reduce, reject } from 'lodash';
-import { nanoid } from 'nanoid';
+import { filter, groupBy, reduce, reject } from "lodash";
+import { nanoid } from "nanoid";
 
-import RouteData from '@/types/route/RouteData';
+import type RouteData from "@/types/route/RouteData";
 
 // TODO: Need rewrite
 
@@ -32,12 +32,12 @@ function group(acc: IGroupData[], value: RouteData[]) {
 
 export default function getGroupedStations(stations: RouteData[]) {
   const orderWithoutOrder = reduce(
-    groupBy(filter(stations, ['order', 0]), 'address'),
+    groupBy(filter(stations, ["order", 0]), "address"),
     (acc, value) => group(acc, value),
-    [] as IGroupData[]
+    [] as IGroupData[],
   );
 
-  return reduce(groupBy(reject(stations, ['order', 0]), 'order'), (acc, value) => group(acc, value), [
+  return reduce(groupBy(reject(stations, ["order", 0]), "order"), (acc, value) => group(acc, value), [
     ...orderWithoutOrder,
   ]);
 }

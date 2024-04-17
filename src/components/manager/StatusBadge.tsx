@@ -1,6 +1,6 @@
-import { Badge, DefaultMantineColor } from '@mantine/core';
-import { toLower, trim } from 'lodash';
-import React, { memo } from 'react';
+import { Badge, type DefaultMantineColor } from "@mantine/core";
+import { toLower, trim } from "lodash";
+import { memo } from "react";
 
 interface IStatusConfig {
   name: string;
@@ -9,76 +9,76 @@ interface IStatusConfig {
 
 function getStatusConfig(status: string): IStatusConfig {
   switch (trim(toLower(status))) {
-    case 'принят менеджером': {
+    case "принят менеджером": {
       return {
-        color: 'orange',
-        name: 'Прийнятий Менеджером',
+        color: "orange",
+        name: "Прийнятий Менеджером",
       };
     }
-    case 'снабжение': {
+    case "снабжение": {
       return {
-        color: 'yellow',
-        name: 'Постачання',
+        color: "yellow",
+        name: "Постачання",
       };
     }
-    case 'производство': {
+    case "производство": {
       return {
-        color: 'blue',
-        name: 'Виробництво',
+        color: "blue",
+        name: "Виробництво",
       };
     }
-    case 'утверждено производством': {
+    case "утверждено производством": {
       return {
-        color: 'cyan',
-        name: 'Затверджено Виробництвом',
+        color: "cyan",
+        name: "Затверджено Виробництвом",
       };
     }
-    case 'есть оптимизация': {
+    case "есть оптимизация": {
       return {
-        color: 'indigo',
-        name: 'Є Оптимізація',
+        color: "indigo",
+        name: "Є Оптимізація",
       };
     }
-    case 'склад частично': {
+    case "склад частично": {
       return {
-        color: 'violet',
-        name: 'Склад Частково',
+        color: "violet",
+        name: "Склад Частково",
       };
     }
-    case 'склад': {
+    case "склад": {
       return {
-        color: 'grape',
-        name: 'Склад',
+        color: "grape",
+        name: "Склад",
       };
     }
-    case 'отгружен': {
+    case "отгружен": {
       return {
-        color: 'lime',
-        name: 'Відвантажено',
+        color: "lime",
+        name: "Відвантажено",
       };
     }
-    case 'отклонен': {
+    case "отклонен": {
       return {
-        color: 'red',
-        name: 'Відхилено',
+        color: "red",
+        name: "Відхилено",
       };
     }
-    case 'произведено (ручной статус)': {
+    case "произведено (ручной статус)": {
       return {
-        color: 'pink',
-        name: 'Виготовлено (ручний статус)',
+        color: "pink",
+        name: "Виготовлено (ручний статус)",
       };
     }
-    case 'выполнено': {
+    case "выполнено": {
       return {
-        color: 'green',
-        name: 'Виконано',
+        color: "green",
+        name: "Виконано",
       };
     }
     default: {
       return {
-        color: 'bg-slate-500 text-black hover:bg-slate-600',
-        name: 'Невідомо',
+        color: "bg-slate-500 text-black hover:bg-slate-600",
+        name: "Невідомо",
       };
     }
   }
@@ -86,7 +86,7 @@ function getStatusConfig(status: string): IStatusConfig {
 
 function StatusBadge({ status }: { status: string }) {
   return (
-    <Badge className='cursor-default select-none' variant='light' color={getStatusConfig(status).color}>
+    <Badge className="cursor-default select-none" variant="light" color={getStatusConfig(status).color}>
       {getStatusConfig(status).name}
     </Badge>
   );

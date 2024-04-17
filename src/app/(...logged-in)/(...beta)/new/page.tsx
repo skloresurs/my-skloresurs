@@ -1,12 +1,10 @@
-import React from 'react';
-
-import NewOrder from '@/components/orders/NewOrder';
-import TitleBar from '@/components/TitleBar';
+import TitleBar from "@/components/TitleBar";
+import NewOrder from "@/components/orders/NewOrder";
 
 export default function NewOrderPage() {
   return (
     <>
-      <TitleBar title='Нове замовлення' />
+      <TitleBar title="Нове замовлення" />
       <NewOrder />
     </>
   );

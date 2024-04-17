@@ -1,13 +1,13 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { type NextRequest, NextResponse } from "next/server";
 
-import { ServerError } from '@/classes/CustomError';
-import apiErrorHandler from '@/libs/api-error-handler';
-import axios1cMain from '@/libs/axios';
-import logger from '@/libs/logger';
-import { getSession } from '@/libs/sessions';
-import verifyIp from '@/libs/verify-ip';
-import { verifyPermissionServer } from '@/libs/verify-permission';
-import { Route } from '@/types/route/Route';
+import { ServerError } from "@/classes/CustomError";
+import apiErrorHandler from "@/libs/api-error-handler";
+import axios1cMain from "@/libs/axios";
+import logger from "@/libs/logger";
+import { getSession } from "@/libs/sessions";
+import verifyIp from "@/libs/verify-ip";
+import { verifyPermissionServer } from "@/libs/verify-permission";
+import type { Route } from "@/types/route/Route";
 
 interface IResponse {
   data: Route[];
@@ -17,27 +17,27 @@ export async function GET(req: NextRequest) {
   try {
     const session = await getSession(req);
     await verifyIp(req, session.user.allowed_ips);
-    verifyPermissionServer(session.user.permissions, 'Driver');
+    verifyPermissionServer(session.user.permissions, "Driver");
 
     const params = req.nextUrl.searchParams;
 
-    const page = params.get('page');
-    const search = params.get('search');
-    const all = params.get('all');
+    const page = params.get("page");
+    const search = params.get("search");
+    const all = params.get("all");
 
     const paramsQuery = new URLSearchParams();
 
     if (page) {
-      paramsQuery.append('page', page);
+      paramsQuery.append("page", page);
     }
     if (search) {
-      paramsQuery.append('search', search);
+      paramsQuery.append("search", search);
     }
     if (all) {
-      paramsQuery.append('all', 'true');
+      paramsQuery.append("all", "true");
     }
 
-    const query = paramsQuery.toString().replaceAll('+', '%20');
+    const query = paramsQuery.toString().replaceAll("+", "%20");
 
     if (!session.user.id_1c) {
       throw ServerError;

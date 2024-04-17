@@ -1,14 +1,14 @@
-'server-only';
+"server-only";
 
-import * as context from 'next/headers';
-import { NextRequest } from 'next/server';
-import UAParser from 'ua-parser-js';
+import * as context from "next/headers";
+import type { NextRequest } from "next/server";
+import UAParser from "ua-parser-js";
 
-import { UnauthorizedError } from '@/classes/CustomError';
-import ISession from '@/types/Session';
-import IUser from '@/types/User';
+import { UnauthorizedError } from "@/classes/CustomError";
+import type ISession from "@/types/Session";
+import type IUser from "@/types/User";
 
-import { auth } from './lucia';
+import { auth } from "./lucia";
 
 /**
  * Asynchronously generates a session for a user based on the incoming request and user ID.
@@ -18,7 +18,7 @@ import { auth } from './lucia';
  * @return {Promise<ISession>} a promise that resolves to the generated session
  */
 export default async function generateSession(request: NextRequest, userId: string): Promise<ISession> {
-  const parser = new UAParser(request.headers.get('user-agent') ?? '');
+  const parser = new UAParser(request.headers.get("user-agent") ?? "");
   return auth.createSession({
     attributes: {
       browser: `${parser.getBrowser().name} ${parser.getBrowser().version}`,

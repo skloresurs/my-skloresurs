@@ -1,12 +1,12 @@
-import { StatusCodes } from 'http-status-codes';
-import { NextRequest, NextResponse } from 'next/server';
-import { z } from 'zod';
+import { StatusCodes } from "http-status-codes";
+import { type NextRequest, NextResponse } from "next/server";
+import { z } from "zod";
 
-import CustomError, { MissingParamsError } from '@/classes/CustomError';
-import apiErrorHandler from '@/libs/api-error-handler';
-import { auth } from '@/libs/lucia';
-import { getSession } from '@/libs/sessions';
-import verifyIp from '@/libs/verify-ip';
+import CustomError, { MissingParamsError } from "@/classes/CustomError";
+import apiErrorHandler from "@/libs/api-error-handler";
+import { auth } from "@/libs/lucia";
+import { getSession } from "@/libs/sessions";
+import verifyIp from "@/libs/verify-ip";
 
 export async function POST(req: NextRequest) {
   try {

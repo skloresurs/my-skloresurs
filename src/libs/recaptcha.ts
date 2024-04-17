@@ -1,7 +1,7 @@
-import axios from 'axios';
+import axios from "axios";
 
-import { ReCatpchaError } from '@/classes/CustomError';
-import { env } from '@/env.mjs';
+import { ReCatpchaError } from "@/classes/CustomError";
+import { env } from "@/env.mjs";
 
 /**
  * Verify ReCaptcha token.
@@ -14,7 +14,7 @@ export default async function verifyReCaptcha(token: string): Promise<void> {
 
   try {
     const { data } = await axios.post<{ success: boolean }>(
-      `https://www.google.com/recaptcha/api/siteverify?secret=${reCaptchaKey}&response=${token}`
+      `https://www.google.com/recaptcha/api/siteverify?secret=${reCaptchaKey}&response=${token}`,
     );
 
     if (!data.success) {

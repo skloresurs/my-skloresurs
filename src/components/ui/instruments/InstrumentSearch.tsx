@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import { ActionIcon, Flex, TextInput } from '@mantine/core';
-import { Search, SearchX } from 'lucide-react';
-import Link from 'next/link';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import React, { memo, useEffect, useMemo, useState } from 'react';
+import { ActionIcon, Flex, TextInput } from "@mantine/core";
+import { Search, SearchX } from "lucide-react";
+import Link from "next/link";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { memo, useEffect, useMemo, useState } from "react";
 
 interface IProps {
   label: string;
@@ -18,23 +18,23 @@ function InstrumentSearch({ label, description, placeholder, disabled }: IProps)
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  const search = searchParams.get('search');
+  const search = searchParams.get("search");
 
-  const [value, setValue] = useState(search ?? '');
+  const [value, setValue] = useState(search ?? "");
 
   useEffect(() => {
-    setValue(search ?? '');
+    setValue(search ?? "");
   }, [search]);
 
   const onSearch = useMemo(() => {
     const params = new URLSearchParams([...searchParams]);
 
-    params.delete('page');
+    params.delete("page");
 
     if (value) {
-      params.set('search', value);
+      params.set("search", value);
     } else {
-      params.delete('search');
+      params.delete("search");
     }
 
     return `${pathname}?${params.toString()}`;
@@ -42,16 +42,16 @@ function InstrumentSearch({ label, description, placeholder, disabled }: IProps)
 
   const onClearSearch = useMemo(() => {
     const params = new URLSearchParams([...searchParams]);
-    params.delete('search');
-    params.delete('page');
+    params.delete("search");
+    params.delete("page");
 
     return `${pathname}?${params.toString()}`;
   }, [searchParams, pathname]);
 
   return (
-    <Flex direction='row' align='end' gap='4px'>
+    <Flex direction="row" align="end" gap="4px">
       <TextInput
-        className='flex-1'
+        className="flex-1"
         label={label}
         description={description}
         placeholder={placeholder}
@@ -59,7 +59,7 @@ function InstrumentSearch({ label, description, placeholder, disabled }: IProps)
         disabled={disabled}
         onChange={(e) => setValue(e.target.value)}
         onKeyDown={(e) => {
-          if (e.key === 'Enter') {
+          if (e.key === "Enter") {
             e.preventDefault();
             e.stopPropagation();
             router.push(onSearch);
@@ -70,7 +70,7 @@ function InstrumentSearch({ label, description, placeholder, disabled }: IProps)
         <Search />
       </ActionIcon>
       {search && (
-        <ActionIcon component={Link} href={onClearSearch} color='red' size={36} disabled={disabled}>
+        <ActionIcon component={Link} href={onClearSearch} color="red" size={36} disabled={disabled}>
           <SearchX />
         </ActionIcon>
       )}
