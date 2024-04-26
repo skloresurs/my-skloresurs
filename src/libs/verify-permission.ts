@@ -35,6 +35,9 @@ const verifyPermission = (userPermissions: Permission[], permission?: Permission
     case "GPS": {
       return includes(userPermissions, "GPS") || includes(userPermissions, "Admin");
     }
+    case "Projects": {
+      return includes(userPermissions, "Projects") || includes(userPermissions, "Admin");
+    }
     default: {
       return defaultState;
     }
