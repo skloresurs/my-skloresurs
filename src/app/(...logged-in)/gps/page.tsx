@@ -1,13 +1,12 @@
-import { Center, Table, TableTbody, TableTh, TableThead, TableTr } from '@mantine/core';
-import axios from 'axios';
-import { constant, map } from 'lodash';
-import React from 'react';
+import { Center, Table, TableTbody, TableTh, TableThead, TableTr } from "@mantine/core";
+import axios from "axios";
+import { constant, map } from "lodash";
 
-import GpsTableRow from '@/components/gps/GpsTableRow';
-import TitleBar from '@/components/TitleBar';
-import ErrorAlert from '@/components/ui/ErrorAlert';
-import { env } from '@/env.mjs';
-import Car from '@/types/gps/Car';
+import TitleBar from "@/components/TitleBar";
+import GpsTableRow from "@/components/gps/GpsTableRow";
+import ErrorAlert from "@/components/ui/ErrorAlert";
+import { env } from "@/env.mjs";
+import type Car from "@/types/gps/Car";
 
 export default async function GpsPage() {
   const data = await axios
@@ -21,9 +20,15 @@ export default async function GpsPage() {
     .catch(constant(null));
   return (
     <>
-      <TitleBar title='GPS' />
+      <TitleBar title="GPS" />
       {data ? (
-        <Table stickyHeader withColumnBorders withTableBorder striped stickyHeaderOffset={60}>
+        <Table
+          stickyHeader={true}
+          withColumnBorders={true}
+          withTableBorder={true}
+          striped={true}
+          stickyHeaderOffset={60}
+        >
           <TableThead>
             <TableTr>
               <TableTh>Автомобіль</TableTh>
@@ -40,7 +45,7 @@ export default async function GpsPage() {
         </Table>
       ) : (
         <Center>
-          <ErrorAlert description='Не вдалось завантажити дані автомобілів' />
+          <ErrorAlert description="Не вдалось завантажити дані автомобілів" />
         </Center>
       )}
     </>

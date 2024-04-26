@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { z } from "zod";
 
 const specificationSchema = z
   .object({
@@ -20,18 +20,18 @@ const specificationSchema = z
     tempRequireEdgeProcessing: z.boolean(),
   })
   .strict()
-  .refine((data) => data.type, { message: 'Тип обов`язковий', path: ['type'] })
+  .refine((data) => data.type, { message: "Тип обов`язковий", path: ["type"] })
   .refine((data) => data.nomenclature, {
-    message: 'Номенклатура обов`язкова',
-    path: ['nomenclature'],
+    message: "Номенклатура обов`язкова",
+    path: ["nomenclature"],
   })
   .refine((data) => (data.edgeProcessing && data.tempRequireEdgeProcessing) || !data.tempRequireEdgeProcessing, {
-    message: 'Для цієї номенклатури необхідно обов`язково вказати обробку кромки',
-    path: ['edgeProcessing'],
+    message: "Для цієї номенклатури необхідно обов`язково вказати обробку кромки",
+    path: ["edgeProcessing"],
   })
   .refine((data) => (data.hardening && data.tempRequireHardening) || !data.tempRequireHardening, {
-    message: 'Для цієї номенклатури необхідно обов`язково вказати гартування',
-    path: ['hardening'],
+    message: "Для цієї номенклатури необхідно обов`язково вказати гартування",
+    path: ["hardening"],
   });
 
 type SpecificationSchema = z.infer<typeof specificationSchema>;

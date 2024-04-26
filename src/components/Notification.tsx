@@ -1,5 +1,4 @@
-import { CheckCircle, XCircle } from 'lucide-react';
-import React from 'react';
+import { CheckCircle, XCircle } from "lucide-react";
 
 const loadingNotificationProps = {
   loading: true,
@@ -9,14 +8,14 @@ const loadingNotificationProps = {
 
 const successNotificationProps = {
   autoClose: 3000,
-  color: 'green',
+  color: "green",
   icon: <CheckCircle />,
   loading: false,
   withCloseButton: true,
 };
 
 const errorNotificationProps = {
-  color: 'red',
+  color: "red",
   withCloseButton: true,
   autoClose: 3000,
   loading: false,

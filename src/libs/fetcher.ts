@@ -1,6 +1,6 @@
-import { nprogress } from '@mantine/nprogress';
-import type { AxiosResponse } from 'axios';
-import axios from 'axios';
+import { nprogress } from "@mantine/nprogress";
+import type { AxiosResponse } from "axios";
+import axios from "axios";
 
 /**
  * An asynchronous function to fetch data from the specified URL.

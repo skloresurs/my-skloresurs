@@ -1,6 +1,7 @@
-import { Grid, Skeleton, StyleProp } from '@mantine/core';
-import { times } from 'lodash';
-import React, { memo } from 'react';
+import { Grid, Skeleton, type StyleProp } from "@mantine/core";
+import { times } from "lodash";
+import type React from "react";
+import { memo } from "react";
 
 interface IProps {
   span: StyleProp<number>;

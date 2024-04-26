@@ -1,4 +1,4 @@
-import { cookies } from 'next/headers';
+import { cookies } from "next/headers";
 
 /**
  * Create an OAuth redirect response.
@@ -8,7 +8,7 @@ import { cookies } from 'next/headers';
  */
 export default function oauthRedirect(activeSession: boolean): Response {
   return new Response(null, {
-    headers: { location: activeSession ? '/profile?tab=link' : '/' },
+    headers: { location: activeSession ? "/profile?tab=link" : "/" },
     status: 302,
   });
 }
@@ -21,6 +21,6 @@ export default function oauthRedirect(activeSession: boolean): Response {
  * @return {Response} The response object for the OAuth redirect
  */
 export function oauthErrorRedirect(message: string, activeSession: boolean): Response {
-  cookies().set('oauth_error', message);
+  cookies().set("oauth_error", message);
   return oauthRedirect(activeSession);
 }

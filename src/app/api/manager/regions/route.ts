@@ -1,14 +1,14 @@
-import { slice } from 'lodash';
-import { NextRequest, NextResponse } from 'next/server';
+import { slice } from "lodash";
+import { type NextRequest, NextResponse } from "next/server";
 
-import { ServerError } from '@/classes/CustomError';
-import apiErrorHandler from '@/libs/api-error-handler';
-import axios1cMain from '@/libs/axios';
-import logger from '@/libs/logger';
-import { getSession } from '@/libs/sessions';
-import verifyIp from '@/libs/verify-ip';
-import { verifyPermissionServer } from '@/libs/verify-permission';
-import Region from '@/types/manager/Region';
+import { ServerError } from "@/classes/CustomError";
+import apiErrorHandler from "@/libs/api-error-handler";
+import axios1cMain from "@/libs/axios";
+import logger from "@/libs/logger";
+import { getSession } from "@/libs/sessions";
+import verifyIp from "@/libs/verify-ip";
+import { verifyPermissionServer } from "@/libs/verify-permission";
+import type Region from "@/types/manager/Region";
 
 interface IResponse {
   data: Region[];
@@ -20,23 +20,23 @@ export async function GET(req: NextRequest) {
   try {
     const session = await getSession(req);
     await verifyIp(req, session.user.allowed_ips);
-    verifyPermissionServer(session.user.permissions, 'Manager');
+    verifyPermissionServer(session.user.permissions, "Manager");
 
     const params = req.nextUrl.searchParams;
 
-    const search = params.get('search');
-    const all = params.get('all');
-    const page = Number(params.get('page') ?? 1);
+    const search = params.get("search");
+    const all = params.get("all");
+    const page = Number(params.get("page") ?? 1);
 
     const paramsQuery = new URLSearchParams();
     if (search) {
-      paramsQuery.append('search', search);
+      paramsQuery.append("search", search);
     }
     if (all) {
-      paramsQuery.append('all', 'true');
+      paramsQuery.append("all", "true");
     }
 
-    const query = paramsQuery.toString().replaceAll('+', '%20');
+    const query = paramsQuery.toString().replaceAll("+", "%20");
 
     if (!session.user.id_1c) {
       throw ServerError;
@@ -54,10 +54,13 @@ export async function GET(req: NextRequest) {
       });
 
     return NextResponse.json(
-      { total: response.data.data.length, data: slice(response.data.data, (page - 1) * PAGE_SIZE, page * PAGE_SIZE) },
+      {
+        total: response.data.data.length,
+        data: slice(response.data.data, (page - 1) * PAGE_SIZE, page * PAGE_SIZE),
+      },
       {
         status: 200,
-      }
+      },
     );
   } catch (error) {
     return apiErrorHandler(req, error);

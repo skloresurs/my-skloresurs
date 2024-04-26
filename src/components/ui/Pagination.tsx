@@ -1,7 +1,7 @@
-import { Center, Pagination as MantinePagination } from '@mantine/core';
-import Link from 'next/link';
-import { ReadonlyURLSearchParams, usePathname } from 'next/navigation';
-import React, { memo } from 'react';
+import { Center, Pagination as MantinePagination } from "@mantine/core";
+import Link from "next/link";
+import { type ReadonlyURLSearchParams, usePathname } from "next/navigation";
+import { memo } from "react";
 
 interface PaginationProps {
   total: number;
@@ -10,20 +10,20 @@ interface PaginationProps {
 function Pagination({ total, query }: PaginationProps) {
   const searchParam = new URLSearchParams([...query.entries()]);
   const pathname = usePathname();
-  const pageNumber = query.get('page') ?? 1;
+  const pageNumber = query.get("page") ?? 1;
   const page = Number.isNaN(Number(pageNumber)) ? 1 : Number(pageNumber);
   return (
-    <Center my='md'>
+    <Center my="md">
       <MantinePagination
         value={page}
         total={total}
-        radius='xl'
-        size='sm'
+        radius="xl"
+        size="sm"
         getItemProps={(e) => {
           if (e === 1) {
-            searchParam.delete('page');
+            searchParam.delete("page");
           } else {
-            searchParam.set('page', e.toString());
+            searchParam.set("page", e.toString());
           }
 
           return {
@@ -32,20 +32,20 @@ function Pagination({ total, query }: PaginationProps) {
           };
         }}
         getControlProps={(e) => {
-          if (e === 'next') {
+          if (e === "next") {
             if (page >= total) {
               return { disabled: true };
             }
-            searchParam.set('page', (page + 1).toString());
+            searchParam.set("page", (page + 1).toString());
           }
-          if (e === 'previous') {
+          if (e === "previous") {
             if (page <= 1) {
               return { disabled: true };
             }
             if (+page - 1 === 1) {
-              searchParam.delete('page');
+              searchParam.delete("page");
             } else {
-              searchParam.set('page', (page - 1).toString());
+              searchParam.set("page", (page - 1).toString());
             }
           }
 

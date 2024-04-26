@@ -1,7 +1,7 @@
-import { Badge } from '@mantine/core';
-import React, { memo } from 'react';
+import { Badge } from "@mantine/core";
+import { memo } from "react";
 
-import { Route } from '@/types/route/Route';
+import type { Route } from "@/types/route/Route";
 
 interface IProps {
   route: Route;
@@ -10,7 +10,7 @@ interface IProps {
 function StatusBadge({ route }: IProps) {
   if (!route.approved) {
     return (
-      <Badge className='cursor-default select-none' variant='light' color='red'>
+      <Badge className="cursor-default select-none" variant="light" color="red">
         Не затверджено
       </Badge>
     );
@@ -18,14 +18,14 @@ function StatusBadge({ route }: IProps) {
 
   if (!route.completed) {
     return (
-      <Badge className='cursor-default select-none' variant='light' color='orange'>
+      <Badge className="cursor-default select-none" variant="light" color="orange">
         Затвержений
       </Badge>
     );
   }
 
   return (
-    <Badge className='cursor-default select-none' variant='light' color='green'>
+    <Badge className="cursor-default select-none" variant="light" color="green">
       Завершено
     </Badge>
   );

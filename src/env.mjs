@@ -1,7 +1,7 @@
-import { createEnv } from '@t3-oss/env-nextjs';
+import { createEnv } from "@t3-oss/env-nextjs";
 // eslint-disable-next-line lodash/import-scope
-import _ from 'lodash';
-import { z } from 'zod';
+import _ from "lodash";
+import { z } from "zod";
 
 /**
  * Creates an environment configuration.
@@ -11,12 +11,12 @@ export const env = createEnv({
   client: {
     NEXT_PUBLIC_GOOGLE_MAPS_API_KEY: z
       .string({
-        required_error: 'GOOGLE_MAPS_API_KEY is required [https://console.cloud.google.com/google/maps-apis/start]',
+        required_error: "GOOGLE_MAPS_API_KEY is required [https://console.cloud.google.com/google/maps-apis/start]",
       })
       .min(1),
     NEXT_PUBLIC_RECAPTCHA_SITE_KEY: z
       .string({
-        required_error: 'NEXT_PUBLIC_RECAPTCHA_SITE_KEY is required [https://www.google.com/recaptcha/admin/]',
+        required_error: "NEXT_PUBLIC_RECAPTCHA_SITE_KEY is required [https://www.google.com/recaptcha/admin/]",
       })
       .min(1),
   },
@@ -30,44 +30,46 @@ export const env = createEnv({
   onValidationError: (error) => {
     throw new Error(
       // eslint-disable-next-line sonarjs/no-nested-template-literals
-      `❌ Invalid environment variables:\n\n${_.map(error.errors, (e, i) => `${i + 1}. ${e.message}`).join('\n')}`
+      `❌ Invalid environment variables:\n\n${_.map(error.errors, (e, i) => `${i + 1}. ${e.message}`).join("\n")}`,
     );
   },
 
   server: {
     API_URL_1C_MAIN: z
-      .string({ required_error: 'NEXT_PUBLIC_API_URL_1C_MAIN is required' })
-      .url('NEXT_PUBLIC_API_URL_1C_MAIN must be a valid URL'),
+      .string({ required_error: "NEXT_PUBLIC_API_URL_1C_MAIN is required" })
+      .url("NEXT_PUBLIC_API_URL_1C_MAIN must be a valid URL"),
     API_KEY_1C_MAIN: z.string({
-      required_error: 'API_KEY_1C_MAIN is required',
+      required_error: "API_KEY_1C_MAIN is required",
     }),
     BASE_URL: z
-      .string({ required_error: 'BASE_URL is required' })
-      .url('BASE_URL must be a valid URL')
-      .default(process.env.URL ?? 'http://localhost:3000'),
-    DATABASE_URL: z.string({ required_error: 'DATABASE_URL is required. Database must be PostgreSQL' }),
+      .string({ required_error: "BASE_URL is required" })
+      .url("BASE_URL must be a valid URL")
+      .default(process.env.URL ?? "http://localhost:3000"),
+    DATABASE_URL: z.string({
+      required_error: "DATABASE_URL is required. Database must be PostgreSQL",
+    }),
     FACEBOOK_APP_ID: z.string({
-      required_error: 'FACEBOOK_APP_ID is required [https://developers.facebook.com/apps]',
+      required_error: "FACEBOOK_APP_ID is required [https://developers.facebook.com/apps]",
     }),
     FACEBOOK_APP_SECRET: z.string({
-      required_error: 'FACEBOOK_APP_SECRET is required [https://developers.facebook.com/apps]',
+      required_error: "FACEBOOK_APP_SECRET is required [https://developers.facebook.com/apps]",
     }),
     GOOGLE_CLIENT_ID: z.string({
-      required_error: 'GOOGLE_CLIENT_ID is required [https://console.cloud.google.com/apis/credentials]',
+      required_error: "GOOGLE_CLIENT_ID is required [https://console.cloud.google.com/apis/credentials]",
     }),
     GOOGLE_CLIENT_SECRET: z.string({
-      required_error: 'GOOGLE_CLIENT_SECRET is required [https://console.cloud.google.com/apis/credentials]',
+      required_error: "GOOGLE_CLIENT_SECRET is required [https://console.cloud.google.com/apis/credentials]",
     }),
     RECAPTCHA_SECRET_KEY: z.string({
-      required_error: 'RECAPTCHA_SECRET_KEY is required [https://www.google.com/recaptcha/admin/]',
+      required_error: "RECAPTCHA_SECRET_KEY is required [https://www.google.com/recaptcha/admin/]",
     }),
     GPS_API: z
       .string({
-        required_error: 'GPS_API is required',
+        required_error: "GPS_API is required",
       })
-      .url('GPS_API must be a valid URL'),
+      .url("GPS_API must be a valid URL"),
     GPS_API_KEY: z.string({
-      required_error: 'GPS_API_KEY is required',
+      required_error: "GPS_API_KEY is required",
     }),
   },
 });

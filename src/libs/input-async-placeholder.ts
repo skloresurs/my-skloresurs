@@ -4,18 +4,18 @@ export default function getInputPlaceholder(
   isValidating: boolean,
   error: unknown,
   forbidden: boolean,
-  defaultValue?: string
+  defaultValue?: string,
 ) {
   if (isValidating) {
-    return 'Завантаження...';
+    return "Завантаження...";
   }
 
   if (error) {
-    return 'Помилка завантаження';
+    return "Помилка завантаження";
   }
 
   if (forbidden) {
-    return 'Недоступно';
+    return "Недоступно";
   }
-  return defaultValue ?? '';
+  return defaultValue ?? "";
 }

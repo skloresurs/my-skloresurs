@@ -1,10 +1,10 @@
-import { eq } from 'drizzle-orm';
-import { constant } from 'lodash';
+import { eq } from "drizzle-orm";
+import { constant } from "lodash";
 
-import { RequiredOneConnections, UserNotFoundError } from '@/classes/CustomError';
+import { RequiredOneConnections, UserNotFoundError } from "@/classes/CustomError";
 
-import { db } from './db';
-import { userSchema } from './db/schema';
+import { db } from "./db";
+import { userSchema } from "./db/schema";
 
 /**
  * Asynchronously verifies the connections for a given user ID.

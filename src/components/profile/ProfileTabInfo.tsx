@@ -1,28 +1,28 @@
-'use client';
+"use client";
 
-import { Button, Divider, Flex, Paper, Stack, Text, TextInput, Title } from '@mantine/core';
-import { useDisclosure } from '@mantine/hooks';
-import { notifications } from '@mantine/notifications';
-import axios from 'axios';
-import { Save } from 'lucide-react';
-import React, { useEffect, useState } from 'react';
-import useSWR from 'swr';
+import { Button, Divider, Flex, Paper, Stack, Text, TextInput, Title } from "@mantine/core";
+import { useDisclosure } from "@mantine/hooks";
+import { notifications } from "@mantine/notifications";
+import axios from "axios";
+import { Save } from "lucide-react";
+import { useEffect, useState } from "react";
+import useSWR from "swr";
 
-import { mutateAllKeysStartingWith } from '@/libs/mutate';
-import { IUserMeRequest } from '@/types/User';
+import { mutateAllKeysStartingWith } from "@/libs/mutate";
+import type { IUserMeRequest } from "@/types/User";
 
-import { errorNotificationProps, loadingNotificationProps, successNotificationProps } from '../Notification';
+import { errorNotificationProps, loadingNotificationProps, successNotificationProps } from "../Notification";
 
-const NotificationTitle = 'Оновлення профілю';
+const NotificationTitle = "Оновлення профілю";
 
 export default function ProfileTabInfo() {
-  const { data: user, mutate } = useSWR<IUserMeRequest>(`/api/user`);
-  const [fullname, setFullName] = useState('');
+  const { data: user, mutate } = useSWR<IUserMeRequest>("/api/user");
+  const [fullname, setFullName] = useState("");
   const [loading, { open: enableLoading, close: disableLoading }] = useDisclosure();
 
   useEffect(() => {
     if (user) {
-      setFullName(user?.fullname ?? '');
+      setFullName(user?.fullname ?? "");
     }
   }, [user]);
 
@@ -37,81 +37,81 @@ export default function ProfileTabInfo() {
       });
     }
     const notification = notifications.show({
-      message: 'Оновлення повного імені...',
+      message: "Оновлення повного імені...",
       title: NotificationTitle,
       ...loadingNotificationProps,
     });
 
     const response = await axios
-      .post('/api/profile/fullname', {
+      .post("/api/profile/fullname", {
         fullname,
       })
       .catch((error) => {
         notifications.update({
           id: notification,
-          message: error.response?.data.error ?? error.message ?? 'Невідома помилка',
+          message: error.response?.data.error ?? error.message ?? "Невідома помилка",
           title: NotificationTitle,
           ...errorNotificationProps,
         });
       });
 
     if (!response || response.status !== 200) return disableLoading();
-    await mutateAllKeysStartingWith('/api/users');
+    await mutateAllKeysStartingWith("/api/users");
     mutate();
 
     disableLoading();
     return notifications.update({
       id: notification,
-      message: 'Оновлено',
+      message: "Оновлено",
       title: NotificationTitle,
       ...successNotificationProps,
     });
   };
 
   return (
-    <Stack gap='sm' maw='576'>
-      <Paper withBorder shadow='md' radius='md' p='md'>
-        <Title order={2} size='h3'>
+    <Stack gap="sm" maw="576">
+      <Paper withBorder={true} shadow="md" radius="md" p="md">
+        <Title order={2} size="h3">
           ID
         </Title>
-        <Text size='sm'>Ваш ID</Text>
-        <TextInput mt='sm' value={user?.id} readOnly />
-        <Divider my='md' />
-        <Text size='sm' c='dimmed'>
+        <Text size="sm">Ваш ID</Text>
+        <TextInput mt="sm" value={user?.id} readOnly={true} />
+        <Divider my="md" />
+        <Text size="sm" c="dimmed">
           ID не може бути змінено
         </Text>
       </Paper>
-      <Paper withBorder shadow='md' radius='md' p='md'>
-        <Title order={2} size='h3'>
+      <Paper withBorder={true} shadow="md" radius="md" p="md">
+        <Title order={2} size="h3">
           E-mail
         </Title>
-        <Text size='sm'>Ваш E-mail. Використовується для входу та оформлення замовлень</Text>
-        <TextInput mt='sm' value={user?.email} readOnly />
-        <Divider my='md' />
-        <Text size='sm' c='dimmed'>
+        <Text size="sm">Ваш E-mail. Використовується для входу та оформлення замовлень</Text>
+        <TextInput mt="sm" value={user?.email} readOnly={true} />
+        <Divider my="md" />
+        <Text size="sm" c="dimmed">
           E-mail не може бути змінено
         </Text>
       </Paper>
-      <Paper withBorder shadow='md' radius='md' p='md'>
-        <Title order={2} size='h3'>
+      <Paper withBorder={true} shadow="md" radius="md" p="md">
+        <Title order={2} size="h3">
           Повне ім&apos;я
         </Title>
-        <Text size='sm'>Ваше повне ім&apos;я. Використовується для оформлення замовлень</Text>
+        <Text size="sm">Ваше повне ім&apos;я. Використовується для оформлення замовлень</Text>
         <TextInput
-          className='mt-3'
+          className="mt-3"
           value={fullname}
           onChange={(e) => setFullName(e.target.value)}
           onKeyDown={(e) => {
-            if (e.key === 'Enter') updateFullname();
+            if (e.key === "Enter") updateFullname();
           }}
           maxLength={100}
         />
-        <Text size='xs' c='dimmed' ta='right'>
+        <Text size="xs" c="dimmed" ta="right">
           {fullname.length}/100
         </Text>
-        <Divider my='md' />
-        <Flex justify='space-between' align='center'>
-          <Text size='sm' c='dimmed'>
+        <Divider my="md" />
+        <Flex justify="space-between" align="center">
+          <Text size="sm" c="dimmed">
             Максимум 100 символів
           </Text>
           <Button onClick={updateFullname} loading={loading} leftSection={<Save size={20} />}>

@@ -1,18 +1,18 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { type NextRequest, NextResponse } from "next/server";
 
-import { ServerError } from '@/classes/CustomError';
-import apiErrorHandler from '@/libs/api-error-handler';
-import axios1cMain from '@/libs/axios';
-import logger from '@/libs/logger';
-import { getSession } from '@/libs/sessions';
-import verifyIp from '@/libs/verify-ip';
-import { verifyPermissionServer } from '@/libs/verify-permission';
+import { ServerError } from "@/classes/CustomError";
+import apiErrorHandler from "@/libs/api-error-handler";
+import axios1cMain from "@/libs/axios";
+import logger from "@/libs/logger";
+import { getSession } from "@/libs/sessions";
+import verifyIp from "@/libs/verify-ip";
+import { verifyPermissionServer } from "@/libs/verify-permission";
 
 export async function GET(req: NextRequest, { params }: { params: { id: string } }) {
   try {
     const session = await getSession(req);
     await verifyIp(req, session.user.allowed_ips);
-    verifyPermissionServer(session.user.permissions, 'Driver');
+    verifyPermissionServer(session.user.permissions, "Driver");
 
     if (!session.user.id_1c) {
       throw ServerError;

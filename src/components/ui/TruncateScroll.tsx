@@ -1,7 +1,8 @@
-'use client';
+"use client";
 
-import React, { useEffect } from 'react';
-import { activateTextTruncateScroll } from 'text-truncate-scroll';
+import type React from "react";
+import { useEffect } from "react";
+import { activateTextTruncateScroll } from "text-truncate-scroll";
 
 export default function TruncateScroll({ children }: { children: React.ReactNode }) {
   useEffect(() => {

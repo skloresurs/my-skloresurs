@@ -1,8 +1,8 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { type NextRequest, NextResponse } from "next/server";
 
-import apiErrorHandler from '@/libs/api-error-handler';
-import { auth } from '@/libs/lucia';
-import { getSession } from '@/libs/sessions';
+import apiErrorHandler from "@/libs/api-error-handler";
+import { auth } from "@/libs/lucia";
+import { getSession } from "@/libs/sessions";
 
 export async function POST(req: NextRequest) {
   try {

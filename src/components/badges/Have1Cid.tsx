@@ -1,11 +1,11 @@
-import { Tooltip } from '@mantine/core';
-import { BadgeInfo } from 'lucide-react';
-import React, { memo } from 'react';
+import { Tooltip } from "@mantine/core";
+import { BadgeInfo } from "lucide-react";
+import { memo } from "react";
 
 function Have1Cid() {
   return (
     <Tooltip label="Користувач прив'язаний до 1С">
-      <BadgeInfo color='yellow' />
+      <BadgeInfo color="yellow" />
     </Tooltip>
   );
 }

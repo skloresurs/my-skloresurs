@@ -1,20 +1,20 @@
-import dayjs from 'dayjs';
-import { eq } from 'drizzle-orm';
-import { orderBy } from 'lodash';
-import { NextRequest, NextResponse } from 'next/server';
+import dayjs from "dayjs";
+import { eq } from "drizzle-orm";
+import { orderBy } from "lodash";
+import { type NextRequest, NextResponse } from "next/server";
 
-import apiErrorHandler from '@/libs/api-error-handler';
-import { db } from '@/libs/db';
-import { userSchema } from '@/libs/db/schema';
-import { auth } from '@/libs/lucia';
-import { getSession } from '@/libs/sessions';
+import apiErrorHandler from "@/libs/api-error-handler";
+import { db } from "@/libs/db";
+import { userSchema } from "@/libs/db/schema";
+import { auth } from "@/libs/lucia";
+import { getSession } from "@/libs/sessions";
 
 export async function GET(req: NextRequest) {
   try {
     const session = await getSession(req);
     const sessions = await auth.getAllUserSessions(session.user.id);
 
-    const now = dayjs(new Date()).format('YYYY-MM-DD');
+    const now = dayjs(new Date()).format("YYYY-MM-DD");
 
     const activeDays = [...new Set([...session.user.active_days, now])];
 
@@ -22,10 +22,10 @@ export async function GET(req: NextRequest) {
     return NextResponse.json(
       {
         ...session.user,
-        sessions: orderBy(sessions, ['created_at'], ['desc']),
+        sessions: orderBy(sessions, ["created_at"], ["desc"]),
         thisSession: session.id,
       },
-      { status: 200 }
+      { status: 200 },
     );
   } catch (error) {
     return apiErrorHandler(req, error);

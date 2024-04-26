@@ -1,13 +1,12 @@
-'use client';
+"use client";
 
-import { Select } from '@mantine/core';
-import React from 'react';
-import useSWR from 'swr';
+import { Select } from "@mantine/core";
+import useSWR from "swr";
 
-import AsyncInputRightSections from '@/components/AsyncInputRightSections';
-import getInputPlaceholder from '@/libs/input-async-placeholder';
-import { FormType } from '@/types/newOrder/Form';
-import INomenclature from '@/types/newOrder/Nomenclature';
+import AsyncInputRightSections from "@/components/AsyncInputRightSections";
+import getInputPlaceholder from "@/libs/input-async-placeholder";
+import type { FormType } from "@/types/newOrder/Form";
+import type INomenclature from "@/types/newOrder/Nomenclature";
 
 interface IProps {
   url: string;
@@ -31,11 +30,11 @@ export default function BaseSelect({ url, form, formKey, label, activeTab, forbr
 
   return (
     <Select
-      className='min-w-[250px] flex-1 '
+      className="min-w-[250px] flex-1 "
       label={label}
       {...thisTypeInputProps}
       data={data?.data ?? []}
-      placeholder={getInputPlaceholder(isValidating, error, forbridden ?? false, 'Не вибрано')}
+      placeholder={getInputPlaceholder(isValidating, error, forbridden ?? false, "Не вибрано")}
       disabled={error || isValidating || forbridden}
       rightSection={<AsyncInputRightSections isValidating={isValidating} error={error} forbidden={forbridden} />}
       withAsterisk={require}

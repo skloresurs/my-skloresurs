@@ -1,25 +1,24 @@
-'use client';
+"use client";
 
-import { Center, Grid, StyleProp } from '@mantine/core';
-import { map } from 'lodash';
-import { useSearchParams } from 'next/navigation';
-import React from 'react';
-import useSWR from 'swr';
+import { Center, Grid, type StyleProp } from "@mantine/core";
+import { map } from "lodash";
+import { useSearchParams } from "next/navigation";
+import useSWR from "swr";
 
-import { Order } from '@/types/manager/Order';
+import type { Order } from "@/types/manager/Order";
 
-import ErrorAlert from '../../ui/ErrorAlert';
-import GridSkeleton from '../../ui/GridSkeleton';
-import InfoAlert from '../../ui/InfoAlert';
-import Pagination from '../../ui/Pagination';
-import OrderItem from './OrderItem';
+import ErrorAlert from "../../ui/ErrorAlert";
+import GridSkeleton from "../../ui/GridSkeleton";
+import InfoAlert from "../../ui/InfoAlert";
+import Pagination from "../../ui/Pagination";
+import OrderItem from "./OrderItem";
 
 const span: StyleProp<number> = {
   base: 12,
-  '2xs': 6,
+  "2xs": 6,
   lg: 4,
   xl: 3,
-  '2xl': 2,
+  "2xl": 2,
 };
 
 interface IResponse {
@@ -34,7 +33,7 @@ export default function OrdersList() {
   if (isValidating) {
     return (
       <GridSkeleton span={span} times={12}>
-        <div className='h-[250px]' />
+        <div className="h-[250px]" />
       </GridSkeleton>
     );
   }
@@ -45,8 +44,8 @@ export default function OrdersList() {
         <ErrorAlert
           maw={576}
           w={576}
-          title='Помилка'
-          description='Не вдалось завантажити список замовлень'
+          title="Помилка"
+          description="Не вдалось завантажити список замовлень"
           refresh={mutate}
         />
       </Center>
@@ -59,8 +58,8 @@ export default function OrdersList() {
         <InfoAlert
           maw={576}
           w={576}
-          title='Немає замовлень'
-          description='Не знадено жодного замовлення за вказаними параметрами'
+          title="Немає замовлень"
+          description="Не знадено жодного замовлення за вказаними параметрами"
         />
       </Center>
     );

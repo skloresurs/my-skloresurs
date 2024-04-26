@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
-import { ActionIcon, TextInput } from '@mantine/core';
-import { Search, X } from 'lucide-react';
-import { DataTable, DataTableColumn } from 'mantine-datatable';
-import { useRouter, useSearchParams } from 'next/navigation';
-import React, { useMemo, useState } from 'react';
-import useSWR from 'swr';
+import { ActionIcon, TextInput } from "@mantine/core";
+import { Search, X } from "lucide-react";
+import { DataTable, type DataTableColumn } from "mantine-datatable";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useMemo, useState } from "react";
+import useSWR from "swr";
 
 interface IUsers1C {
   id: number;
@@ -18,7 +18,7 @@ interface Response {
 }
 
 const page = (pageParam: string | null) => {
-  if (!pageParam || !Number.isInteger(+pageParam) || +pageParam < 1) {
+  if (!(pageParam && Number.isInteger(+pageParam)) || +pageParam < 1) {
     return 1;
   }
   return +pageParam;
@@ -27,15 +27,15 @@ const page = (pageParam: string | null) => {
 export default function Users() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const pageParam = searchParams.get('page');
-  const [search, setSearch] = useState(searchParams.get('search') ?? '');
+  const pageParam = searchParams.get("page");
+  const [search, setSearch] = useState(searchParams.get("search") ?? "");
   const params = useMemo(
     () =>
       new URLSearchParams({
-        page: pageParam ?? '1',
+        page: pageParam ?? "1",
         search,
       }),
-    [pageParam, search]
+    [pageParam, search],
   );
   const { data, isValidating } = useSWR<Response>(`/api/users-1c?${params.toString()}`);
 
@@ -44,42 +44,42 @@ export default function Users() {
   const columns = useMemo<DataTableColumn<IUsers1C>[]>(
     () => [
       {
-        accessor: 'id',
-        title: 'ID',
+        accessor: "id",
+        title: "ID",
       },
       {
-        accessor: 'name',
+        accessor: "name",
         title: "Повне ім'я",
         filter: (
           <TextInput
-            label='Пошук за повним ім`ям'
+            label="Пошук за повним ім`ям"
             leftSection={<Search size={16} />}
             rightSection={
-              <ActionIcon size='sm' variant='transparent' c='dimmed' onClick={() => setSearch('')}>
+              <ActionIcon size="sm" variant="transparent" c="dimmed" onClick={() => setSearch("")}>
                 <X size={14} />
               </ActionIcon>
             }
             value={search}
             onChange={(e) => {
               setSearch(e.currentTarget.value);
-              params.set('page', '1');
+              params.set("page", "1");
             }}
           />
         ),
-        filtering: search !== '',
+        filtering: search !== "",
       },
     ],
-    [params, search]
+    [params, search],
   );
 
   return (
     <DataTable
-      withTableBorder
-      withColumnBorders
-      striped
+      withTableBorder={true}
+      withColumnBorders={true}
+      striped={true}
       columns={columns}
       minHeight={400}
-      verticalSpacing='md'
+      verticalSpacing="md"
       records={data?.data ?? []}
       loaderBackgroundBlur={2}
       totalRecords={data?.total ?? 0}

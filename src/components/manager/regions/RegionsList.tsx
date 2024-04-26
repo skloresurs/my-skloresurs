@@ -1,25 +1,24 @@
-'use client';
+"use client";
 
-import { Center, Grid, StyleProp } from '@mantine/core';
-import { map } from 'lodash';
-import { useSearchParams } from 'next/navigation';
-import React from 'react';
-import useSWR from 'swr';
+import { Center, Grid, type StyleProp } from "@mantine/core";
+import { map } from "lodash";
+import { useSearchParams } from "next/navigation";
+import useSWR from "swr";
 
-import ErrorAlert from '@/components/ui/ErrorAlert';
-import GridSkeleton from '@/components/ui/GridSkeleton';
-import InfoAlert from '@/components/ui/InfoAlert';
-import Pagination from '@/components/ui/Pagination';
-import Region from '@/types/manager/Region';
+import ErrorAlert from "@/components/ui/ErrorAlert";
+import GridSkeleton from "@/components/ui/GridSkeleton";
+import InfoAlert from "@/components/ui/InfoAlert";
+import Pagination from "@/components/ui/Pagination";
+import type Region from "@/types/manager/Region";
 
-import RegionItem from './RegionItem';
+import RegionItem from "./RegionItem";
 
 const span: StyleProp<number> = {
   base: 12,
   md: 6,
   lg: 4,
   xl: 3,
-  '2xl': 2,
+  "2xl": 2,
 };
 
 interface IResponse {
@@ -33,7 +32,7 @@ export default function RegionsList() {
   if (isValidating) {
     return (
       <GridSkeleton span={span} times={12}>
-        <div className='h-[125px]' />
+        <div className="h-[125px]" />
       </GridSkeleton>
     );
   }
@@ -44,8 +43,8 @@ export default function RegionsList() {
         <ErrorAlert
           maw={576}
           w={576}
-          title='Помилка'
-          description='Не вдалось завантажити список регіонів'
+          title="Помилка"
+          description="Не вдалось завантажити список регіонів"
           refresh={mutate}
         />
       </Center>
@@ -58,8 +57,8 @@ export default function RegionsList() {
         <InfoAlert
           maw={576}
           w={576}
-          title='Немає регіонів'
-          description='Не знадено жодного регіона за вказаними параметрами'
+          title="Немає регіонів"
+          description="Не знадено жодного регіона за вказаними параметрами"
         />
       </Center>
     );
@@ -72,7 +71,7 @@ export default function RegionsList() {
           <RegionItem agent={agent} />
         </Grid.Col>
       ))}
-      <Center w='100%'>
+      <Center w="100%">
         <Pagination total={Math.ceil(data.total / 48)} query={query} />
       </Center>
     </Grid>

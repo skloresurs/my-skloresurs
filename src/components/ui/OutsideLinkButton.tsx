@@ -1,5 +1,6 @@
-import { ActionIcon, Button } from '@mantine/core';
-import React, { memo } from 'react';
+import { ActionIcon, Button } from "@mantine/core";
+import type React from "react";
+import { memo } from "react";
 
 interface IProps {
   link: string | null;
@@ -14,9 +15,9 @@ function OutsideLinkButton({ link, full, fullWidth, label, icon, target }: IProp
   if (full) {
     return (
       <Button
-        component='a'
-        href={link ?? '#'}
-        variant='light'
+        component="a"
+        href={link ?? "#"}
+        variant="light"
         fullWidth={fullWidth}
         leftSection={icon}
         data-disabled={!link}
@@ -32,15 +33,15 @@ function OutsideLinkButton({ link, full, fullWidth, label, icon, target }: IProp
 
   return (
     <ActionIcon
-      component='a'
-      href={link ?? '#'}
+      component="a"
+      href={link ?? "#"}
       data-disabled={!link}
       onClick={(event) => {
         if (!link) event.preventDefault();
       }}
       target={target}
-      variant='light'
-      size='lg'
+      variant="light"
+      size="lg"
     >
       {icon}
     </ActionIcon>

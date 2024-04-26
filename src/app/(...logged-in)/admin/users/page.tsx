@@ -1,12 +1,10 @@
-import React from 'react';
-
-import UsersList from '@/components/admin/users/list/UsersList';
-import TitleBar from '@/components/TitleBar';
+import TitleBar from "@/components/TitleBar";
+import UsersList from "@/components/admin/users/list/UsersList";
 
 export default function UsersPage() {
   return (
     <>
-      <TitleBar title='Користувачі' />
+      <TitleBar title="Користувачі" />
       <UsersList />
     </>
   );
