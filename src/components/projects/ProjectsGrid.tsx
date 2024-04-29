@@ -51,7 +51,7 @@ export default function ProjectsGrid() {
     <>
       <Grid align="stretch">
         {map(data.data, (e) => (
-          <Grid.Col key={e.id} span={span}>
+          <Grid.Col key={e.id + e.agent.name} span={span}>
             <ProjectCard project={e} />
           </Grid.Col>
         ))}
