@@ -5,6 +5,7 @@ type Message = {
   date: string;
   manager: PersonData;
   agent: PersonData;
+  notificationDate: string;
   comment: string;
   status: string;
 };
