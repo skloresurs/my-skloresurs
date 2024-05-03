@@ -46,7 +46,7 @@ export default function CreateNewMessage({ projectId }: IProps) {
       agent,
       message: "",
       status: "",
-      notificationDate: dayjs().set("hour", 0).set("minute", 0).set("second", 0).toDate(),
+      notificationDate: dayjs().set("hour", 0).set("minute", 0).set("second", 0).add(7, "day").toDate(),
     },
     validate: zodResolver(schema),
   });
