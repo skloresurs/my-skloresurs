@@ -117,7 +117,7 @@ export default function CreateNewMessage({ projectId, agent }: IProps) {
         </form>
       </Drawer>
 
-      <ActionIcon onClick={open} size="lg" radius="xl" variant="light" c="green">
+      <ActionIcon onClick={open} size="lg" radius="xl" variant="light" c="green" color="green">
         <PlusCircle />
       </ActionIcon>
     </>

@@ -5,9 +5,9 @@ import { env } from "@/env.mjs";
 export default {
   schema: "./src/libs/db/schema.ts",
   out: "./drizzle",
-  driver: "pg",
+  dialect: "postgresql",
   dbCredentials: {
-    connectionString: env.DATABASE_URL,
+    url: env.DATABASE_URL,
   },
   verbose: true,
   strict: true,

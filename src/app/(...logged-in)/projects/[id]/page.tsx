@@ -17,14 +17,12 @@ const getColumns = (projectId: string): DataTableColumn<Message>[] => [
   {
     accessor: "manager-agent",
     title: "Менеджер/Контрагент",
-    render: ({ manager, agent, date, notificationDate }) => (
+    render: ({ manager, agent, notificationDate }) => (
       <Stack gap="2px">
         <Text size="sm">{manager?.name}</Text>
         <Text fw={600}>{agent?.name}</Text>
         <Text size="xs" c="dimmed">
-          {dayjs(date).format("DD.MM.YYYY")}
-          {" / "}
-          {dayjs(notificationDate).isValid() ? dayjs(notificationDate).format("DD.MM.YYYY") : "Не вказано"}
+          {dayjs(notificationDate).format("DD.MM.YYYY")}
         </Text>
       </Stack>
     ),

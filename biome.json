@@ -5,6 +5,7 @@
   },
   "linter": {
     "enabled": true,
+    "ignore": ["./drizzle/**/*"],
     "rules": {
       "recommended": true,
       "complexity": {
@@ -22,6 +23,7 @@
   },
   "formatter": {
     "enabled": true,
+    "ignore": ["./drizzle/**/*"],
     "formatWithErrors": true,
     "attributePosition": "auto",
     "indentStyle": "space",

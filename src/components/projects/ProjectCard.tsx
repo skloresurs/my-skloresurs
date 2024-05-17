@@ -3,6 +3,7 @@ import { Card, Flex, Text, Title } from "@mantine/core";
 import dayjs from "dayjs";
 import { Calendar, CheckCheck, Fingerprint, UserRound } from "lucide-react";
 import Link from "next/link";
+import { twMerge } from "tailwind-merge";
 
 interface IProps {
   project: Project;
@@ -13,7 +14,10 @@ export default function ProjectCard({ project }: IProps) {
     <Card
       component={Link}
       href={`/projects/${project.id}`}
-      className="hover:bg-[var(--mantine-color-dark-5)] duration-300 cursor-pointer"
+      className={twMerge(
+        "hover:bg-[var(--mantine-color-dark-5)] duration-300 cursor-pointer",
+        dayjs(project.date).isBefore(dayjs()) && "bg-[#3d2f2f] hover:bg-[#4d3f3f]",
+      )}
       h="100%"
     >
       <Flex direction="column" gap="0">
