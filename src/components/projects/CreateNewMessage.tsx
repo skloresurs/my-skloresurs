@@ -1,7 +1,7 @@
 "use client";
 
 import { mutateAllKeysStartingWith } from "@/libs/mutate";
-import { Button, Drawer, Group, Select, Textarea } from "@mantine/core";
+import { ActionIcon, Button, Drawer, Group, Select, Textarea } from "@mantine/core";
 import { DateInput } from "@mantine/dates";
 import { useForm, zodResolver } from "@mantine/form";
 import { useDisclosure } from "@mantine/hooks";
@@ -11,8 +11,7 @@ import dayjs from "dayjs";
 import "dayjs/locale/uk";
 import { constant } from "lodash";
 import { CheckCircle, PlusCircle, XCircle } from "lucide-react";
-import { useSearchParams } from "next/navigation";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import useSWR from "swr";
 import { z } from "zod";
 
@@ -27,10 +26,10 @@ type ValidationSchema = z.infer<typeof schema>;
 
 interface IProps {
   projectId: string;
+  agent: string;
 }
 
-export default function CreateNewMessage({ projectId }: IProps) {
-  const searchParams = useSearchParams();
+export default function CreateNewMessage({ projectId, agent }: IProps) {
   const { data: agents, error: agentsError, isValidating: agentsIsValidating } = useSWR("/api/data/agents");
   const {
     data: statuses,
@@ -38,7 +37,6 @@ export default function CreateNewMessage({ projectId }: IProps) {
     isValidating: statusesIsValidating,
   } = useSWR("/api/data/project-statuses");
 
-  const agent = useMemo(() => searchParams.get("agent") ?? "", [searchParams]);
   const [opened, { open, close }] = useDisclosure(false);
   const [isLoading, setIsLoading] = useState(false);
   const form = useForm<ValidationSchema>({
@@ -119,9 +117,9 @@ export default function CreateNewMessage({ projectId }: IProps) {
         </form>
       </Drawer>
 
-      <Button leftSection={<PlusCircle />} onClick={open} size="sm">
-        Додати повідомлення
-      </Button>
+      <ActionIcon onClick={open} size="lg" radius="xl" variant="light" c="green">
+        <PlusCircle />
+      </ActionIcon>
     </>
   );
 }

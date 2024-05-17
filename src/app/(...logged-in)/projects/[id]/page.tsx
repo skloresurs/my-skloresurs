@@ -4,8 +4,9 @@ import TitleBar from "@/components/TitleBar";
 import CreateNewMessage from "@/components/projects/CreateNewMessage";
 import type Message from "@/types/projects/Message";
 import type { ProjectData } from "@/types/projects/Project";
-import { Badge, Stack, Text } from "@mantine/core";
+import { ActionIcon, Badge, Group, Popover, PopoverDropdown, PopoverTarget, Stack, Text } from "@mantine/core";
 import dayjs from "dayjs";
+import { MessageCircleMore } from "lucide-react";
 import { DataTable, type DataTableColumn } from "mantine-datatable";
 import { redirect } from "next/navigation";
 import { useMemo } from "react";
@@ -29,14 +30,30 @@ const getColumns = (projectId: string): DataTableColumn<Message>[] => [
     ),
   },
   {
-    accessor: "comment",
-    title: <CreateNewMessage projectId={projectId} />,
+    accessor: "status",
+    title: "Статус",
     textAlign: "right",
-    render: ({ comment, status }) => (
-      <Stack gap="2px" align="flex-end">
-        <Badge variant="light">{status}</Badge>
-        <Text>{comment}</Text>
-      </Stack>
+    render: ({ status }) => <Badge variant="light">{status}</Badge>,
+  },
+  {
+    accessor: "new",
+    title: "",
+    width: "110px",
+    textAlign: "right",
+    render: ({ agent, comment }) => (
+      <Group justify="center">
+        {comment && (
+          <Popover>
+            <PopoverTarget>
+              <ActionIcon size="lg" radius="xl" variant="light" c="blue">
+                <MessageCircleMore />
+              </ActionIcon>
+            </PopoverTarget>
+            <PopoverDropdown p="xs">{comment}</PopoverDropdown>
+          </Popover>
+        )}
+        <CreateNewMessage projectId={projectId} agent={agent.id} />
+      </Group>
     ),
   },
 ];

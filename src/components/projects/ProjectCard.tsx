@@ -12,7 +12,7 @@ export default function ProjectCard({ project }: IProps) {
   return (
     <Card
       component={Link}
-      href={`/projects/${project.id}?agent=${project.agent?.id}`}
+      href={`/projects/${project.id}`}
       className="hover:bg-[var(--mantine-color-dark-5)] duration-300 cursor-pointer"
       h="100%"
     >

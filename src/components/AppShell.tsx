@@ -5,17 +5,7 @@ import { useDisclosure } from "@mantine/hooks";
 import { notifications } from "@mantine/notifications";
 import axios from "axios";
 import { constant } from "lodash";
-import {
-  Boxes,
-  Database,
-  FolderOpenDot,
-  GanttChartSquare,
-  Locate,
-  LogOut,
-  Shield,
-  Truck,
-  UserRound,
-} from "lucide-react";
+import { Boxes, Database, GanttChartSquare, Locate, LogOut, Shield, Truck, UserRound } from "lucide-react";
 import Image from "next/image";
 import type { ReactNode } from "react";
 import useSWR, { useSWRConfig } from "swr";
@@ -26,6 +16,7 @@ import type { IUserMeRequest } from "@/types/User";
 import { errorNotificationProps, loadingNotificationProps, successNotificationProps } from "./Notification";
 import NavBarItem from "./navbar/NavBarItem";
 import NavBarItemAdminUsers from "./navbar/NavBarItemAdminUsers";
+import NavBarItemProjects from "./navbar/NavBarItemProjects";
 
 const NotificationTitle = "Вихід";
 
@@ -102,12 +93,7 @@ export default function AppShell({ children }: { children: ReactNode }) {
             icon={<Locate />}
             hide={!verifyPermission(user?.permissions ?? [], "GPS")}
           />
-          <NavBarItem
-            label="Проекти"
-            href="/projects"
-            icon={<FolderOpenDot />}
-            hide={!verifyPermission(user?.permissions ?? [], "Projects")}
-          />
+          <NavBarItemProjects user={user} />
           <NavBarItem label="Адмін-панель" icon={<Shield />} hide={!verifyPermission(user?.permissions ?? [], "Admin")}>
             <NavBarItemAdminUsers user={user} />
             <NavBarItem
