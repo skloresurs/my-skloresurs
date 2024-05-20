@@ -73,7 +73,7 @@ export default function Page({ params }: { params: { id: string } }) {
 
   return (
     <>
-      <TitleBar title={data.title} enableBackButton />
+      <TitleBar title={data.title} description={`Код: ${params.id}`} enableBackButton />
       <DataTable columns={columns} records={data.messages} />
     </>
   );

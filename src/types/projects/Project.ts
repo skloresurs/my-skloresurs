@@ -17,6 +17,7 @@ type ProjectData = {
   id: string;
   title: string;
   description: string;
+  allMessagesCount: number;
   messages: Message[];
 };
 
