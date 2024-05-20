@@ -17,7 +17,7 @@ const mainTableColumns: DataTableColumn<CommercialOffer>[] = [
     accessor: "price",
     title: "Ціна",
     textAlign: "right",
-    render: ({ price }) => <NumberFormatter value={price} decimalScale={2} thousandSeparator=" " />,
+    render: ({ price }) => <NumberFormatter value={price} fixedDecimalScale decimalScale={0} thousandSeparator=" " />,
   },
 ];
 
@@ -29,23 +29,32 @@ const subTableColumns: DataTableColumn<CommercialOfferDetail>[] = [
   {
     accessor: "price",
     title: "Ціна",
-    render: ({ price }) => <NumberFormatter value={price} decimalScale={2} thousandSeparator=" " />,
+    render: ({ price }) => <NumberFormatter value={price} decimalScale={0} fixedDecimalScale thousandSeparator=" " />,
   },
   {
     accessor: "size",
     title: "Розмір",
     textAlign: "right",
     render: ({ count, countSuffix }) => (
-      <NumberFormatter value={count} suffix={` ${countSuffix}`} decimalScale={3} thousandSeparator=" " />
+      <NumberFormatter
+        value={count}
+        suffix={` ${countSuffix}`}
+        fixedDecimalScale
+        decimalScale={0}
+        thousandSeparator=" "
+      />
     ),
   },
 ];
 
+interface IResponse {
+  title: string;
+  data: CommercialOffer[];
+}
+
 export default function Page({ params }: { params: { id: string; agent: string } }) {
   const [expandedIds, setExpandedIds] = useState<number[]>([]);
-  const { data, error, isValidating } = useSWR<{ data: CommercialOffer[] }>(
-    `/api/projects/${params.id}/${params.agent}`,
-  );
+  const { data, error, isValidating } = useSWR<IResponse>(`/api/projects/${params.id}/${params.agent}`);
 
   if (isValidating) {
     return <TitleBar title="Завантаження..." />;
@@ -57,14 +66,14 @@ export default function Page({ params }: { params: { id: string; agent: string }
 
   return (
     <>
-      <TitleBar title="КП" enableBackButton />
+      <TitleBar title={data.title ?? "КП"} enableBackButton />
       <DataTable
         columns={mainTableColumns}
         records={data.data}
         rowExpansion={{
           allowMultiple: true,
           expanded: { recordIds: expandedIds, onRecordIdsChange: setExpandedIds },
-          content: ({ record }) => <DataTable columns={subTableColumns} records={record.details} />,
+          content: ({ record }) => <DataTable bg="dark.9" columns={subTableColumns} records={record.details} />,
         }}
       />
     </>
