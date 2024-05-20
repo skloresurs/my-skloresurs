@@ -8,6 +8,7 @@ import { ActionIcon, Badge, Group, Popover, PopoverDropdown, PopoverTarget, Stac
 import dayjs from "dayjs";
 import { MessageCircleMore } from "lucide-react";
 import { DataTable, type DataTableColumn } from "mantine-datatable";
+import Link from "next/link";
 import { redirect } from "next/navigation";
 import { useMemo } from "react";
 import useSWR from "swr";
@@ -20,7 +21,9 @@ const getColumns = (projectId: string): DataTableColumn<Message>[] => [
     render: ({ manager, agent, notificationDate }) => (
       <Stack gap="2px">
         <Text size="sm">{manager?.name}</Text>
-        <Text fw={600}>{agent?.name}</Text>
+        <Link href={`/projects/${projectId}/${agent.id}`}>
+          <Text fw={600}>{agent?.name}</Text>
+        </Link>
         <Text size="xs" c="dimmed">
           {dayjs(notificationDate).format("DD.MM.YYYY")}
         </Text>
