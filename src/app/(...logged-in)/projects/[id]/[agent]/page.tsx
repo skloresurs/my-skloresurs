@@ -15,8 +15,9 @@ const mainTableColumns: DataTableColumn<CommercialOffer>[] = [
   },
   {
     accessor: "price",
-    title: "Ціна",
+    title: "Сума",
     textAlign: "right",
+    width: "120px",
     render: ({ price }) => <NumberFormatter value={price} fixedDecimalScale decimalScale={0} thousandSeparator=" " />,
   },
 ];
@@ -27,14 +28,10 @@ const subTableColumns: DataTableColumn<CommercialOfferDetail>[] = [
     title: "Назва",
   },
   {
-    accessor: "price",
-    title: "Ціна",
-    render: ({ price }) => <NumberFormatter value={price} decimalScale={0} fixedDecimalScale thousandSeparator=" " />,
-  },
-  {
     accessor: "size",
-    title: "Розмір",
+    title: "Площа",
     textAlign: "right",
+    width: "120px",
     render: ({ count, countSuffix }) => (
       <NumberFormatter
         value={count}
@@ -44,6 +41,12 @@ const subTableColumns: DataTableColumn<CommercialOfferDetail>[] = [
         thousandSeparator=" "
       />
     ),
+  },
+  {
+    accessor: "price",
+    title: "Сума",
+    width: "120px",
+    render: ({ price }) => <NumberFormatter value={price} decimalScale={0} fixedDecimalScale thousandSeparator=" " />,
   },
 ];
 
