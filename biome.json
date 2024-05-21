@@ -5,7 +5,7 @@
   },
   "linter": {
     "enabled": true,
-    "ignore": ["./drizzle/**/*"],
+    "ignore": ["./drizzle/**/*", "./.vscode/**/*"],
     "rules": {
       "recommended": true,
       "complexity": {
@@ -23,7 +23,7 @@
   },
   "formatter": {
     "enabled": true,
-    "ignore": ["./drizzle/**/*"],
+    "ignore": ["./drizzle/**/*", "./.vscode/**/*"],
     "formatWithErrors": true,
     "attributePosition": "auto",
     "indentStyle": "space",

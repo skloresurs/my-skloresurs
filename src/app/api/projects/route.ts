@@ -22,11 +22,15 @@ export async function GET(req: NextRequest) {
     const params = req.nextUrl.searchParams;
 
     const page = params.get("page");
+    const agent = params.get("agent");
 
     const paramsQuery = new URLSearchParams();
 
     if (page) {
       paramsQuery.append("page", page);
+    }
+    if (agent) {
+      paramsQuery.append("agent", agent);
     }
 
     const query = paramsQuery.toString().replaceAll("+", "%20");
