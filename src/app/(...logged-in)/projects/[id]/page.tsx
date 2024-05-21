@@ -2,14 +2,16 @@
 
 import TitleBar from "@/components/TitleBar";
 import CreateNewMessage from "@/components/projects/CreateNewMessage";
+import plurals from "@/libs/plurals";
 import type Message from "@/types/projects/Message";
 import type { ProjectData } from "@/types/projects/Project";
-import { ActionIcon, Badge, Group, Popover, PopoverDropdown, PopoverTarget, Stack, Text } from "@mantine/core";
+import { ActionIcon, Badge, Button, Group, Popover, PopoverDropdown, PopoverTarget, Stack, Text } from "@mantine/core";
 import dayjs from "dayjs";
 import { MessageCircleMore } from "lucide-react";
 import { DataTable, type DataTableColumn } from "mantine-datatable";
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import plural from "plurals-cldr";
 import { useMemo } from "react";
 import useSWR from "swr";
 
@@ -59,22 +61,44 @@ const getColumns = (projectId: string): DataTableColumn<Message>[] => [
   },
 ];
 
-export default function Page({ params }: { params: { id: string } }) {
-  const { data, error, isValidating } = useSWR<ProjectData>(`/api/projects/${params.id}`);
+interface IProps {
+  params: {
+    id: string;
+  };
+  searchParams: {
+    all?: unknown;
+  };
+}
+
+export default function Page({ params, searchParams }: IProps) {
+  const { data, error, isValidating } = useSWR<ProjectData>(
+    `/api/projects/${params.id}${searchParams.all ? "?all=true" : ""}`,
+  );
   const columns = useMemo(() => getColumns(params.id), [params.id]);
 
   if (isValidating) {
     return <TitleBar title="Завантаження..." />;
   }
 
-  if (error || !data) {
+  if (error) {
     redirect("/projects");
+  }
+
+  if (!data) {
+    return <TitleBar title="Завантаження..." />;
   }
 
   return (
     <>
       <TitleBar title={data.title} description={`Код: ${params.id}`} enableBackButton />
       <DataTable columns={columns} records={data.messages} />
+      <Text c="dimmed" size="sm" ta="center" mt={"md"}>
+        Показано {data.messages.length}/{data.allMessagesCount}{" "}
+        {plurals.message?.[plural("uk", data.messages.length) ?? ""]}
+      </Text>
+      <Button component={Link} href={searchParams.all === "true" ? "?" : "?all=true"} fullWidth variant="light" mt="xs">
+        {searchParams.all === "true" ? "Показати лише останні" : "Показати всі"}
+      </Button>
     </>
   );
 }

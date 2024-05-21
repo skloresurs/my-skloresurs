@@ -18,8 +18,11 @@ export async function GET(req: NextRequest, { params }: { params: { id: string }
       throw ServerError;
     }
 
+    const searchParams = req.nextUrl.searchParams;
+    const all = searchParams.get("all");
+
     const response = await axios1cMain
-      .get(`/projects/${params.id}`, {
+      .get(`/projects/${params.id}${all ? "?all=true" : ""}`, {
         headers: {
           user: session.user.id_1c,
         },
