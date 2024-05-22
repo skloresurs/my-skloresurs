@@ -52,7 +52,6 @@
     "**/*.cjs",
     "**/*.mjs",
     ".next/types/**/*.ts",
-    ".eslintrc.cjs",
     ".lintstagedrc.cjs"
   ],
   "exclude": ["node_modules", ".next"]

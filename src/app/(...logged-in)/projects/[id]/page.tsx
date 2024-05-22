@@ -16,7 +16,6 @@ import { useMemo } from "react";
 import useSWR from "swr";
 
 const getColumns = (projectId: string): DataTableColumn<Message>[] => [
-  { accessor: "id", title: "#", width: "45px", textAlign: "center" },
   {
     accessor: "manager-agent",
     title: "Менеджер/Контрагент",
@@ -96,9 +95,17 @@ export default function Page({ params, searchParams }: IProps) {
         Показано {data.messages.length}/{data.allMessagesCount}{" "}
         {plurals.message?.[plural("uk", data.messages.length) ?? ""]}
       </Text>
-      <Button component={Link} href={searchParams.all === "true" ? "?" : "?all=true"} fullWidth variant="light" mt="xs">
-        {searchParams.all === "true" ? "Показати лише останні" : "Показати всі"}
-      </Button>
+      {(searchParams.all === "true" || data.messages.length < data.allMessagesCount) && (
+        <Button
+          component={Link}
+          href={searchParams.all === "true" ? "?" : "?all=true"}
+          fullWidth
+          variant="light"
+          mt="xs"
+        >
+          {searchParams.all === "true" ? "Показати лише останні" : "Показати всі"}
+        </Button>
+      )}
     </>
   );
 }
