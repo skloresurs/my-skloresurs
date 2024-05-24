@@ -23,6 +23,7 @@ export async function GET(req: NextRequest) {
 
     const page = params.get("page");
     const agent = params.get("agent");
+    const search = params.get("search");
 
     const paramsQuery = new URLSearchParams();
 
@@ -31,6 +32,9 @@ export async function GET(req: NextRequest) {
     }
     if (agent) {
       paramsQuery.append("agent", agent);
+    }
+    if (search) {
+      paramsQuery.append("search", search);
     }
 
     const query = paramsQuery.toString().replaceAll("+", "%20");
