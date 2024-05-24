@@ -32,18 +32,12 @@ const getColumns = (projectId: string): DataTableColumn<Message>[] => [
     ),
   },
   {
-    accessor: "status",
-    title: "Статус",
-    textAlign: "right",
-    render: ({ status }) => <Badge variant="light">{status}</Badge>,
-  },
-  {
     accessor: "new",
     title: "",
-    width: "110px",
     textAlign: "right",
-    render: ({ agent, comment }) => (
-      <Group justify="center">
+    render: ({ agent, comment, status }) => (
+      <Group justify="end">
+        <Badge variant="light">{status}</Badge>
         {comment && (
           <Popover>
             <PopoverTarget>

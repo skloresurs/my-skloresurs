@@ -46,6 +46,7 @@ const subTableColumns: DataTableColumn<CommercialOfferDetail>[] = [
     accessor: "price",
     title: "Сума",
     width: "120px",
+    textAlign: "right",
     render: ({ price }) => <NumberFormatter value={price} decimalScale={0} fixedDecimalScale thousandSeparator=" " />,
   },
 ];
