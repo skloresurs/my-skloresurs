@@ -13,7 +13,7 @@ export default function Page() {
       <TitleBar title="Проекти" />
       <InstrumentsBar>
         <InstrumentPopover buttonIcon={<Filter size={16} />}>
-          <InstrumentSearch label="Пошук" />
+          <InstrumentSearch label="Пошук за назвою проекта" />
           <InstrumentSelect paramKey="agent" label="Пошук за контрагентом" dataUrl="/api/data/agents" />
           <InstrumentReset />
         </InstrumentPopover>
