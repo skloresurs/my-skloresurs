@@ -31,6 +31,7 @@ export async function GET(req: NextRequest) {
     const storage = params.get("storage");
     const bill = params.get("bill");
     const region = params.get("region");
+    const debt = params.get("debt");
 
     const paramsQuery = new URLSearchParams();
     if (search) {
@@ -50,6 +51,9 @@ export async function GET(req: NextRequest) {
     }
     if (region) {
       paramsQuery.append("region", region);
+    }
+    if (debt) {
+      paramsQuery.append("debt", "true");
     }
 
     const query = paramsQuery.toString().replaceAll("+", "%20");

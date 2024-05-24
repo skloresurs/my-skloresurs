@@ -29,6 +29,12 @@ export default function ManagerPage() {
             description="Показувати замовлення з іншими статусами"
             enabledDescription='Показувати замовлення лише з статусом "Склад"'
           />
+          <InstrumentCheckbox
+            paramKey="debt"
+            title="Борг до відвантаження"
+            description="Показувати всі замовлення"
+            enabledDescription="Показувати замовлення лише з боргом до відвантаження"
+          />
           <InstrumentResetOne title="Скинути контрагента" paramKey="agent" />
           <InstrumentResetOne title="Скинути регіон" paramKey="region" />
           <InstrumentResetOne title="Скинути рахунок" paramKey="bill" />
