@@ -1,6 +1,7 @@
 export type CommercialOffer = {
   id: string;
   price: number;
+  comment: string;
   details: CommercialOfferDetail[];
 };
 
