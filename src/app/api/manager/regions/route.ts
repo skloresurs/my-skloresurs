@@ -3,7 +3,7 @@ import { type NextRequest, NextResponse } from "next/server";
 
 import { ServerError } from "@/classes/CustomError";
 import apiErrorHandler from "@/libs/api-error-handler";
-import axios1cMain from "@/libs/axios";
+import axios1c from "@/libs/axios";
 import logger from "@/libs/logger";
 import { getSession } from "@/libs/sessions";
 import verifyIp from "@/libs/verify-ip";
@@ -18,6 +18,7 @@ const PAGE_SIZE = 48;
 
 export async function GET(req: NextRequest) {
   try {
+    const server = req.headers.get("server");
     const session = await getSession(req);
     await verifyIp(req, session.user.allowed_ips);
     verifyPermissionServer(session.user.permissions, "Manager");
@@ -42,7 +43,7 @@ export async function GET(req: NextRequest) {
       throw ServerError;
     }
 
-    const response = await axios1cMain
+    const response = await axios1c(server)
       .get<IResponse>(`/manager/regions?${query}`, {
         headers: {
           user: session.user.id_1c,

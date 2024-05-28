@@ -14,6 +14,7 @@ import verifyPermission from "@/libs/verify-permission";
 import type { IUserMeRequest } from "@/types/User";
 
 import { errorNotificationProps, loadingNotificationProps, successNotificationProps } from "./Notification";
+import ServerSwitch from "./ServerSwitch";
 import NavBarItem from "./navbar/NavBarItem";
 import NavBarItemAdminUsers from "./navbar/NavBarItemAdminUsers";
 import NavBarItemProjects from "./navbar/NavBarItemProjects";
@@ -106,6 +107,7 @@ export default function AppShell({ children }: { children: ReactNode }) {
         </MantineAppShell.Section>
         <MantineAppShell.Section>
           <Divider my="md" />
+          <ServerSwitch />
           <NavBarItem label="Профіль" href="/profile" icon={<UserRound />} />
           <NavBarItem label="Вийти" icon={<LogOut />} onClick={logout} />
         </MantineAppShell.Section>

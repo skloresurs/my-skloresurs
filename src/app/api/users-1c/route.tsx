@@ -1,11 +1,12 @@
 import { type NextRequest, NextResponse } from "next/server";
 
 import apiErrorHandler from "@/libs/api-error-handler";
-import axios1cMain from "@/libs/axios";
+import axios1c from "@/libs/axios";
 
 export async function GET(req: NextRequest) {
   try {
     const params = req.nextUrl.searchParams;
+    const server = req.headers.get("server");
 
     const search = params.get("search");
     const page = params.get("page");
@@ -20,7 +21,7 @@ export async function GET(req: NextRequest) {
 
     const query = paramsQuery.toString().replaceAll("+", "%20");
 
-    const response = await axios1cMain.get(`/data/users?${query}`);
+    const response = await axios1c(server).get(`/data/users?${query}`);
     return NextResponse.json(response.data, { status: 200 });
   } catch (error) {
     return apiErrorHandler(req, error);

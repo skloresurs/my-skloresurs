@@ -1,3 +1,3 @@
-type Server = "main";
+type Server = "dubno" | "tlymach";
 
 export default Server;

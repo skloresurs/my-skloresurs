@@ -11,7 +11,7 @@ import axios from "axios";
 const fetcher = async (url: string): Promise<unknown> => {
   nprogress.start();
   return axios
-    .get(url)
+    .get(url, { headers: { server: localStorage.getItem("server") ?? "dubno" } })
     .then((res: AxiosResponse) => res.data)
     .finally(() => nprogress.complete());
 };

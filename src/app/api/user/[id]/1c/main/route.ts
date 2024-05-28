@@ -4,7 +4,8 @@ import { type NextRequest, NextResponse } from "next/server";
 
 import CustomError from "@/classes/CustomError";
 import apiErrorHandler from "@/libs/api-error-handler";
-import axios1cMain from "@/libs/axios";
+("@/libs/axios");
+import axios1c from "@/libs/axios";
 import { auth } from "@/libs/lucia";
 import { getSession } from "@/libs/sessions";
 import verifyIp from "@/libs/verify-ip";
@@ -12,6 +13,7 @@ import { verifyPermissionServer } from "@/libs/verify-permission";
 
 export async function POST(req: NextRequest, { params }: { params: { id: string } }) {
   try {
+    const server = req.headers.get("server");
     const session = await getSession(req);
 
     verifyPermissionServer(session.user.permissions, "Admin");
@@ -19,7 +21,7 @@ export async function POST(req: NextRequest, { params }: { params: { id: string 
 
     const { id } = await req.json();
 
-    const fullname = await axios1cMain
+    const fullname = await axios1c(server)
       .get(`/data/users/${id}`)
       .then((res) => res.data.name)
       .catch(constant(null));
