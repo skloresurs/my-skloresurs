@@ -2,7 +2,7 @@
 
 import TitleBar from "@/components/TitleBar";
 import type { CommercialOffer, CommercialOfferDetail } from "@/types/projects/CommercialOffer";
-import { ActionIcon, Group, NumberFormatter, Popover, PopoverDropdown, PopoverTarget } from "@mantine/core";
+import { ActionIcon, Group, NumberFormatter, Popover, PopoverDropdown, PopoverTarget, Text } from "@mantine/core";
 import { MessageCircleMore } from "lucide-react";
 import { DataTable, type DataTableColumn } from "mantine-datatable";
 import { redirect } from "next/navigation";
@@ -48,6 +48,7 @@ const subTableColumns: DataTableColumn<CommercialOfferDetail>[] = [
   {
     accessor: "name",
     title: "Назва",
+    render: ({ name }) => <Text miw={400}>{name}</Text>,
   },
   {
     accessor: "size",
