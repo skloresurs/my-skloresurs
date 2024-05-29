@@ -49,7 +49,7 @@ const subTableColumns: DataTableColumn<CommercialOfferDetail>[] = [
     accessor: "name",
     title: "Назва",
     render: ({ name }) => (
-      <Text size="xs" miw={250}>
+      <Text size="xs" miw={200}>
         {name}
       </Text>
     ),
@@ -58,7 +58,7 @@ const subTableColumns: DataTableColumn<CommercialOfferDetail>[] = [
     accessor: "size",
     title: "Площа",
     textAlign: "right",
-    width: "120px",
+    noWrap: true,
     render: ({ count, countSuffix }) => (
       <NumberFormatter
         value={count}
@@ -72,8 +72,8 @@ const subTableColumns: DataTableColumn<CommercialOfferDetail>[] = [
   {
     accessor: "price",
     title: "Сума",
-    width: "120px",
     textAlign: "right",
+    noWrap: true,
     render: ({ price }) => <NumberFormatter value={price} decimalScale={0} fixedDecimalScale thousandSeparator=" " />,
   },
 ];
@@ -104,7 +104,9 @@ export default function Page({ params }: { params: { id: string; agent: string }
         rowExpansion={{
           allowMultiple: true,
           expanded: { recordIds: expandedIds, onRecordIdsChange: setExpandedIds },
-          content: ({ record }) => <DataTable bg="dark.9" columns={subTableColumns} records={record.details} />,
+          content: ({ record }) => (
+            <DataTable horizontalSpacing="2px" bg="dark.9" columns={subTableColumns} records={record.details} />
+          ),
         }}
       />
     </>
