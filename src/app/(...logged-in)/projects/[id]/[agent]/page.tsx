@@ -48,7 +48,11 @@ const subTableColumns: DataTableColumn<CommercialOfferDetail>[] = [
   {
     accessor: "name",
     title: "Назва",
-    render: ({ name }) => <Text miw={400}>{name}</Text>,
+    render: ({ name }) => (
+      <Text size="xs" miw={250}>
+        {name}
+      </Text>
+    ),
   },
   {
     accessor: "size",
