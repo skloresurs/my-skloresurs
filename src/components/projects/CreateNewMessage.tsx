@@ -102,13 +102,13 @@ export default function CreateNewMessage({ projectId, agent }: IProps) {
             data={statuses?.data ?? []}
             label="Статус"
             disabled={isLoading || !statuses || statusesError || statusesIsValidating}
-            searchable
           />
           <DateInput
             {...form.getInputProps("notificationDate")}
             label="Дата нагадування"
             locale="uk"
             valueFormat="DD MMMM YYYY"
+            inputMode="none"
           />
           <Textarea label="Повідомлення" {...form.getInputProps("message")} />
           <Group justify="flex-end" mt="md">
