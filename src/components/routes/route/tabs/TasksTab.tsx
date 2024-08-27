@@ -1,12 +1,9 @@
 "use client";
 
-import { Accordion, Checkbox, Flex, Group, Stack, Text } from "@mantine/core";
-import { constant, map, split } from "lodash";
+import { Checkbox, Group, Paper, Stack, Text, Title } from "@mantine/core";
+import { constant, map } from "lodash";
 import { memo, useState } from "react";
 
-import DrawerItem from "@/components/ui/DrawerItem";
-import TelephoneButton from "@/components/ui/TelephoneButton";
-import { phoneRegexp } from "@/libs/regexp";
 import type { FullRoute } from "@/types/route/Route";
 import { notifications } from "@mantine/notifications";
 import axios from "axios";
@@ -56,42 +53,29 @@ function TasksTab({ route }: IProps) {
   };
 
   return (
-    <Accordion mt="sm">
+    <Stack mt="sm" gap="sm">
       {map(route.tasks, (task) => (
-        <Accordion.Item value={task.id} key={task.id}>
-          <Accordion.Control
-            flex={1}
-            c={task.completed ? "dimmed" : ""}
-            td={task.completed ? "line-through" : ""}
-            className="duration-300"
-          >
-            <Group align="center">
-              <Checkbox
-                radius="xl"
-                size="md"
-                checked={task.completed}
-                onChange={() => updateTask(task.id, !task.completed)}
-                disabled={isLoading}
-              />
-              <Text>Завдання №{task.id}</Text>
-            </Group>
-          </Accordion.Control>
-          <Accordion.Panel>
-            <Stack gap="sm">
-              <DrawerItem label="Менеджер" value={task.manager} />
-              <Flex align="center" gap="xs">
-                <Stack gap="0px" className="flex-1">
-                  {map(split(task.description, "¶"), (d) => (
-                    <Text>{d}</Text>
-                  ))}
-                </Stack>
-                <TelephoneButton tel={[task.description.match(phoneRegexp)?.at(0) ?? ""]} />
-              </Flex>
+        <Paper p="sm">
+          <Group align="center" gap="sm">
+            <Checkbox
+              radius="xl"
+              size="md"
+              checked={task.completed}
+              onChange={() => updateTask(task.id, !task.completed)}
+              disabled={isLoading}
+            />
+            <Stack gap={1}>
+              <Title order={3} size="h5" td={task.completed ? "line-through" : ""} c={task.completed ? "dimmed" : ""}>
+                Завдання №{task.id} - {task.manager}
+              </Title>
+              <Text size="sm" c="dimmed">
+                {task.description}
+              </Text>
             </Stack>
-          </Accordion.Panel>
-        </Accordion.Item>
+          </Group>
+        </Paper>
       ))}
-    </Accordion>
+    </Stack>
   );
 }
 
