@@ -37,3 +37,38 @@ export async function GET(req: NextRequest, { params }: { params: { id: string }
     return apiErrorHandler(req, error);
   }
 }
+
+export async function PATCH(req: NextRequest, { params }: { params: { id: string } }) {
+  try {
+    const server = req.headers.get("server");
+    const session = await getSession(req);
+    await verifyIp(req, session.user.allowed_ips);
+    verifyPermissionServer(session.user.permissions, "Driver");
+
+    if (!session.user.id_1c) {
+      throw ServerError;
+    }
+
+    const body = await req.json();
+
+    await axios1c(server)
+      .patch(`/driver/routes/${params.id}`, body, {
+        headers: {
+          user: session.user.id_1c,
+        },
+      })
+      .catch((error) => {
+        logger.error(error.response.data);
+        throw ServerError;
+      });
+
+    return NextResponse.json(
+      { status: "ok" },
+      {
+        status: 200,
+      },
+    );
+  } catch (error) {
+    return apiErrorHandler(req, error);
+  }
+}
