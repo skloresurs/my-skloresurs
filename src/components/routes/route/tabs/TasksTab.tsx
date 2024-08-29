@@ -8,7 +8,6 @@ import TelephoneButton from "@/components/ui/TelephoneButton";
 import type { FullRoute } from "@/types/route/Route";
 import { notifications } from "@mantine/notifications";
 import axios from "axios";
-import dayjs from "dayjs";
 import { Star } from "lucide-react";
 import { mutate } from "swr";
 
@@ -75,9 +74,6 @@ function TasksTab({ route }: IProps) {
                 {task.description}
               </Title>
             </Group>
-            <Text size="sm" c="dimmed">
-              {dayjs(task.createAt).format("DD.MM.YYYY HH:mm:ss")}
-            </Text>
             <Text size="sm" c="dimmed">
               {task.manager?.name}
             </Text>
