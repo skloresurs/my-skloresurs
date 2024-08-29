@@ -4,9 +4,11 @@ import { Checkbox, Group, Paper, Stack, Text, Title } from "@mantine/core";
 import { constant, map } from "lodash";
 import { memo, useState } from "react";
 
+import TelephoneButton from "@/components/ui/TelephoneButton";
 import type { FullRoute } from "@/types/route/Route";
 import { notifications } from "@mantine/notifications";
 import axios from "axios";
+import dayjs from "dayjs";
 import { mutate } from "swr";
 
 interface IProps {
@@ -56,7 +58,7 @@ function TasksTab({ route }: IProps) {
     <Stack mt="sm" gap="sm">
       {map(route.tasks, (task) => (
         <Paper p="sm">
-          <Group align="center" gap="sm">
+          <Group align="center" gap="sm" wrap="nowrap">
             <Checkbox
               radius="xl"
               size="md"
@@ -64,14 +66,18 @@ function TasksTab({ route }: IProps) {
               onChange={() => updateTask(task.id, !task.completed)}
               disabled={isLoading}
             />
-            <Stack gap={1}>
+            <Stack gap={0}>
               <Title order={3} size="h5" td={task.completed ? "line-through" : ""} c={task.completed ? "dimmed" : ""}>
-                Завдання №{task.id} - {task.manager}
+                {task.description}
               </Title>
               <Text size="sm" c="dimmed">
-                {task.description}
+                {dayjs(task.createAt).format("DD.MM.YYYY HH:mm:ss")}
+              </Text>
+              <Text size="sm" c="dimmed">
+                {task.manager?.name}
               </Text>
             </Stack>
+            <TelephoneButton tel={task.manager?.tel} />
           </Group>
         </Paper>
       ))}
