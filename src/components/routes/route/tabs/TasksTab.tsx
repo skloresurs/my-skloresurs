@@ -1,6 +1,6 @@
 "use client";
 
-import { Checkbox, Group, Paper, Stack, Text, Title } from "@mantine/core";
+import { Checkbox, Group, Stack, Text, Title } from "@mantine/core";
 import { constant, map } from "lodash";
 import { memo, useState } from "react";
 
@@ -9,6 +9,7 @@ import type { FullRoute } from "@/types/route/Route";
 import { notifications } from "@mantine/notifications";
 import axios from "axios";
 import dayjs from "dayjs";
+import { Star } from "lucide-react";
 import { mutate } from "swr";
 
 interface IProps {
@@ -57,29 +58,32 @@ function TasksTab({ route }: IProps) {
   return (
     <Stack mt="sm" gap="sm">
       {map(route.tasks, (task) => (
-        <Paper p="sm">
-          <Group align="center" gap="sm" wrap="nowrap">
-            <Checkbox
-              radius="xl"
-              size="md"
-              checked={task.completed}
-              onChange={() => updateTask(task.id, !task.completed)}
-              disabled={isLoading}
-            />
-            <Stack gap={0}>
+        <Group align="center" gap="sm" wrap="nowrap" p="sm">
+          <Checkbox
+            radius="xl"
+            size="md"
+            checked={task.completed}
+            onChange={() => updateTask(task.id, !task.completed)}
+            disabled={isLoading}
+          />
+          <Stack gap={0} flex={1}>
+            <Group gap={2}>
+              {task.important && (
+                <Star size={16} fill="var(--mantine-color-blue-6)" color="var(--mantine-color-blue-6)" />
+              )}
               <Title order={3} size="h5" td={task.completed ? "line-through" : ""} c={task.completed ? "dimmed" : ""}>
                 {task.description}
               </Title>
-              <Text size="sm" c="dimmed">
-                {dayjs(task.createAt).format("DD.MM.YYYY HH:mm:ss")}
-              </Text>
-              <Text size="sm" c="dimmed">
-                {task.manager?.name}
-              </Text>
-            </Stack>
-            <TelephoneButton tel={task.manager?.tel} />
-          </Group>
-        </Paper>
+            </Group>
+            <Text size="sm" c="dimmed">
+              {dayjs(task.createAt).format("DD.MM.YYYY HH:mm:ss")}
+            </Text>
+            <Text size="sm" c="dimmed">
+              {task.manager?.name}
+            </Text>
+          </Stack>
+          <TelephoneButton tel={task.manager?.tel} />
+        </Group>
       ))}
     </Stack>
   );
